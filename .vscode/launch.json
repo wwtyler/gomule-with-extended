@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug GoMule",
+            "request": "launch",
+            "mainClass": "gomule.GoMule",
+            "projectName": "GoMule",
+            "cwd": "${workspaceFolder}",
+            "vmArgs": "-Xmx1024m -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8",
+            "args": "",
+            "console": "internalConsole",
+            "encoding": "UTF-8"
+        },
+        {
+            "type": "java",
+            "name": "Debug GoMule (External Console)",
+            "request": "launch",
+            "mainClass": "gomule.GoMule",
+            "projectName": "GoMule",
+            "cwd": "${workspaceFolder}",
+            "vmArgs": "-Xmx1024m -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8",
+            "args": "",
+            "console": "externalTerminal",
+            "encoding": "UTF-8"
+        },
+        {
+            "type": "java",
+            "name": "Debug Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "projectName": "GoMule"
+        },
+        {
+            "type": "java",
+            "name": "Attach to JVM",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5005
+        }
+    ]
+}

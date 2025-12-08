@@ -28,6 +28,7 @@ import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class D2ViewProject extends JPanel {

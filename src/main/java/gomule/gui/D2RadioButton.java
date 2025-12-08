@@ -7,6 +7,7 @@
 package gomule.gui;
 
 import javax.swing.*;
+import java.io.Serial;
 
 /**
  * @author Marco

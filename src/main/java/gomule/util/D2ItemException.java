@@ -20,6 +20,8 @@
  ******************************************************************************/
 package gomule.util;
 
+import java.io.Serial;
+
 /**
  * @author Marco
  * <p>

@@ -30,6 +30,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serial;
 import java.util.ArrayList;
 
 import static gomule.d2s.D2Character.STASHSIZEX;

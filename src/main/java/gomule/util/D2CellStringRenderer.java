@@ -9,6 +9,7 @@ package gomule.util;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * @author Marco & Silospen

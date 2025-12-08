@@ -24,6 +24,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.Serial;
 
 public class RandallPanel extends JPanel {
     public static final Integer NONE = Integer.valueOf(100);
