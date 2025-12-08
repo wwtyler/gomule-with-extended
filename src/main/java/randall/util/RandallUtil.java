@@ -73,7 +73,7 @@ public class RandallUtil {
     public static String merge(ArrayList pArrayList, String pJoin) {
         String lReturn = "";
         if (pArrayList.size() > 0) {
-            lReturn += (String) pArrayList.get(0);
+            lReturn += (String) pArrayList.getFirst();
             for (int i = 1; i < pArrayList.size(); i++) {
                 lReturn += pJoin + (String) pArrayList.get(i);
             }

@@ -65,6 +65,7 @@ public class D2FileManager extends JFrame {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 4010435064410504579L;
 
     private static final String CURRENT_VERSION = "R0.44: Resurrected";
@@ -196,8 +197,8 @@ public class D2FileManager extends JFrame {
 
     public static void displayTextDialog(Window pParent, String pTitle, String pText) {
         JDialog lDialog;
-        if (pParent instanceof JFrame) {
-            lDialog = new JDialog((JFrame) pParent, pTitle, true);
+        if (pParent instanceof JFrame frame) {
+            lDialog = new JDialog(frame, pTitle, true);
         } else {
             lDialog = new JDialog((JDialog) pParent, pTitle, true);
         }
@@ -576,8 +577,8 @@ public class D2FileManager extends JFrame {
                                 }
                             }
 
-                        } else if (d2ItemContainer instanceof D2ViewSharedStash) {
-                            D2ViewSharedStash viewSharedStash = ((D2ViewSharedStash) d2ItemContainer);
+                        } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
+                            D2ViewSharedStash viewSharedStash = stash;
                             D2ViewClipboard.addItems(
                                     viewSharedStash.getSharedStashPanel().removeAllItems());
                         } else {
@@ -613,8 +614,8 @@ public class D2FileManager extends JFrame {
                             for (int x = 2; x > -1; x--) {
                                 iCharacter.putOnCharacter(x, D2ViewClipboard.getItemList());
                             }
-                        } else if (d2ItemContainer instanceof D2ViewSharedStash) {
-                            D2ViewSharedStash viewSharedStash = ((D2ViewSharedStash) d2ItemContainer);
+                        } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
+                            D2ViewSharedStash viewSharedStash = stash;
                             //noinspection unchecked
                             List<D2Item> successfullyAddedItems =
                                     viewSharedStash.getSharedStashPanel().tryToAddItems(D2ViewClipboard.getItemList());
@@ -622,7 +623,7 @@ public class D2FileManager extends JFrame {
                         } else {
                             ArrayList lItemList = D2ViewClipboard.removeAllItems();
                             while (lItemList.size() > 0) {
-                                iList.addItem((D2Item) lItemList.remove(0));
+                                iList.addItem((D2Item) lItemList.removeFirst());
                             }
                         }
                     } finally {
@@ -1227,7 +1228,7 @@ public class D2FileManager extends JFrame {
     public void closeWindows() {
         saveAll();
         while (iOpenWindows.size() > 0) {
-            D2ItemContainer lItemContainer = (D2ItemContainer) iOpenWindows.get(0);
+            D2ItemContainer lItemContainer = (D2ItemContainer) iOpenWindows.getFirst();
             if (lItemContainer != null) {
                 lItemContainer.closeView();
             }

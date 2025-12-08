@@ -200,9 +200,9 @@ public class DirectD2Files {
                     if (pItem.isRune()) {
                         Long lRuneCount = (Long) iFlavie.iRuneCount.get(pItem.getName());
                         if (lRuneCount == null) {
-                            lRuneCount = new Long(1);
+                            lRuneCount = Long.valueOf(1);
                         } else {
-                            lRuneCount = new Long(lRuneCount.longValue() + 1);
+                            lRuneCount = Long.valueOf(lRuneCount.longValue() + 1);
                         }
                         iFlavie.iRuneCount.put(pItem.getName(), lRuneCount);
                     }
@@ -220,7 +220,7 @@ public class DirectD2Files {
                             lFound = lItemObject;
                         }
                     } else if (lItemObject.getName().equals(pItem.getName())) {
-                        if (pItem.isUnique() && pItem.isJewel() && matchStr[0].equals(lItemObject.getExtraDetect().get(0)) && matchStr[1].equals(lItemObject.getExtraDetect().get(1))) {
+                        if (pItem.isUnique() && pItem.isJewel() && matchStr[0].equals(lItemObject.getExtraDetect().getFirst()) && matchStr[1].equals(lItemObject.getExtraDetect().get(1))) {
                             lFound = lItemObject;
                         }
 

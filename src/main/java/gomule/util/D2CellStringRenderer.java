@@ -21,6 +21,7 @@ public class D2CellStringRenderer extends DefaultTableCellRenderer {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1351337843493777035L;
 
     public D2CellStringRenderer() {
@@ -37,10 +38,10 @@ public class D2CellStringRenderer extends DefaultTableCellRenderer {
 //              	System.out.println("yo");
 //        	super.setBackground(Color.black);
 
-        if (pValue instanceof D2CellValue) {
-            lValue = ((D2CellValue) pValue).getValue();
-            lForeground = ((D2CellValue) pValue).getForeground();
-            lTooltip = ((D2CellValue) pValue).getTooltip();
+        if (pValue instanceof D2CellValue value) {
+            lValue = value.getValue();
+            lForeground = value.getForeground();
+            lTooltip = value.getTooltip();
         } else {
             lValue = pValue;
         }
@@ -59,8 +60,8 @@ public class D2CellStringRenderer extends DefaultTableCellRenderer {
             lRenderer.setForeground(Color.black);
         }
 
-        if (lRenderer instanceof D2CellStringRenderer) {
-            ((D2CellStringRenderer) lRenderer).setToolTipText(lTooltip);
+        if (lRenderer instanceof D2CellStringRenderer renderer) {
+            renderer.setToolTipText(lTooltip);
         }
 
 

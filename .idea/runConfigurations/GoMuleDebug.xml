@@ -4,7 +4,6 @@
     <option name="WORKING_DIRECTORY" value="E:\D2R-Modding-Tools\gomule-with-extended\GoMule" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="ALTERNATIVE_JRE_PATH" value="D:/Code/jdk-17.0.17" />
-    <module name="GoMule" />
     <method v="2">
       <option name="Gradle.BeforeRunTask" enabled="true" tasks="createDistribution" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
     </method>

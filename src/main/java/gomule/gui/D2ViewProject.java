@@ -34,6 +34,7 @@ public class D2ViewProject extends JPanel {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -7147981187044642216L;
     private D2FileManager iFileManager;
     private D2Project iProject;
@@ -53,6 +54,7 @@ public class D2ViewProject extends JPanel {
             /**
              *
              */
+            @Serial
             private static final long serialVersionUID = 3529087650697421360L;
 
             public void scrollRectToVisible(Rectangle aRect) {
@@ -64,6 +66,7 @@ public class D2ViewProject extends JPanel {
             /**
              *
              */
+            @Serial
             private static final long serialVersionUID = 4441305975881423913L;
 
             public Component getTreeCellRendererComponent(JTree pTree, Object pValue,
@@ -74,8 +77,7 @@ public class D2ViewProject extends JPanel {
                 Component lRenderer = super.getTreeCellRendererComponent(pTree, pValue, pSel,
                         pExpanded, pLeaf, pRow, pHasFocus);
 
-                if (pValue instanceof CharTreeNode) {
-                    CharTreeNode lNode = (CharTreeNode) pValue;
+                if (pValue instanceof CharTreeNode lNode) {
                     lRenderer.setForeground(lNode.getForeGround());
                 }
 
@@ -122,15 +124,15 @@ public class D2ViewProject extends JPanel {
                         if (e.getButton() == MouseEvent.BUTTON1 && iLastClickCount == 2) {
                             Object lPathObjects[] = lPath.getPath();
                             Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode) {
-                                ((CharTreeNode) lLast).view();
+                            if (lLast instanceof CharTreeNode node) {
+                                node.view();
                             }
                         }
                         if (e.getButton() == MouseEvent.BUTTON3 && iLastClickCount == 1) {
                             Object lPathObjects[] = lPath.getPath();
                             Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode) {
-                                ((CharTreeNode) lLast).startMenu(e.getX(), e.getY());
+                            if (lLast instanceof CharTreeNode node) {
+                                node.startMenu(e.getX(), e.getY());
                             }
                         }
                     }
@@ -154,8 +156,8 @@ public class D2ViewProject extends JPanel {
                         TreePath lPath = iTree.getPathForRow(lSelected[i]);
                         Object lPathObjects[] = lPath.getPath();
                         Object lLast = lPathObjects[lPathObjects.length - 1];
-                        if (lLast instanceof CharTreeNode) {
-                            ((CharTreeNode) lLast).remove();
+                        if (lLast instanceof CharTreeNode node) {
+                            node.remove();
                         }
                     }
                 } else if (e.getModifiers() == KeyEvent.ALT_MASK) {
@@ -165,8 +167,8 @@ public class D2ViewProject extends JPanel {
                             TreePath lPath = iTree.getPathForRow(lSelected[i]);
                             Object lPathObjects[] = lPath.getPath();
                             Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode) {
-                                ((CharTreeNode) lLast).view();
+                            if (lLast instanceof CharTreeNode node) {
+                                node.view();
                             }
                         }
                     } else if (e.getKeyCode() == KeyEvent.VK_C) {
@@ -175,8 +177,8 @@ public class D2ViewProject extends JPanel {
                             TreePath lPath = iTree.getPathForRow(lSelected[i]);
                             Object lPathObjects[] = lPath.getPath();
                             Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode) {
-                                ((CharTreeNode) lLast).close();
+                            if (lLast instanceof CharTreeNode node) {
+                                node.close();
                             }
                         }
                     } else if (e.getKeyCode() == KeyEvent.VK_F) {
@@ -185,8 +187,8 @@ public class D2ViewProject extends JPanel {
                             TreePath lPath = iTree.getPathForRow(lSelected[i]);
                             Object lPathObjects[] = lPath.getPath();
                             Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode) {
-                                ((CharTreeNode) lLast).fullDump();
+                            if (lLast instanceof CharTreeNode node) {
+                                node.fullDump();
                             }
                         }
                     }
@@ -346,6 +348,7 @@ public class D2ViewProject extends JPanel {
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = -7061935461861570778L;
         private String iFileName;
         private Color iForeGround = UIManager.getColor("Tree.textForeground");
@@ -429,28 +432,28 @@ public class D2ViewProject extends JPanel {
 
             if (iFileOpened) {
                 JMenuItem lOpen = new JMenuItem("Move to Top");
-                lOpen.setAccelerator(KeyStroke.getKeyStroke(new Character('M'), KeyEvent.ALT_MASK));
+                lOpen.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('M'), KeyEvent.ALT_MASK));
                 lMenu.add(lOpen);
                 lOpen.addActionListener(new ActionNodeView(this));
 
                 JMenuItem lFullDump = new JMenuItem("Full Dump");
-                lFullDump.setAccelerator(KeyStroke.getKeyStroke(new Character('F'), KeyEvent.ALT_MASK));
+                lFullDump.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('F'), KeyEvent.ALT_MASK));
 //				lMenu.add(lFullDump);
                 lFullDump.addActionListener(new ActionNodeFullDump(this));
 
                 JMenuItem lClose = new JMenuItem("Close");
-                lClose.setAccelerator(KeyStroke.getKeyStroke(new Character('C'), KeyEvent.ALT_MASK));
+                lClose.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('C'), KeyEvent.ALT_MASK));
                 lMenu.add(lClose);
                 lClose.addActionListener(new ActionNodeClose(this));
             } else {
                 if (iItemListRead) {
                     JMenuItem lOpen = new JMenuItem("View");
-                    lOpen.setAccelerator(KeyStroke.getKeyStroke(new Character('V'), KeyEvent.ALT_MASK));
+                    lOpen.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('V'), KeyEvent.ALT_MASK));
                     lMenu.add(lOpen);
                     lOpen.addActionListener(new ActionNodeView(this));
                 } else {
                     JMenuItem lOpen = new JMenuItem("Open");
-                    lOpen.setAccelerator(KeyStroke.getKeyStroke(new Character('O'), KeyEvent.ALT_MASK));
+                    lOpen.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('O'), KeyEvent.ALT_MASK));
                     lMenu.add(lOpen);
                     lOpen.addActionListener(new ActionNodeView(this));
                 }

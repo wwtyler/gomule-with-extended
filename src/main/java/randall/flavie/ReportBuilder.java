@@ -88,17 +88,17 @@ public class ReportBuilder {
 
         for (int i = 0; i < pDatFile.size(); i++) {
             Object lObject = pDatFile.get(i);
-            if (lObject instanceof TotalObject) {
+            if (lObject instanceof TotalObject object) {
                 lShowCounters = true;
-                PercentageCounter lPerc = new PercentageCounter((TotalObject) lObject);
+                PercentageCounter lPerc = new PercentageCounter(object);
                 lPercentages.add(lPerc);
             }
-            if (lObject instanceof CatObject) {
+            if (lObject instanceof CatObject object) {
                 int lNrItems = 0;
 
                 int lNrItemsFound = 0;
 
-                lCatObject = (CatObject) lObject;
+                lCatObject = object;
 
                 ArrayList lSubCatList = lCatObject.getSubCats();
                 for (int j = 0; j < lSubCatList.size(); j++) {
@@ -165,8 +165,8 @@ public class ReportBuilder {
                 lPercentages.add(lPerc);
                 lOutReport.println("<div class=cat>" + lCatObject.toString() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
-            } else if (lObject instanceof SubCatObject) {
-                lSubCatObject = (SubCatObject) lObject;
+            } else if (lObject instanceof SubCatObject object) {
+                lSubCatObject = object;
 
                 if (lSubCat) {
                     lSubCat = false;
@@ -217,8 +217,7 @@ public class ReportBuilder {
                 lOutReport.println("<div class=subcat>" + lSubCatObject.toString() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
                 lOutReport.println("<table>");
-            } else if (lObject instanceof ItemObject) {
-                ItemObject lItemObject = (ItemObject) lObject;
+            } else if (lObject instanceof ItemObject lItemObject) {
 
 //				ArrayList lItem = RandallUtil.split(lLine, ",", false);
 

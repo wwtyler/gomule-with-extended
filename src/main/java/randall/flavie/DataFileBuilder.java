@@ -82,7 +82,7 @@ public class DataFileBuilder {
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
                 }
-                TotalObject lTotal = new TotalObject((String) lItem.get(0), (String) lItem.get(1), (String) lItem.get(2));
+                TotalObject lTotal = new TotalObject((String) lItem.getFirst(), (String) lItem.get(1), (String) lItem.get(2));
                 if (lItem.size() == 4) {
                     for (int i = 0; i < lTotalObjectList.size(); i++) {
                         TotalObject lParent = (TotalObject) lTotalObjectList.get(i);
@@ -103,7 +103,7 @@ public class DataFileBuilder {
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
                 }
-                lCat = new CatObject((String) lItem.get(0));
+                lCat = new CatObject((String) lItem.getFirst());
                 lCat.setStyle((String) lItem.get(1));
                 lCat.setNewRow(lItem.get(2).equals("newrow"));
                 if (lItem.size() == 4) {
@@ -127,17 +127,17 @@ public class DataFileBuilder {
                 ArrayList lItem = RandallUtil.split(lLine, ",", false);
                 if (lItem.size() == 1) {
                     // Ok, found a item definition
-                    ItemObject lItemObject = new ItemObject((String) lItem.get(0), "", lSubCat);
+                    ItemObject lItemObject = new ItemObject((String) lItem.getFirst(), "", lSubCat);
                     lList.add(lItemObject);
                     lSubCat.addItemObject(lItemObject);
                     pDatFile.add(lItemObject);
                 } else if (lItem.size() == 2 || lItem.size() == 3) {
-                    if ("Fire Skills".equals(lItem.get(0))) {
+                    if ("Fire Skills".equals(lItem.getFirst())) {
                         System.err.println("Test");
                     }
                     // Ok, found a item definition
-                    ItemObject lItemObject = new ItemObject((String) lItem.get(0), (String) lItem.get(1), lSubCat);
-                    if (iFlavie.checkForRuneWord((String) lItem.get(0), (String) lItem.get(1))) {
+                    ItemObject lItemObject = new ItemObject((String) lItem.getFirst(), (String) lItem.get(1), lSubCat);
+                    if (iFlavie.checkForRuneWord((String) lItem.getFirst(), (String) lItem.get(1))) {
                         lItemObject.setRuneWord(true);
                     } else {
                         checkForTC(lItemObject, (String) lItem.get(1));
@@ -183,7 +183,7 @@ public class DataFileBuilder {
     public void checkForTC(ItemObject pItemObject, String lLine) {
         ArrayList lList = RandallUtil.split(lLine, "(", false);
         if (lList.size() == 2 && ((String) lList.get(1)).toUpperCase().startsWith("TC")) {
-            pItemObject.setItemType(((String) lList.get(0)).trim());
+            pItemObject.setItemType(((String) lList.getFirst()).trim());
         } else {
             pItemObject.setItemType(lLine);
         }

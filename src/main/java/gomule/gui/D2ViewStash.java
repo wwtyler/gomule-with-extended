@@ -50,6 +50,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -5346518067556935604L;
     public static final Color BLACK = Color.BLACK;
     public static final Color WHITE = Color.white;
@@ -337,7 +338,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
     public static String getStashName(String pFileName) {
         ArrayList lList = RandallUtil.split(pFileName, File.separator, true);
-        return (String) lList.get(lList.size() - 1);
+        return (String) lList.getLast();
     }
 
     public void activateView() {
@@ -437,7 +438,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     iStash.ignoreItemListEvents();
                     ArrayList lItemList = D2ViewClipboard.removeAllItems();
                     while (lItemList.size() > 0) {
-                        lastItemAdded = (D2Item) lItemList.remove(0);
+                        lastItemAdded = (D2Item) lItemList.removeFirst();
                         iStash.addItem(lastItemAdded);
                     }
                 } finally {
@@ -944,7 +945,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         public void sortCol(int pHeaderCol) {
             iSortList.remove(HEADER[pHeaderCol]);
-            iSortList.add(0, HEADER[pHeaderCol]);
+            iSortList.addFirst(HEADER[pHeaderCol]);
             sort();
         }
 
@@ -1129,7 +1130,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                             if (iCatAll.isSelected()) {
                                 lAdd2 = true;
                             } else if (iCatArmor.isSelected() && lItem.isTypeArmor()) {
-                                D2RadioButton lAll = (D2RadioButton) iArmorFilterList.get(iArmorFilterList.size() - 1);
+                                D2RadioButton lAll = (D2RadioButton) iArmorFilterList.getLast();
                                 if (lAll.isSelected()) {
                                     lAdd2 = true;
                                 }
@@ -1142,7 +1143,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                                 }
                             } else if (iCatWeapons.isSelected()
                                     && lItem.isTypeWeapon()) {
-                                D2RadioButton lAll = (D2RadioButton) iWeaponFilterList.get(iWeaponFilterList.size() - 1);
+                                D2RadioButton lAll = (D2RadioButton) iWeaponFilterList.getLast();
                                 if (lAll.isSelected()) {
                                     lAdd2 = true;
                                 }

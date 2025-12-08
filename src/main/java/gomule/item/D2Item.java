@@ -1500,8 +1500,8 @@ public class D2Item implements Comparable, D2ItemInterface {
     }
 
     public int compareTo(Object pObject) {
-        if (pObject instanceof D2Item) {
-            String lItemName = ((D2Item) pObject).iItemName;
+        if (pObject instanceof D2Item item) {
+            String lItemName = item.iItemName;
             if (iItemName == lItemName) {
                 // also both "null"
                 return 0;

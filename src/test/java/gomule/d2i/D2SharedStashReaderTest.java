@@ -37,14 +37,18 @@ public class D2SharedStashReaderTest {
         StringWriter out = new StringWriter();
         stash.fullDump(new PrintWriter(out));
         assertEquals(
-                "somethingSoftCore.d2i\n" + "\n"
-                        + "\n"
-                        + "Scroll of Town Portal\n"
-                        + "Version: Resurrected\n"
-                        + "\n"
-                        + "Scroll of Identify\n"
-                        + "Version: Resurrected\n"
-                        + "Finished: somethingSoftCore.d2i\n\n",
+                """
+                somethingSoftCore.d2i
+                
+                
+                Scroll of Town Portal
+                Version: Resurrected
+                
+                Scroll of Identify
+                Version: Resurrected
+                Finished: somethingSoftCore.d2i
+                
+                """,
                 out.toString().replaceAll("\r", ""));
     }
 

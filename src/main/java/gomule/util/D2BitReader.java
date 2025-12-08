@@ -75,7 +75,7 @@ public class D2BitReader {
                     if (num == -1)
                         break;
                     for (int i = 0; i < num; i++)
-                        v.add(new Byte(data[i]));
+                        v.add(Byte.valueOf(data[i]));
                 } while (true);
                 filedata = new byte[v.size()];
                 for (int i = 0; i < v.size(); i++)
@@ -126,7 +126,7 @@ public class D2BitReader {
                     }
                 }
                 if (found) {
-                    v.add(new Integer(i));
+                    v.add(Integer.valueOf(i));
                 }
             }
         }

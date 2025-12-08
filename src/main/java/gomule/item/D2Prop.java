@@ -252,7 +252,7 @@ public class D2Prop {
                 }
 
             case (5):
-                return String.format(oString, ((pVals[0] * 100) / 128));
+                return oString.formatted(((pVals[0] * 100) / 128));
 
             case (6):
                 if (dispLoc == 1) {
@@ -402,7 +402,7 @@ public class D2Prop {
                         return "Unknown property";
                     }
                 }
-                D2TxtFileItemProperties o = matchingPropsRecords.get(0);
+                D2TxtFileItemProperties o = matchingPropsRecords.getFirst();
                 String tooltip = o.get("*Tooltip");
                 String value = tooltip.replace("#", String.valueOf(pVals[0]));
                 if (pVals[0] < 0) {

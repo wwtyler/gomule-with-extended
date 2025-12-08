@@ -209,7 +209,7 @@ public class D2Character extends D2ItemListAdapter {
             iReader.skipBits(-32);
             extractMercName(iReader.read(16), hireCol);
             iReader.skipBits(16);
-            cMercInfo.put("xp", new Long(iReader.read(32)));
+            cMercInfo.put("xp", Long.valueOf(iReader.read(32)));
             setMercLevel(hireCol);
         } else {
             iReader.skipBits(64);

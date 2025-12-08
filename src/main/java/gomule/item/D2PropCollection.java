@@ -35,6 +35,7 @@ public class D2PropCollection extends ArrayList {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -6107521404310600035L;
     private boolean tidy;
 
@@ -187,7 +188,7 @@ public class D2PropCollection extends ArrayList {
                     vMin = ((D2Prop) resMap.get(y)).getPVals()[0];
                 }
             }
-            add(new D2Prop(183, new int[]{vMin}, ((D2Prop) resMap.get(0)).getQFlag(), true, 37));
+            add(new D2Prop(183, new int[]{vMin}, ((D2Prop) resMap.getFirst()).getQFlag(), true, 37));
             threshDelete(resMap, vMin);
         }
 
@@ -201,7 +202,7 @@ public class D2PropCollection extends ArrayList {
                     vMin = ((D2Prop) statMap.get(y)).getPVals()[0];
                 }
             }
-            add(new D2Prop(184, new int[]{vMin}, ((D2Prop) statMap.get(0)).getQFlag(), true, 38));
+            add(new D2Prop(184, new int[]{vMin}, ((D2Prop) statMap.getFirst()).getQFlag(), true, 38));
             threshDelete(statMap, vMin);
 
         }

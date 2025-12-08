@@ -41,6 +41,7 @@ public class D2ProjectSettingsDialog extends JDialog {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -6365602357286303263L;
     private D2FileManager iFileManager;
     private D2Project iProject;

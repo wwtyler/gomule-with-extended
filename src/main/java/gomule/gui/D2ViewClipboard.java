@@ -44,6 +44,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 501590478287942908L;
 
     //	private static final int   		GRID_SIZE = 28;

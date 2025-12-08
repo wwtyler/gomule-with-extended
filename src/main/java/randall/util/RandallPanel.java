@@ -26,15 +26,16 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class RandallPanel extends JPanel {
-    public static final Integer NONE = new Integer(100);
-    public static final Integer HORIZONTAL = new Integer(101);
-    public static final Integer VERTICAL = new Integer(102);
-    public static final Integer BOTH = new Integer(103);
+    public static final Integer NONE = Integer.valueOf(100);
+    public static final Integer HORIZONTAL = Integer.valueOf(101);
+    public static final Integer VERTICAL = Integer.valueOf(102);
+    public static final Integer BOTH = Integer.valueOf(103);
     public static final int ANCHOR_NORTHWEST = GridBagConstraints.NORTHWEST;
     public static final int ANCHOR_NORTHEAST = GridBagConstraints.NORTHEAST;
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -6556940562813366360L;
     private int iMarginXSize = 2;
     private int iMarginYSize = -1;

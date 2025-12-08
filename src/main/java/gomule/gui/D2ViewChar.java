@@ -42,6 +42,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = -7350581523641897831L;
     private static final int BG_WIDTH = 790;
     private static final int BG_HEIGHT = 512;
@@ -937,6 +938,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 2159433491696507246L;
         private Image iBackground;
 
@@ -1348,6 +1350,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 2412158000132602811L;
         private Image iBackground;
 
@@ -1605,6 +1608,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = -4532690271347197756L;
         private Image iBackground;
 
@@ -1830,6 +1834,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 8956659406243697754L;
         private Image iBackground;
         private Image lEmptyBackground;
@@ -2150,6 +2155,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 1154694362190497678L;
         private final int cowKingX = 140;
         private final int cowkingY = 233;
@@ -2266,6 +2272,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = -7583208611559380148L;
         private Image iBackground;
         private int bgNum = 1;
@@ -2482,6 +2489,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         /**
          *
          */
+        @Serial
         private static final long serialVersionUID = 3335835168313769724L;
         private Image iBackground;
 

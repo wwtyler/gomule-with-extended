@@ -18,6 +18,7 @@ public class D2RadioButton extends JRadioButton {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 3895689813117999958L;
     private Object iData;
 
