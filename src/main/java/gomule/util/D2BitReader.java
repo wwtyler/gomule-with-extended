@@ -69,7 +69,7 @@ public class D2BitReader {
                 }
                 FileInputStream in = new FileInputStream(filename);
                 byte[] data = new byte[1024];
-                Vector v = new Vector();
+                Vector<Byte> v = new Vector<Byte>();
                 do {
                     int num = in.read(data);
                     if (num == -1)
@@ -116,7 +116,7 @@ public class D2BitReader {
          * v.add(new Integer(i+offset)); System.out.println(filedata[i+offset]);
          * offset += i+1; data = data.substring(i+1); }while(true);
          */
-        Vector v = new Vector();
+        Vector<Integer> v = new Vector<Integer>();
         for (int i = 0; i < filedata.length; i++) {
             if (filedata[i] == target[0]) {
                 boolean found = true;

@@ -38,6 +38,7 @@ import java.io.Serial;
  * Don't allow the dialog to close without a project ! (or stop the application
  * alltogether)
  */
+@SuppressWarnings("rawtypes")
 public class D2ProjectSettingsDialog extends JDialog {
     /**
      *

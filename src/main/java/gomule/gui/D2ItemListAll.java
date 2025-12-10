@@ -1,7 +1,7 @@
 /*
  * Created on 8-jun-2007
  *
- * TODO To change the template for this generated file go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.gui;
@@ -17,22 +17,22 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2ItemListAll implements D2ItemList {
     private D2FileManager iFileManager;
     private D2Project iProject;
 
-    private ArrayList iList = new ArrayList();
-    private ArrayList iD2ItemListListenerList = new ArrayList();
+    private ArrayList<D2ItemList> iList = new ArrayList<D2ItemList>();
+    private ArrayList<D2ItemListListener> iD2ItemListListenerList = new ArrayList<D2ItemListListener>();
     private boolean iIgnoreItemListEvents = false;
 
     public D2ItemListAll(D2FileManager pFileManager, D2Project pProject) {
         iFileManager = pFileManager;
         iProject = pProject;
 
-        ArrayList lFileNames = new ArrayList();
+        ArrayList<String> lFileNames = new ArrayList<String>();
 
         lFileNames.addAll(iProject.getCharList());
         lFileNames.addAll(iProject.getStashList());
@@ -85,7 +85,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    public ArrayList getAllContainers() {
+    public ArrayList<D2ItemList> getAllContainers() {
         return iList;
     }
 
@@ -131,8 +131,8 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    public ArrayList getItemList() {
-        ArrayList lList = new ArrayList();
+    public ArrayList<D2Item> getItemList() {
+        ArrayList<D2Item> lList = new ArrayList<D2Item>();
 
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {

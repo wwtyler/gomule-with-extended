@@ -62,6 +62,7 @@ import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
  * It contains all internal frames
  * it contains all open files
  */
+@SuppressWarnings({"rawtypes", "unchecked", "unlikely-arg-type"})
 public class D2FileManager extends JFrame {
     /**
      *
@@ -74,8 +75,8 @@ public class D2FileManager extends JFrame {
     private final D2SharedStashReader sharedStashReader;
     private final JSplitPane lSplit;
     private final JSplitPane rSplit;
-    private HashMap iItemLists = new HashMap();
-    private ArrayList iOpenWindows;
+    private HashMap<String, D2ItemList> iItemLists = new HashMap<String, D2ItemList>();
+    private ArrayList<D2ItemContainer> iOpenWindows;
     private JMenuBar iMenuBar;
     private JPanel iContentPane;
     private JDesktopPane iDesktopPane;
@@ -117,7 +118,7 @@ public class D2FileManager extends JFrame {
     private D2FileManager() {
         D2TxtFile.constructTxtFiles("d2111");
         sharedStashReader = new D2SharedStashReader();
-        iOpenWindows = new ArrayList();
+        iOpenWindows = new ArrayList<D2ItemContainer>();
         iContentPane = new JPanel();
         iDesktopPane = new JDesktopPane();
         iDesktopPane.setDragMode(1);
@@ -1738,7 +1739,6 @@ public class D2FileManager extends JFrame {
     }
 
     private static D2ItemListListener TITLE_SETTING_LIST_LISTENER = new D2ItemListListener() {
-        @SuppressWarnings("unchecked")
         @Override
         public void itemListChanged() {
             boolean noModifiedWindows = D2FileManager.getInstance().iOpenWindows.stream()

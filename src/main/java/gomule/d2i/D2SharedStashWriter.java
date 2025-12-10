@@ -44,7 +44,7 @@ public class D2SharedStashWriter {
 
     private byte[] writeStashPane(D2SharedStash.D2SharedStashPane pane, D2BitReader bitReader, int stashHeaderOffset, int itemListStartOffset) {
         bitReader.set_byte_pos(stashHeaderOffset);
-        int itemByteLength = pane.getItems().stream().map(it -> it.get_bytes().length).reduce(4, Integer::sum);
+        int itemByteLength = pane.getItems().stream().map(it -> it.get_bytes().length).reduce(4, (a, b) -> a + b);
         byte[] oldHeaderBytes = bitReader.get_bytes(itemListStartOffset - stashHeaderOffset);
         D2BitReader writer = new D2BitReader(new byte[oldHeaderBytes.length + itemByteLength]);
         writer.setBytes(0, oldHeaderBytes);

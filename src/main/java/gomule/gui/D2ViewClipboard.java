@@ -41,6 +41,7 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2ItemListListener {
     /**
      *
@@ -54,7 +55,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     private D2ItemModel iItemModel;
     //	private RandallPanel      		iContentPane;
     private JTable iTable;
-    private ArrayList iItems;
+    private ArrayList<D2Item> iItems;
 
     private String iFileName;
     private D2Stash iStash;
@@ -159,11 +160,11 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         iMouseItem.iBank.setText(Integer.toString(pProject.getBankValue()));
     }
 
-    public static ArrayList getItemList() {
+    public static ArrayList<D2Item> getItemList() {
         return iMouseItem.iItems;
     }
 
-    public static ArrayList removeAllItems() {
+    public static ArrayList<D2Item> removeAllItems() {
         return iMouseItem.iStash.removeAllItems();
 
     }
@@ -322,14 +323,14 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     }
 
     class D2ItemModel implements TableModel {
-        private ArrayList iTableModelListeners = new ArrayList();
-        private ArrayList iItems;
+        private ArrayList<TableModelListener> iTableModelListeners = new ArrayList<TableModelListener>();
+        private ArrayList<D2Item> iItems;
 
-        public D2ItemModel(ArrayList pItems) {
+        public D2ItemModel(ArrayList<D2Item> pItems) {
             setItems(pItems);
         }
 
-        public void setItems(ArrayList pItems) {
+        public void setItems(ArrayList<D2Item> pItems) {
             iItems = pItems;
         }
 

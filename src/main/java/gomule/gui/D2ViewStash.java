@@ -47,6 +47,7 @@ import static gomule.gui.D2FileManager.displayErrorDialog;
 /**
  * @author Marco
  */
+ @SuppressWarnings({"rawtypes","unchecked"})
 public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2ItemListListener {
     /**
      *
@@ -91,10 +92,10 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     private JRadioButton iCatAll;
 
     private RandallPanel iArmorFilter;
-    private ArrayList iArmorFilterList;
+    private ArrayList<D2RadioButton> iArmorFilterList;
 
     private RandallPanel iWeaponFilter;
-    private ArrayList iWeaponFilterList;
+    private ArrayList<D2RadioButton> iWeaponFilterList;
 
     private RandallPanel iSocketFilter;
     private JRadioButton iCatSocketJewel;
@@ -338,7 +339,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
 
     public static String getStashName(String pFileName) {
-        ArrayList lList = RandallUtil.split(pFileName, File.separator, true);
+        ArrayList<String> lList = RandallUtil.split(pFileName, File.separator, true);
         return (String) lList.getLast();
     }
 
@@ -437,7 +438,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 D2Item lastItemAdded = null;
                 try {
                     iStash.ignoreItemListEvents();
-                    ArrayList lItemList = D2ViewClipboard.removeAllItems();
+                    ArrayList<D2Item> lItemList = D2ViewClipboard.removeAllItems();
                     while (lItemList.size() > 0) {
                         lastItemAdded = (D2Item) lItemList.removeFirst();
                         iStash.addItem(lastItemAdded);
@@ -489,7 +490,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     return;
                 }
 
-                HashMap lItemList = new HashMap();
+                HashMap<String, D2Item> lItemList = new HashMap<String, D2Item>();
 
                 for (int i = 0; i < iTable.getRowCount(); i++) {
                     if (iItemModel.getItem(i).getFingerprint() != null && !iItemModel.getItem(i).getFingerprint().equals("")) {
@@ -694,8 +695,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         ButtonGroup lCatArmorBtnGroup = new ButtonGroup();
         RandallPanel lCategoriesArmor = new RandallPanel(true);
 
-        iArmorFilterList = new ArrayList();
-        ArrayList lArmorFilterList = D2BodyLocations.getArmorFilterList();
+        iArmorFilterList = new ArrayList<D2RadioButton>();
+        ArrayList<D2BodyLocations> lArmorFilterList = D2BodyLocations.getArmorFilterList();
         for (int i = 0; i < lArmorFilterList.size(); i++) {
             D2BodyLocations lArmor = (D2BodyLocations) lArmorFilterList.get(i);
             D2RadioButton lBtn = new D2RadioButton(lArmor);

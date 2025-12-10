@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.Serial;
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 public class D2ViewProject extends JPanel {
     /**
      *
@@ -315,7 +316,7 @@ public class D2ViewProject extends JPanel {
         iChars = new DefaultMutableTreeNode("characters");
         root.add(iChars);
         if (iProject != null) {
-            ArrayList lCharList = iProject.getCharList();
+            ArrayList<String> lCharList = iProject.getCharList();
             for (int i = 0; i < lCharList.size(); i++) {
                 iChars.add(new CharTreeNode((String) lCharList.get(i)));
             }
@@ -324,7 +325,7 @@ public class D2ViewProject extends JPanel {
         iStashes = new DefaultMutableTreeNode("stashes");
         root.add(iStashes);
         if (iProject != null) {
-            ArrayList lStashList = iProject.getStashList();
+            ArrayList<String> lStashList = iProject.getStashList();
             for (int i = 0; i < lStashList.size(); i++) {
                 iStashes.add(new CharTreeNode((String) lStashList.get(i)));
             }
@@ -333,7 +334,7 @@ public class D2ViewProject extends JPanel {
         iSharedStashes = new DefaultMutableTreeNode("sharedstashes");
         root.add(iSharedStashes);
         if (iProject != null) {
-            ArrayList lSharedStashList = iProject.getSharedStashList();
+            ArrayList<String> lSharedStashList = iProject.getSharedStashList();
             for (int i = 0; i < lSharedStashList.size(); i++) {
                 iSharedStashes.add(new CharTreeNode((String) lSharedStashList.get(i)));
             }

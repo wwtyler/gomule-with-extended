@@ -21,7 +21,7 @@
 package randall.flavie;
 
 import java.util.ArrayList;
-
+@SuppressWarnings({"rawtypes","unchecked"})
 public class ItemObject {
     private String iName;
     private String iInfo;

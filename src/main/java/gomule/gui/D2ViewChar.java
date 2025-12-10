@@ -668,7 +668,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         return iCharacter;
     }
 
-    public void putOnCharacter(int areaCode, ArrayList dropList) {
+    public void putOnCharacter(int areaCode, ArrayList<D2Item> dropList) {
 
         iCharacter.ignoreItemListEvents();
         int dPanel = 0;

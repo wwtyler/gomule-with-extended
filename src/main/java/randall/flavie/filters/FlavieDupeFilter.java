@@ -17,6 +17,7 @@ import java.util.HashMap;
 /**
  * @author mbr
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 public class FlavieDupeFilter implements FlavieItemFilter {
     //	private String			iDupeFile;
     private PrintStream iDupeOut = null;

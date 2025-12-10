@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class DirectD2Files {
@@ -50,7 +50,7 @@ public class DirectD2Files {
         iFlavie = pFlavie;
     }
 
-    public void readDirectD2Files(ArrayList pDataObjects, ArrayList pFileNames) throws Exception {
+    public void readDirectD2Files(ArrayList<ItemObject> pDataObjects, ArrayList<String> pFileNames) throws Exception {
         String errStr = "";
         File lMatchedDir = new File(Flavie.sMatchedDir);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
@@ -93,7 +93,7 @@ public class DirectD2Files {
 //					throw new Exception("File " + lD2FileName + " can not be read");
 //				}
 
-                List lItems = null;
+                List<D2Item> lItems = null;
 
                 if (lD2FileName.endsWith(".d2s")) {
                     try {
@@ -143,7 +143,8 @@ public class DirectD2Files {
         }
     }
 
-    public void matchItem(ArrayList pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
+    @SuppressWarnings("null")
+    public void matchItem(ArrayList<ItemObject> pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
         if (pItem.getName() == null) {
             System.err.println("Item: null");
         }

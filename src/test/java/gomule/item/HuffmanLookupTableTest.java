@@ -6,7 +6,6 @@ import gomule.util.D2BitReader;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class HuffmanLookupTableTest {
 

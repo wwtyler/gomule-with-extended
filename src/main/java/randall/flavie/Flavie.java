@@ -34,19 +34,19 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
+import gomule.item.D2Item;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
+@SuppressWarnings({"rawtypes","unchecked","resource"})
 public class Flavie {
     public static final String sMatchedDir = "." + File.separator;
-    protected HashMap iAllItemsFP = new HashMap();
-    protected HashMap iRuneCount = new HashMap();
+    protected HashMap<String, D2Item> iAllItemsFP = new HashMap<>();
+    protected HashMap<String, Long> iRuneCount = new HashMap<>();
 //    private String iStyleFile;
-    protected ArrayList iFilters = new ArrayList();
+    protected ArrayList iFilters = new ArrayList<>();
     protected int iNotMatched = 0;
     protected int iNotMatchedType = 0;
     protected int iNormalMatched = 0;

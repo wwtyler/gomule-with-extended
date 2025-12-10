@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to Window -
+ *  Window -
  * Preferences - Java - Code Style - Code Templates
  */
 public final class D2TxtFile {
@@ -129,9 +129,9 @@ public final class D2TxtFile {
         return "<none>";
     }
 
-    public static ArrayList propToStat(String pCode, String pMin, String pMax, String pParam, int qFlag) {
+    public static ArrayList<D2Prop> propToStat(String pCode, String pMin, String pMax, String pParam, int qFlag) {
 
-        ArrayList outArr = new ArrayList();
+        ArrayList<D2Prop> outArr = new ArrayList<D2Prop>();
         for (int x = 1; x < 8; x++) {
 
             String propsStatCode = D2TxtFile.PROPS.searchColumns("code", pCode).get("stat" + x);
@@ -216,7 +216,7 @@ public final class D2TxtFile {
 
     private void readInData() {
         try {
-            ArrayList strArr = new ArrayList();
+            ArrayList<String[] > strArr = new ArrayList<String[] >();
             FileReader lFileIn = new FileReader(sMod + File.separator + iFileName + ".txt");
             BufferedReader lIn = new BufferedReader(lFileIn);
             String lFirstLine = lIn.readLine();
@@ -294,8 +294,8 @@ public final class D2TxtFile {
         return null;
     }
 
-    public ArrayList searchColumnsMultipleHits(String pCol, String pText) {
-        ArrayList hits = new ArrayList();
+    public ArrayList<D2TxtFileItemProperties> searchColumnsMultipleHits(String pCol, String pText) {
+        ArrayList<D2TxtFileItemProperties> hits = new ArrayList<>();
         int lColNr = getCol(pCol);
 
         if (lColNr != -1) {
@@ -311,10 +311,10 @@ public final class D2TxtFile {
         return hits;
     }
 
-    public D2TxtFileItemProperties searchRuneWord(ArrayList pList) {
+    public D2TxtFileItemProperties searchRuneWord(ArrayList<String> pList) {
         int lRuneNr[] = new int[]{getCol("Rune1"), getCol("Rune2"), getCol("Rune3"), getCol("Rune4"), getCol("Rune5"), getCol("Rune6")};
         for (int i = 0; i < iData.length; i++) {
-            ArrayList lRW = new ArrayList();
+            ArrayList<String> lRW = new ArrayList<String>();
             for (int j = 0; j < lRuneNr.length; j++) {
                 String lFile = iData[i][lRuneNr[j]];
 

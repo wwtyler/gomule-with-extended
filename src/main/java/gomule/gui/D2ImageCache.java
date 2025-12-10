@@ -34,13 +34,13 @@ import java.util.HashMap;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2ImageCache {
-    private static HashMap sImages = new HashMap();
-    private static HashMap sDC6Images = new HashMap();
-    private static HashMap sIcon = new HashMap();
+    private static HashMap<String, Image> sImages = new HashMap<>();
+    private static HashMap<String, Image> sDC6Images = new HashMap<>();
+    private static HashMap<String, Icon> sIcon = new HashMap<>();
 
     public static Image getImage(String pImageName) {
         return getImageAbsolute("resources" + File.separator + pImageName);

@@ -21,7 +21,7 @@
 package randall.flavie;
 
 import java.util.ArrayList;
-
+@SuppressWarnings({"rawtypes","unchecked"})
 public class SubCatObject implements Comparable {
     private String iSubCat;
     private ArrayList iItemObjects = new ArrayList();

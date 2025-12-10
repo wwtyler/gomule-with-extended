@@ -23,6 +23,6 @@ public interface GoMuleDesktop {
 
     public void showView(GoMuleView pView);
 
-    public Iterator getIteratorView();
+    public Iterator<GoMuleView> getIteratorView();
 //	public Iterator		getIteratorContainer();
 }

@@ -28,6 +28,7 @@ package randall.util;
 import java.io.File;
 import java.util.ArrayList;
 
+@SuppressWarnings("rawtypes")
 public class RandallFileFilter
         extends javax.swing.filechooser.FileFilter {
     private ArrayList iExtensions;
@@ -50,6 +51,7 @@ public class RandallFileFilter
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     public void addExtension(String pExtension) {
         iExtensions.add(pExtension);
     }

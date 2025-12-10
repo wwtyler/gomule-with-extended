@@ -105,7 +105,7 @@ public class GoMule {
             String lLine = lIn.readLine();
             lIn.close();
 
-            ArrayList lString = RandallUtil.split(lLine, " ", false);
+            ArrayList<String> lString = RandallUtil.split(lLine, " ", false);
 
             // Convert here
             String lReturn[] = new String[lString.size()];

@@ -52,7 +52,7 @@ public class D2SharedStash extends D2ItemListAdapter {
 
     @Override
     public int getNrItems() {
-        return panes.stream().map(it -> it.items.size()).reduce(0, Integer::sum);
+        return panes.stream().mapToInt(it -> it.items.size()).sum();
     }
 
     @Override

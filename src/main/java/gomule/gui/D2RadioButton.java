@@ -1,7 +1,7 @@
 /*
  * Created on 11-mei-2007
  *
- * TODO To change the template for this generated file go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.gui;
@@ -12,7 +12,7 @@ import java.io.Serial;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2RadioButton extends JRadioButton {

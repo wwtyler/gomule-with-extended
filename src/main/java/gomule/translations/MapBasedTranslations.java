@@ -16,6 +16,7 @@ public class MapBasedTranslations implements Translations {
         this.translationData = translationData;
     }
 
+    @SuppressWarnings("null")
     public static Translations loadTranslations(InputStream inputStream) {
         try {
             ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();

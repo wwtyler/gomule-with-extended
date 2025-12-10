@@ -38,7 +38,7 @@ import java.util.Properties;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to Window -
+ *  Window -
  * Preferences - Java - Code Style - Code Templates
  */
 public class D2Project {
@@ -57,9 +57,9 @@ public class D2Project {
     private JFileChooser iCharDialog;
     private JFileChooser iStashDialog;
     private JFileChooser iSharedStashDialog;
-    private ArrayList iCharList = new ArrayList();
-    private ArrayList iStashList = new ArrayList();
-    private ArrayList iSharedStashList = new ArrayList();
+    private ArrayList<String> iCharList = new ArrayList<String>();
+    private ArrayList<String> iStashList = new ArrayList<String>();
+    private ArrayList<String> iSharedStashList = new ArrayList<String>();
     private int iBank;
     private int iType = TYPE_BOTH;
     private int iBackup = BACKUP_WEEK;
@@ -310,15 +310,15 @@ public class D2Project {
         this.allowDelete = allowDelete;
     }
 
-    public ArrayList getCharList() {
+    public ArrayList<String> getCharList() {
         return iCharList;
     }
 
-    public ArrayList getStashList() {
+    public ArrayList<String> getStashList() {
         return iStashList;
     }
 
-    public ArrayList getSharedStashList() {
+    public ArrayList<String> getSharedStashList() {
         return iSharedStashList;
     }
 

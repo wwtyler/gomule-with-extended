@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class DataFileBuilder {
@@ -46,12 +46,13 @@ public class DataFileBuilder {
         return "Unknown";
     }
 
-    public ArrayList readDataFileObjects(String pFileName, ArrayList pDatFile) throws Exception {
+    @SuppressWarnings("null")
+    public ArrayList<Object> readDataFileObjects(String pFileName, ArrayList<Object> pDatFile) throws Exception {
         if (pFileName == null || "".equals(pFileName.trim())) {
             throw new Exception("No data file set, please set the data file in the Flavie tab");
         }
 
-        ArrayList lList = new ArrayList();
+        ArrayList<Object> lList = new ArrayList<Object>();
 
         File lData = new File(pFileName);
 
@@ -63,12 +64,13 @@ public class DataFileBuilder {
             throw new Exception("Data File " + pFileName + " can not be read");
         }
 
+        @SuppressWarnings("resource")
         BufferedReader lIn = new BufferedReader(new FileReader(lData));
 
         CatObject lCat = null;
         SubCatObject lSubCat = null;
 
-        ArrayList lTotalObjectList = new ArrayList();
+        ArrayList<TotalObject> lTotalObjectList = new ArrayList<TotalObject>();
 
         String lLine = lIn.readLine();
         while (lLine != null) {
@@ -77,7 +79,7 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
                 lWork = lWork.substring(3);
 
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                ArrayList<String> lItem = RandallUtil.split(lWork, "[", false);
 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
@@ -98,7 +100,7 @@ public class DataFileBuilder {
                 String lWork = RandallUtil.merge(RandallUtil.split(lLine, "]", true), "");
 
                 lWork = lWork.substring(2);
-                ArrayList lItem = RandallUtil.split(lWork, "[", false);
+                ArrayList<String> lItem = RandallUtil.split(lWork, "[", false);
 
                 if (lItem.size() != 3 && lItem.size() != 4) {
                     throw new Exception("Incorrect line format " + lLine);
@@ -123,8 +125,7 @@ public class DataFileBuilder {
                 lCat.addSubCat(lSubCat);
                 pDatFile.add(lSubCat);
             } else {
-                // TODO: Start item
-                ArrayList lItem = RandallUtil.split(lLine, ",", false);
+                ArrayList<String> lItem = RandallUtil.split(lLine, ",", false);
                 if (lItem.size() == 1) {
                     // Ok, found a item definition
                     ItemObject lItemObject = new ItemObject((String) lItem.getFirst(), "", lSubCat);
@@ -158,7 +159,7 @@ public class DataFileBuilder {
                                 lDetectStart < lDetectEnd
                         ) {
                             String lDisplay = lExtra.substring(lDisplayStart + 1, lDisplayEnd);
-                            ArrayList lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
+                            ArrayList<String> lDetect = RandallUtil.split(lExtra.substring(lDetectStart + 1, lDetectEnd), "/", true);
 
                             lItemObject.setExtraDisplay(lDisplay);
                             lItemObject.setExtraDetect(lDetect);
@@ -176,12 +177,11 @@ public class DataFileBuilder {
 //		{
 //			System.err.println("Item " + i + ": " + lList.get(i));
 //		}
-
         return lList;
     }
 
     public void checkForTC(ItemObject pItemObject, String lLine) {
-        ArrayList lList = RandallUtil.split(lLine, "(", false);
+        ArrayList<String> lList = RandallUtil.split(lLine, "(", false);
         if (lList.size() == 2 && ((String) lList.get(1)).toUpperCase().startsWith("TC")) {
             pItemObject.setItemType(((String) lList.getFirst()).trim());
         } else {

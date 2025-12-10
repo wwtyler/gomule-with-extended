@@ -487,7 +487,7 @@ public class D2ItemTest {
         runItemDumpComparison(expected, d2Item);
         assertEquals(10, d2Item.getItemLength());
     }
-
+    @SuppressWarnings("null")
     private byte[] decode(String s) {
         return BaseEncoding.base16().decode(s.replaceAll(" ", ""));
     }

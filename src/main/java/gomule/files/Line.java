@@ -29,9 +29,10 @@ public class Line {
         return Arrays.stream(fieldNames)
                 .map(header::get)
                 .filter(Objects::nonNull)
-                .map(this::get)
+                .map(index -> get(index))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Failed to find " + Arrays.toString(fieldNames) + " in header " + header));
     }
+     
 }

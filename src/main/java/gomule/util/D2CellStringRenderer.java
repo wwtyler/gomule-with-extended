@@ -1,7 +1,7 @@
 /*
  * Created on 5-mrt-2007
  *
- * TODO To change the template for this generated file go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.util;
@@ -14,7 +14,7 @@ import java.io.Serial;
 /**
  * @author Marco & Silospen
  * <p>
- * TODO To change the template for this generated type comment go to Window -
+ *  Window -
  * Preferences - Java - Code Style - Code Templates
  */
 public class D2CellStringRenderer extends DefaultTableCellRenderer {

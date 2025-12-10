@@ -22,7 +22,7 @@ package randall.util;
 
 import java.io.File;
 import java.util.ArrayList;
-
+@SuppressWarnings("null")
 public class RandallUtil {
 //	private static final String ICON_PATH = "/randall/images/";
 //	private static HashMap iIcons = new HashMap();
@@ -70,7 +70,7 @@ public class RandallUtil {
 //	    return icon;
 //	}
 
-    public static String merge(ArrayList pArrayList, String pJoin) {
+    public static String merge(ArrayList<String> pArrayList, String pJoin) {
         String lReturn = "";
         if (pArrayList.size() > 0) {
             lReturn += (String) pArrayList.getFirst();
@@ -95,13 +95,14 @@ public class RandallUtil {
 //	    return lCount;
 //	}
 
-    public static ArrayList split(String pString, String pSeparator, boolean pIgnoreCase) {
-        ArrayList lSplit = new ArrayList();
+    public static ArrayList<String> split(String pString, String pSeparator, boolean pIgnoreCase) {
+        ArrayList<String> lSplit = new ArrayList<String>();
         int lIndex = 0;
         int lSeparator;
         String lSubString;
 
         // For (faster) uppercase comparing
+           
         String pCompStr;
         String pCompSep;
         if (pIgnoreCase) {

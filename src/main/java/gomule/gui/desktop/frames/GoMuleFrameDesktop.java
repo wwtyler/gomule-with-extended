@@ -86,8 +86,8 @@ public class GoMuleFrameDesktop implements GoMuleDesktop {
         }
     }
 
-    public Iterator getIteratorView() {
-        ArrayList lList = new ArrayList();
+    public Iterator<GoMuleView> getIteratorView() {
+        ArrayList<GoMuleView> lList = new ArrayList<>();
 
         for (int i = 0; i < iDesktop.getComponentCount(); i++) {
             GoMuleInternalFrame lFrame = (GoMuleInternalFrame) iDesktop.getComponent(i);
@@ -106,12 +106,12 @@ public class GoMuleFrameDesktop implements GoMuleDesktop {
 
     class GoMuleInternalFrame extends JInternalFrame implements GoMuleViewDisplayHandler {
         private final GoMuleView iView;
-        private final ArrayList iListenerList;
+        private final ArrayList<GoMuleDesktopListener> iListenerList;
 
         public GoMuleInternalFrame(GoMuleView pView) {
             super(pView.getItemContainer().getFileName(), (pView instanceof GoMuleViewStash), true, false, true);
             iView = pView;
-            iListenerList = new ArrayList();
+            iListenerList = new ArrayList<GoMuleDesktopListener>();
 
             iView.setDisplayHandler(this); // pass on this reference to the view
 //			setTitle( "Internal Frame" );

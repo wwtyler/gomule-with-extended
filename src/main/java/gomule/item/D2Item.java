@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 //to be written only exist to facillitate
 //moving items. writing other item fields
 //is not supported by this class
-public class D2Item implements Comparable, D2ItemInterface {
+public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
     protected String iItemName;
     protected String iBaseItemName;
@@ -382,8 +382,8 @@ public class D2Item implements Comparable, D2ItemInterface {
             readPropertiesPots(pFile);
         }
 
+        @SuppressWarnings("unused")
         int lLastItem = pFile.get_byte_pos();
-
 
         if (iSocketNrFilled > 0) {
             iSocketedItems = new ArrayList<>();
@@ -413,7 +413,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         }
 
         if (iRuneWord) {
-            ArrayList lList = new ArrayList();
+            ArrayList<String> lList = new ArrayList<String>();
             for (int i = 0; i < iSocketedItems.size(); i++) {
                 lList.add(iSocketedItems.get(i).getRuneCode());
             }
@@ -1499,7 +1499,7 @@ public class D2Item implements Comparable, D2ItemInterface {
         return false;
     }
 
-    public int compareTo(Object pObject) {
+    public int compareTo(D2Item pObject) {
         if (pObject instanceof D2Item item) {
             String lItemName = item.iItemName;
             if (iItemName == lItemName) {

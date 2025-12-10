@@ -26,10 +26,11 @@ public class ApplicationRunningChecker implements Runnable {
     public void run() {
         try {
             Process proc = runtime.exec(new String[]{"cmd", "/c", "tasklist"});
-            boolean isApplicationRunning = new BufferedReader(new InputStreamReader(proc.getInputStream(), Charsets.UTF_8))
-                    .lines()
-                    .anyMatch(s -> s.startsWith(applicationName));
-            if (isApplicationRunning) action.run();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream(), Charsets.UTF_8))) {
+                boolean isApplicationRunning = reader.lines()
+                        .anyMatch(s -> s.startsWith(applicationName));
+                if (isApplicationRunning) action.run();
+            }
         } catch (IOException e) {
             System.err.println("ApplicationRunningChecker failed to run");
         }

@@ -133,6 +133,7 @@ public class D2Prop {
 
     }
 
+    @SuppressWarnings("null")
     public String generateDisplay(int qFlag, int cLvl) {
 
         if (this.qFlag != qFlag) {
@@ -711,7 +712,7 @@ public class D2Prop {
         }
     }
 
-    public void addCharMods(int[] outStats, ArrayList plSkill, int cLvl, int op, int qFlagMarker) {
+    public void addCharMods(int[] outStats, ArrayList<D2Prop> plSkill, int cLvl, int op, int qFlagMarker) {
 
         //If it's 0 we only want standard properties (non set)
         if (qFlagMarker == 0) {

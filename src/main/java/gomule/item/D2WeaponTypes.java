@@ -1,7 +1,7 @@
 /*
  * Created on 14-mei-2007
  *
- * TODO To change the template for this generated file go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.item;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2WeaponTypes {
@@ -19,7 +19,7 @@ public class D2WeaponTypes {
     private String iType2;
     private String iDisplay;
 
-    public static final ArrayList sListAll = new ArrayList();
+    public static final ArrayList<D2WeaponTypes> sListAll = new ArrayList<D2WeaponTypes>();
 
     public static final D2WeaponTypes WEAP_SWOR = new D2WeaponTypes("swor", "Sword");
     public static final D2WeaponTypes WEAP_SCEP = new D2WeaponTypes("scep", "Scepter");
@@ -67,7 +67,7 @@ public class D2WeaponTypes {
     public static final D2WeaponTypes WEAP_ALL = new D2WeaponTypes("all", "All");
 
     private static void addNewLine() {
-        sListAll.add(new Object());
+        sListAll.add(new D2WeaponTypes("type", "display"));
     }
 
     private D2WeaponTypes(String pType, String pDisplay) {
@@ -97,7 +97,7 @@ public class D2WeaponTypes {
         return iDisplay;
     }
 
-    public static ArrayList getWeaponTypeList() {
+    public static ArrayList<D2WeaponTypes> getWeaponTypeList() {
         return sListAll;
     }
 

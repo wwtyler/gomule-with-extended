@@ -33,12 +33,12 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2Stash extends D2ItemListAdapter {
     //    private String		iFileName;
-    private ArrayList iItems;
+    private ArrayList<D2Item> iItems;
 
     private D2BitReader iBR;
     private boolean iHC;
@@ -56,7 +56,7 @@ public class D2Stash extends D2ItemListAdapter {
         if (iFileName == null || !iFileName.toLowerCase().endsWith(".d2x")) {
             throw new Exception("Incorrect Stash file name");
         }
-        iItems = new ArrayList();
+        iItems = new ArrayList<D2Item>();
 
         lFile = new File(iFileName);
 
@@ -97,7 +97,7 @@ public class D2Stash extends D2ItemListAdapter {
         return iSC;
     }
 
-    public ArrayList getItemList() {
+    public ArrayList<D2Item> getItemList() {
         return iItems;
     }
 
@@ -118,8 +118,8 @@ public class D2Stash extends D2ItemListAdapter {
         setModified(true);
     }
 
-    public ArrayList removeAllItems() {
-        ArrayList lReturn = new ArrayList();
+    public ArrayList<D2Item> removeAllItems() {
+        ArrayList<D2Item> lReturn = new ArrayList<D2Item>();
         lReturn.addAll(iItems);
 
         iItems.clear();

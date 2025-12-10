@@ -32,7 +32,9 @@ public class FileManagerProperties {
             properties.load(fileInputStream);
             return properties;
         } finally {
-            Closeables.closeQuietly(fileInputStream);
+            if (fileInputStream != null) {
+                Closeables.closeQuietly(fileInputStream);
+            }
         }
     }
 

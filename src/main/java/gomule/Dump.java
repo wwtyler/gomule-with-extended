@@ -79,6 +79,7 @@ public class Dump {
                 }
                 System.out.println();
             }
+            in.close();
         } catch (Exception ex) {
             System.out.println("I/O error");
         }

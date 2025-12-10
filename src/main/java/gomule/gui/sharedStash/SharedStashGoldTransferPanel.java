@@ -31,6 +31,7 @@ class SharedStashGoldTransferPanel extends JPanel {
         add(transferPanel);
     }
 
+    @SuppressWarnings("null")
     private void transferGoldOut(int goldAmount) {
         transferGold(
                 goldAmount,
@@ -42,6 +43,7 @@ class SharedStashGoldTransferPanel extends JPanel {
         );
     }
 
+    @SuppressWarnings("null")
     private void transferGoldIn(int goldAmount) {
         transferGold(
                 goldAmount,

@@ -1,7 +1,7 @@
 /*
  * Created on 11-mei-2007
  *
- * TODO To change the template for this generated file go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.item;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2BodyLocations {
-    public static final ArrayList sListAll = new ArrayList();
+    public static final ArrayList<D2BodyLocations> sListAll = new ArrayList<D2BodyLocations>();
     public static final D2BodyLocations BODY_HEAD = new D2BodyLocations("head", "Head", sListAll);
     public static final D2BodyLocations BODY_TORS = new D2BodyLocations("tors", "Body", sListAll);
     public static final D2BodyLocations BODY_GLOV = new D2BodyLocations("glov", "Gloves", sListAll);
@@ -29,7 +29,7 @@ public class D2BodyLocations {
     private String iLocation;
     private String iDisplay;
 
-    private D2BodyLocations(String pLocation, String pDisplay, ArrayList pListAll) {
+    private D2BodyLocations(String pLocation, String pDisplay, ArrayList<D2BodyLocations> pListAll) {
         iLocation = pLocation;
         iDisplay = pDisplay;
         if (pListAll != null) {
@@ -37,7 +37,7 @@ public class D2BodyLocations {
         }
     }
 
-    public static ArrayList getArmorFilterList() {
+    public static ArrayList<D2BodyLocations> getArmorFilterList() {
         return sListAll;
     }
 

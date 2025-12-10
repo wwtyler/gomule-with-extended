@@ -25,9 +25,9 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 public class TotalObject {
     private String iDisplay;
     private String iShort;

@@ -21,8 +21,8 @@ public class FileReaderUtils {
 
     @SuppressWarnings("UnstableApiUsage")
     public static <T> List<T> readTsv(InputStream inputStream, LineParser<T> lineParser) {
-        try {
-            Stream<String> lines = new BufferedReader(new InputStreamReader(inputStream, UTF_8)).lines();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, UTF_8))) {
+            Stream<String> lines = reader.lines();
             Iterator<String> iterator = lines.iterator();
             Map<String, Integer> header = parseHeader(iterator.next());
             return Streams.stream(iterator)
@@ -30,8 +30,12 @@ public class FileReaderUtils {
                     .map(it -> lineParser.parseLine(new Line(asList(it), header)))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read TSV", e);
         } finally {
-            Closeables.closeQuietly(inputStream);
+            if (inputStream != null) {
+                Closeables.closeQuietly(inputStream);
+            }
         }
     }
 

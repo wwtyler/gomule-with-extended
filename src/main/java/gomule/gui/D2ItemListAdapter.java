@@ -1,7 +1,6 @@
 /*
  * Created on 6-jun-2007
  *
- * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package gomule.gui;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 /**
  * @author Marco
  * <p>
- * TODO To change the template for this generated type comment go to
+ * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public abstract class D2ItemListAdapter implements D2ItemList {
@@ -22,7 +21,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
 
     private long iTimestamp;
 
-    private ArrayList iListeners = new ArrayList();
+    private ArrayList<D2ItemListListener> iListeners = new ArrayList<D2ItemListListener>();
     private boolean iModified;
 
     private boolean iIgnoreItemListEvents = false;
@@ -52,8 +51,9 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         return iListeners;
     }
 
+    @SuppressWarnings("unchecked")
     public void putItemListInfo(Object pItemListInfo) {
-        iListeners = (ArrayList) pItemListInfo;
+        iListeners = (ArrayList<D2ItemListListener>) pItemListInfo;
     }
 
     public boolean isModified() {

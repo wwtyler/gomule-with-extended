@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class D2PropCollection extends ArrayList {
+public class D2PropCollection extends ArrayList<D2Prop> {
 
 
     /**
@@ -161,13 +161,13 @@ public class D2PropCollection extends ArrayList {
         //Light 41
         //Cold 43
         //Poison 45
-        ArrayList resMap = new ArrayList();
+        ArrayList<D2Prop> resMap = new ArrayList<D2Prop>();
 
         //Str 0
         //Ener 1
         //Dex 2
         //Vit 3
-        ArrayList statMap = new ArrayList();
+        ArrayList<D2Prop> statMap = new ArrayList<D2Prop>();
 
         for (int x = 0; x < size(); x++) {
 
@@ -212,7 +212,7 @@ public class D2PropCollection extends ArrayList {
     }
 
 
-    private void threshDelete(ArrayList valMap, int vMin) {
+    private void threshDelete(ArrayList<D2Prop> valMap, int vMin) {
 
         for (int x = 0; x < valMap.size(); x++) {
             if (((D2Prop) valMap.get(x)).getPVals()[0] == vMin) {
@@ -308,9 +308,9 @@ public class D2PropCollection extends ArrayList {
         }
     }
 
-    private ArrayList getPartialList(int qFlag) {
+    private ArrayList<D2Prop> getPartialList(int qFlag) {
 
-        ArrayList partialList = new ArrayList();
+        ArrayList<D2Prop> partialList = new ArrayList<D2Prop>();
 //		NEED TO ADD AS A NEW WITH STANDARD Q FLAG
         for (int x = 0; x < size(); x++) {
             if (((D2Prop) get(x)).getQFlag() == qFlag) {
@@ -323,7 +323,7 @@ public class D2PropCollection extends ArrayList {
 
     }
 
-    private ArrayList getFullList() {
+    private ArrayList<D2Prop> getFullList() {
         return this;
     }
 
@@ -392,7 +392,7 @@ public class D2PropCollection extends ArrayList {
 
     }
 
-    public void calcStats(int[] outStats, ArrayList plSkill, int cLvl, int op, int qFlagM) {
+    public void calcStats(int[] outStats, ArrayList<D2Prop> plSkill, int cLvl, int op, int qFlagM) {
 
         for (int x = 0; x < size(); x++) {
 
@@ -403,8 +403,8 @@ public class D2PropCollection extends ArrayList {
 
     public void sort() {
 
-        Collections.sort(this, new Comparator() {
-            public int compare(Object pObj1, Object pObj2) {
+        Collections.sort(this, new Comparator<D2Prop>() {
+            public int compare(D2Prop pObj1, D2Prop pObj2) {
                 D2Prop p1 = (D2Prop) pObj1;
                 D2Prop p2 = (D2Prop) pObj2;
                 if (p2.getDescPriority() == p1.getDescPriority()) {
