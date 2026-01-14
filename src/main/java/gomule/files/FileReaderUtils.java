@@ -1,11 +1,10 @@
 package gomule.files;
 
-import com.google.common.collect.Streams;
-import com.google.common.io.Closeables;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +13,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Arrays.asList;
+import com.google.common.collect.Streams;
+import com.google.common.io.Closeables;
 
 public class FileReaderUtils {
 
-    @SuppressWarnings("UnstableApiUsage")
     public static <T> List<T> readTsv(InputStream inputStream, LineParser<T> lineParser) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, UTF_8))) {
             Stream<String> lines = reader.lines();

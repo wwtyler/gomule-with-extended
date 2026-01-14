@@ -21,17 +21,37 @@
 
 package gomule.gui;
 
-import gomule.util.D2Project;
-
-import javax.swing.*;
-import javax.swing.tree.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.Serial;
 import java.util.ArrayList;
 
-@SuppressWarnings("deprecation")
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import gomule.util.D2Project;
+
+@SuppressWarnings("override")
 public class D2ViewProject extends JPanel {
     /**
      *
@@ -95,12 +115,15 @@ public class D2ViewProject extends JPanel {
             private long iLastClickCount = 0;
             private TreePath iLastTreePath = null;
 
+            @Override
             public void mousePressed(MouseEvent e) {
             }
 
+            @Override
             public void mouseClicked(MouseEvent e) {
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 iFileManager.workCursor();
                 try {
@@ -163,35 +186,41 @@ public class D2ViewProject extends JPanel {
                         }
                     }
                 } else if (e.getModifiers() == KeyEvent.ALT_MASK) {
-                    if (e.getKeyCode() == KeyEvent.VK_V || e.getKeyCode() == KeyEvent.VK_O || e.getKeyCode() == KeyEvent.VK_M) {
-                        int lSelected[] = iTree.getSelectionRows();
-                        for (int i = 0; i < lSelected.length; i++) {
-                            TreePath lPath = iTree.getPathForRow(lSelected[i]);
-                            Object lPathObjects[] = lPath.getPath();
-                            Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode node) {
-                                node.view();
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_V, KeyEvent.VK_O, KeyEvent.VK_M -> {
+                            int lSelected[] = iTree.getSelectionRows();
+                            for (int i = 0; i < lSelected.length; i++) {
+                                TreePath lPath = iTree.getPathForRow(lSelected[i]);
+                                Object lPathObjects[] = lPath.getPath();
+                                Object lLast = lPathObjects[lPathObjects.length - 1];
+                                if (lLast instanceof CharTreeNode node) {
+                                    node.view();
+                                }
                             }
                         }
-                    } else if (e.getKeyCode() == KeyEvent.VK_C) {
-                        int lSelected[] = iTree.getSelectionRows();
-                        for (int i = 0; i < lSelected.length; i++) {
-                            TreePath lPath = iTree.getPathForRow(lSelected[i]);
-                            Object lPathObjects[] = lPath.getPath();
-                            Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode node) {
-                                node.close();
+                        case KeyEvent.VK_C -> {
+                            int lSelected[] = iTree.getSelectionRows();
+                            for (int i = 0; i < lSelected.length; i++) {
+                                TreePath lPath = iTree.getPathForRow(lSelected[i]);
+                                Object lPathObjects[] = lPath.getPath();
+                                Object lLast = lPathObjects[lPathObjects.length - 1];
+                                if (lLast instanceof CharTreeNode node) {
+                                    node.close();
+                                }
                             }
                         }
-                    } else if (e.getKeyCode() == KeyEvent.VK_F) {
-                        int lSelected[] = iTree.getSelectionRows();
-                        for (int i = 0; i < lSelected.length; i++) {
-                            TreePath lPath = iTree.getPathForRow(lSelected[i]);
-                            Object lPathObjects[] = lPath.getPath();
-                            Object lLast = lPathObjects[lPathObjects.length - 1];
-                            if (lLast instanceof CharTreeNode node) {
-                                node.fullDump();
+                        case KeyEvent.VK_F -> {
+                            int lSelected[] = iTree.getSelectionRows();
+                            for (int i = 0; i < lSelected.length; i++) {
+                                TreePath lPath = iTree.getPathForRow(lSelected[i]);
+                                Object lPathObjects[] = lPath.getPath();
+                                Object lLast = lPathObjects[lPathObjects.length - 1];
+                                if (lLast instanceof CharTreeNode node) {
+                                    node.fullDump();
+                                }
                             }
+                        }
+                        default -> {
                         }
                     }
                 }
@@ -352,7 +381,7 @@ public class D2ViewProject extends JPanel {
          */
         @Serial
         private static final long serialVersionUID = -7061935461861570778L;
-        private String iFileName;
+        private final String iFileName;
         private Color iForeGround = UIManager.getColor("Tree.textForeground");
         private boolean iItemListRead = false;
         private boolean iFileOpened = false;

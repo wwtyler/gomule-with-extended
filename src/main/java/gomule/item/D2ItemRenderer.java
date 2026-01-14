@@ -1,6 +1,6 @@
 package gomule.item;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class D2ItemRenderer {
@@ -76,42 +76,42 @@ public class D2ItemRenderer {
                 int iWhichHand = d2Item.getiWhichHand();
                 short[] i1Dmg = d2Item.getI1Dmg();
                 short[] i2Dmg = d2Item.getI2Dmg();
-                if (iWhichHand == 0) {
-                    if (d2Item.isiThrow()) {
-                        dispStr.append("Throw Damage: ")
-                                .append(i2Dmg[1])
-                                .append(" - ")
-                                .append(i2Dmg[3])
-                                .append("<br>&#10;");
-                        dispStr.append("One Hand Damage: ")
-                                .append(i1Dmg[1])
-                                .append(" - ")
-                                .append(i1Dmg[3])
-                                .append("<br>&#10;");
-                    } else {
-                        dispStr.append("One Hand Damage: ")
-                                .append(i1Dmg[1])
-                                .append(" - ")
-                                .append(i1Dmg[3])
-                                .append("<br>&#10;");
-                        dispStr.append("Two Hand Damage: ")
-                                .append(i2Dmg[1])
-                                .append(" - ")
-                                .append(i2Dmg[3])
-                                .append("<br>&#10;");
+                switch (iWhichHand) {
+                    case 0 -> {
+                        if (d2Item.isiThrow()) {
+                            dispStr.append("Throw Damage: ")
+                                    .append(i2Dmg[1])
+                                    .append(" - ")
+                                    .append(i2Dmg[3])
+                                    .append("<br>&#10;");
+                            dispStr.append("One Hand Damage: ")
+                                    .append(i1Dmg[1])
+                                    .append(" - ")
+                                    .append(i1Dmg[3])
+                                    .append("<br>&#10;");
+                        } else {
+                            dispStr.append("One Hand Damage: ")
+                                    .append(i1Dmg[1])
+                                    .append(" - ")
+                                    .append(i1Dmg[3])
+                                    .append("<br>&#10;");
+                            dispStr.append("Two Hand Damage: ")
+                                    .append(i2Dmg[1])
+                                    .append(" - ")
+                                    .append(i2Dmg[3])
+                                    .append("<br>&#10;");
+                        }
                     }
-                } else if (iWhichHand == 1) {
-                    dispStr.append("One Hand Damage: ")
-                            .append(i1Dmg[1])
-                            .append(" - ")
-                            .append(i1Dmg[3])
-                            .append("<br>&#10;");
-                } else {
-                    dispStr.append("Two Hand Damage: ")
-                            .append(i1Dmg[1])
-                            .append(" - ")
-                            .append(i1Dmg[3])
-                            .append("<br>&#10;");
+                    case 1 -> dispStr.append("One Hand Damage: ")
+                                .append(i1Dmg[1])
+                                .append(" - ")
+                                .append(i1Dmg[3])
+                                .append("<br>&#10;");
+                    default -> dispStr.append("Two Hand Damage: ")
+                                .append(i1Dmg[1])
+                                .append(" - ")
+                                .append(i1Dmg[3])
+                                .append("<br>&#10;");
                 }
             } else if (d2Item.isTypeArmor()) {
                 dispStr.append("Defense: ").append(d2Item.getiDef()).append("<br>&#10;");

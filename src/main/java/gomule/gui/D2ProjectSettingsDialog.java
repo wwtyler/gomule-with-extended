@@ -20,17 +20,26 @@
  ******************************************************************************/
 package gomule.gui;
 
-import gomule.util.D2Project;
-import randall.util.RandallFileFilter;
-import randall.util.RandallPanel;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.Serial;
+
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import gomule.util.D2Project;
+import randall.util.RandallFileFilter;
+import randall.util.RandallPanel;
 
 /**
  * @author Marco
@@ -38,8 +47,8 @@ import java.io.Serial;
  * Don't allow the dialog to close without a project ! (or stop the application
  * alltogether)
  */
-@SuppressWarnings("rawtypes")
-public class D2ProjectSettingsDialog extends JDialog {
+@SuppressWarnings("FieldMayBeFinal")
+public final class D2ProjectSettingsDialog extends JDialog {
     /**
      *
      */
@@ -82,6 +91,7 @@ public class D2ProjectSettingsDialog extends JDialog {
     private JCheckBox iFlavieCountChar;
     private JCheckBox iFlavieCountEthereal;
 
+    @SuppressWarnings({"Convert2Lambda", "override"})
     public D2ProjectSettingsDialog(D2FileManager pFileManager) {
         super(pFileManager, true);
         iFileManager = pFileManager;
@@ -145,18 +155,21 @@ public class D2ProjectSettingsDialog extends JDialog {
 
         iTypeSC = new JRadioButton("Softcore (SC) Only");
         iTypeSC.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_SC);
             }
         });
         iTypeHC = new JRadioButton("Hardcore (HC) Only");
         iTypeHC.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_HC);
             }
         });
         iTypeBoth = new JRadioButton("All (SC+HC+Unknown)");
         iTypeBoth.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent pEvent) {
                 iProject.setType(D2Project.TYPE_BOTH);
             }
@@ -358,30 +371,16 @@ public class D2ProjectSettingsDialog extends JDialog {
 
     protected void setProjectValues() {
         switch (iProject.getType()) {
-            case D2Project.TYPE_SC:
-                iTypeSC.setSelected(true);
-                break;
-            case D2Project.TYPE_HC:
-                iTypeHC.setSelected(true);
-                break;
-            default:
-                iTypeBoth.setSelected(true);
-                break;
+            case D2Project.TYPE_SC -> iTypeSC.setSelected(true);
+            case D2Project.TYPE_HC -> iTypeHC.setSelected(true);
+            default -> iTypeBoth.setSelected(true);
         }
 
         switch (iProject.getBackup()) {
-            case D2Project.BACKUP_DAY:
-                iBackupDay.setSelected(true);
-                break;
-            case D2Project.BACKUP_MONTH:
-                iBackupMonth.setSelected(true);
-                break;
-            case D2Project.BACKUP_NONE:
-                iBackupNone.setSelected(true);
-                break;
-            default:
-                iBackupWeek.setSelected(true);
-                break;
+            case D2Project.BACKUP_DAY -> iBackupDay.setSelected(true);
+            case D2Project.BACKUP_MONTH -> iBackupMonth.setSelected(true);
+            case D2Project.BACKUP_NONE -> iBackupNone.setSelected(true);
+            default -> iBackupWeek.setSelected(true);
         }
 
         iFlavieOutputReportFileName.setText(iProject.getReportName());
@@ -398,6 +397,7 @@ public class D2ProjectSettingsDialog extends JDialog {
 
 }
 
+@SuppressWarnings("override")
 abstract class RandallDocumentListener implements DocumentListener {
     abstract void check();
 

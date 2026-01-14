@@ -23,8 +23,8 @@ public class D2SharedStashReaderTest {
         byte[] simpleStash = BaseEncoding.base16()
                 .decode(
                         "55AA55AA0000000063000000F2A416004D00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004A4D01001000A2000564D6900855AA55AA0000000063000000000000004D00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004A4D01001000A2000564F6472255AA55AA0000000063000000000000004400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004A4D0000");
-        D2SharedStash stash =
-                new D2SharedStashReader().readStash("somethingSoftCore.d2i", new D2BitReader(simpleStash));
+        D2SharedStash stash
+                = new D2SharedStashReader().readStash("somethingSoftCore.d2i", new D2BitReader(simpleStash));
         assertEquals(1484018, stash.getPane(0).getGold());
         assertEquals(0, stash.getPane(1).getGold());
         assertEquals(0, stash.getPane(2).getGold());

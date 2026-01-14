@@ -37,16 +37,16 @@ Polearm	pole	sppl	merc	1	1	rarm	larm			0	0	0	0		1	0	0	6	25	6	40	6	0	3			0							
 Crossbow	xbow	miss	merc	1	1	rarm	larm	xboq		0	0	0	0		1	0	0	6	25	6	40	6	0	3			0							weap	0
 Mace	mace	blun	merc	1	1	rarm	larm			0	0	0	0		1	0	0	6	25	6	40	6	0	3			0							weap	0
 Helm	merc			1	1	head	head			0	0	0	0		1	0	0	6	25	6	40	6	0	3			0							armo	0
-Missile Potion	tpot	thro		0	1	rarm	larm			1	1	1	1			1	0	0	25	0	40	0	0	3			0							misc	0
+Missile Potion	tpot			0	1	rarm	larm			1	1	1	1			1	0	0	25	0	40	0	0	3			0							misc	0
 Quest	ques			0	0					0	0	0	0			0	0	0	25	0	40	0	0	3			0								0
 Body Part	body	misc		0	0					0	0	0	0			1	0	0	25	0	40	0	0	3			0							misc	0
 Key	key	misc		0	0					0	0	0	1			1	0	0	25	0	40	0	0	3			0							misc	0
 Throwing Knife	tkni	comb	knif	1	1	rarm	larm			1	1	1	1		1	0	0	6	25	6	40	6	0	3			0							misc	0
 Throwing Axe	taxe	comb	axe	1	1	rarm	larm			1	1	1	1		1	0	0	6	25	6	40	6	0	3			0							misc	0
 Javelin	jave	comb	spea	1	1	rarm	larm			1	1	1	1		1	0	0	6	25	6	40	6	0	3			0							misc	0
-Weapon	weap	merc		0	0					0	0	0	0		1	0	0	0	25	0	40	0	1	3			0								0
-Melee Weapon	mele	weap		0	0					0	0	0	0		1	0	0	0	25	0	40	0	1	3			0								0
-Missile Weapon	miss	weap		0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
+Weapon	weap		merc	0	0					0	0	0	0		1	0	0	0	25	0	40	0	1	3			0								0
+Melee Weapon	mele	weap	merc	0	0					0	0	0	0		1	0	0	0	25	0	40	0	1	3			0								0
+Missile Weapon	miss	weap	merc	0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Thrown Weapon	thro	weap		0	0					1	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Combo Weapon	comb	mele	thro	0	0					1	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Any Armor	armo			0	0					0	0	0	0		1	0	0	0	25	0	40	0	1	3			0								0
@@ -57,7 +57,7 @@ Second Hand	seco			0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Staves And Rods	rod	blun	merc	0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Missile	misl	misc		0	0					0	0	0	0			0	0	0	25	0	40	0	0	3			0								0
 Blunt	blun	mele	merc	0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
-Expansion																																			0
+Expansion																																			
 Jewel	jewl	sock		0	0					0	0	0	0	1	1	0	0	0	25	0	40	0	0	3			6	invjw1	invjw2	invjw3	invjw4	invjw5	invjw6	misc	0
 Class Specific	clas			0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0								0
 Amazon Item	amaz	clas		0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	1		ama	0								0
@@ -108,8 +108,14 @@ Spears and Polearms	sppl	mele		0	0					0	0	0	0		1	0	0	0	25	0	40	0	0	3			0							
 Merc Equip	helm	armo	merc	1	1	head	head			0	0	0	0		1	0	0	6	25	6	40	6	0	3			0							armo	0
 Soul Ore	sore			0	0					0	0	0	0	0	0	1	0	0	25	0	40	0	0	3			0							misc	0
 Soul Ore	srM	sore		0	0					0	0	0	0	0	0	1	0	0	25	0	40	0	0	3			0							misc	0
-Rune	rune1	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	1			0							misc	0
-Rune	rune2	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	2			0							misc	0
-Rune	rune3	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	3			0							misc	0
-Rune	rune4	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	4			0							misc	0
-Rune	rune5	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	5			0							misc	0
+rune1	rune1	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	4			0							misc	0
+rune2	rune2	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	12			0							misc	0
+rune3	rune3	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	18			0							misc	0
+rune4	rune4	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	20			0							misc	0
+rune5	rune5	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	24			0							misc	0
+rune6	rune6	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	28			0							misc	0
+rune7	rune7	rune		0	0					0	0	0	0			1	0	0	25	0	40	0	0	30			0							misc	0
+Gem Stack	sgem	misc		0	0					0	0	0	1			1	0	0	25	0	40	0	0	3			0							misc	0
+Rune Stack	runs	misc		0	0					0	0	0	1			1	0	0	25	0	40	0	0	3			0							misc	0
+Antifire Potion	ZyF	poti		0	0					0	0	0	0			1	1	0	25	0	40	0	0	3			0							misc	0
+Antiltng Potion	ZyL	poti		0	0					0	0	0	0			1	1	0	25	0	40	0	0	3			0							misc	0

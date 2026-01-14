@@ -22,9 +22,10 @@
 package gomule;
 
 
-import randall.d2files.D2TxtFile;
-
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import randall.d2files.D2TxtFile;
 
 public class Dump {
     public static void main(String[] args) {
@@ -67,20 +68,20 @@ public class Dump {
 
     public void print_d2s(String filename) {
         try {
-            FileInputStream in = new FileInputStream(filename);
-            byte[] bytes = new byte[10];
-            while (in.read(bytes) != -1) {
-                for (int i = 0; i < 10; i++) {
-                    int unsigned = 0x000000ff & bytes[i];
-                    if (unsigned > 20 && unsigned < 125)
-                        System.out.print((char) unsigned + "\t");
-                    else
-                        System.out.print(unsigned + "\t");
+            try (FileInputStream in = new FileInputStream(filename)) {
+                byte[] bytes = new byte[10];
+                while (in.read(bytes) != -1) {
+                    for (int i = 0; i < 10; i++) {
+                        int unsigned = 0x000000ff & bytes[i];
+                        if (unsigned > 20 && unsigned < 125)
+                            System.out.print((char) unsigned + "\t");
+                        else
+                            System.out.print(unsigned + "\t");
+                    }
+                    System.out.println();
                 }
-                System.out.println();
             }
-            in.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("I/O error");
         }
     }

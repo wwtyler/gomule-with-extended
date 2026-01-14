@@ -1,24 +1,52 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.debug.settings.hotCodeReplace": "auto",
-    "java.debug.settings.onBuildFailureProceed": false,
-    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable -Dfile.encoding=UTF-8",
-    "files.encoding": "utf8",
-    "files.autoGuessEncoding": true,
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-21",
-            // "path": "C:\\Users\\wangwei\\.jdk\\jdk-21.0.8",
-             "path": "/Users/liuhao.781/code/jdk-25.0.1.jdk/Contents/Home",
-            "default": true
-        }
-    ],
-    "java.project.sourcePaths": [
-        "src/main/java"
-    ],
-    "java.project.outputPath": "build/classes/java/main",
-    "java.project.referencedLibraries": [
-        "build/libs/**/*.jar"
-    ]
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.debug.settings.hotCodeReplace": "auto",
+  "java.debug.settings.onBuildFailureProceed": false,
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable -Dfile.encoding=UTF-8",
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": true,
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "D:\\Code\\jdk-21.0.9",
+      //  "path": "/Users/liuhao.781/code/jdk-25.0.1.jdk/Contents/Home",
+      "default": true
+    },
+    {
+      "name": "JavaSE-25",
+      "path": "D:\\Code\\jdk-25.0.1",
+      //  "path": "/Users/liuhao.781/code/jdk-25.0.1.jdk/Contents/Home",
+      "default": false
+    }
+  ],
+  "java.project.sourcePaths": ["src/test", "src"],
+  "java.project.outputPath": "build/classes/java/main",
+  "java.project.referencedLibraries": ["build/libs/**/*.jar"],
+  "java.format.settings.url": ".vscode/java-formatter.xml",
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": false,
+
+  // 关闭不必要的错误提示
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "java.configuration.checkProjectSettingsExclusions": false,
+
+  // 以下为方案三配置在 settings.json 中的直接对应项
+  "java.compiler.problem.printStackTrace": "ignore", // CallToPrintStackTrace
+  "java.compiler.problem.missingOverrideAnnotation": "ignore", // missingOverrideAnnotation
+  "java.compiler.problem.unlikelyCollectionMethodArgumentType": "ignore",
+  "java.compiler.problem.deprecation": "ignore", // deprecation
+  "java.compiler.problem.deprecationInDeprecatedCode": "ignore",
+  "java.compiler.problem.deprecationWhenOverridingDeprecatedMethod": "ignore",
+  "java.compiler.problem.redundantSpecificationOfTypeArguments": "ignore", // Convert2Diamond
+  "java.compiler.problem.reportMethodCanBePotentiallyStatic": "ignore",
+  "java.compiler.problem.unnecessaryElse": "ignore",
+
+  // 额外补充：针对 Legacy 项目常见的其他噪音
+  "java.compiler.problem.rawTypeReference": "ignore", // 原始类型使用
+  "java.compiler.problem.uncheckedTypeOperation": "ignore", // 未经检查的转换
+  "java.compiler.problem.unusedLocalVariable": "ignore", // 未使用的变量
+  "java.compiler.problem.unusedImport": "ignore", // 未使用的 Import
+  "java.compiler.problem.missingSerialVersion": "ignore" // 缺少 SerialVersionID
 }

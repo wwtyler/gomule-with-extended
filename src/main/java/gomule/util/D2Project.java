@@ -41,6 +41,7 @@ import java.util.Properties;
  *  Window -
  * Preferences - Java - Code Style - Code Templates
  */
+@SuppressWarnings({"ForLoopReplaceableByForEach", "Convert2Diamond"})
 public class D2Project {
     public static final String PROJECTS_DIR = "projects";
     public static final int TYPE_SC = 1;
@@ -76,6 +77,7 @@ public class D2Project {
     private boolean iIgnoreItems;
     private boolean allowDelete;
 
+    @SuppressWarnings({"UseSpecificCatch", "ConvertToTryWithResources"})
     public D2Project(D2FileManager pFileManager, String pProjectName) {
         iFileManager = pFileManager;
         boolean lNew = false;
@@ -201,21 +203,13 @@ public class D2Project {
             String lBackup = lLoadProperties.getProperty("backup");
 
             try {
-                if (lLoadProperties.getProperty("propDisplay").equals("true")) {
-                    iIgnoreItems = true;
-                } else {
-                    iIgnoreItems = false;
-                }
+                iIgnoreItems = "true".equals(lLoadProperties.getProperty("propDisplay"));
             } catch (Exception pEx) {
                 iIgnoreItems = true;
             }
 
             try {
-                if (lLoadProperties.getProperty("allowDelete").equals("true")) {
-                    allowDelete = true;
-                } else {
-                    allowDelete = false;
-                }
+                allowDelete = "true".equals(lLoadProperties.getProperty("allowDelete"));
             } catch (Exception pEx) {
                 allowDelete = true;
             }
@@ -390,6 +384,7 @@ public class D2Project {
         return iSharedStashDialog;
     }
 
+    @SuppressWarnings({"ConvertToTryWithResources", "UseSpecificCatch"})
     public void saveProject() {
         // clear old
         Properties lSaveProperties = new Properties();

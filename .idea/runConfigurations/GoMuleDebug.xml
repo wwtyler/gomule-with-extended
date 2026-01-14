@@ -5,8 +5,6 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="ALTERNATIVE_JRE_PATH" value="D:/Code/jdk-21.0.9" />
     <module name="GoMule" />
-    <method v="2">
-      <option name="Gradle.BeforeRunTask" enabled="false" tasks="copyResourcesToDistribution" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>

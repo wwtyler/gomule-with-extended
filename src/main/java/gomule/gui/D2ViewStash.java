@@ -47,7 +47,7 @@ import static gomule.gui.D2FileManager.displayErrorDialog;
 /**
  * @author Marco
  */
- @SuppressWarnings({"rawtypes","unchecked"})
+@SuppressWarnings({"FieldMayBeFinal","override"})
 public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2ItemListListener {
     /**
      *
@@ -115,11 +115,11 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     private JRadioButton iCatMiscOther;
     private JRadioButton iCatMiscAll;
 
-    private RandallPanel iRequerementFilter;
-    private JTextField iReqMaxLvl;
-    private JTextField freeTextSearch;
-    private JTextField iReqMaxStr;
-    private JTextField iReqMaxDex;
+    private final RandallPanel iRequerementFilter;
+    private final JTextField iReqMaxLvl;
+    private final JTextField freeTextSearch;
+    private final JTextField iReqMaxStr;
+    private final JTextField iReqMaxDex;
     private JButton iDelete;
     private JButton iDeleteDups;
     private JCheckBox iTypeSocketed;
@@ -141,6 +141,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
     private JButton iCusFilter;
 
+    @SuppressWarnings({"override", "OverridableMethodCallInConstructor", "Convert2Lambda"})
     public D2ViewStash(D2FileManager pMainFrame, String pFileName) {
         super(pFileName, true, true, false, true);
 
@@ -150,6 +151,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 //                System.err.println("internalFrameOpened()");
 //                iTable.requestFocus();
 //            }
+            @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 iFileManager.saveAll();
                 closeView();
@@ -168,7 +170,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iStashFilter = new D2StashFilter();
         iItemModel = new D2ItemModel();
         iTable = new JTable(iItemModel);
+        
         iTable.addKeyListener(new KeyAdapter() {
+            @SuppressWarnings("override")
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_Z) {
                     int lNew = iTable.getSelectedRow() + 1;
@@ -187,9 +191,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 //        Font lFont = iTable.getTableHeader().getFont();
 //            iTable.getTableHeader().setFont( new Font(lFont.getName(), lFont.getStyle(), lFont.getSize()-2) );
         iTable.getTableHeader().addMouseListener(new MouseAdapter() {
+            @SuppressWarnings("override")
             public void mouseReleased(MouseEvent e) {
-                if (e.getSource() instanceof JTableHeader) {
-                    JTableHeader lHeader = (JTableHeader) e.getSource();
+                if (e.getSource() instanceof JTableHeader lHeader) {
                     int lHeaderCol = lHeader.columnAtPoint(new Point(e.getX(), e.getY()));
 
                     lHeaderCol = lHeader.getColumnModel().getColumn(lHeaderCol).getModelIndex();
@@ -232,6 +236,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iCusFilter = new JButton("Filter...");
 
         iCusFilter.addActionListener(new ActionListener() {
+            @SuppressWarnings("override")
             public void actionPerformed(ActionEvent pEvent) {
                 new CustomFilterPanel().filterPopUp();
             }
@@ -291,6 +296,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         if (iTable != null) {
 
+            
             iTable.addMouseListener(new MouseListener() {
 
                 public void mouseClicked(MouseEvent arg0) {
@@ -407,6 +413,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         return iStash.isSC();
     }
 
+    @SuppressWarnings("Convert2Lambda")
     private RandallPanel getButtonPanel() {
         RandallPanel lButtonPanel = new RandallPanel(true);
 
@@ -439,7 +446,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 try {
                     iStash.ignoreItemListEvents();
                     ArrayList<D2Item> lItemList = D2ViewClipboard.removeAllItems();
-                    while (lItemList.size() > 0) {
+                    while (!lItemList.isEmpty()) {
                         lastItemAdded = (D2Item) lItemList.removeFirst();
                         iStash.addItem(lastItemAdded);
                     }
@@ -454,7 +461,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         iDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent pEvent) {
-                Vector lItemList = new Vector();
+                ArrayList<D2Item> lItemList = new ArrayList<>();
 
                 int lRows[] = iTable.getSelectedRows();
 
@@ -490,6 +497,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     return;
                 }
 
+                @SuppressWarnings("Convert2Diamond")
                 HashMap<String, D2Item> lItemList = new HashMap<String, D2Item>();
 
                 for (int i = 0; i < iTable.getRowCount(); i++) {
@@ -510,7 +518,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
                     Iterator it = lItemList.keySet().iterator();
                     while (it.hasNext()) {
-                        ((D2Stash) iStash).addItem(((D2Item) lItemList.get(it.next())));
+                        ((D2Stash) iStash).addItem(((D2Item) lItemList.get((String) it.next())));
                     }
 
                 } finally {
@@ -532,7 +540,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
 
     protected void pickupSelected() {
-        Vector lItemList = new Vector();
+        ArrayList<D2Item> lItemList = new ArrayList<>();
 
         int lRows[] = iTable.getSelectedRows();
 
@@ -691,6 +699,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         return lCategories;
     }
 
+    @SuppressWarnings("Convert2Diamond")
     private RandallPanel getCategoriesArmor() {
         ButtonGroup lCatArmorBtnGroup = new ButtonGroup();
         RandallPanel lCategoriesArmor = new RandallPanel(true);
@@ -723,8 +732,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iWeaponFilterList = new ArrayList();
         ArrayList lWeaponFilterList = D2WeaponTypes.getWeaponTypeList();
         for (int i = 0; i < lWeaponFilterList.size(); i++) {
-            if (lWeaponFilterList.get(i) instanceof D2WeaponTypes) {
-                D2WeaponTypes lWeapon = (D2WeaponTypes) lWeaponFilterList.get(i);
+            if (lWeaponFilterList.get(i) instanceof D2WeaponTypes lWeapon) {
                 D2RadioButton lBtn = new D2RadioButton(lWeapon);
                 lBtn.addActionListener(iStashFilter);
                 lCurrentRow.addToPanel(lBtn, i, 0, 1, RandallPanel.HORIZONTAL);
@@ -934,6 +942,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         private ArrayList iTableModelListeners = new ArrayList();
         private ArrayList iSortList = new ArrayList();
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public D2ItemModel() {
 //            iStash = pStash;
             iSortList.add(HEADER[0]);
@@ -1029,32 +1038,29 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         }
 
 
-                        if (lItem.getItemQuality().equals("normal")) {
-
-                            if (!iQualNorm.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
+                        switch (lItem.getItemQuality()) {
+                            case "normal" -> {
+                                if (!iQualNorm.isSelected() && !iQualAll.isSelected()) {
+                                    lAdd1 = false;
+                                }
                             }
-
-                        } else if (lItem.getItemQuality().equals("exceptional")) {
-
-                            if (!iQualExce.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
+                            case "exceptional" -> {
+                                if (!iQualExce.isSelected() && !iQualAll.isSelected()) {
+                                    lAdd1 = false;
+                                }
                             }
-
-                        } else if (lItem.getItemQuality().equals("elite")) {
-
-
-                            if (!iQualEli.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
+                            case "elite" -> {
+                                if (!iQualEli.isSelected() && !iQualAll.isSelected()) {
+                                    lAdd1 = false;
+                                }
                             }
-
-                        } else if (lItem.getItemQuality().equals("none")) {
-
-
-                            if (!iQualOther.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
+                            case "none" -> {
+                                if (!iQualOther.isSelected() && !iQualAll.isSelected()) {
+                                    lAdd1 = false;
+                                }
                             }
-
+                            default -> {
+                            }
                         }
 
                         if (!lItem.isEthereal()) {
@@ -1089,39 +1095,37 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
                             switch ((int) lItem.getSocketNrTotal()) {
 
-                                case 0:
-                                    lAdd1 = false;
-                                    break;
-                                case 1:
+                                case 0 -> lAdd1 = false;
+                                case 1 -> {
                                     if (!iCatSock1.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
-                                case 2:
+                                }
+                                case 2 -> {
                                     if (!iCatSock2.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
-                                case 3:
+                                }
+                                case 3 -> {
                                     if (!iCatSock3.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
-                                case 4:
+                                }
+                                case 4 -> {
                                     if (!iCatSock4.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
-                                case 5:
+                                }
+                                case 5 -> {
                                     if (!iCatSock5.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
-                                case 6:
+                                }
+                                case 6 -> {
                                     if (!iCatSock6.isSelected() && !iCatSockAll.isSelected()) {
                                         lAdd1 = false;
                                     }
-                                    break;
+                                }
 
                             }
 
@@ -1238,6 +1242,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             sort();
         }
 
+        @SuppressWarnings("Convert2Lambda")
         public void sort() {
             Collections.sort(iItems, new Comparator() {
                 public int compare(Object pObj1, Object pObj2) {
@@ -1288,20 +1293,13 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         }
 
         public String getColumnName(int pCol) {
-            switch (pCol) {
-                case 0:
-                    return "Name";
-                case 1:
-                    return "lvl";
-                case 2:
-                    return "str";
-                case 3:
-                    return "dex";
-//            case 4:
-//                return "Type";
-                default:
-                    return "";
-            }
+            return switch (pCol) {
+                case 0 -> "Name";
+                case 1 -> "lvl";
+                case 2 -> "str";
+                case 3 -> "dex";
+                default -> "";
+            };
         }
 
         public Class getColumnClass(int pCol) {
@@ -1315,20 +1313,26 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         public Object getValueAt(int pRow, int pCol) {
             D2Item lItem = (D2Item) iItems.get(pRow);
             switch (pCol) {
-                case 0:
+                case 0 -> {
                     return new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
-                case 1:
+                }
+                case 1 -> {
                     return new D2CellValue(getStringValue(lItem.getReqLvl()), lItem, iFileManager.getProject());
-                case 2:
+                }
+                case 2 -> {
                     return new D2CellValue(getStringValue(lItem.getReqStr()), lItem, iFileManager.getProject());
-                case 3:
+                }
+                case 3 -> {
                     return new D2CellValue(getStringValue(lItem.getReqDex()), lItem, iFileManager.getProject());
-                case 4:
+                }
+                case 4 -> {
                     String lFileName = ((D2ItemListAll) iStash).getFilename(lItem);
                     String lType = (lFileName.toLowerCase().endsWith(".d2s")) ? "C" : "S";
                     return new D2CellValue(lType, lFileName, lItem, iFileManager.getProject());
-                default:
+                }
+                default -> {
                     return "";
+                }
             }
         }
 
@@ -1444,6 +1448,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             fMax = new JRadioButton[lNr];
         }
 
+        @SuppressWarnings("Convert2Lambda")
         public void filterPopUp() {
             setTitle("Item Filter");
             setLocation((int) iContentPane.getLocationOnScreen().getX() + 100, (int) iContentPane.getLocationOnScreen().getY() + 100);
@@ -1477,6 +1482,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
 
             fOk.addActionListener(new ActionListener() {
+                @SuppressWarnings("CallToPrintStackTrace")
                 public void actionPerformed(ActionEvent pEvent) {
                     for (int lFilterNr = 0; lFilterNr < iItemModel.iCusFilterList.size(); lFilterNr++) {
                         D2ItemModelCusFilter lFilter = (D2ItemModelCusFilter) iItemModel.iCusFilterList.get(lFilterNr);

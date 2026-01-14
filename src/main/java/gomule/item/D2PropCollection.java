@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+@SuppressWarnings({"ForLoopReplaceableByForEach", "Convert2Diamond"})
 public class D2PropCollection extends ArrayList<D2Prop> {
 
 
@@ -401,9 +402,11 @@ public class D2PropCollection extends ArrayList<D2Prop> {
     }
 
 
+    @SuppressWarnings("Convert2Lambda")
     public void sort() {
 
         Collections.sort(this, new Comparator<D2Prop>() {
+            @SuppressWarnings("override")
             public int compare(D2Prop pObj1, D2Prop pObj2) {
                 D2Prop p1 = (D2Prop) pObj1;
                 D2Prop p2 = (D2Prop) pObj2;

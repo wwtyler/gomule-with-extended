@@ -22,9 +22,10 @@ package randall.flavie;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"FieldMayBeFinal","override"})
 public class CatObject implements Comparable {
     private String iCat;
+    @SuppressWarnings("Convert2Diamond")
     private ArrayList<SubCatObject> iSubCats = new ArrayList<SubCatObject>();
     private String iStyle;
     private String iGroup;
@@ -61,8 +62,16 @@ public class CatObject implements Comparable {
         return toString().compareTo(pObject.toString());
     }
 
+    @Override
     public boolean equals(Object pObject) {
+        if (this == pObject) return true;
+        if (pObject == null || getClass() != pObject.getClass()) return false;
         return toString().equals(pObject.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 
     public String getStyle() {

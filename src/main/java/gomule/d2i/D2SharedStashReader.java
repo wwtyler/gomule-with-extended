@@ -1,12 +1,13 @@
 package gomule.d2i;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.io.BaseEncoding;
+
 import gomule.d2i.D2SharedStash.D2SharedStashPane;
 import gomule.item.D2Item;
 import gomule.util.D2BitReader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class D2SharedStashReader {
 
@@ -26,7 +27,8 @@ public class D2SharedStashReader {
         return new D2SharedStash(filename, result, bitReader.getFileContent());
     }
 
-    private D2SharedStashPane readSharedStashPane(D2BitReader bitReader, String filename) throws Exception {
+    private D2SharedStashPane readSharedStashPane(D2BitReader bitReader, String filename)
+            throws Exception {
         int stashPaneStart = bitReader.get_byte_pos();
         D2SharedStash.Header header = D2SharedStash.Header.fromBytes(bitReader);
         if (header.getVersion() != 99)
@@ -40,7 +42,8 @@ public class D2SharedStashReader {
         }
         int calculatedLength = bitReader.get_byte_pos() - stashPaneStart;
         if (calculatedLength != header.getLength())
-            throw new RuntimeException("Incorrect shared stash length: " + calculatedLength + " expected: " + header.getLength());
+            throw new RuntimeException("Incorrect shared stash length: " + calculatedLength
+                    + " expected: " + header.getLength());
         return D2SharedStashPane.fromItems(result, header.getGold());
     }
 }

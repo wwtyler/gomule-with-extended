@@ -20,6 +20,14 @@
  ******************************************************************************/
 package randall.flavie;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import gomule.D2Files;
 import gomule.d2i.D2SharedStash;
 import gomule.d2i.D2SharedStashReader;
@@ -30,13 +38,6 @@ import gomule.item.D2Item;
 import gomule.item.D2Prop;
 import randall.d2files.D2TxtFile;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Marco
  * <p>
@@ -44,7 +45,7 @@ import java.util.List;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class DirectD2Files {
-    private Flavie iFlavie;
+    private final Flavie iFlavie;
 
     public DirectD2Files(Flavie pFlavie) {
         iFlavie = pFlavie;
@@ -52,7 +53,7 @@ public class DirectD2Files {
 
     public void readDirectD2Files(ArrayList<ItemObject> pDataObjects, ArrayList<String> pFileNames) throws Exception {
         String errStr = "";
-        File lMatchedDir = new File(Flavie.sMatchedDir);
+        File lMatchedDir = new File(Flavie.S_MATCHED_DIR);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
             throw new Exception("If there is a file called matched in the Flavie directory, please delete it");
         }
@@ -60,7 +61,7 @@ public class DirectD2Files {
             throw new Exception("The directory called matched is missing, please create it");
         }
 
-        File lDualFP = new File(Flavie.sMatchedDir + "matched.dualFP.txt");
+        File lDualFP = new File(Flavie.S_MATCHED_DIR + "matched.dualFP.txt");
         if (!lDualFP.exists()) {
             lDualFP.createNewFile();
         }
@@ -69,7 +70,7 @@ public class DirectD2Files {
         try {
             iFlavie.initializeFilters();
 
-            if (pFileNames.size() == 0) {
+            if (pFileNames.isEmpty()) {
                 throw new Exception("No files selected, please select files in the Files tab.");
             }
 
@@ -199,11 +200,11 @@ public class DirectD2Files {
 
                 } else {
                     if (pItem.isRune()) {
-                        Long lRuneCount = (Long) iFlavie.iRuneCount.get(pItem.getName());
+                        Long lRuneCount = iFlavie.iRuneCount.get(pItem.getName());
                         if (lRuneCount == null) {
                             lRuneCount = Long.valueOf(1);
                         } else {
-                            lRuneCount = Long.valueOf(lRuneCount.longValue() + 1);
+                            lRuneCount = lRuneCount + 1;
                         }
                         iFlavie.iRuneCount.put(pItem.getName(), lRuneCount);
                     }
@@ -212,7 +213,7 @@ public class DirectD2Files {
                     ItemObject lItemObject = (ItemObject) pDataObjects.get(lDataObjectNr);
 
                     SubCatObject lSubCatObj = lItemObject.getSubCatObject();
-                    CatObject lCatObj = null;
+                    CatObject lCatObj ;
 
                     lCatObj = lSubCatObj.getCatObject();
 
@@ -253,8 +254,8 @@ public class DirectD2Files {
 //		iFlavie.iDualFPMatched++;
 //		}
     }
-
-    private boolean fitsSkiller(CatObject pCatObj, ItemObject pItemObject, D2Item pItem) {
+    @SuppressWarnings("unused")
+    private boolean fitsSkiller( CatObject pCatObj, ItemObject pItemObject, D2Item pItem) {
         return (pItem.getName().startsWith(pItemObject.getInfo()));
 
 //		return false;

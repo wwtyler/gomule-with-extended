@@ -20,13 +20,6 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>bin</name>
-			<type>2</type>
-			<location>e:/home/silo/workspace/Donkey/bin</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1765190243940</id>

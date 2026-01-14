@@ -3,10 +3,6 @@
  */
 package randall.flavie.filters;
 
-import randall.flavie.D2ItemInterface;
-import randall.flavie.Flavie;
-import randall.util.RandallUtil;
-
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -14,10 +10,14 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import randall.flavie.D2ItemInterface;
+import randall.flavie.Flavie;
+import randall.util.RandallUtil;
+
 /**
  * @author mbr
  */
-@SuppressWarnings({"rawtypes","unchecked"})
+@SuppressWarnings({"ConvertToTryWithResources","FieldMayBeFinal","override"})
 public class FlavieDupeFilter implements FlavieItemFilter {
     //	private String			iDupeFile;
     private PrintStream iDupeOut = null;
@@ -57,7 +57,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         if (iDupeOut != null) {
             throw new Exception("Dupe file allready initialised");
         }
-        iDupeOut = new PrintStream(new FileOutputStream(Flavie.sMatchedDir + "matched.dupe.txt"));
+        iDupeOut = new PrintStream(new FileOutputStream(Flavie.S_MATCHED_DIR + "matched.dupe.txt"));
         iDupeCounter = 0;
 //		iDupeOut.println("Start dupe detection");
     }
