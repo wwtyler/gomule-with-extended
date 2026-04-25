@@ -290,6 +290,14 @@ public class D2BodyLocations {
                 iSkillLocs[28] = new Point(173, 307);
                 iSkillLocs[29] = new Point(112, 370);
                 break;
+            default:
+                // D2RMMMDKV3 新职业 (Warlock 等) 的占位布局：3 列 × 10 行均匀网格
+                for (int i = 0; i < 30; i++) {
+                    int col = i % 3;
+                    int row = i / 3;
+                    iSkillLocs[i] = new Point(50 + col * 62, 64 + row * 34);
+                }
+                break;
         }
         return iSkillLocs;
     }

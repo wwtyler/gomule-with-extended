@@ -1,13 +1,13 @@
 package gomule.item;
 
+import gomule.util.D2BitReader;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import gomule.util.D2BitReader;
-
 public class HuffmanLookupTable {
 
-    private final Map<String, Character> dictionary;
+    private Map<String, Character> dictionary;
 
     public HuffmanLookupTable(Map<String, Character> dictionary) {
         this.dictionary = dictionary;

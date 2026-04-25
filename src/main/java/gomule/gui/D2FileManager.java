@@ -62,7 +62,7 @@ import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
  * It contains all internal frames
  * it contains all open files
  */
-@SuppressWarnings({"Convert2Lambda", "override","Convert2Diamond", "FieldMayBeFinal","CallToPrintStackTrace","UseSpecificCatch", "ConvertToTryWithResources", "RedundantThrows", "ResultOfMethodCallIgnored", "SizeReplaceableByIsEmpty"})
+@SuppressWarnings({"rawtypes", "unchecked", "unlikely-arg-type"})
 public class D2FileManager extends JFrame {
     /**
      *
@@ -158,14 +158,14 @@ public class D2FileManager extends JFrame {
         });
         setVisible(true);
         iClipboard.scrollbarBottom();
-        // new ApplicationRunningChecker(
-        //         Runtime.getRuntime(),
-        //         "D2R.exe",
-        //         () -> JOptionPane.showMessageDialog(
-        //                 this,
-        //                 "Diablo 2 Resurrected is currently running, changes in GoMule are unlikely to be applied and you may lose changes when you exit D2R.",
-        //                 "Warning: D2R.exe Running",
-        //                 JOptionPane.INFORMATION_MESSAGE));
+        new ApplicationRunningChecker(
+                Runtime.getRuntime(),
+                "D2R.exe",
+                () -> JOptionPane.showMessageDialog(
+                        this,
+                        "Diablo 2 Resurrected is currently running, changes in GoMule are unlikely to be applied and you may lose changes when you exit D2R.",
+                        "Warning: D2R.exe Running",
+                        JOptionPane.INFORMATION_MESSAGE));
     }
 
     private void setTitle(boolean saved) {
@@ -186,8 +186,8 @@ public class D2FileManager extends JFrame {
         String lText = "Error\n\n" + pException.getMessage() + "\n";
 
         StackTraceElement trace[] = pException.getStackTrace();
-        for (StackTraceElement trace1 : trace) {
-            lText += "\tat " + trace1 + "\n";
+        for (int i = 0; i < trace.length; i++) {
+            lText += "\tat " + trace[i] + "\n";
         }
 
         displayTextDialog(pParent, "Error", lText);
@@ -233,9 +233,9 @@ public class D2FileManager extends JFrame {
             lProjectsDir.mkdir();
         } else {
             File lList[] = lProjectsDir.listFiles();
-            for (File lList1 : lList) {
-                if (lList1.isDirectory() && lList1.canRead() && lList1.canWrite()) {
-                    iProjectModel.addElement(lList1.getName());
+            for (int i = 0; i < lList.length; i++) {
+                if (lList[i].isDirectory() && lList[i].canRead() && lList[i].canWrite()) {
+                    iProjectModel.addElement(lList[i].getName());
                 }
             }
         }
@@ -303,7 +303,10 @@ public class D2FileManager extends JFrame {
                 Pattern projectNamePattern = Pattern.compile("[^/?*:;{}\\\\]+", Pattern.UNIX_LINES);
                 Matcher projectNamePatternMatcher = projectNamePattern.matcher(lNewName);
 
-                return projectNamePatternMatcher.matches();
+                if (!projectNamePatternMatcher.matches()) {
+                    return false;
+                }
+                return true;
             }
         });
 
@@ -503,8 +506,7 @@ public class D2FileManager extends JFrame {
             } else {
                 reportName = iProject.getProjectName() + iProject.getReportName();
             }
-            @SuppressWarnings("unused")
-            Flavie flavie = new Flavie(
+            new Flavie(
                     reportName,
                     iProject.getReportTitle(),
                     iProject.getDataName(),
@@ -598,7 +600,6 @@ public class D2FileManager extends JFrame {
 
         dropAll = new JButton("Drop All");
         dropAll.addActionListener(new ActionListener() {
-            @SuppressWarnings("SizeReplaceableByIsEmpty")
             public void actionPerformed(ActionEvent arg0) {
                 if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
                     D2ItemContainer d2ItemContainer =
@@ -654,30 +655,30 @@ public class D2FileManager extends JFrame {
                                 continue;
                             }
                             switch (pickChooser.getSelectedIndex()) {
-                                case 0 -> {
+                                case 0:
                                     if (remItem.get_location() == 0 && remItem.get_panel() == 5) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
-                                }
-                                case 1 -> {
+                                    break;
+                                case 1:
                                     if (remItem.get_location() == 0 && remItem.get_panel() == 1) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
-                                }
-                                case 2 -> {
+                                    break;
+                                case 2:
                                     if (remItem.get_location() == 0 && remItem.get_panel() == 4) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
-                                }
-                                case 3 -> {
+                                    break;
+                                case 3:
                                     if (remItem.get_location() == 1) {
                                         moveToClipboard(remItem, iList);
                                         x--;
                                     }
-                                }
+                                    break;
                             }
                         }
                     } finally {
@@ -1099,7 +1100,6 @@ public class D2FileManager extends JFrame {
                 }));
     }
 
-    @SuppressWarnings("UseSpecificCatch")
     private void checkProjects() {
         try {
             iProperties = FileManagerProperties.loadFileManagerProperties();
@@ -1161,7 +1161,7 @@ public class D2FileManager extends JFrame {
     }
 
     public boolean projTxtDump(String pFileName, D2ItemList lList, String folder) {
-        String lFileName ;
+        String lFileName = null;
         if (folder == null) {
 
             lFileName = pFileName + ".txt";
@@ -1270,7 +1270,9 @@ public class D2FileManager extends JFrame {
         checkAll(false);
 
         iClipboard.saveView();
-        for (String lFileName : iItemLists.keySet()) {
+        Iterator lIterator = iItemLists.keySet().iterator();
+        while (lIterator.hasNext()) {
+            String lFileName = (String) lIterator.next();
             D2ItemList lList = getItemList(lFileName);
             if (lList.isModified()) {
                 lList.save(iProject);
@@ -1299,9 +1301,11 @@ public class D2FileManager extends JFrame {
                 }
             }
 
-            for (String lFileName : iItemLists.keySet()) {
+            Iterator lIterator = iItemLists.keySet().iterator();
+            while (lIterator.hasNext()) {
+                String lFileName = (String) lIterator.next();
                 D2ItemList lList = (D2ItemList) iItemLists.get(lFileName);
-                if (lList != null && !(lList instanceof D2ItemListAll) && !lList.checkTimestamp()) {
+                if (!(lList instanceof D2ItemListAll) && !lList.checkTimestamp()) {
                     lChanges = true;
                     if (lList.isModified()) {
                         lModifiedChanges = true;
@@ -1592,7 +1596,7 @@ public class D2FileManager extends JFrame {
             }
         }
 
-        D2ViewStash lStashView;
+        D2ViewStash lStashView = null;
         if (load) {
             if (lExisting != null) {
                 lStashView = ((D2ViewStash) lExisting);
@@ -1665,14 +1669,8 @@ public class D2FileManager extends JFrame {
     public void displayAbout() {
         JOptionPane.showMessageDialog(
                 this,
-                """
-                A java-based Diablo II muling application
-                
-                oriniginally created by Andy Theuninck (Gohanman)
-                Version 0.1a
-                
-                current release by Randall & Silospen
-                Version """ + CURRENT_VERSION
+                "A java-based Diablo II muling application\n\noriniginally created by Andy Theuninck (Gohanman)\nVersion 0.1a"
+                        + "\n\ncurrent release by Randall & Silospen\nVersion " + CURRENT_VERSION
                         + "\n\nAnd special thanks to:"
                         + "\n\tHakai_no_Tenshi & Gohanman for helping me out with the file formats"
                         + "\nRTB for all his help.\n\tThe Super Beta Testers:\nSkinhead On The MBTA\nnubikon\nOscuro\nThyiad\nMoiselvus\nPurpleLocust\nAnd anyone else I've forgotten..!",
@@ -1777,10 +1775,11 @@ public class D2FileManager extends JFrame {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
-    // class D2MenuListener implements ActionListener {
+    class D2MenuListener implements ActionListener {
 
-    //     public void actionPerformed(ActionEvent arg0) {
+        public void actionPerformed(ActionEvent arg0) {
 
-    //     }
-    // }
+            new RandallPanel();
+        }
+    }
 }

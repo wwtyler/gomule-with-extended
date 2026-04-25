@@ -10,16 +10,16 @@ import java.util.ArrayList;
 
 /**
  * @author Marco
- *         <p>
+ * <p>
  * 
- *         Window - Preferences - Java - Code Style - Code Templates
+ * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2WeaponTypes {
     private String iType;
     private String iType2;
     private String iDisplay;
 
-    public static final ArrayList<D2WeaponTypes> sListAll = new ArrayList<>();
+    public static final ArrayList<D2WeaponTypes> sListAll = new ArrayList<D2WeaponTypes>();
 
     public static final D2WeaponTypes WEAP_SWOR = new D2WeaponTypes("swor", "Sword");
     public static final D2WeaponTypes WEAP_SCEP = new D2WeaponTypes("scep", "Scepter");
@@ -55,14 +55,14 @@ public class D2WeaponTypes {
 
     public static final D2WeaponTypes WEAP_KNIF = new D2WeaponTypes("knif", "Knife");
     public static final D2WeaponTypes WEAP_H2H = new D2WeaponTypes("h2h", "h2h2", "Hand to Hand");
-    // public static final D2WeaponTypes WEAP_H2H2 = new D2WeaponTypes("h2h2", "Hand to Hand 2");
+    //    public static final D2WeaponTypes WEAP_H2H2 = new D2WeaponTypes("h2h2", "Hand to Hand 2");
     public static final D2WeaponTypes WEAP_TAXE = new D2WeaponTypes("taxe", "Throwing Axe");
     public static final D2WeaponTypes WEAP_TKNI = new D2WeaponTypes("tkni", "Throwing Knife");
 
-    // static
-    // {
-    // addNewLine();
-    // }
+//    static
+//    {
+//        addNewLine();
+//    }
 
     public static final D2WeaponTypes WEAP_ALL = new D2WeaponTypes("all", "All");
 
@@ -86,10 +86,13 @@ public class D2WeaponTypes {
             return true;
         }
 
-        return iType2 != null && iType2.equals(pType);
+        if (iType2 != null && iType2.equals(pType)) {
+            return true;
+        }
+
+        return false;
     }
 
-    @Override
     public String toString() {
         return iDisplay;
     }

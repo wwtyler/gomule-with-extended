@@ -1,0 +1,3662 @@
+
+{
+  "header": {
+    "identifier": "aa55aa55",
+    "version": 105,
+    "filesize": 1069,
+    "checksum": "db06088a",
+    "status": {
+      "b1": false,
+      "b2": false,
+      "hardcore": false,
+      "died": false,
+      "b5": false,
+      "expansion": false,
+      "ladder": false,
+      "b8": false
+    },
+    "progression": 2,
+    "active_arms": 0,
+    "class_id": 7,
+    "level": 87,
+    "created": 0,
+    "last_played": 1777081776,
+    "assigned_skill_ids": [
+      33162,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      220
+    ],
+    "left_skill": "Apocalypse",
+    "right_skill": "Attack",
+    "left_swap_skill": "Attack",
+    "right_swap_skill": "Attack",
+    "menu_appearance": {
+      "head": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "torso": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "legs": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "right_arm": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "left_arm": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "right_hand": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "left_hand": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "shield": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special1": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special2": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special3": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special4": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special5": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special6": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special7": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special8": {
+        "graphic": 255,
+        "tint": 255
+      }
+    },
+    "difficulty": {
+      "Normal": 129,
+      "Nightmare": 0,
+      "Hell": 0
+    },
+    "map_id": 881419541,
+    "dead_merc": 0,
+    "merc_id": "8b2577aa",
+    "merc_name_id": 16,
+    "merc_type": 8,
+    "merc_experience": 70781130,
+    "unknown_before_realm": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0
+    },
+    "realm": 3,
+    "unknown_after_realm": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 4,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 4,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0
+    },
+    "name": "Warlock",
+    "unknown_after_name": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "extended_header_data": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0
+    },
+    "quests_header_magic": "Woo!",
+    "quests_header_version": 6,
+    "quests_header_length": 298,
+    "quests_normal": {
+      "act_i": {
+        "introduced": 1,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": true,
+          "unk3": true,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": true,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": true,
+          "unk4": true,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": true,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 1
+      },
+      "act_ii": {
+        "introduced": 1,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": true,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": true,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": true,
+          "unk4": true,
+          "unk5": true,
+          "unk6": true,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": true,
+          "unk11": true,
+          "closed": true,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": true,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": true,
+          "unk8": true,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": true,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": true,
+          "is_requirement_completed": false,
+          "is_received": true,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": true,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": true,
+          "is_requirement_completed": false,
+          "is_received": true,
+          "unk3": false,
+          "unk4": false,
+          "unk5": true,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": true,
+          "unk11": false,
+          "closed": true,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "quests_nm": {
+      "act_i": {
+        "introduced": 0,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_ii": {
+        "introduced": 0,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "quests_hell": {
+      "act_i": {
+        "introduced": 0,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_ii": {
+        "introduced": 0,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "waypoints_header_magic": "WS",
+    "waypoints_header_version": 1,
+    "waypoints_header_length": 80,
+    "waypoints": {
+      "normal": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": true,
+            "Stony Field": true,
+            "Dark Wood": true,
+            "Black Marsh": true,
+            "Outer Cloister": true,
+            "Jail Level 1": true,
+            "Inner Cloister": true,
+            "Catacombs Level 2": true
+          },
+          {
+            "Lut Gholein": true,
+            "Sewers Level 2": true,
+            "Dry Hills": true,
+            "Halls of the Dead Level 2": true,
+            "Far Oasis": true,
+            "Lost City": true,
+            "Palace Cellar Level 1": true,
+            "Arcane Sanctuary": true,
+            "Canyon of the Magi": true
+          },
+          {
+            "Kurast Docktown": true,
+            "Spider Forest": true,
+            "Great Marsh": true,
+            "Flayer Jungle": true,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      },
+      "nm": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": false,
+            "Stony Field": false,
+            "Dark Wood": false,
+            "Black Marsh": false,
+            "Outer Cloister": false,
+            "Jail Level 1": false,
+            "Inner Cloister": false,
+            "Catacombs Level 2": false
+          },
+          {
+            "Lut Gholein": false,
+            "Sewers Level 2": false,
+            "Dry Hills": false,
+            "Halls of the Dead Level 2": false,
+            "Far Oasis": false,
+            "Lost City": false,
+            "Palace Cellar Level 1": false,
+            "Arcane Sanctuary": false,
+            "Canyon of the Magi": false
+          },
+          {
+            "Kurast Docktown": false,
+            "Spider Forest": false,
+            "Great Marsh": false,
+            "Flayer Jungle": false,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      },
+      "hell": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": false,
+            "Stony Field": false,
+            "Dark Wood": false,
+            "Black Marsh": false,
+            "Outer Cloister": false,
+            "Jail Level 1": false,
+            "Inner Cloister": false,
+            "Catacombs Level 2": false
+          },
+          {
+            "Lut Gholein": false,
+            "Sewers Level 2": false,
+            "Dry Hills": false,
+            "Halls of the Dead Level 2": false,
+            "Far Oasis": false,
+            "Lost City": false,
+            "Palace Cellar Level 1": false,
+            "Arcane Sanctuary": false,
+            "Canyon of the Magi": false
+          },
+          {
+            "Kurast Docktown": false,
+            "Spider Forest": false,
+            "Great Marsh": false,
+            "Flayer Jungle": false,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      }
+    },
+    "npcs_header_magic": {
+      "0": 1,
+      "1": 119
+    },
+    "npcs_header_length": 52,
+    "npcs": {
+      "normal": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": true,
+          "congrats": true
+        },
+        "charsi": {
+          "intro": true,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": false,
+          "congrats": true
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": true
+        },
+        "akara": {
+          "intro": true,
+          "congrats": true
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": true
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": true,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": true,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": true,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": true,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": true,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": true,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "nm": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": false,
+          "congrats": false
+        },
+        "charsi": {
+          "intro": false,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": false,
+          "congrats": false
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": false
+        },
+        "akara": {
+          "intro": false,
+          "congrats": false
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": false,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": false,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": false,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": false,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "hell": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": false,
+          "congrats": false
+        },
+        "charsi": {
+          "intro": false,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": false,
+          "congrats": false
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": false
+        },
+        "akara": {
+          "intro": false,
+          "congrats": false
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": false,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": false,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": false,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": false,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "unknown_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    "attributes_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "attributes": {
+    "strength": 128,
+    "energy": 20,
+    "dexterity": 70,
+    "vitality": 202,
+    "unused_stats": 90,
+    "current_hp": 1195.5,
+    "max_hp": 1195.5,
+    "current_mana": 278,
+    "max_mana": 278,
+    "current_stamina": 349,
+    "max_stamina": 349,
+    "level": 87,
+    "experience": 1248719440,
+    "gold": 69408
+  },
+  "skills": [
+    {
+      "id": 373,
+      "points": 1
+    },
+    {
+      "id": 374,
+      "points": 1
+    },
+    {
+      "id": 375,
+      "points": 2
+    },
+    {
+      "id": 376,
+      "points": 1
+    },
+    {
+      "id": 377,
+      "points": 1
+    },
+    {
+      "id": 378,
+      "points": 0
+    },
+    {
+      "id": 379,
+      "points": 1
+    },
+    {
+      "id": 380,
+      "points": 1
+    },
+    {
+      "id": 381,
+      "points": 0
+    },
+    {
+      "id": 382,
+      "points": 13
+    },
+    {
+      "id": 383,
+      "points": 0
+    },
+    {
+      "id": 384,
+      "points": 0
+    },
+    {
+      "id": 385,
+      "points": 0
+    },
+    {
+      "id": 386,
+      "points": 0
+    },
+    {
+      "id": 387,
+      "points": 0
+    },
+    {
+      "id": 388,
+      "points": 0
+    },
+    {
+      "id": 389,
+      "points": 0
+    },
+    {
+      "id": 390,
+      "points": 0
+    },
+    {
+      "id": 391,
+      "points": 0
+    },
+    {
+      "id": 392,
+      "points": 0
+    },
+    {
+      "id": 393,
+      "points": 1
+    },
+    {
+      "id": 394,
+      "points": 20
+    },
+    {
+      "id": 395,
+      "points": 3
+    },
+    {
+      "id": 396,
+      "points": 1
+    },
+    {
+      "id": 397,
+      "points": 0
+    },
+    {
+      "id": 398,
+      "points": 20
+    },
+    {
+      "id": 399,
+      "points": 0
+    },
+    {
+      "id": 400,
+      "points": 1
+    },
+    {
+      "id": 401,
+      "points": 20
+    },
+    {
+      "id": 402,
+      "points": 0
+    }
+  ],
+  "items": [
+    {
+      "offset": 7344,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 2,
+      "equipped_id": 0,
+      "position_x": 0,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "hp2",
+      "categories": [
+        "Healing Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Light Healing Potion|HP2",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 7424,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 1
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 2,
+      "equipped_id": 0,
+      "position_x": 1,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "hp1",
+      "categories": [
+        "Healing Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Minor Healing Potion|HP1",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 7504,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 1
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 2,
+      "equipped_id": 0,
+      "position_x": 2,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "hp1",
+      "categories": [
+        "Healing Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Minor Healing Potion|HP1",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 7584,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 1
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 1
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 2,
+      "equipped_id": 0,
+      "position_x": 3,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "hp2",
+      "categories": [
+        "Healing Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Light Healing Potion|HP2",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 7664,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "tome_extra_5": 1
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 0,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "ibk",
+      "categories": [
+        "Book",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "id": 992831142,
+      "level": 20,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": true,
+      "quantity": 38,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Tome of Identify",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 1,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 7816,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "tome_extra_5": 0
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 1,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "tbk",
+      "categories": [
+        "Book",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "id": 1171907751,
+      "level": 20,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": true,
+      "quantity": 37,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Tome of Town Portal",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 1,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 7960,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 7,
+      "position_y": 2,
+      "alt_position_id": 5,
+      "type": "hp4",
+      "categories": [
+        "Healing Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Greater Healing Potion|HP4",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 8040,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 2,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "box",
+      "categories": [
+        "Quest"
+      ],
+      "type_id": 4,
+      "quest_difficulty": 0,
+      "nr_of_items_in_sockets": 0,
+      "id": 2118130951,
+      "level": 13,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": false,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Horadric Cube",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 2,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 8176,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 4,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "vps",
+      "categories": [
+        "Stamina Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Stamina Potion|VPS",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 8256,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 4,
+      "position_y": 1,
+      "alt_position_id": 1,
+      "type": "key",
+      "categories": [
+        "Key",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "id": 2837704850,
+      "level": 1,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": true,
+      "quantity": 3,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Key|KEY",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    }
+  ],
+  "corpses": [],
+  "merc_items": [],
+  "has_demon": 0,
+  "item_bonuses": []
+}
+

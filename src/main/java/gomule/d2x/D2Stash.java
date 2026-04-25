@@ -4,17 +4,18 @@
  *
  * This file is part of gomule.
  *
- * gomule is free software; you can redistribute it and/or modify it under the terms of the GNU
- * General Public License as published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
+ * gomule is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- * gomule is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * gomule is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with gomlue; if not,
- * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
- * USA
+ * You should have received a copy of the GNU General Public License along with
+ * gomlue; if not, write to the Free Software Foundation, Inc., 51 Franklin St,
+ * Fifth Floor, Boston, MA 02110-1301 USA
  *
  ******************************************************************************/
 package gomule.d2x;
@@ -31,26 +32,25 @@ import java.util.ArrayList;
 
 /**
  * @author Marco
- *         <p>
+ * <p>
  * 
- *         Window - Preferences - Java - Code Style - Code Templates
+ * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2Stash extends D2ItemListAdapter {
-    // private String iFileName;
+    //    private String		iFileName;
     private ArrayList<D2Item> iItems;
 
     private D2BitReader iBR;
     private boolean iHC;
     private boolean iSC;
 
-    private final int iCharLvl = 75; // default char lvl for properties
+    private int iCharLvl = 75; // default char lvl for properties
 
     private File lFile;
 
-    // private int iItemlistStart;
-    // private int iItemlistEnd;
+//    private int iItemlistStart;
+//    private int iItemlistEnd;
 
-    @SuppressWarnings({"Convert2Diamond", "override"})
     public D2Stash(String pFileName) throws Exception {
         super(pFileName);
         if (iFileName == null || !iFileName.toLowerCase().endsWith(".d2x")) {
@@ -85,27 +85,22 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
-    @SuppressWarnings("override")
     public String getFilename() {
         return iFileName;
     }
 
-    @SuppressWarnings("override")
     public boolean isHC() {
         return iHC;
     }
 
-    @SuppressWarnings("override")
     public boolean isSC() {
         return iSC;
     }
 
-    @SuppressWarnings("override")
     public ArrayList<D2Item> getItemList() {
         return iItems;
     }
 
-    @SuppressWarnings("override")
     public void addItem(D2Item pItem) {
         if (pItem != null) {
             iItems.add(pItem);
@@ -114,19 +109,16 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
-    @SuppressWarnings("override")
     public boolean containsItem(D2Item pItem) {
         return iItems.contains(pItem);
     }
 
-    @SuppressWarnings("override")
     public void removeItem(D2Item pItem) {
         iItems.remove(pItem);
         setModified(true);
     }
 
     public ArrayList<D2Item> removeAllItems() {
-        @SuppressWarnings("Convert2Diamond")
         ArrayList<D2Item> lReturn = new ArrayList<D2Item>();
         lReturn.addAll(iItems);
 
@@ -137,7 +129,6 @@ public class D2Stash extends D2ItemListAdapter {
     }
 
 
-    @SuppressWarnings("override")
     public int getNrItems() {
         return iItems.size();
     }
@@ -182,8 +173,7 @@ public class D2Stash extends D2ItemListAdapter {
             lCheckSum = upshift + add;
         }
 
-        // System.err.println("Test " + lOriginal + " - " + lCheckSum + " = " + (lOriginal ==
-        // lCheckSum) );
+//		System.err.println("Test " + lOriginal + " - " + lCheckSum + " = " + (lOriginal == lCheckSum) );
         return lCheckSum;
     }
 
@@ -195,7 +185,6 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
-    @SuppressWarnings("override")
     public void saveInternal(D2Project pProject) {
         // backup file
         D2Backup.backup(pProject, iFileName, iBR);
@@ -219,10 +208,10 @@ public class D2Stash extends D2ItemListAdapter {
         iBR.set_byte_pos(3);
         iBR.write(iItems.size(), 16);
         iBR.write(99, 16); // version 99
-        // iBR.replace_bytes(11, iBR.get_length(), newbytes);
+//        iBR.replace_bytes(11, iBR.get_length(), newbytes);
 
         long lCheckSum1 = calculateAtmaCheckSum();
-        // System.err.println("CheckSum at saving: " + lCheckSum1 );
+//        System.err.println("CheckSum at saving: " + lCheckSum1 );
 
         iBR.set_byte_pos(7);
         iBR.write(lCheckSum1, 32);
@@ -230,8 +219,8 @@ public class D2Stash extends D2ItemListAdapter {
         iBR.set_byte_pos(7);
         long lCheckSum2 = iBR.read(32);
 
-        // long lCheckSum3 = calculateGoMuleCheckSum();
-        // System.err.println("CheckSum after insert: " + lCheckSum3 );
+//        long lCheckSum3 = calculateGoMuleCheckSum();
+//        System.err.println("CheckSum after insert: " + lCheckSum3 );
 
         if (lCheckSum1 == lCheckSum2) {
             iBR.save();
@@ -241,7 +230,6 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
-    @SuppressWarnings("override")
     public void fullDump(PrintWriter pWriter) {
         pWriter.println(iFileName);
         pWriter.println();

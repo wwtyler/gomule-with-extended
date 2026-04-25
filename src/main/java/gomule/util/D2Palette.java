@@ -24,7 +24,7 @@ package gomule.util;
 // loads a d2-style palette
 public class D2Palette {
     static private D2Palette p = null;
-    private final int[] colors;
+    private int[] colors;
 
     private D2Palette() {
         String s = java.io.File.separator;

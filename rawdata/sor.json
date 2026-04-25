@@ -1,0 +1,4629 @@
+{
+  "header": {
+    "identifier": "aa55aa55",
+    "version": 105,
+    "filesize": 1204,
+    "checksum": "f1da56b3",
+    "status": {
+      "b1": false,
+      "b2": false,
+      "hardcore": false,
+      "died": false,
+      "b5": false,
+      "expansion": false,
+      "ladder": false,
+      "b8": false
+    },
+    "progression": 0,
+    "active_arms": 0,
+    "class_id": 1,
+    "level": 91,
+    "created": 0,
+    "last_played": 1777081827,
+    "assigned_skill_ids": [
+      38,
+      65535,
+      65535,
+      32768,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535,
+      65535
+    ],
+    "left_skill": "Attack",
+    "right_skill": "Attack",
+    "left_swap_skill": "Attack",
+    "right_swap_skill": "Charged Bolt",
+    "menu_appearance": {
+      "head": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "torso": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "legs": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "right_arm": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "left_arm": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "right_hand": {
+        "graphic": 37,
+        "tint": 255
+      },
+      "left_hand": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "shield": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special1": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special2": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special3": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special4": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special5": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special6": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special7": {
+        "graphic": 255,
+        "tint": 255
+      },
+      "special8": {
+        "graphic": 255,
+        "tint": 255
+      }
+    },
+    "difficulty": {
+      "Normal": 128,
+      "Nightmare": 0,
+      "Hell": 0
+    },
+    "map_id": 526460524,
+    "dead_merc": 0,
+    "merc_id": "0",
+    "merc_name_id": 0,
+    "merc_type": 0,
+    "merc_experience": 0,
+    "unknown_before_realm": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0
+    },
+    "realm": 3,
+    "unknown_after_realm": {
+      "0": 0,
+      "1": 0,
+      "2": 115,
+      "3": 115,
+      "4": 116,
+      "5": 32,
+      "6": 255,
+      "7": 4,
+      "8": 0,
+      "9": 0,
+      "10": 4,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0
+    },
+    "name": "SOR",
+    "unknown_after_name": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "extended_header_data": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0,
+      "21": 0,
+      "22": 0,
+      "23": 0,
+      "24": 0,
+      "25": 0,
+      "26": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 0,
+      "41": 0,
+      "42": 0,
+      "43": 0,
+      "44": 0,
+      "45": 0,
+      "46": 0,
+      "47": 0,
+      "48": 0,
+      "49": 0,
+      "50": 0,
+      "51": 0,
+      "52": 0,
+      "53": 0,
+      "54": 0,
+      "55": 0,
+      "56": 0,
+      "57": 0,
+      "58": 0,
+      "59": 0,
+      "60": 0,
+      "61": 0,
+      "62": 0,
+      "63": 0,
+      "64": 0,
+      "65": 0,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 0,
+      "71": 0,
+      "72": 0,
+      "73": 0,
+      "74": 0,
+      "75": 0,
+      "76": 0,
+      "77": 0,
+      "78": 0,
+      "79": 0,
+      "80": 0,
+      "81": 0,
+      "82": 0,
+      "83": 0
+    },
+    "quests_header_magic": "Woo!",
+    "quests_header_version": 6,
+    "quests_header_length": 298,
+    "quests_normal": {
+      "act_i": {
+        "introduced": 1,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": true,
+          "unk3": true,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": true,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_ii": {
+        "introduced": 0,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "quests_nm": {
+      "act_i": {
+        "introduced": 0,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_ii": {
+        "introduced": 0,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "quests_hell": {
+      "act_i": {
+        "introduced": 0,
+        "den_of_evil": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_burial_grounds": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tools_of_the_trade": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_search_for_cain": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_forgotten_tower": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "sisters_to_the_slaughter": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_ii": {
+        "introduced": 0,
+        "radaments_lair": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_horadric_staff": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "tainted_sun": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "arcane_sanctuary": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_summoner": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_seven_tombs": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iii": {
+        "introduced": 0,
+        "lam_esens_tome": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "khalims_will": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "blade_of_the_old_religion": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_golden_bird": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_blackened_temple": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "the_guardian": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "act_iv": {
+        "introduced": 0,
+        "the_fallen_angel": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "terrors_end": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "hellforge": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_act_iv_v_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "act_v": {
+        "introduced": 0,
+        "siege_on_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rescue_on_mount_arreat": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "prison_of_ice": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "betrayal_of_harrogath": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "rite_of_passage": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "eve_of_destruction": {
+          "is_completed": false,
+          "is_requirement_completed": false,
+          "is_received": false,
+          "unk3": false,
+          "unk4": false,
+          "unk5": false,
+          "unk6": false,
+          "consumed_scroll": false,
+          "unk8": false,
+          "unk9": false,
+          "unk10": false,
+          "unk11": false,
+          "closed": false,
+          "done_recently": false,
+          "unk14": false,
+          "unk15": false
+        },
+        "completed": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      }
+    },
+    "waypoints_header_magic": "WS",
+    "waypoints_header_version": 1,
+    "waypoints_header_length": 80,
+    "waypoints": {
+      "normal": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": false,
+            "Stony Field": false,
+            "Dark Wood": false,
+            "Black Marsh": false,
+            "Outer Cloister": true,
+            "Jail Level 1": false,
+            "Inner Cloister": false,
+            "Catacombs Level 2": false
+          },
+          {
+            "Lut Gholein": false,
+            "Sewers Level 2": false,
+            "Dry Hills": false,
+            "Halls of the Dead Level 2": false,
+            "Far Oasis": false,
+            "Lost City": false,
+            "Palace Cellar Level 1": false,
+            "Arcane Sanctuary": false,
+            "Canyon of the Magi": false
+          },
+          {
+            "Kurast Docktown": false,
+            "Spider Forest": false,
+            "Great Marsh": false,
+            "Flayer Jungle": false,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      },
+      "nm": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": false,
+            "Stony Field": false,
+            "Dark Wood": false,
+            "Black Marsh": false,
+            "Outer Cloister": false,
+            "Jail Level 1": false,
+            "Inner Cloister": false,
+            "Catacombs Level 2": false
+          },
+          {
+            "Lut Gholein": false,
+            "Sewers Level 2": false,
+            "Dry Hills": false,
+            "Halls of the Dead Level 2": false,
+            "Far Oasis": false,
+            "Lost City": false,
+            "Palace Cellar Level 1": false,
+            "Arcane Sanctuary": false,
+            "Canyon of the Magi": false
+          },
+          {
+            "Kurast Docktown": false,
+            "Spider Forest": false,
+            "Great Marsh": false,
+            "Flayer Jungle": false,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      },
+      "hell": {
+        "acts": [
+          {
+            "Rogue Encampment": true,
+            "Cold Plains": false,
+            "Stony Field": false,
+            "Dark Wood": false,
+            "Black Marsh": false,
+            "Outer Cloister": false,
+            "Jail Level 1": false,
+            "Inner Cloister": false,
+            "Catacombs Level 2": false
+          },
+          {
+            "Lut Gholein": false,
+            "Sewers Level 2": false,
+            "Dry Hills": false,
+            "Halls of the Dead Level 2": false,
+            "Far Oasis": false,
+            "Lost City": false,
+            "Palace Cellar Level 1": false,
+            "Arcane Sanctuary": false,
+            "Canyon of the Magi": false
+          },
+          {
+            "Kurast Docktown": false,
+            "Spider Forest": false,
+            "Great Marsh": false,
+            "Flayer Jungle": false,
+            "Lower Kurast": false,
+            "Kurast Bazaar": false,
+            "Upper Kurast": false,
+            "Travincal": false,
+            "Durance of Hate Level 2": false
+          },
+          {
+            "The Pandemonium Fortress": false,
+            "City of the Damned": false,
+            "River of Flame": false
+          },
+          {
+            "Harrogath": false,
+            "Rigid Highlands": false,
+            "Arreat Plateau": false,
+            "Crystalized Cavern Level 1": false,
+            "Crystalized Cavern Level 2": false,
+            "Halls of Death's Calling": false,
+            "Tundra Wastelands": false,
+            "Glacial Caves Level 1": false,
+            "The Worldstone Keep Level 2": false
+          }
+        ],
+        "unknown_header": {
+          "0": 2,
+          "1": 1
+        },
+        "unknown_trailing": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0
+        }
+      }
+    },
+    "npcs_header_magic": {
+      "0": 1,
+      "1": 119
+    },
+    "npcs_header_length": 52,
+    "npcs": {
+      "normal": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": true,
+          "congrats": false
+        },
+        "charsi": {
+          "intro": true,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": true,
+          "congrats": false
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": false
+        },
+        "akara": {
+          "intro": true,
+          "congrats": false
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": false,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": false,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": false,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": false,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "nm": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": false,
+          "congrats": false
+        },
+        "charsi": {
+          "intro": false,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": false,
+          "congrats": false
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": false
+        },
+        "akara": {
+          "intro": false,
+          "congrats": false
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": false,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": false,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": false,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": false,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "hell": {
+        "warriv_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_1": {
+          "intro": false,
+          "congrats": false
+        },
+        "charsi": {
+          "intro": false,
+          "congrats": false
+        },
+        "warriv_act_i": {
+          "intro": false,
+          "congrats": false
+        },
+        "kashya": {
+          "intro": false,
+          "congrats": false
+        },
+        "akara": {
+          "intro": false,
+          "congrats": false
+        },
+        "gheed": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_2": {
+          "intro": false,
+          "congrats": false
+        },
+        "greiz": {
+          "intro": false,
+          "congrats": false
+        },
+        "jerhyn": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_ii": {
+          "intro": false,
+          "congrats": false
+        },
+        "geglash": {
+          "intro": false,
+          "congrats": false
+        },
+        "lysnader": {
+          "intro": false,
+          "congrats": false
+        },
+        "fara": {
+          "intro": false,
+          "congrats": false
+        },
+        "drogan": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_3": {
+          "intro": false,
+          "congrats": false
+        },
+        "alkor": {
+          "intro": false,
+          "congrats": false
+        },
+        "hratli": {
+          "intro": false,
+          "congrats": false
+        },
+        "ashera": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_4": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_5": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_6": {
+          "intro": false,
+          "congrats": false
+        },
+        "elzix": {
+          "intro": false,
+          "congrats": false
+        },
+        "malah": {
+          "intro": false,
+          "congrats": false
+        },
+        "anya": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_7": {
+          "intro": false,
+          "congrats": false
+        },
+        "natalya": {
+          "intro": false,
+          "congrats": false
+        },
+        "meshif_act_iii": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_8": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_9": {
+          "intro": false,
+          "congrats": false
+        },
+        "ormus": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_10": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_11": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_12": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_13": {
+          "intro": false,
+          "congrats": false
+        },
+        "unknown_14": {
+          "intro": false,
+          "congrats": false
+        },
+        "cain_act_v": {
+          "intro": false,
+          "congrats": false
+        },
+        "qualkehk": {
+          "intro": false,
+          "congrats": false
+        },
+        "nihlathak": {
+          "intro": false,
+          "congrats": false
+        }
+      },
+      "unknown_gap": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "unknown_trailing": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    "attributes_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "attributes": {
+    "strength": 10,
+    "energy": 35,
+    "dexterity": 25,
+    "vitality": 10,
+    "unused_stats": 450,
+    "unused_skill_points": 90,
+    "current_hp": 220,
+    "max_hp": 220,
+    "current_mana": 395,
+    "max_mana": 395,
+    "current_stamina": 238,
+    "max_stamina": 238,
+    "level": 91,
+    "experience": 1764543087,
+    "gold": 10000,
+    "stashed_gold": 182
+  },
+  "skills": [
+    {
+      "id": 36,
+      "points": 0
+    },
+    {
+      "id": 37,
+      "points": 0
+    },
+    {
+      "id": 38,
+      "points": 0
+    },
+    {
+      "id": 39,
+      "points": 0
+    },
+    {
+      "id": 40,
+      "points": 0
+    },
+    {
+      "id": 41,
+      "points": 0
+    },
+    {
+      "id": 42,
+      "points": 0
+    },
+    {
+      "id": 43,
+      "points": 0
+    },
+    {
+      "id": 44,
+      "points": 0
+    },
+    {
+      "id": 45,
+      "points": 0
+    },
+    {
+      "id": 46,
+      "points": 0
+    },
+    {
+      "id": 47,
+      "points": 0
+    },
+    {
+      "id": 48,
+      "points": 0
+    },
+    {
+      "id": 49,
+      "points": 0
+    },
+    {
+      "id": 50,
+      "points": 0
+    },
+    {
+      "id": 51,
+      "points": 0
+    },
+    {
+      "id": 52,
+      "points": 0
+    },
+    {
+      "id": 53,
+      "points": 0
+    },
+    {
+      "id": 54,
+      "points": 0
+    },
+    {
+      "id": 55,
+      "points": 0
+    },
+    {
+      "id": 56,
+      "points": 0
+    },
+    {
+      "id": 57,
+      "points": 0
+    },
+    {
+      "id": 58,
+      "points": 0
+    },
+    {
+      "id": 59,
+      "points": 0
+    },
+    {
+      "id": 60,
+      "points": 0
+    },
+    {
+      "id": 61,
+      "points": 0
+    },
+    {
+      "id": 62,
+      "points": 0
+    },
+    {
+      "id": 63,
+      "points": 0
+    },
+    {
+      "id": 64,
+      "points": 0
+    },
+    {
+      "id": 65,
+      "points": 0
+    }
+  ],
+  "items": [
+    {
+      "offset": 7400,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 1,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 9,
+      "position_y": 7,
+      "alt_position_id": 1,
+      "type": "yps",
+      "categories": [
+        "Antidote Potion",
+        "Potion",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "has_advanced_stash_quantity": false,
+      "type_name": "Antidote Potion|YPS",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal"
+    },
+    {
+      "offset": 7480,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 1,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "sst",
+      "categories": [
+        "Staff",
+        "Staves And Rods",
+        "Blunt",
+        "Melee Weapon",
+        "Weapon"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 2576924760,
+      "level": 6,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 87,
+          "values": [
+            90
+          ],
+          "name": "item_reducedprices"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "twohandmindam": 1,
+        "twohandmaxdam": 5
+      },
+      "type_name": "Short Staff",
+      "inv_file": null,
+      "inv_height": 3,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 87,
+          "values": [
+            90
+          ],
+          "name": "item_reducedprices",
+          "description": "ÿc4Reduces all Vendor Prices 90%ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 87,
+          "values": [
+            90
+          ],
+          "name": "item_reducedprices"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 87,
+          "values": [
+            90
+          ],
+          "name": "item_reducedprices",
+          "description": "ÿc4Reduces all Vendor Prices 90%ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 7648,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 6,
+      "position_y": 7,
+      "alt_position_id": 1,
+      "type": "key",
+      "categories": [
+        "Key",
+        "Miscellaneous"
+      ],
+      "type_id": 4,
+      "nr_of_items_in_sockets": 0,
+      "id": 2366905533,
+      "level": 6,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": true,
+      "quantity": 1,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Key|KEY",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 7792,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 2,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "ob1",
+      "categories": [
+        "Orb",
+        "Weapon",
+        "Sorceress Item",
+        "Class Specific"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 1209218551,
+      "level": 5,
+      "quality": 4,
+      "multiple_pictures": 0,
+      "class_specific": 1,
+      "auto_affix_id": 16,
+      "magic_prefix": 409,
+      "magic_prefix_name": "Beryl",
+      "magic_suffix": 0,
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 9,
+          "values": [
+            2
+          ],
+          "name": "maxmana"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            2
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 107,
+          "values": [
+            40,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "mindam": 2,
+        "maxdam": 5
+      },
+      "type_name": "Eagle Orb",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Fire Bolt ÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            40,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Frozen Armor ÿc0"
+        },
+        {
+          "id": 9,
+          "values": [
+            2
+          ],
+          "name": "maxmana",
+          "description": "ÿcO+2 to Manaÿc0"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist",
+          "description": "ÿc2Poison Resist +5%ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 9,
+          "values": [
+            2
+          ],
+          "name": "maxmana"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            2
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 107,
+          "values": [
+            40,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Fire Bolt ÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            40,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Frozen Armor ÿc0"
+        },
+        {
+          "id": 9,
+          "values": [
+            2
+          ],
+          "name": "maxmana",
+          "description": "ÿcO+2 to Manaÿc0"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist",
+          "description": "ÿc2Poison Resist +5%ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 8056,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 3,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "ob1",
+      "categories": [
+        "Orb",
+        "Weapon",
+        "Sorceress Item",
+        "Class Specific"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 3357991331,
+      "level": 5,
+      "quality": 6,
+      "multiple_pictures": 0,
+      "class_specific": 1,
+      "auto_affix_id": 10,
+      "rare_name_id": 194,
+      "rare_name": "Bitter",
+      "rare_name_id2": 128,
+      "rare_name2": "Gyre",
+      "magical_name_ids": [
+        976,
+        799,
+        389,
+        293,
+        null,
+        419
+      ],
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 1,
+          "values": [
+            1
+          ],
+          "name": "energy"
+        },
+        {
+          "id": 7,
+          "values": [
+            3
+          ],
+          "name": "maxhp"
+        },
+        {
+          "id": 9,
+          "values": [
+            4
+          ],
+          "name": "maxmana"
+        },
+        {
+          "id": 41,
+          "values": [
+            7
+          ],
+          "name": "lightresist"
+        },
+        {
+          "id": 105,
+          "values": [
+            10
+          ],
+          "name": "item_fastercastrate"
+        },
+        {
+          "id": 107,
+          "values": [
+            38,
+            1
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 195,
+          "values": [
+            6,
+            36,
+            5
+          ],
+          "name": "item_skillonattack"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "mindam": 2,
+        "maxdam": 5
+      },
+      "type_name": "Eagle Orb",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 195,
+          "values": [
+            6,
+            36,
+            5
+          ],
+          "name": "item_skillonattack",
+          "description": "ÿc3ÿc25% Chance to castÿc3 ÿc9level 6ÿc3 ÿcOFire Boltÿc3 on attackÿc0"
+        },
+        {
+          "id": 105,
+          "values": [
+            10
+          ],
+          "name": "item_fastercastrate",
+          "description": "ÿcO+10% Faster Cast Rateÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            38,
+            1
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+1 to Charged Bolt ÿc0"
+        },
+        {
+          "id": 1,
+          "values": [
+            1
+          ],
+          "name": "energy",
+          "description": "ÿcO+1 to Energyÿc0"
+        },
+        {
+          "id": 7,
+          "values": [
+            3
+          ],
+          "name": "maxhp",
+          "description": "ÿcV+3 to Lifeÿc0"
+        },
+        {
+          "id": 9,
+          "values": [
+            4
+          ],
+          "name": "maxmana",
+          "description": "ÿcO+4 to Manaÿc0"
+        },
+        {
+          "id": 41,
+          "values": [
+            7
+          ],
+          "name": "lightresist",
+          "description": "ÿc9Lightning Resist +7%ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 1,
+          "values": [
+            1
+          ],
+          "name": "energy"
+        },
+        {
+          "id": 7,
+          "values": [
+            3
+          ],
+          "name": "maxhp"
+        },
+        {
+          "id": 9,
+          "values": [
+            4
+          ],
+          "name": "maxmana"
+        },
+        {
+          "id": 41,
+          "values": [
+            7
+          ],
+          "name": "lightresist"
+        },
+        {
+          "id": 105,
+          "values": [
+            10
+          ],
+          "name": "item_fastercastrate"
+        },
+        {
+          "id": 107,
+          "values": [
+            38,
+            1
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 195,
+          "values": [
+            6,
+            36,
+            5
+          ],
+          "name": "item_skillonattack"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 195,
+          "values": [
+            6,
+            36,
+            5
+          ],
+          "name": "item_skillonattack",
+          "description": "ÿc3ÿc25% Chance to castÿc3 ÿc9level 6ÿc3 ÿcOFire Boltÿc3 on attackÿc0"
+        },
+        {
+          "id": 105,
+          "values": [
+            10
+          ],
+          "name": "item_fastercastrate",
+          "description": "ÿcO+10% Faster Cast Rateÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            38,
+            1
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+1 to Charged Bolt ÿc0"
+        },
+        {
+          "id": 1,
+          "values": [
+            1
+          ],
+          "name": "energy",
+          "description": "ÿcO+1 to Energyÿc0"
+        },
+        {
+          "id": 7,
+          "values": [
+            3
+          ],
+          "name": "maxhp",
+          "description": "ÿcV+3 to Lifeÿc0"
+        },
+        {
+          "id": 9,
+          "values": [
+            4
+          ],
+          "name": "maxmana",
+          "description": "ÿcO+4 to Manaÿc0"
+        },
+        {
+          "id": 41,
+          "values": [
+            7
+          ],
+          "name": "lightresist",
+          "description": "ÿc9Lightning Resist +7%ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 8432,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 4,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "lbt",
+      "categories": [
+        "Boots",
+        "Any Armor",
+        "Helm"
+      ],
+      "type_id": 1,
+      "nr_of_items_in_sockets": 0,
+      "id": 3344930924,
+      "level": 5,
+      "quality": 6,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "rare_name_id": 159,
+      "rare_name": "Viper",
+      "rare_name_id2": 101,
+      "rare_name2": "Spur",
+      "magical_name_ids": [
+        144,
+        934,
+        667,
+        1130,
+        664,
+        852
+      ],
+      "timestamp": 0,
+      "defense_rating": 3,
+      "max_durability": 12,
+      "current_durability": 12,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 16,
+          "values": [
+            28
+          ],
+          "name": "item_armor_percent"
+        },
+        {
+          "id": 19,
+          "values": [
+            10
+          ],
+          "name": "tohit"
+        },
+        {
+          "id": 43,
+          "values": [
+            5
+          ],
+          "name": "coldresist"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 89,
+          "values": [
+            1
+          ],
+          "name": "item_lightradius"
+        },
+        {
+          "id": 110,
+          "values": [
+            16
+          ],
+          "name": "item_poisonlengthresist"
+        },
+        {
+          "id": 232,
+          "values": [
+            4
+          ],
+          "name": "item_resist_ltng_perlevel"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Boots",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 2,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "transform_color": "dblu",
+      "displayed_magic_attributes": [
+        {
+          "id": 19,
+          "values": [
+            10
+          ],
+          "name": "tohit",
+          "description": "ÿc8+10 to Attack Ratingÿc0"
+        },
+        {
+          "id": 16,
+          "values": [
+            28
+          ],
+          "name": "item_armor_percent",
+          "description": "ÿcA+28% Enhanced Defenseÿc0"
+        },
+        {
+          "id": 43,
+          "values": [
+            5
+          ],
+          "name": "coldresist",
+          "description": "ÿcUCold Resist +5%ÿc0"
+        },
+        {
+          "id": 232,
+          "values": [
+            4
+          ],
+          "name": "item_resist_ltng_perlevel",
+          "op_stats": [
+            "lightresist"
+          ],
+          "op_value": 45,
+          "description": "ÿc9Lightning Resist +45%ÿc0"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist",
+          "description": "ÿc2Poison Resist +5%ÿc0"
+        },
+        {
+          "id": 110,
+          "values": [
+            16
+          ],
+          "name": "item_poisonlengthresist",
+          "description": "ÿc2Poison Length Reduced by 16%ÿc0"
+        },
+        {
+          "id": 89,
+          "values": [
+            1
+          ],
+          "name": "item_lightradius",
+          "description": "ÿc3+1 to Light Radiusÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 16,
+          "values": [
+            28
+          ],
+          "name": "item_armor_percent"
+        },
+        {
+          "id": 19,
+          "values": [
+            10
+          ],
+          "name": "tohit"
+        },
+        {
+          "id": 43,
+          "values": [
+            5
+          ],
+          "name": "coldresist"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 89,
+          "values": [
+            1
+          ],
+          "name": "item_lightradius"
+        },
+        {
+          "id": 110,
+          "values": [
+            16
+          ],
+          "name": "item_poisonlengthresist"
+        },
+        {
+          "id": 232,
+          "values": [
+            4
+          ],
+          "name": "item_resist_ltng_perlevel"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 19,
+          "values": [
+            10
+          ],
+          "name": "tohit",
+          "description": "ÿc8+10 to Attack Ratingÿc0"
+        },
+        {
+          "id": 16,
+          "values": [
+            28
+          ],
+          "name": "item_armor_percent",
+          "description": "ÿcA+28% Enhanced Defenseÿc0"
+        },
+        {
+          "id": 43,
+          "values": [
+            5
+          ],
+          "name": "coldresist",
+          "description": "ÿcUCold Resist +5%ÿc0"
+        },
+        {
+          "id": 232,
+          "values": [
+            4
+          ],
+          "name": "item_resist_ltng_perlevel",
+          "op_stats": [
+            "lightresist"
+          ],
+          "op_value": 45,
+          "description": "ÿc9Lightning Resist +45%ÿc0"
+        },
+        {
+          "id": 45,
+          "values": [
+            5
+          ],
+          "name": "poisonresist",
+          "description": "ÿc2Poison Resist +5%ÿc0"
+        },
+        {
+          "id": 110,
+          "values": [
+            16
+          ],
+          "name": "item_poisonlengthresist",
+          "description": "ÿc2Poison Length Reduced by 16%ÿc0"
+        },
+        {
+          "id": 89,
+          "values": [
+            1
+          ],
+          "name": "item_lightradius",
+          "description": "ÿc3+1 to Light Radiusÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 8800,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 6,
+      "position_y": 0,
+      "alt_position_id": 1,
+      "type": "sst",
+      "categories": [
+        "Staff",
+        "Staves And Rods",
+        "Blunt",
+        "Melee Weapon",
+        "Weapon"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 344404577,
+      "level": 6,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            1
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 107,
+          "values": [
+            39,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "twohandmindam": 1,
+        "twohandmaxdam": 5
+      },
+      "type_name": "Short Staff",
+      "inv_file": null,
+      "inv_height": 3,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            1
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+1 to Fire Bolt ÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            39,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Ice Bolt ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            1
+          ],
+          "name": "item_singleskill"
+        },
+        {
+          "id": 107,
+          "values": [
+            39,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            36,
+            1
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+1 to Fire Bolt ÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            39,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Ice Bolt ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 8992,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 1,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 0,
+      "position_y": 3,
+      "alt_position_id": 1,
+      "type": "box",
+      "categories": [
+        "Quest"
+      ],
+      "type_id": 4,
+      "quest_difficulty": 0,
+      "nr_of_items_in_sockets": 0,
+      "id": 2950100428,
+      "level": 1,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "has_quantity": false,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Horadric Cube",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 2,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 9128,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 1,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 1,
+      "equipped_id": 11,
+      "position_x": 11,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "sst",
+      "categories": [
+        "Staff",
+        "Staves And Rods",
+        "Blunt",
+        "Melee Weapon",
+        "Weapon"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 1267780273,
+      "level": 6,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "total_nr_of_sockets": 3,
+      "magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            38,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "twohandmindam": 1,
+        "twohandmaxdam": 5
+      },
+      "type_name": "Short Staff",
+      "inv_file": null,
+      "inv_height": 3,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            38,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Charged Bolt ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            38,
+            2
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 107,
+          "values": [
+            38,
+            2
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+2 to Charged Bolt ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 9304,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 1,
+      "equipped_id": 4,
+      "position_x": 4,
+      "position_y": 0,
+      "alt_position_id": 0,
+      "type": "sst",
+      "categories": [
+        "Staff",
+        "Staves And Rods",
+        "Blunt",
+        "Melee Weapon",
+        "Weapon"
+      ],
+      "type_id": 3,
+      "nr_of_items_in_sockets": 0,
+      "id": 3819203277,
+      "level": 6,
+      "quality": 4,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "magic_prefix": 855,
+      "magic_prefix_name": "Jagged",
+      "magic_suffix": 0,
+      "timestamp": 0,
+      "max_durability": 20,
+      "current_durability": 20,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 24,
+          "values": [
+            1
+          ],
+          "name": "secondary_maxdamage"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            3
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "base_damage": {
+        "twohandmindam": 1,
+        "twohandmaxdam": 5
+      },
+      "type_name": "Short Staff",
+      "inv_file": null,
+      "inv_height": 3,
+      "inv_width": 1,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 24,
+          "values": [
+            1
+          ],
+          "name": "secondary_maxdamage",
+          "description": "ÿcV+1 to Maximum Damageÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            3
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+3 to Fire Bolt ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 24,
+          "values": [
+            1
+          ],
+          "name": "secondary_maxdamage"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            3
+          ],
+          "name": "item_singleskill"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 24,
+          "values": [
+            1
+          ],
+          "name": "secondary_maxdamage",
+          "description": "ÿcV+1 to Maximum Damageÿc0"
+        },
+        {
+          "id": 107,
+          "values": [
+            36,
+            3
+          ],
+          "name": "item_singleskill",
+          "description": "ÿc9+3 to Fire Bolt ÿc0"
+        }
+      ]
+    }
+  ],
+  "corpses": [],
+  "merc_items": [],
+  "has_demon": 0,
+  "item_bonuses": [
+    {
+      "id": 107,
+      "values": [
+        38,
+        2
+      ],
+      "name": "item_singleskill"
+    },
+    {
+      "id": 24,
+      "values": [
+        1
+      ],
+      "name": "secondary_maxdamage"
+    },
+    {
+      "id": 107,
+      "values": [
+        36,
+        3
+      ],
+      "name": "item_singleskill"
+    }
+  ]
+}

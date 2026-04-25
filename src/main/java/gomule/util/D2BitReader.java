@@ -176,6 +176,42 @@ public class D2BitReader {
         return position / 8;
     }
 
+    /**
+     * Forensic dump of the bit stream around the current position. Renders
+     * each byte as 8 bits in LSB-first order (matching how {@link #read(int)}
+     * consumes them) with {@code [..]} marking the next bit to be read.
+     *
+     * <p>Useful when a downstream parse fails and you need to manually compare
+     * the actual stream against a reference parser. Pair with {@link D2Log#error}.
+     *
+     * @param bitsBack    how many bits to render before the cursor (clamped to start)
+     * @param bitsForward how many bits to render after  the cursor (clamped to end)
+     * @return e.g. {@code "byte=0x0416 bit=8551 ...0000 1011 [01]00 1101 0011..."}
+     */
+    public String snapshot(int bitsBack, int bitsForward) {
+        int total = filedata.length * 8;
+        int from = Math.max(0, position - bitsBack);
+        int to   = Math.min(total, position + bitsForward);
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("byte=0x").append(String.format("%04X", position / 8))
+          .append(" bit_off_in_byte=").append(position % 8)
+          .append(" abs_bit=").append(position).append("  ");
+        // Walk byte-by-byte to keep grouping aligned; mark the cursor.
+        int byteFrom = from / 8;
+        int byteTo   = (to + 7) / 8;
+        for (int bi = byteFrom; bi < byteTo; bi++) {
+            int b = filedata[bi] & 0xFF;
+            for (int k = 0; k < 8; k++) { // LSB-first
+                int abs = bi * 8 + k;
+                if (abs == position) sb.append('[');
+                sb.append((b >> k) & 1);
+                if (abs == position) sb.append(']');
+            }
+            sb.append(' ');
+        }
+        return sb.toString();
+    }
+
     // set the current position (in bytes)
     public void set_byte_pos(int b) {
         position = 8 * b;

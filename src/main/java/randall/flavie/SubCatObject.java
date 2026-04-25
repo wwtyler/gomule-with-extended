@@ -21,9 +21,10 @@
 package randall.flavie;
 
 import java.util.ArrayList;
-public final class SubCatObject implements Comparable {
-    private final String iSubCat;
-    private final ArrayList iItemObjects = new ArrayList();
+@SuppressWarnings({"rawtypes","unchecked"})
+public class SubCatObject implements Comparable {
+    private String iSubCat;
+    private ArrayList iItemObjects = new ArrayList();
     private CatObject iCatObject;
 
     public SubCatObject(String pSubCat, CatObject pCatObject) {
@@ -31,7 +32,6 @@ public final class SubCatObject implements Comparable {
         iCatObject = pCatObject;
     }
 
-    @Override
     public String toString() {
         return iSubCat;
     }
@@ -44,22 +44,12 @@ public final class SubCatObject implements Comparable {
         return iItemObjects;
     }
 
-    @Override
     public int compareTo(Object pObject) {
         return toString().compareTo(pObject.toString());
     }
 
-    @Override
     public boolean equals(Object pObject) {
-        if (this == pObject) return true;
-        if (pObject == null || getClass() != pObject.getClass()) return false;
-        SubCatObject that = (SubCatObject) pObject;
-        return toString().equals(that.toString());
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
+        return toString().equals(pObject.toString());
     }
 
     public CatObject getCatObject() {

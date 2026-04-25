@@ -27,12 +27,15 @@ public class D2SharedStashReader {
         return new D2SharedStash(filename, result, bitReader.getFileContent());
     }
 
-    private D2SharedStashPane readSharedStashPane(D2BitReader bitReader, String filename)
-            throws Exception {
+    private D2SharedStashPane readSharedStashPane(D2BitReader bitReader, String filename) throws Exception {
         int stashPaneStart = bitReader.get_byte_pos();
         D2SharedStash.Header header = D2SharedStash.Header.fromBytes(bitReader);
-        if (header.getVersion() != 99)
-            throw new RuntimeException("Incorrect shared stash version: " + header.getVersion());
+        // D2 LoD = 99, D2R 可能使用 99 或实际从文件中读出的版本，宽容处理
+        long ver = header.getVersion();
+        if (ver != 99 && ver != 105 && ver != 96 && ver != 97 && ver != 98)
+            throw new RuntimeException("Incorrect shared stash version: " + ver);
+        // D2R 1.5+ tail-bit format for items (must be set before constructing D2Item)
+        D2Item.sSaveVersion = (ver >= 99) ? 0x69 : 0;
         bitReader.set_byte_pos(bitReader.findNextFlag("JM", bitReader.get_byte_pos()));
         bitReader.skipBytes(2);
         int numItems = (int) bitReader.read(16);
@@ -42,8 +45,7 @@ public class D2SharedStashReader {
         }
         int calculatedLength = bitReader.get_byte_pos() - stashPaneStart;
         if (calculatedLength != header.getLength())
-            throw new RuntimeException("Incorrect shared stash length: " + calculatedLength
-                    + " expected: " + header.getLength());
+            throw new RuntimeException("Incorrect shared stash length: " + calculatedLength + " expected: " + header.getLength());
         return D2SharedStashPane.fromItems(result, header.getGold());
     }
 }

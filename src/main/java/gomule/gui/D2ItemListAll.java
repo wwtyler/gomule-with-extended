@@ -20,23 +20,18 @@ import java.util.ArrayList;
  * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"ForLoopReplaceableByForEach"})
 public class D2ItemListAll implements D2ItemList {
     private D2FileManager iFileManager;
     private D2Project iProject;
 
-    @SuppressWarnings("Convert2Diamond")
     private ArrayList<D2ItemList> iList = new ArrayList<D2ItemList>();
-    @SuppressWarnings("Convert2Diamond")
     private ArrayList<D2ItemListListener> iD2ItemListListenerList = new ArrayList<D2ItemListListener>();
     private boolean iIgnoreItemListEvents = false;
 
-    @SuppressWarnings({"OverridableMethodCallInConstructor", "CallToPrintStackTrace"})
     public D2ItemListAll(D2FileManager pFileManager, D2Project pProject) {
         iFileManager = pFileManager;
         iProject = pProject;
 
-        @SuppressWarnings("Convert2Diamond")
         ArrayList<String> lFileNames = new ArrayList<String>();
 
         lFileNames.addAll(iProject.getCharList());
@@ -54,7 +49,6 @@ public class D2ItemListAll implements D2ItemList {
         fireD2ItemListEvent();
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public void connect(String pFileName) {
         try {
             D2ItemList lList = iFileManager.addItemList(pFileName, null);
@@ -70,7 +64,6 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public void disconnect(String pFileName) {
         try {
             D2ItemList lList = iFileManager.getItemList(pFileName);
@@ -96,7 +89,6 @@ public class D2ItemListAll implements D2ItemList {
         return iList;
     }
 
-    @SuppressWarnings("override")
     public String getFilename() {
         return "all";
     }
@@ -117,7 +109,6 @@ public class D2ItemListAll implements D2ItemList {
         return null;
     }
 
-    @SuppressWarnings("override")
     public boolean containsItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -129,7 +120,6 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
-    @SuppressWarnings("override")
     public void removeItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -141,9 +131,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public ArrayList<D2Item> getItemList() {
-        @SuppressWarnings("Convert2Diamond")
         ArrayList<D2Item> lList = new ArrayList<D2Item>();
 
         D2ItemList lItemList;
@@ -155,7 +143,6 @@ public class D2ItemListAll implements D2ItemList {
         return lList;
     }
 
-    @SuppressWarnings("override")
     public int getNrItems() {
         int lNrItems = 0;
 
@@ -168,7 +155,6 @@ public class D2ItemListAll implements D2ItemList {
         return lNrItems;
     }
 
-    @SuppressWarnings("override")
     public boolean isModified() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -181,7 +167,6 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
-    @SuppressWarnings("override")
     public void addD2ItemListListener(D2ItemListListener pListener) {
         iD2ItemListListenerList.add(pListener);
         D2ItemList lItemList;
@@ -191,7 +176,6 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public void removeD2ItemListListener(D2ItemListListener pListener) {
         iD2ItemListListenerList.remove(pListener);
         D2ItemList lItemList;
@@ -201,7 +185,6 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public void fireD2ItemListEvent() {
         if (iIgnoreItemListEvents) {
             return;
@@ -212,7 +195,6 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public boolean hasD2ItemListListener() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -225,7 +207,6 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
-    @SuppressWarnings("override")
     public void save(D2Project pProject) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -236,7 +217,6 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public boolean isSC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -249,7 +229,6 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
-    @SuppressWarnings("override")
     public boolean isHC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -262,7 +241,6 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
-    @SuppressWarnings("override")
     public void fullDump(PrintWriter pWriter) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -271,28 +249,23 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public void initTimestamp() {
         throw new RuntimeException("Internal error: wrong calling");
     }
 
-    @SuppressWarnings("override")
     public boolean checkTimestamp() {
 //        throw new RuntimeException("Internal error: wrong calling");
         return true;
     }
 
-    @SuppressWarnings("override")
     public void ignoreItemListEvents() {
         iIgnoreItemListEvents = true;
     }
 
-    @SuppressWarnings("override")
     public void listenItemListEvents() {
         iIgnoreItemListEvents = false;
     }
 
-    @SuppressWarnings("override")
     public void addItem(D2Item pItem) {
         //Do Nothing!
     }

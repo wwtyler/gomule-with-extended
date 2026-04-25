@@ -1,21 +1,16 @@
 package gomule.d2i;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import gomule.gui.D2ItemListAdapter;
 import gomule.item.D2Item;
 import gomule.util.D2Backup;
 import gomule.util.D2BitReader;
 import gomule.util.D2Project;
 
-public class D2SharedStash extends D2ItemListAdapter {
+import java.io.PrintWriter;
+import java.util.*;
+import java.util.stream.Collectors;
 
+public class D2SharedStash extends D2ItemListAdapter {
     private final List<D2SharedStashPane> panes;
     private final byte[] originalContent;
     private final D2SharedStashWriter sharedStashWriter;
@@ -42,12 +37,12 @@ public class D2SharedStash extends D2ItemListAdapter {
 
     @Override
     public void removeItem(D2Item pItem) {
-        // Handled by panes
+        //Handled by panes
     }
 
     @Override
     public void addItem(D2Item pItem) {
-        // Handled by panes
+        //Handled by panes
     }
 
     @Override
@@ -89,9 +84,7 @@ public class D2SharedStash extends D2ItemListAdapter {
 
     @Override
     protected void saveInternal(D2Project d2Project) {
-        if (d2Project != null) {
-            D2Backup.backup(d2Project, iFileName, new D2BitReader(originalContent.clone()));
-        }
+        if (d2Project != null) D2Backup.backup(d2Project, iFileName, new D2BitReader(originalContent.clone()));
         sharedStashWriter.write(this);
         setModified(false);
     }
@@ -101,7 +94,6 @@ public class D2SharedStash extends D2ItemListAdapter {
     }
 
     public static class D2SharedStashPane {
-
         private final List<D2Item> items;
         private final D2Item[][] paneGrid;
         private final int gold;
@@ -119,13 +111,9 @@ public class D2SharedStash extends D2ItemListAdapter {
         private static D2Item[][] constructPaneGrid(List<D2Item> items) {
             D2Item[][] grid = new D2Item[16][13];
             for (D2Item item : items) {
-                for (int i = item.get_col(); i < (int) item.get_col()
-                        + (int) item.get_width(); i++) {
-                    for (int j = item.get_row(); j < (int) item.get_row()
-                            + (int) item.get_height(); j++) {
-                        if (grid[i][j] != null) {
-                            throw new RuntimeException("Failed to create shared stash pane");
-                        }
+                for (int i = item.get_col(); i < (int) item.get_col() + (int) item.get_width(); i++) {
+                    for (int j = item.get_row(); j < (int) item.get_row() + (int) item.get_height(); j++) {
+                        if (grid[i][j] != null) throw new RuntimeException("Failed to create shared stash pane");
                         grid[i][j] = item;
                     }
                 }
@@ -146,20 +134,12 @@ public class D2SharedStash extends D2ItemListAdapter {
         }
 
         public boolean canDropItem(int col, int row, D2Item item) {
-            if (item.isQuestItem()) {
-                return false;
-            }
-            if (col > paneGrid.length - 1 || col < 0 || row > paneGrid[0].length - 1 || row < 0) {
-                return false;
-            }
+            if (item.isQuestItem()) return false;
+            if (col > paneGrid.length - 1 || col < 0 || row > paneGrid[0].length - 1 || row < 0) return false;
             for (int i = col; i < col + item.get_width(); i++) {
                 for (int j = row; j < row + item.get_height(); j++) {
-                    if (i > paneGrid.length - 1 || j > paneGrid[0].length - 1) {
-                        return false;
-                    }
-                    if (paneGrid[i][j] != null) {
-                        return false;
-                    }
+                    if (i > paneGrid.length - 1 || j > paneGrid[0].length - 1) return false;
+                    if (paneGrid[i][j] != null) return false;
                 }
             }
             return true;
@@ -167,18 +147,16 @@ public class D2SharedStash extends D2ItemListAdapter {
 
         @Override
         public String toString() {
-            return "D2SharedStashPane{" + "items=" + items + ", paneGrid="
-                    + Arrays.toString(paneGrid) + '}';
+            return "D2SharedStashPane{" +
+                    "items=" + items +
+                    ", paneGrid=" + Arrays.toString(paneGrid) +
+                    '}';
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
             D2SharedStashPane that = (D2SharedStashPane) o;
             return Objects.equals(items, that.items) && Arrays.deepEquals(paneGrid, that.paneGrid);
         }
@@ -197,20 +175,19 @@ public class D2SharedStash extends D2ItemListAdapter {
             item.set_body_position((short) 0);
             item.set_panel((short) 5);
             item.setCharLvl(75);
-            List<D2Item> updatedItems = new ArrayList<>(this.items);
-            updatedItems.add(item);
-            return D2SharedStashPane.fromItems(updatedItems, gold);
+            List<D2Item> items = new ArrayList<>(this.items);
+            items.add(item);
+            return D2SharedStashPane.fromItems(items, gold);
         }
 
         public D2SharedStashPane removeItem(D2Item item) {
-            List<D2Item> updatedItems = new ArrayList<>(this.items);
-            updatedItems.remove(item);
-            return D2SharedStashPane.fromItems(updatedItems, gold);
+            List<D2Item> items = new ArrayList<>(this.items);
+            items.remove(item);
+            return D2SharedStashPane.fromItems(items, gold);
         }
     }
 
     static class Header {
-
         private final long version;
         private final int gold;
         private final long length;
@@ -245,17 +222,17 @@ public class D2SharedStash extends D2ItemListAdapter {
 
         @Override
         public String toString() {
-            return "Header{" + "version=" + version + ", gold=" + gold + ", length=" + length + '}';
+            return "Header{" +
+                    "version=" + version +
+                    ", gold=" + gold +
+                    ", length=" + length +
+                    '}';
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
             Header header = (Header) o;
             return version == header.version && gold == header.gold && length == header.length;
         }

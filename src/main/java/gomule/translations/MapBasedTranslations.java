@@ -1,12 +1,12 @@
 package gomule.translations;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.google.common.collect.ImmutableMap;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Objects;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.google.common.collect.ImmutableMap;
 
 public class MapBasedTranslations implements Translations {
     private final Map<String, String> translationData;
@@ -19,11 +19,18 @@ public class MapBasedTranslations implements Translations {
     @SuppressWarnings("null")
     public static Translations loadTranslations(InputStream inputStream) {
         try {
-            ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();
-            MAPPER.readTree(inputStream)
-                    .forEach(node -> mapBuilder.put(
-                            node.get("Key").textValue(), node.get("enUS").textValue()));
-            return new MapBasedTranslations(mapBuilder.build());
+            // Use a mutable HashMap to tolerate duplicate keys in mod translation files
+            // (e.g. MDK V3 item-modifiers.json contains "Chaotic" twice).
+            // Last entry wins, matching D2R's MPQ-load behavior.
+            java.util.HashMap<String, String> map = new java.util.HashMap<>();
+            MAPPER.readTree(inputStream).forEach(node -> {
+                String key = node.get("Key").textValue();
+                String val = node.get("enUS").textValue();
+                if (key != null && val != null) {
+                    map.put(key, val);
+                }
+            });
+            return new MapBasedTranslations(ImmutableMap.copyOf(map));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

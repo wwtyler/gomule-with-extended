@@ -1,6 +1,27 @@
 This release of GoMule is in test stadium, 
 do not use this program without backup your D2 characters !!!
 
+================================================================
+DEVELOPER NOTES (D2R 1.5+ support — MUST READ before touching
+the .d2s/.d2i bit-stream parser):
+  - d2r-1.5-item-tail-bits.md   Per-item has_quantity / chronicle /
+                                 advanced_stash_quantity tail bits;
+                                 root cause of "Unknown item code
+                                 'sf4ic94p'" and the empty-string
+                                 NumberFormatException at
+                                 D2PropCollection.readProp.
+  - d2r-d2s-key-notes.md         General D2R .d2s format overview.
+
+DATA-TABLE SYNC (d2111/):
+  GoMule loads ~25 .txt tables from d2111/ at startup. They MUST
+  match the actual D2R install + active mod or .d2s parsing breaks.
+  Verify / sync via:
+    pwsh tools/sync-d2111.ps1            # report only
+    pwsh tools/sync-d2111.ps1 -Apply     # copy mismatched files
+  Resolution priority: mod (MDK V3 MPQ) -> vanilla D2R dump.
+  Edit -Mod / -Vanilla parameters if your install paths differ.
+================================================================
+
 Basically the read/write character "core" is setup by Gohanman,
 a lot is changed starting from this first release
 

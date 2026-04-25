@@ -16,25 +16,21 @@ import java.util.ArrayList;
  * 
  * Window - Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"ForLoopReplaceableByForEach"})
 public abstract class D2ItemListAdapter implements D2ItemList {
     protected String iFileName;
 
     private long iTimestamp;
 
-    @SuppressWarnings("Convert2Diamond")
     private ArrayList<D2ItemListListener> iListeners = new ArrayList<D2ItemListListener>();
     private boolean iModified;
 
     private boolean iIgnoreItemListEvents = false;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     protected D2ItemListAdapter(String pFileName) {
         iFileName = pFileName;
         initTimestamp();
     }
 
-    @SuppressWarnings("override")
     public final void save(D2Project pProject) {
         saveInternal(pProject);
         initTimestamp();
@@ -42,12 +38,10 @@ public abstract class D2ItemListAdapter implements D2ItemList {
 
     protected abstract void saveInternal(D2Project pProject);
 
-    @SuppressWarnings("override")
     public void initTimestamp() {
         iTimestamp = (new File(iFileName)).lastModified();
     }
 
-    @SuppressWarnings("override")
     public boolean checkTimestamp() {
         long lTimestamp = (new File(iFileName)).lastModified();
         return iTimestamp == lTimestamp;
@@ -57,11 +51,11 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         return iListeners;
     }
 
+    @SuppressWarnings("unchecked")
     public void putItemListInfo(Object pItemListInfo) {
         iListeners = (ArrayList<D2ItemListListener>) pItemListInfo;
     }
 
-    @SuppressWarnings("override")
     public boolean isModified() {
         return iModified;
     }
@@ -71,22 +65,18 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         fireD2ItemListEvent();
     }
 
-    @SuppressWarnings("override")
     public void addD2ItemListListener(D2ItemListListener pListener) {
         iListeners.add(pListener);
     }
 
-    @SuppressWarnings("override")
     public void removeD2ItemListListener(D2ItemListListener pListener) {
         iListeners.remove(pListener);
     }
 
-    @SuppressWarnings("override")
     public boolean hasD2ItemListListener() {
         return !iListeners.isEmpty();
     }
 
-    @SuppressWarnings("override")
     public void fireD2ItemListEvent() {
         if (iIgnoreItemListEvents) {
             return;
@@ -96,12 +86,10 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         }
     }
 
-    @SuppressWarnings("override")
     public void ignoreItemListEvents() {
         iIgnoreItemListEvents = true;
     }
 
-    @SuppressWarnings("override")
     public void listenItemListEvents() {
         iIgnoreItemListEvents = false;
     }

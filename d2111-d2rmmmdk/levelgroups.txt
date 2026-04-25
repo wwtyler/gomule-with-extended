@@ -1,0 +1,97 @@
+Name	Id	*StringName	GroupName	*StringChinese
+Null	0	Null		
+Act 1 - Town	1	Rogue Encampment	[MDK MOD]Rogue Encampment	[A1]俠盜營地
+Act 1 - Blood Moor	2	Blood Moor	[MDK MOD]Blood Moor	[A1]鮮血荒地
+Act 1 - Cold Plains	3	Cold Plains	[MDK MOD]Cold Plains	[A1]冰冷之原
+Act 1 - Stony Field	4	Stony Field	[MDK MOD]Stony Field	[A1]亂石曠野
+Act 1 - Dark Wood	5	Dark Wood	[MDK MOD]Dark Wood	[A1]黑暗森林
+Act 1 - Black Marsh	6	Black Marsh	[MDK MOD]Black Marsh	[A1]黑色荒地
+Act 1 - Tamoe Highland	7	Tamoe Highland	[MDK MOD]Tamoe Highland	[A1]泰摩高地
+Act 1 - Den of Evil	8	Den of Evil	[MDK MOD]Den of Evil	[A1]邪惡洞窟
+Act 1 - Cave	9	Cave	[MDK MOD]Cave	[A1冰冷之原]洞穴
+Act 1 - Underground Passage	10	Underground Passage	[MDK MOD]Underground Passage	[A1黑暗森林]地底通道
+Act 1 - Hole	11	Hole	[MDK MOD]Hole	[A1黑色荒地]地洞
+Act 1 - Pit	12	Pit	[MDK MOD]Pit	[A1泰摩高地]地穴
+Act 1 - Burial Grounds	13	Burial Grounds	[MDK MOD]Burial Grounds	[A1]埋骨之地
+Act 1 - Crypt	14	Crypt	[MDK MOD]Crypt	[A1]墓地
+Act 1 - Mausoleum	15	Mausoleum	[MDK MOD]Mausoleum	[A1]大陵墓
+Act 1 - Forgotten Tower	16	Forgotten Tower	[MDK MOD]Forgotten Tower	[A1]遺忘之塔
+Act 1 - Monastery Gate	17	Monastery Gate	[MDK MOD]Monastery Gate	[A1]修道院大門
+Act 1 - Outer Cloister	18	Outer Cloister	[MDK MOD]Outer Cloister	[A1]外側迴廊
+Act 1 - Barracks	19	Barracks	[MDK MOD]Barracks	[A1]兵營
+Act 1 - Jail	20	Jail Level 1	[MDK MOD]Jail	[A1]監牢
+Act 1 - Inner Cloister	21	Inner Cloister	[MDK MOD]Inner Cloister	[A1]內側迴廊
+Act 1 - Cathedral	22	Cathedral	[MDK MOD]Cathedral	[A1]大教堂
+Act 1 - Catacombs	23	Catacombs	[MDK MOD]Catacombs	[A1]地下墓穴
+Act 1 - Tristram	24	Tristram	[MDK MOD]Tristram	[A1]崔斯特姆
+Act 1 - Moo Moo Farm	25	Moo Moo Farm	[MDK MOD]MooMooFarmGroup	[A1]?c8不存在的關卡(哞哞農莊)?c0
+Act 2 - Town	26	Lut Gholein	[MDK MOD]Lut Gholein	[A2]魯高因
+Act 2 - Rocky Waste	27	Rocky Waste	[MDK MOD]Rocky Waste	[A2]碎石荒地
+Act 2 - Dry Hills	28	Dry Hills	[MDK MOD]Dry Hills	[A2]乾土高地
+Act 2 - Far Oasis	29	Far Oasis	[MDK MOD]Far Oasis	[A2]遙遠的綠洲
+Act 2 - Lost City	30	Lost City	[MDK MOD]Lost City	[A2]失落古城
+Act 2 - Valley of Snakes	31	Valley of Snakes	[MDK MOD]Valley of Snakes	[A2]群蛇峽谷
+Act 2 - Canyon of the Magi	32	Canyon of the Magi	[MDK MOD]Canyon of the Magi	[A2]賢者之穀
+Act 2 - Sewers	33	Sewers	[MDK MOD]Lut Gholein Sewers	[A2]魯高因下水道
+Act 2 - Harem	34	Harem	[MDK MOD]Harem	[A2]後宮
+Act 2 - Palace Cellar	35	Palace Cellar	[MDK MOD]Palace Cellar	[A2]皇宮地窖
+Act 2 - Stony Tomb	36	Stony Tomb	[MDK MOD]Stony Tomb	[A2]古老石墓
+Act 2 - Halls of the Dead	37	Halls of the Dead	[MDK MOD]Halls of the Dead	[A2]死亡之殿
+Act 2 - Claw Viper Temple	38	Claw Viper Temple	[MDK MOD]Claw Viper Temple	[A2]利爪蛇魔神殿
+Act 2 - Maggot Lair	39	Maggot Lair	[MDK MOD]Maggot Lair	[A2]蛆蟲巢穴
+Act 2 - Ancient Tunnels	40	Ancient Tunnels	[MDK MOD]Ancient Tunnels	[A2]古代通道
+Act 2 - Tal Rasha's Tomb	41	Tal Rasha's Tomb	[MDK MOD]Tal Rasha's Tomb	[A2]塔拉夏的古墓
+Act 2 - Duriel's Lair	42	Duriel's Lair	[MDK MOD]Duriel's Lair	[A2]塔拉夏的密室
+Act 2 - Arcane Sanctuary	43	Arcane Sanctuary	[MDK MOD]Arcane Sanctuary	[A2]秘法聖殿
+Act 3 - Town	44	Kurast Docktown	[MDK MOD]Kurast Docktown	[A3]庫拉斯特港口
+Act 3 - Spider Forest	45	Spider Forest	[MDK MOD]Spider Forest	[A3]蜘蛛森林
+Act 3 - Great Marsh	46	Great Marsh	[MDK MOD]Great Marsh	[A3]大沼澤
+Act 3 - Flayer Jungle	47	Flayer Jungle	[MDK MOD]Flayer Jungle	[A3]剝皮叢林
+Act 3 - Lower Kurast	48	Lower Kurast	[MDK MOD]Lower Kurast	[A3]庫拉斯特下層?c4
+Act 3 - Kurast Bazaar	49	Kurast Bazaar	[MDK MOD]Kurast Bazaar	[A3]庫拉斯特市集
+Act 3 - Upper Kurast	50	Upper Kurast	[MDK MOD]Upper Kurast	[A3]庫拉斯特上層?c4
+Act 3 - Kurast Causeway	51	Kurast Causeway	[MDK MOD]Kurast Causeway	[A3]庫拉斯特堤道
+Act 3 - Travincal	52	Travincal	[MDK MOD]Travincal	[A3]崔凡克
+Act 3 - Arachnid Lair	53	Arachnid Lair	[MDK MOD]Spider Cave	[A3]蜘蛛巢穴
+Act 3 - Spider Cavern	54	Spider Cavern	[MDK MOD]Spider Cavern	[A3]蜘蛛洞窟
+Act 3 - Swampy Pit	55	Swampy Pit	[MDK MOD]Swampy Pit	[A3]沼澤地穴
+Act 3 - Flayer Dungeon	56	Flayer Dungeon	[MDK MOD]Flayer Dungeon	[A3]剝皮地牢
+Act 3 - Sewers	57	Sewers	[MDK MOD]Kurast Sewers	[A3]庫拉斯特下水道
+Act 3 - Ruined Temple	58	Ruined Temple	[MDK MOD]Ruined Temple	[A3]荒廢的神殿
+Act 3 - Disused Fane	59	Disused Fane	[MDK MOD]Disused Fane	[A3]廢棄的寺院
+Act 3 - Forgotten Reliquary	60	Forgotten Reliquary	[MDK MOD]Forgotten Reliquary	[A3]遺忘的聖殿
+Act 3 - Forgotten Temple	61	Forgotten Temple	[MDK MOD]Forgotten Temple	[A3]遺忘神殿
+Act 3 - Ruined Fane	62	Ruined Fane	[MDK MOD]Ruined Fane	[A3]荒廢的寺院
+Act 3 - Disused Reliquary	63	Disused Reliquary	[MDK MOD]Disused Reliquary	[A3]廢棄的聖殿
+Act 3 - Durance of Hate	64	Durance of Hate	[MDK MOD]Durance of Hate	[A3]憎恨囚牢
+Act 4 - Town	65	The Pandemonium Fortress	[MDK MOD]The Pandemonium Fortress	[A4]混沌界要塞
+Act 4 - Outer Steppes	66	Outer Steppes	[MDK MOD]Outer Steppes	[A4]外圍荒原
+Act 4 - Plains of Despair	67	Plains of Despair	[MDK MOD]Plains of Despair	[A4]絕望平原
+Act 4 - City of the Damned	68	City of the Damned	[MDK MOD]City of the Damned	[A4]罪罰之城
+Act 4 - River of Flame	69	River of Flame	[MDK MOD]River of Flame	[A4]火焰之河
+Act 4 - Chaos Sanctuary	70	The Chaos Sanctuary	[MDK MOD]Chaos Sanctum	[A4]混沌魔殿
+Expansion			[MDK MOD]	
+Act 5 - Town	71	Harrogath	[MDK MOD]Harrogath	[A5]哈洛加斯
+Act 5 - Bloody Foothills	72	Bloody Foothills	[MDK MOD]Bloody Foothills	[A5]血腥丘陵
+Act 5 - Frigid Highlands	73	Frigid Highlands	[MDK MOD]Rigid Highlands	[A5]冰凍高地
+Act 5 - Arreat Plateau	74	Arreat Plateau	[MDK MOD]Arreat Plateau	[A5]亞瑞特高原
+Act 5 - Crystalline Passage	75	Crystalline Passage	[MDK MOD]Crystalized Cavern Level 1	[A5]水晶通道
+Act 5 - Frozen River	76	Frozen River	[MDK MOD]Cellar of Pity	[A5]冰凍之河
+Act 5 - Glacial Trail	77	Glacial Trail	[MDK MOD]Crystalized Cavern Level 2	[A5]冰河小徑
+Act 5 - Drifter Cavern	78	Drifter Cavern	[MDK MOD]Echo Chamber	[A5]漂泊者洞窟
+Act 5 - Frozen Tundra	79	Frozen Tundra	[MDK MOD]Tundra Wastelands	[A5]冰凍苔原
+Act 5 - The Ancient's Way	80	The Ancients' Way	[MDK MOD]Glacial Caves Level 1	[A5]先祖之路
+Act 5 - Icy Cellar	81	Icy Cellar	[MDK MOD]Glacial Caves Level 2	[A5]冰窖
+Act 5 - Arreat Summit	82	Arreat Summit	[MDK MOD]Rocky Summit	[A5]亞瑞特山巔
+Act 5 - Nihlathak's Temple	83	Nihlathak's Temple	[MDK MOD]Nihlathaks Temple	[A5]尼拉塞克的神殿
+Act 5 - Halls	84	Halls	[MDK MOD]Temple Halls	[A5]神殿大廳
+Act 5 - Abaddon	85	Abaddon	[MDK MOD]Hell1	[A5冰冻高地]亞巴頓
+Act 5 - Pit of Acheron	86	Pit of Acheron	[MDK MOD]Hell2	[A5亚瑞特高原]冥河地穴
+Act 5 - Infernal Pit	87	Infernal Pit	[MDK MOD]Hell3	[A5冰冻苔原]煉獄地穴
+Act 5 - Worldstone Keep	88	The Worldstone Keep	[MDK MOD]The Worldstone Keep	[A5]世界之石要塞
+Act 5 - Throne of Destruction	89	Throne of Destruction	[MDK MOD]Throne of Destruction	[A5]毀滅王座
+Act 5 - Worldstone Chamber	90	The Worldstone Chamber	[MDK MOD]The Worldstone Chamber	[A5]世界之石大殿
+Act 5 - Matron's Den	91	Matron's Den	[MDK MOD]Pandemonium Run 1	[A5]群魔殿·魔母巢穴
+Act 5 - Forgotten Sands	92	Forgotten Sands	[MDK MOD]Pandemonium Run 2	[A5]群魔殿·遺忘沙漠
+Act 5 - Furnace of Pain	93	Furnace of Pain	[MDK MOD]Pandemonium Run 3	[A5]群魔殿·苦痛熔爐
+Act 5 - Tristram	94	Tristram	[MDK MOD]DiabloTristram	[A5]群魔殿決戰·崔斯特姆

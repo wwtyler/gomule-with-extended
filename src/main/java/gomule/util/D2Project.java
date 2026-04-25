@@ -41,7 +41,6 @@ import java.util.Properties;
  *  Window -
  * Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"ForLoopReplaceableByForEach", "Convert2Diamond"})
 public class D2Project {
     public static final String PROJECTS_DIR = "projects";
     public static final int TYPE_SC = 1;
@@ -77,7 +76,28 @@ public class D2Project {
     private boolean iIgnoreItems;
     private boolean allowDelete;
 
-    @SuppressWarnings({"UseSpecificCatch", "ConvertToTryWithResources"})
+    /**
+     * 返回 D2R 存档默认目录。优先返回 D2RMMMDKV3 mod 存档目录（如存在），
+     * 否则回退到 D2R 默认 Saved Games 目录或当前工作目录。
+     */
+    private static String getDefaultD2RSaveDir() {
+        String userHome = System.getProperty("user.home");
+        String[] candidates = new String[] {
+                userHome + File.separator + "Saved Games" + File.separator
+                        + "Diablo II Resurrected" + File.separator + "mods"
+                        + File.separator + "D2RMMMDKV3",
+                userHome + File.separator + "Saved Games" + File.separator
+                        + "Diablo II Resurrected",
+        };
+        for (String p : candidates) {
+            File f = new File(p);
+            if (f.isDirectory()) {
+                return p;
+            }
+        }
+        return ".";
+    }
+
     public D2Project(D2FileManager pFileManager, String pProjectName) {
         iFileManager = pFileManager;
         boolean lNew = false;
@@ -105,21 +125,21 @@ public class D2Project {
             lNew = true;
         }
 
-        String lCharDir = lLoadProperties.getProperty("CharDir", ".");
+        String lCharDir = lLoadProperties.getProperty("CharDir", getDefaultD2RSaveDir());
         iCharDialog = new JFileChooser(lCharDir);
         RandallFileFilter lCharFilter = new RandallFileFilter(".d2s files");
         lCharFilter.addExtension("d2s");
         iCharDialog.setFileFilter(lCharFilter);
         iCharDialog.setFileHidingEnabled(true);
 
-        String lStashDir = lLoadProperties.getProperty("StashDir", ".");
+        String lStashDir = lLoadProperties.getProperty("StashDir", getDefaultD2RSaveDir());
         iStashDialog = new JFileChooser(lStashDir);
         RandallFileFilter lStashFilter = new RandallFileFilter(".d2x files");
         lStashFilter.addExtension("d2x");
         iStashDialog.setFileFilter(lStashFilter);
         iStashDialog.setFileHidingEnabled(true);
 
-        String lSharedStashDir = lLoadProperties.getProperty("SharedStashDir", ".");
+        String lSharedStashDir = lLoadProperties.getProperty("SharedStashDir", getDefaultD2RSaveDir());
         iSharedStashDialog = new JFileChooser(lSharedStashDir);
         RandallFileFilter lSharedStashFilter = new RandallFileFilter(".d2i files");
         lSharedStashFilter.addExtension("d2i");
@@ -203,13 +223,21 @@ public class D2Project {
             String lBackup = lLoadProperties.getProperty("backup");
 
             try {
-                iIgnoreItems = "true".equals(lLoadProperties.getProperty("propDisplay"));
+                if (lLoadProperties.getProperty("propDisplay").equals("true")) {
+                    iIgnoreItems = true;
+                } else {
+                    iIgnoreItems = false;
+                }
             } catch (Exception pEx) {
                 iIgnoreItems = true;
             }
 
             try {
-                allowDelete = "true".equals(lLoadProperties.getProperty("allowDelete"));
+                if (lLoadProperties.getProperty("allowDelete").equals("true")) {
+                    allowDelete = true;
+                } else {
+                    allowDelete = false;
+                }
             } catch (Exception pEx) {
                 allowDelete = true;
             }
@@ -384,7 +412,6 @@ public class D2Project {
         return iSharedStashDialog;
     }
 
-    @SuppressWarnings({"ConvertToTryWithResources", "UseSpecificCatch"})
     public void saveProject() {
         // clear old
         Properties lSaveProperties = new Properties();

@@ -19,9 +19,6 @@ public class ApplicationRunningChecker implements Runnable {
         this.runtime = runtime;
         this.applicationName = applicationName;
         this.action = action;
-    }
-
-    public void start() {
         Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setDaemon(true).build()).scheduleWithFixedDelay(this, 0, 5, TimeUnit.MINUTES);
     }
 

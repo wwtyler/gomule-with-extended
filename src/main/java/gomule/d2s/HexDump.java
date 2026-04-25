@@ -6,8 +6,7 @@ public class HexDump {
     public static void printHex(byte[] b) {
         for (int i = 0; i < b.length; ++i) {
             if (i % 16 == 0) {
-                System.out
-                        .print(Integer.toHexString((i & 0xFFFF) | 0x10000).substring(1, 5) + " - ");
+                System.out.print(Integer.toHexString((i & 0xFFFF) | 0x10000).substring(1, 5) + " - ");
             }
             System.out.print(Integer.toHexString((b[i] & 0xFF) | 0x100).substring(1, 3) + " ");
             if (i % 16 == 15 || i == b.length - 1) {
@@ -29,10 +28,10 @@ public class HexDump {
     }
 
     public static void main(String[] args) throws Exception {
-        try (FileInputStream fis = new FileInputStream(args[0])) {
-            byte[] bytes = new byte[fis.available()];
-            fis.read(bytes);
-            printHex(bytes);
-        }
+        FileInputStream fis = new FileInputStream(args[0]);
+        byte[] bytes = new byte[fis.available()];
+        fis.read(bytes);
+        printHex(bytes);
+        fis.close();
     }
 }

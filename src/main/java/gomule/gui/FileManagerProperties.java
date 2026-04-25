@@ -51,7 +51,7 @@ public class FileManagerProperties {
                     out.close();
                 }
             } catch (IOException e) {
-                D2FileManager.displayErrorDialog(e);
+                e.printStackTrace();
             }
         }
     }

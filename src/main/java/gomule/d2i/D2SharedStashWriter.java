@@ -1,8 +1,5 @@
 package gomule.d2i;
 
-import gomule.item.D2Item;
-import gomule.util.D2BitReader;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static gomule.d2i.D2SharedStashReader.STASH_HEADER_START;
+import gomule.item.D2Item;
+import gomule.util.D2BitReader;
 
 public class D2SharedStashWriter {
     private final File file;
@@ -57,7 +56,9 @@ public class D2SharedStashWriter {
     public void writeHeader(D2SharedStash.D2SharedStashPane pane, D2BitReader bitWriter, long length) {
         bitWriter.skipBytes(8);
         long version = bitWriter.read(8);
-        if (version != 99) throw new RuntimeException("Overwriting wrong version stash");
+        // D2 LoD = 99, D2R 使用 99/105 等
+        if (version != 99 && version != 105 && version != 96 && version != 97 && version != 98)
+            throw new RuntimeException("Overwriting wrong version stash: " + version);
         bitWriter.skipBytes(3);
         bitWriter.write(pane.getGold(), 24);
         bitWriter.skipBytes(1);

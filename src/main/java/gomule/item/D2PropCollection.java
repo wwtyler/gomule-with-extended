@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-@SuppressWarnings({"ForLoopReplaceableByForEach", "Convert2Diamond"})
 public class D2PropCollection extends ArrayList<D2Prop> {
 
 
@@ -365,7 +364,18 @@ public class D2PropCollection extends ArrayList<D2Prop> {
     public void readProp(D2BitReader pFile, int rootProp, int qFlag) {
 
         D2TxtFileItemProperties pRow = D2TxtFile.ITEM_STAT_COST.getRow(rootProp);
-        int readLength = Integer.parseInt(pRow.get("Save Bits"));
+        String saveBitsStr = pRow != null ? pRow.get("Save Bits") : null;
+        if (saveBitsStr == null || saveBitsStr.trim().isEmpty()) {
+            String snap = pFile.snapshot(64, 64);
+            String msg = "ItemStatCost row #" + rootProp
+                    + (pRow != null ? " (" + pRow.get("Stat") + ")" : " (missing row)")
+                    + " has empty 'Save Bits' — bit stream likely misaligned at bit position "
+                    + pFile.get_pos() + ". 检查 d2111/itemstatcost.txt 是否与当前 mod 一致 (pwsh tools/sync-d2111.ps1)。"
+                    + "\n  bits: " + snap;
+            gomule.util.D2Log.error("D2PropCol", "%s", msg);
+            throw new RuntimeException(msg);
+        }
+        int readLength = Integer.parseInt(saveBitsStr.trim());
         int saveAdd = 0;
         if (!pRow.get("Save Add").equals("")) {
             saveAdd = Integer.parseInt(pRow.get("Save Add"));
@@ -402,11 +412,9 @@ public class D2PropCollection extends ArrayList<D2Prop> {
     }
 
 
-    @SuppressWarnings("Convert2Lambda")
     public void sort() {
 
         Collections.sort(this, new Comparator<D2Prop>() {
-            @SuppressWarnings("override")
             public int compare(D2Prop pObj1, D2Prop pObj2) {
                 D2Prop p1 = (D2Prop) pObj1;
                 D2Prop p2 = (D2Prop) pObj2;

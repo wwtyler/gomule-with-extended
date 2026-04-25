@@ -41,8 +41,8 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("override")
-public final class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2ItemListListener {
+@SuppressWarnings({"rawtypes","unchecked"})
+public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2ItemListListener {
     /**
      *
      */
@@ -64,7 +64,6 @@ public final class D2ViewClipboard extends RandallPanel implements D2ItemContain
 
     private JScrollPane lPane;
 
-    @SuppressWarnings("Convert2Lambda")
     private D2ViewClipboard(D2FileManager pFileManager) {
         iFileManager = pFileManager;
         try {
@@ -104,7 +103,6 @@ public final class D2ViewClipboard extends RandallPanel implements D2ItemContain
 
             iTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-                @Override
                 public void valueChanged(ListSelectionEvent arg0) {
 
                     if (!arg0.getValueIsAdjusting()) {
@@ -325,11 +323,9 @@ public final class D2ViewClipboard extends RandallPanel implements D2ItemContain
     }
 
     class D2ItemModel implements TableModel {
-        @SuppressWarnings("Convert2Diamond")
-        private final ArrayList<TableModelListener> iTableModelListeners = new ArrayList<TableModelListener>();
+        private ArrayList<TableModelListener> iTableModelListeners = new ArrayList<TableModelListener>();
         private ArrayList<D2Item> iItems;
 
-        @SuppressWarnings("OverridableMethodCallInConstructor")
         public D2ItemModel(ArrayList<D2Item> pItems) {
             setItems(pItems);
         }
@@ -347,11 +343,14 @@ public final class D2ViewClipboard extends RandallPanel implements D2ItemContain
         }
 
         public String getColumnName(int pCol) {
-            return switch (pCol) {
-                case 0 -> "Name";
-                case 1 -> "Fingerprint";
-                default -> "";
-            };
+            switch (pCol) {
+                case 0:
+                    return "Name";
+                case 1:
+                    return "Fingerprint";
+                default:
+                    return "";
+            }
         }
 
         public Class getColumnClass(int pCol) {
@@ -364,11 +363,14 @@ public final class D2ViewClipboard extends RandallPanel implements D2ItemContain
 
         public Object getValueAt(int pRow, int pCol) {
             D2Item lItem = (D2Item) iItems.get(pRow);
-            return switch (pCol) {
-                case 0 -> new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
-                case 1 -> new D2CellValue(lItem.getFingerprint(), lItem, iFileManager.getProject());
-                default -> "";
-            };
+            switch (pCol) {
+                case 0:
+                    return new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
+                case 1:
+                    return new D2CellValue(lItem.getFingerprint(), lItem, iFileManager.getProject());
+                default:
+                    return "";
+            }
         }
 
         public void setValueAt(Object pValue, int pRow, int pCol) {
