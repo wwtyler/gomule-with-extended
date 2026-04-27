@@ -20,12 +20,6 @@
  ******************************************************************************/
 package randall.flavie;
 
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
-import randall.flavie.filters.FlavieDupeFilter;
-import randall.flavie.filters.FlavieItemFilter;
-import randall.util.RandallUtil;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -34,7 +28,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import gomule.item.D2Item;
+import randall.d2files.D2TxtFile;
+import randall.d2files.D2TxtFileItemProperties;
+import randall.flavie.filters.FlavieDupeFilter;
+import randall.flavie.filters.FlavieItemFilter;
+import randall.util.RandallUtil;
 /**
  * @author Marco
  * <p>
@@ -53,14 +53,14 @@ public class Flavie {
     protected int iMultipleMatched = 0;
     protected int iDualFPMatched = 0;
     protected int iDupeMatched = 0;
-    private String iReportName;
+    private final String iReportName;
     //    private String iReportTitle;
-    private String iDataFile;
+    private final String iDataFile;
     //	protected HashMap iAllItems = new HashMap();
-    private ArrayList iDatFile = new ArrayList();
-    private DataFileBuilder iDataFileBuilder;
-    private DirectD2Files iDirectD2;
-    private ReportBuilder iReportBuilder;
+    private final ArrayList iDatFile = new ArrayList();
+    private final DataFileBuilder iDataFileBuilder;
+    private final DirectD2Files iDirectD2;
+    private final ReportBuilder iReportBuilder;
 
     public Flavie(String pReportName, String pReportTitle, String pDataFile, String pStyleFile, ArrayList pFileNames, boolean pCountAll, boolean pCountEthereal, boolean pCountStash, boolean pCountChar) throws Exception {
         iReportName = pReportName;
@@ -78,17 +78,17 @@ public class Flavie {
         File lDupeDirList = new File("dupelists");
         File lDupeFiles[] = lDupeDirList.listFiles();
 
-        for (int i = 0; i < lDupeFiles.length; i++) {
-            if (lDupeFiles[i].getCanonicalPath().endsWith(".txt")) {
-                iFilters.add(new FlavieDupeFilter(lDupeFiles[i].getCanonicalPath(), new FileReader(lDupeFiles[i].getCanonicalPath())));
+        for (File lDupeFile : lDupeFiles) {
+            if (lDupeFile.getCanonicalPath().endsWith(".txt")) {
+                iFilters.add(new FlavieDupeFilter(lDupeFile.getCanonicalPath(), new FileReader(lDupeFile.getCanonicalPath())));
             }
-            if (lDupeFiles[i].getCanonicalPath().endsWith(".zip")) {
-                ZipFile lZip = new ZipFile(lDupeFiles[i].getCanonicalPath());
+            if (lDupeFile.getCanonicalPath().endsWith(".zip")) {
+                ZipFile lZip = new ZipFile(lDupeFile.getCanonicalPath());
                 Enumeration lEnum = lZip.entries();
                 while (lEnum.hasMoreElements()) {
                     ZipEntry lEntry = (ZipEntry) lEnum.nextElement();
                     if (lEntry.getName().endsWith(".txt")) {
-                        iFilters.add(new FlavieDupeFilter(lDupeFiles[i].getCanonicalPath() + ":" + lEntry.getName(), new InputStreamReader(lZip.getInputStream(lEntry))));
+                        iFilters.add(new FlavieDupeFilter(lDupeFile.getCanonicalPath() + ":" + lEntry.getName(), new InputStreamReader(lZip.getInputStream(lEntry))));
                     }
                 }
             }
@@ -125,8 +125,8 @@ public class Flavie {
 
     public void finishFilters() throws Exception {
         for (int i = 0; i < iFilters.size(); i++) {
-            if (iFilters.get(i) instanceof FlavieDupeFilter) {
-                iDupeMatched += ((FlavieDupeFilter) iFilters.get(i)).getDupeCount();
+            if (iFilters.get(i) instanceof FlavieDupeFilter lDupeFilter) {
+                iDupeMatched += lDupeFilter.getDupeCount();
             }
             ((FlavieItemFilter) iFilters.get(i)).finish();
         }
