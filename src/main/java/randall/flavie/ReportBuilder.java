@@ -32,7 +32,7 @@ import java.util.Iterator;
  * <p>
  * Window - Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"rawtypes","unchecked","null"})
+@SuppressWarnings({"rawtypes","unchecked"})
 public class ReportBuilder {
 //	private Flavie				iFlavie;
 //	private FlavieSettingsPanel	iFlaviePanel;
@@ -61,7 +61,7 @@ public class ReportBuilder {
         if (!lReport.exists()) {
             lReport.createNewFile();
         }
-        PrintStream lOutReport = new PrintStream(new FileOutputStream(lReport));
+        try (PrintStream lOutReport = new PrintStream(new FileOutputStream(lReport))) {
 
         lOutReport.println("<html>");
         lOutReport.println("<head>");
@@ -79,7 +79,7 @@ public class ReportBuilder {
         ArrayList lPercentages = new ArrayList();
 
         CatObject lCatObject = null;
-        SubCatObject lSubCatObject = null;
+        SubCatObject lSubCatObject;
 
         boolean lShowCounters = false;
         boolean lNewRow = false;
@@ -93,7 +93,8 @@ public class ReportBuilder {
                 PercentageCounter lPerc = new PercentageCounter(object);
                 lPercentages.add(lPerc);
             }
-            if (lObject instanceof CatObject object) {
+            switch (lObject) {
+                case CatObject object -> {
                 int lNrItems = 0;
 
                 int lNrItemsFound = 0;
@@ -138,6 +139,7 @@ public class ReportBuilder {
                     }
                 }
                 if (lSubCat) {
+                    //noinspection UnusedAssignment
                     lSubCat = false;
                     lOutReport.println("</table>");
                 }
@@ -165,11 +167,11 @@ public class ReportBuilder {
                 lPercentages.add(lPerc);
                 lOutReport.println("<div class=cat>" + lCatObject.toString() + "(" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
-            } else if (lObject instanceof SubCatObject object) {
+                }
+                case SubCatObject object -> {
                 lSubCatObject = object;
 
                 if (lSubCat) {
-                    lSubCat = false;
                     lOutReport.println("</table><br>");
                 }
 
@@ -217,7 +219,8 @@ public class ReportBuilder {
                 lOutReport.println("<div class=subcat>" + lSubCatObject.toString() + " (" + lNrItemsFound + " of " + lNrItems + ") (" + lPerc.getPercentage(lNrItemsFound, lNrItems) + "%)</div>");
                 lOutReport.println("<p>");
                 lOutReport.println("<table>");
-            } else if (lObject instanceof ItemObject lItemObject) {
+                }
+                case ItemObject lItemObject -> {
 
 //				ArrayList lItem = RandallUtil.split(lLine, ",", false);
 
@@ -259,41 +262,41 @@ public class ReportBuilder {
                 {
                     // &nbsp
                     lOutReport.println("<tr>");
-                    lOutReport.println(lCountStr + "<td class=" + lCatObject.getStyle() + ">" + lItemObject.getName() + "</td>");
+                    lOutReport.println(lCountStr + "<td class=" + (lCatObject != null ? lCatObject.getStyle() : "") + ">" + lItemObject.getName() + "</td>");
                     lOutReport.println("</tr>");
                 } else if (lItemObject.getExtraDisplay() == null || lItemObject.getExtraDisplay().equals("")) {
                     lOutReport.println("<tr>");
-                    lOutReport.println(lCountStr + "<td class=" + lCatObject.getStyle() + ">" + lItemObject.getName() + "</td><td class=d>" + lItemObject.getInfo() + "</td>");
+                    lOutReport.println(lCountStr + "<td class=" + (lCatObject != null ? lCatObject.getStyle() : "") + ">" + lItemObject.getName() + "</td><td class=d>" + lItemObject.getInfo() + "</td>");
                     lOutReport.println("</tr>");
                 } else {
                     // xTODO: Fix
 //		            System.err.println("Print Jewelry");
 
                     lOutReport.println("<tr>");
-                    lOutReport.println(lCountStr + "<td class=" + lCatObject.getStyle() + ">" + lItemObject.getName() + "</td><td class=d>" + lItemObject.getExtraDisplay() + "</td>");
+                    lOutReport.println(lCountStr + "<td class=" + (lCatObject != null ? lCatObject.getStyle() : "") + ">" + lItemObject.getName() + "</td><td class=d>" + lItemObject.getExtraDisplay() + "</td>");
                     lOutReport.println("</tr>");
                 }
+                }
+                case null -> {}
+                default -> {}
             }
         }
 
         if (lSubCat) {
-            lSubCat = false;
             lOutReport.println("</table>");
         }
         if (lNewRow) {
             lOutReport.println("</p>");
             lOutReport.println("</td>");
             lOutReport.println("</tr>");
-            lNewRow = false;
         } else if (lNewCol) {
             lOutReport.println("</p>");
             lOutReport.println("</td>");
-            lNewCol = false;
         }
 
         lOutReport.println("</table>");
 
-        if (lShowCounters && lPercentages.size() > 0) {
+        if (lShowCounters && !lPercentages.isEmpty()) {
             lOutReport.println("<br>");
             lOutReport.println("<table>");
             lOutReport.println("<tr>");
@@ -341,8 +344,7 @@ public class ReportBuilder {
         lOutReport.println("<p><center><font size=\"-1\">Powered by Flavie<font></center></p>");
         lOutReport.println("</body>");
         lOutReport.println("</html>");
-
-        lOutReport.close();
+        }
     }
 
     public void buildItemlist(String pItemlistName, HashMap lAllItems) throws Exception {
@@ -353,18 +355,16 @@ public class ReportBuilder {
         if (!lItemlist.exists()) {
             lItemlist.createNewFile();
         }
-        PrintStream lOutItemlist = new PrintStream(new FileOutputStream(lItemlist));
+        try (PrintStream lOutItemlist = new PrintStream(new FileOutputStream(lItemlist))) {
+            Iterator lIterator = lAllItems.keySet().iterator();
 
-        Iterator lIterator = lAllItems.keySet().iterator();
+            while (lIterator.hasNext()) {
+                String lKey = (String) lIterator.next();
+                D2ItemInterface lItem = (D2ItemInterface) lAllItems.get(lKey);
 
-        while (lIterator.hasNext()) {
-            String lKey = (String) lIterator.next();
-            D2ItemInterface lItem = (D2ItemInterface) lAllItems.get(lKey);
-
-            lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getName());
+                lOutItemlist.println(lItem.getFingerprint() + " " + lItem.getName());
+            }
         }
-
-        lOutItemlist.close();
     }
 
 
