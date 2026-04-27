@@ -133,9 +133,6 @@ public class GoMuleFrameDesktop implements GoMuleDesktop {
             });
 
             pack();
-            if (iView instanceof GoMuleViewStash) {
-                setSize(514, 500);
-            }
             setVisible(true);
         }
 

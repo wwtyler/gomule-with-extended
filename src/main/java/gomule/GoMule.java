@@ -22,8 +22,12 @@
 package gomule;
 
 import gomule.gui.D2FileManager;
+import gomule.gui.D2ViewChar;
 import gomule.gui.FileManagerProperties;
+import gomule.gui.LayoutProfile;
 import gomule.gui.LookAndFeelOptions;
+import gomule.gui.PanelTheme;
+import gomule.util.D2UI;
 import randall.util.RandallUtil;
 
 import javax.swing.*;
@@ -44,6 +48,16 @@ public class GoMule {
     public static void main(String[] pArgs) {
         try {
             Properties fileManagerPropertiesFile = FileManagerProperties.loadFileManagerProperties();
+
+            // 尽早应用布局配置（在任何 UI 或角色文件加载之前）
+            LayoutProfile layoutProfile = LayoutProfile.fromName(
+                    fileManagerPropertiesFile.getProperty(LayoutProfile.PROPERTY_NAME));
+            D2ViewChar.applyLayout(layoutProfile);
+
+            // 加载面板主题配置
+            PanelTheme.active = PanelTheme.fromName(
+                    fileManagerPropertiesFile.getProperty(PanelTheme.PROPERTY_NAME));
+
             String lLookAndFeel = LookAndFeelOptions.valueOf(fileManagerPropertiesFile.getProperty(LookAndFeelOptions.PROPERTY_NAME, LookAndFeelOptions.CLASSIC.name())).getLookAndFeelName();
 
             String[] lArgs = pArgs;
@@ -70,8 +84,22 @@ public class GoMule {
                 }
             }
             UIManager.setLookAndFeel(lLookAndFeel);
+            // Apply global menu/UI font size if configured (ui.menu.font.size > 0)
+            int menuFontSize = D2UI.getMenuFontSize();
+            if (menuFontSize > 0) {
+                java.util.Enumeration<?> keys = UIManager.getDefaults().keys();
+                while (keys.hasMoreElements()) {
+                    Object key = keys.nextElement();
+                    Object value = UIManager.get(key);
+                    if (value instanceof Font) {
+                        Font f = (Font) value;
+                        UIManager.put(key, f.deriveFont((float) menuFontSize));
+                    }
+                }
+            }
             UIManager.put("ToolTip.background", Color.black);
             UIManager.put("ToolTip.foreground", Color.white);
+            UIManager.put("ToolTip.font", new Font(Font.SANS_SERIF, Font.PLAIN, D2UI.getTooltipFontSize()));
             UIManager.put("info", Color.black);
             ToolTipManager.sharedInstance().setInitialDelay(0);
         } catch (Exception e) {

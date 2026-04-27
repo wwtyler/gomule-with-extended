@@ -72,9 +72,9 @@ public class D2Stash extends D2ItemListAdapter {
 
         if (!iBR.isNewFile()) {
             iBR.set_byte_pos(0);
-            byte lBytes[] = iBR.get_bytes(3);
+            byte lBytes[] = iBR.get_bytes(D2XOffsets.MAGIC_LENGTH);
             String lStart = new String(lBytes);
-            if ("D2X".equals(lStart)) {
+            if (D2XOffsets.MAGIC_STRING.equals(lStart)) {
                 readAtmaItems();
             }
             // clear status
@@ -135,19 +135,22 @@ public class D2Stash extends D2ItemListAdapter {
 
     private void readAtmaItems() throws Exception {
 
-        iBR.set_byte_pos(7);
-        long lOriginal = iBR.read(32);
+        iBR.set_byte_pos(D2XOffsets.CHECKSUM);
+        long lOriginal = iBR.read(D2XOffsets.CHECKSUM_BITS);
 
         long lCalculated = calculateAtmaCheckSum();
 
         if (lOriginal == lCalculated) {
-            iBR.set_byte_pos(3);
+            iBR.set_byte_pos(D2XOffsets.NUM_ITEMS);
 
-            long lNumItems = iBR.read(16);
+            long lNumItems = iBR.read(D2XOffsets.NUM_ITEMS_BITS);
 
-            long lVersionNr = iBR.read(16);
+            long lVersionNr = iBR.read(D2XOffsets.VERSION_BITS);
 
-            if (lVersionNr == 99) {
+            if (D2XOffsets.isValidVersion(lVersionNr)) {
+                // D2R 1.5+ 使用与 .d2s / .d2i 相同的 tail-bit 扩展格式
+                // 必须在构造 D2Item 之前设置版本号，否则按 LoD 旧格式解析导致位流错位
+                D2Item.sSaveVersion = 0x69;
                 readItems(lNumItems);
             } else {
                 throw new Exception("Stash Version Incorrect!");
@@ -159,12 +162,11 @@ public class D2Stash extends D2ItemListAdapter {
         long lCheckSum;
         lCheckSum = 0;
 
-
         iBR.set_byte_pos(0);
-        // calculate a new checksum
+        // calculate a new checksum (bytes CHECKSUM..CHECKSUM_END are treated as 0)
         for (int i = 0; i < iBR.get_length(); i++) {
             long lByte = iBR.read(8);
-            if (i >= 7 && i <= 10) {
+            if (i >= D2XOffsets.CHECKSUM && i <= D2XOffsets.CHECKSUM_END) {
                 lByte = 0;
             }
 
@@ -178,7 +180,7 @@ public class D2Stash extends D2ItemListAdapter {
     }
 
     private void readItems(long pNumItems) throws Exception {
-        iBR.set_byte_pos(11);
+        iBR.set_byte_pos(D2XOffsets.ITEMS_START);
         for (int i = 0; i < pNumItems; i++) {
             D2Item lItem = new D2Item(iFileName, iBR, iCharLvl);
             iItems.add(lItem);
@@ -192,11 +194,11 @@ public class D2Stash extends D2ItemListAdapter {
         int size = 0;
         for (int i = 0; i < iItems.size(); i++)
             size += ((D2Item) iItems.get(i)).get_bytes().length;
-        byte[] newbytes = new byte[size + 11];
-        newbytes[0] = 'D';
-        newbytes[1] = '2';
-        newbytes[2] = 'X';
-        int pos = 11;
+        byte[] newbytes = new byte[size + D2XOffsets.HEADER_SIZE];
+        newbytes[D2XOffsets.MAGIC]   = 'D';
+        newbytes[D2XOffsets.MAGIC+1] = '2';
+        newbytes[D2XOffsets.MAGIC+2] = 'X';
+        int pos = D2XOffsets.ITEMS_START;
         for (int i = 0; i < iItems.size(); i++) {
             byte[] item_bytes = ((D2Item) iItems.get(i)).get_bytes();
             for (int j = 0; j < item_bytes.length; j++)
@@ -205,19 +207,18 @@ public class D2Stash extends D2ItemListAdapter {
 
         iBR.setBytes(newbytes);
 
-        iBR.set_byte_pos(3);
-        iBR.write(iItems.size(), 16);
-        iBR.write(99, 16); // version 99
+        iBR.set_byte_pos(D2XOffsets.NUM_ITEMS);
+        iBR.write(iItems.size(), D2XOffsets.NUM_ITEMS_BITS);
+        iBR.write(D2XOffsets.VERSION_D2R, D2XOffsets.VERSION_BITS); // version
 //        iBR.replace_bytes(11, iBR.get_length(), newbytes);
 
         long lCheckSum1 = calculateAtmaCheckSum();
-//        System.err.println("CheckSum at saving: " + lCheckSum1 );
 
-        iBR.set_byte_pos(7);
-        iBR.write(lCheckSum1, 32);
+        iBR.set_byte_pos(D2XOffsets.CHECKSUM);
+        iBR.write(lCheckSum1, D2XOffsets.CHECKSUM_BITS);
 
-        iBR.set_byte_pos(7);
-        long lCheckSum2 = iBR.read(32);
+        iBR.set_byte_pos(D2XOffsets.CHECKSUM);
+        long lCheckSum2 = iBR.read(D2XOffsets.CHECKSUM_BITS);
 
 //        long lCheckSum3 = calculateGoMuleCheckSum();
 //        System.err.println("CheckSum after insert: " + lCheckSum3 );

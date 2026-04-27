@@ -68,10 +68,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         iFileManager = pFileManager;
         try {
 
-            setPreferredSize(new Dimension(190, 320));
-            setSize(new Dimension(190, 320));
-            setMaximumSize(new Dimension(190, 320));
-            setMinimumSize(new Dimension(190, 320));
+            setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
             iBank = new JTextField();
             iBank.setEditable(false);
@@ -81,16 +78,15 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
             iItemModel = new D2ItemModel(iItems);
             iTable = new JTable(iItemModel);
             iTable.setDefaultRenderer(String.class, new D2CellStringRenderer());
+            iTable.setRowHeight(iTable.getFontMetrics(iTable.getFont()).getHeight() + 4);
             lPane = new JScrollPane(iTable);
             setBorder((new TitledBorder(null, ("GoMule Clipboard"),
                     TitledBorder.LEFT, TitledBorder.TOP, this.getFont(), Color.gray)));
             final ImageIcon iIcon = new ImageIcon();
             final JLabel iIconLabel = new JLabel();
 
-            iIconLabel.setPreferredSize(new Dimension(190, 112));
-            iIconLabel.setSize(new Dimension(190, 112));
-            iIconLabel.setMaximumSize(new Dimension(190, 112));
-            iIconLabel.setMinimumSize(new Dimension(190, 112));
+            iIconLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 112));
+            iIconLabel.setMinimumSize(new Dimension(0, 112));
             iIconLabel.setIcon(iIcon);
             iIconLabel.setHorizontalAlignment(JLabel.CENTER);
             iIconLabel.setOpaque(true);
@@ -108,7 +104,8 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
                     if (!arg0.getValueIsAdjusting()) {
                         if (iTable.getSelectedRow() > -1) {
                             D2Item iItem = (D2Item) iItems.get(iTable.getSelectedRow());
-                            iIcon.setImage(D2ImageCache.getDC6Image(iItem));
+                            Image spriteImg = D2ImageCache.getSpriteImage(iItem.getItemCode(), iItem.get_gfx_num());
+                            iIcon.setImage(spriteImg != null ? spriteImg : D2ImageCache.getDC6Image(iItem));
                             if (iIconLabel.getIcon() == null) {
                                 iIconLabel.setIcon(iIcon);
                             }
@@ -125,10 +122,7 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
 
             iTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            lPane.setPreferredSize(new Dimension(190, 150));
-            lPane.setSize(new Dimension(190, 150));
-            lPane.setMaximumSize(new Dimension(190, 150));
-            lPane.setMinimumSize(new Dimension(190, 150));
+            lPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
             if (!iItems.isEmpty()) {
                 iTable.setRowSelectionInterval(iItems.size() - 1, iItems.size() - 1);

@@ -85,8 +85,8 @@ public class D2ProjectSettingsDialog extends JDialog {
     public D2ProjectSettingsDialog(D2FileManager pFileManager) {
         super(pFileManager, true);
         iFileManager = pFileManager;
-        setBounds(100, 100, 600, 450);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 450));
 
         // close and save everything sofar
         iFileManager.closeWindows();
@@ -354,6 +354,8 @@ public class D2ProjectSettingsDialog extends JDialog {
         iContent.finishDefaultPanel();
 
         setProjectValues();
+        pack();
+        setLocationRelativeTo(iFileManager);
     }
 
     protected void setProjectValues() {

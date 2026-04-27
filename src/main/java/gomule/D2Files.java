@@ -19,6 +19,14 @@ public class D2Files {
         return INSTANCE;
     }
 
+    /**
+     * Forces the singleton to reload translations on the next {@link #getInstance()} call.
+     * Call this after the data-directory or locale settings change.
+     */
+    public static synchronized void reset() {
+        INSTANCE = null;
+    }
+
     public Translations getTranslations() {
         return translations;
     }

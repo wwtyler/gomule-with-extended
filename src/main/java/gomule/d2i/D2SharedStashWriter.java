@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gomule.d2i.D2IOffsets.HEADER_D2R_SIZE;
+import static gomule.d2i.D2IOffsets.SECTION_TYPE_MATERIALS;
+import static gomule.d2i.D2IOffsets.SECTION_TYPE_NORMAL;
 import static gomule.d2i.D2SharedStashReader.STASH_HEADER_START;
 import gomule.item.D2Item;
 import gomule.util.D2BitReader;
@@ -28,8 +31,53 @@ public class D2SharedStashWriter {
         D2BitReader bitReader = new D2BitReader(originalContent.clone());
         int[] stashHeaderOffsets = bitReader.findBytes(STASH_HEADER_START);
         List<byte[]> stashPanes = new ArrayList<>();
-        for (int i = 0; i < stashHeaderOffsets.length; i++) {
-            stashPanes.add(writeStashPane(stash.getPane(i), bitReader, stashHeaderOffsets[i], bitReader.findNextFlag("JM", stashHeaderOffsets[i])));
+        int normalPaneIndex = 0;
+        for (int stashHeaderOffset : stashHeaderOffsets) {
+            // Peek at sectionType to decide how to write this block.
+            bitReader.set_byte_pos(stashHeaderOffset);
+            D2SharedStash.Header peekHeader = D2SharedStash.Header.fromBytes(bitReader);
+            if (peekHeader.getSectionType() == SECTION_TYPE_NORMAL) {
+                // Normal stash page: re-serialize with updated items
+                // NOTE: search AFTER the D2R section header (HEADER_D2R_SIZE bytes) to avoid
+                // false-positive JM matches inside the header (e.g. gold or sectionSize bytes).
+                stashPanes.add(writeStashPane(stash.getPane(normalPaneIndex++), bitReader, stashHeaderOffset,
+                        bitReader.findNextFlag("JM", stashHeaderOffset + HEADER_D2R_SIZE)));
+            } else if (peekHeader.getSectionType() == SECTION_TYPE_MATERIALS && stash.getMaterialsPane() != null) {
+                // Materials pane: re-serialize with current item bytes so quantity changes are persisted.
+                // D2R section headers are always HEADER_D2R_SIZE (64) bytes; JM must start at that offset.
+                int sectionStart = stashHeaderOffset;
+                bitReader.set_byte_pos(sectionStart);
+                byte[] headerBytes = bitReader.get_bytes(HEADER_D2R_SIZE);
+
+                List<D2Item> matItems = stash.getMaterialsPane().getItems();
+                int itemPayloadSize = 4; // JM (2) + item count (2)
+                for (D2Item item : matItems) itemPayloadSize += item.get_bytes().length;
+
+                int newTotalSize = HEADER_D2R_SIZE + itemPayloadSize;
+                byte[] result = new byte[newTotalSize];
+                System.arraycopy(headerBytes, 0, result, 0, HEADER_D2R_SIZE);
+
+                // Patch the 24-bit length field at HDR_LENGTH offset.
+                D2BitReader patcher = new D2BitReader(result);
+                patcher.set_pos(D2IOffsets.HDR_LENGTH * 8);
+                patcher.write(newTotalSize, D2IOffsets.HDR_LENGTH_BITS);
+
+                // Write JM + count + item bytes starting at HEADER_D2R_SIZE.
+                patcher.set_byte_pos(HEADER_D2R_SIZE);
+                patcher.write(19786, 16); // "JM" in D2 bit order
+                patcher.write(matItems.size(), 16);
+                for (D2Item item : matItems) {
+                    byte[] bytes = item.get_bytes();
+                    patcher.setBytes(patcher.get_byte_pos(), bytes);
+                    patcher.set_byte_pos(patcher.get_byte_pos() + bytes.length);
+                }
+                stashPanes.add(result);
+            } else {
+                // SECTION_TYPE_CHRONICLE or materials with no materialsPane: preserve original bytes unchanged
+                int sectionSize = (int) peekHeader.getLength();
+                bitReader.set_byte_pos(stashHeaderOffset);
+                stashPanes.add(bitReader.get_bytes(sectionSize));
+            }
         }
         writeToFile(stashPanes);
     }
@@ -54,15 +102,14 @@ public class D2SharedStashWriter {
     }
 
     public void writeHeader(D2SharedStash.D2SharedStashPane pane, D2BitReader bitWriter, long length) {
-        bitWriter.skipBytes(8);
+        bitWriter.skipBytes(D2IOffsets.HDR_VERSION);  // skip to version field (offset 8)
         long version = bitWriter.read(8);
-        // D2 LoD = 99, D2R 使用 99/105 等
-        if (version != 99 && version != 105 && version != 96 && version != 97 && version != 98)
+        if (!D2IOffsets.isValidVersion(version))
             throw new RuntimeException("Overwriting wrong version stash: " + version);
         bitWriter.skipBytes(3);
         bitWriter.write(pane.getGold(), 24);
         bitWriter.skipBytes(1);
-        bitWriter.write(length, 24);
+        bitWriter.write(length, D2IOffsets.HDR_LENGTH_BITS);
     }
 
     private void writeItemBytes(D2SharedStash.D2SharedStashPane pane, D2BitReader writer) {

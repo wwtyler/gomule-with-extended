@@ -28,6 +28,7 @@ import gomule.item.D2ItemRenderer;
 import gomule.item.D2WeaponTypes;
 import gomule.util.D2CellStringRenderer;
 import gomule.util.D2CellValue;
+import gomule.util.D2UI;
 import randall.util.RandallPanel;
 import randall.util.RandallUtil;
 
@@ -207,10 +208,12 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iTable.getColumnModel().getColumn(1).setPreferredWidth(11);
         iTable.getColumnModel().getColumn(2).setPreferredWidth(11);
         iTable.getColumnModel().getColumn(3).setPreferredWidth(15);
+        // 根据当前字体度量动态设置行高，避免大字体下内容被裁剪
+        iTable.setRowHeight(iTable.getFontMetrics(iTable.getFont()).getHeight() + 4);
         JScrollPane lPane = new JScrollPane(iTable);
-        lPane.setPreferredSize(new Dimension(257, 100));
 
         JSplitPane stashConts = new JSplitPane();
+        stashConts.setResizeWeight(0.4); // 40% 分配给物品列表，60% 给词条详情
         stashConts.setLeftComponent(lPane);
 
 //        iContentPane.add(lPane, BorderLayout.WEST);
@@ -222,12 +225,16 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         iRequerementFilter = new RandallPanel();
         freeTextSearch = new JTextField();
+        freeTextSearch.setColumns(8); // 字体感知宽度，随 ui.menu.font.size 自动缩放
         freeTextSearch.getDocument().addDocumentListener(iStashFilter);
         iReqMaxLvl = new JTextField();
+        iReqMaxLvl.setColumns(5);
         iReqMaxLvl.getDocument().addDocumentListener(iStashFilter);
         iReqMaxStr = new JTextField();
+        iReqMaxStr.setColumns(5);
         iReqMaxStr.getDocument().addDocumentListener(iStashFilter);
         iReqMaxDex = new JTextField();
+        iReqMaxDex.setColumns(5);
         iReqMaxDex.getDocument().addDocumentListener(iStashFilter);
         iCusFilter = new JButton("Filter...");
 
@@ -255,7 +262,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         lTopPanel.addToPanel(lCategoryPanel, 0, 3, 1, RandallPanel.HORIZONTAL);
         lTopPanel.addToPanel(iRequerementFilter, 0, 4, 1, RandallPanel.HORIZONTAL);
 
-
+        // 直接放入 NORTH，BorderLayout 自动给 lTopPanel 完整的 preferredHeight
+        // （JScrollPane 包裹会因水平滚动条占垂直空间而裁剪最后一行）
         iContentPane.add(lTopPanel, BorderLayout.NORTH);
 
         JPanel lItemPanel = new JPanel();
@@ -272,8 +280,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         JScrollPane lItemScroll = new JScrollPane(iItemText);
         lItemPanel.setLayout(new BorderLayout());
         lItemPanel.add(lItemScroll, BorderLayout.CENTER);
-        lItemPanel.setPreferredSize(new Dimension(250, 100));
-
+        // 启用 HONOR_DISPLAY_PROPERTIES 让 HTML 渲染使用组件基础字体（而非固定 HTML font size）
+        iItemText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        iItemText.setFont(new Font(Font.DIALOG, Font.PLAIN, D2UI.getTooltipFontSize()));
 //        iContentPane.add(lItemPanel, BorderLayout.CENTER);
 
         stashConts.setRightComponent(lItemPanel);
@@ -282,8 +291,16 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iContentPane.add(stashConts);
         setContentPane(iContentPane);
 
+        // pack() 之前给 stashConts（CENTER 区域）设置 preferred size
+        // 避免空 JTable + 空 JEditorPane 导致 pack() 把 CENTER 压缩到几乎为零
+        int fontBase = D2UI.getMenuFontSize();
+        stashConts.setPreferredSize(new Dimension(fontBase * 38, fontBase * 18));
+
         pack();
-        setSize(514, 500);
+        // pack 后的尺寸 = NORTH(lTopPanel preferred height) + CENTER(fontBase*18) + 窗口装饰
+        // 以字体比例再加最小保证值，防止 NORTH 行数多时仍显示不全
+        Dimension sz = getSize();
+        setMinimumSize(new Dimension(Math.max(sz.width, fontBase * 36), Math.max(sz.height, fontBase * 14)));
         setVisible(true);
 
 
@@ -319,12 +336,12 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         String dispStr = D2ItemRenderer.itemDumpHtml(iItemModel.getItem(iTable.getSelectedRow()), true)
                                 .replaceAll("<[/]*html>", "");
                         if (!isStash()) {
-                            iItemText.setText("<html><font size=3 face=Dialog><font color = white>Item From: "
+                            iItemText.setText("<html><body style='color:white'>Item From: "
                                     + (((D2ItemListAll) iStash)
                                             .getFilename(iItemModel.getItem(iTable.getSelectedRow())))
-                                    + "</font><br><br>" + dispStr + "</font></html>");
+                                    + "<br><br>" + dispStr + "</body></html>");
                         } else {
-                            iItemText.setText("<html><font size=3 face=Dialog>" + dispStr + "</font></html>");
+                            iItemText.setText("<html><body>" + dispStr + "</body></html>");
                         }
                         iItemText.setCaretPosition(0);
                     } else {
@@ -1447,8 +1464,6 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         public void filterPopUp() {
             setTitle("Item Filter");
             setLocation((int) iContentPane.getLocationOnScreen().getX() + 100, (int) iContentPane.getLocationOnScreen().getY() + 100);
-            setSize(500, 500);
-            setVisible(true);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
             RandallPanel lContent = new RandallPanel();
@@ -1563,6 +1578,9 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             lContent.addToPanel(fOk, 0, lY, 1, RandallPanel.HORIZONTAL);
             lContent.addToPanel(fClear, 1, lY, 1, RandallPanel.HORIZONTAL);
             lContent.addToPanel(fCancel, 2, lY, 2, RandallPanel.HORIZONTAL);
+
+            pack();
+            setVisible(true);
         }
 
         private class CustomFilterMinActionListener implements ActionListener {

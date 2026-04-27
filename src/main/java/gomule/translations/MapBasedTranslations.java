@@ -18,6 +18,18 @@ public class MapBasedTranslations implements Translations {
 
     @SuppressWarnings("null")
     public static Translations loadTranslations(InputStream inputStream) {
+        return loadTranslations(inputStream, "zhCN");
+    }
+
+    /**
+     * Loads translations from a D2R lng strings JSON file, using the specified locale field.
+     * Falls back to {@code enUS} when the requested locale field is absent or null.
+     *
+     * @param inputStream the JSON input (D2R lng strings array format)
+     * @param locale      the locale field name to read (e.g. {@code "zhCN"}, {@code "enUS"})
+     */
+    @SuppressWarnings("null")
+    public static Translations loadTranslations(InputStream inputStream, String locale) {
         try {
             // Use a mutable HashMap to tolerate duplicate keys in mod translation files
             // (e.g. MDK V3 item-modifiers.json contains "Chaotic" twice).
@@ -25,7 +37,13 @@ public class MapBasedTranslations implements Translations {
             java.util.HashMap<String, String> map = new java.util.HashMap<>();
             MAPPER.readTree(inputStream).forEach(node -> {
                 String key = node.get("Key").textValue();
-                String val = node.get("enUS").textValue();
+                // Try requested locale first, fall back to enUS
+                com.fasterxml.jackson.databind.JsonNode localeNode = node.get(locale);
+                String val = (localeNode != null && localeNode.isTextual()) ? localeNode.textValue() : null;
+                if (val == null) {
+                    com.fasterxml.jackson.databind.JsonNode enNode = node.get("enUS");
+                    val = (enNode != null && enNode.isTextual()) ? enNode.textValue() : null;
+                }
                 if (key != null && val != null) {
                     map.put(key, val);
                 }

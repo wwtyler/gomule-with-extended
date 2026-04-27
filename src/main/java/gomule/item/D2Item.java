@@ -92,6 +92,11 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     private boolean iJewel;
     private boolean iGem;
     private boolean iStackable = false;
+    private int iAdvancedStashQuantity = 0;
+    /** Bit position in the full file stream where the 8-bit quantity VALUE starts (after the has_qty flag bit). */
+    private int iAdvancedStashQtyBitPosInFile = -1;
+    /** Bit offset within {@code iItem} where the 8-bit quantity VALUE starts, or -1 if not present. */
+    private int iAdvancedStashQtyBitOffset = -1;
     private boolean iRune;
     private boolean iTypeMisc;
     private boolean iIdentified;
@@ -188,6 +193,9 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
             pFile.set_byte_pos(startOfItemInBytes);
             iItem = new D2BitReader(pFile.get_bytes(lLengthToNextJM));
             pFile.set_byte_pos(startOfItemInBytes + lLengthToNextJM);
+            if (iAdvancedStashQtyBitPosInFile >= 0) {
+                iAdvancedStashQtyBitOffset = iAdvancedStashQtyBitPosInFile - startOfItemInBytes * 8;
+            }
         } catch (D2ItemException pEx) {
             throw pEx;
         } catch (Exception pEx) {
@@ -463,7 +471,8 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
                 pFile.read(4);  // chronicle_suffix
             }
             if (pFile.read(1) == 1) { // has_advanced_stash_quantity
-                pFile.read(8);        // advanced_stash_quantity
+                iAdvancedStashQtyBitPosInFile = pFile.get_pos(); // record bit pos of qty value in full stream
+                iAdvancedStashQuantity = (int) pFile.read(8); // advanced_stash_quantity
             }
         }
         // Align to next byte boundary (items.ts: reader.Align()).
@@ -1455,6 +1464,16 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         return iItem.get_length();
     }
 
+    public String getItemCode() {
+        return item_type;
+    }
+
+    /** Returns the variable graphic index (0-7) for items with multiple sprite variants,
+     *  or -1 if no variable graphic flag was set in the save file. */
+    public short get_gfx_num() {
+        return gfx_num;
+    }
+
     public String getItemName() {
         return iItemName;
     }
@@ -1581,6 +1600,22 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
     public boolean isStackable() {
         return iStackable;
+    }
+
+    public int getAdvancedStashQuantity() {
+        return iAdvancedStashQuantity;
+    }
+
+    /**
+     * Updates the advanced stash quantity, patching the raw item bytes in-place so
+     * that the saved file reflects the new value.
+     */
+    public void setAdvancedStashQuantity(int qty) {
+        iAdvancedStashQuantity = qty;
+        if (iAdvancedStashQtyBitOffset >= 0) {
+            iItem.set_pos(iAdvancedStashQtyBitOffset);
+            iItem.write(qty, 8);
+        }
     }
 
     public boolean isTypeMisc() {

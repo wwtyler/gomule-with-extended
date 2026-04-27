@@ -68,14 +68,30 @@ public class D2Character extends D2ItemListAdapter {
     public static final int BODY_LARM2 = 22;
     public static final int GOLEM_SLOT = 23;
 
-    public static final int INVSIZEX = 10;
-    public static final int INVSIZEY = 8;
-    public static final int STASHSIZEX = 16;
-    public static final int STASHSIZEY = 13;
-    public static final int BELTSIZEX = 4;
-    public static final int BELTSIZEY = 4;
-    public static final int CUBESIZEX = 6;// 大盒子 6x4
-    public static final int CUBESIZEY = 4;
+    // ── 网格尺寸常量（非 final，可在启动时由 LayoutProfile 覆盖） ──────────────
+    // 默认值对应 BIG_STASH (1.1) + BigInventory (1.3) + BigCube (1.2) 组合。
+    // 若使用其他 mod 配置，通过 applyLayout(LayoutProfile) 在启动时设置。
+    public static int INVSIZEX = 10;
+    public static int INVSIZEY = 8;
+    public static int STASHSIZEX = 16;
+    public static int STASHSIZEY = 13;
+    public static int BELTSIZEX = 4;
+    public static int BELTSIZEY = 4;
+    public static int CUBESIZEX = 6;
+    public static int CUBESIZEY = 4;
+
+    /**
+     * 根据 LayoutProfile 更新网格尺寸常量，并清除 D2ImageCache 缓存（触发重载背景图）。
+     * 应在加载任何角色文件之前调用，且必须在 Swing EDT 线程以外的时机设置。
+     */
+    public static void applyLayout(gomule.gui.LayoutProfile profile) {
+        INVSIZEX   = profile.invSizeX;
+        INVSIZEY   = profile.invSizeY;
+        CUBESIZEX  = profile.cubeSizeX;
+        CUBESIZEY  = profile.cubeSizeY;
+        STASHSIZEX = profile.stashSizeX;
+        STASHSIZEY = profile.stashSizeY;
+    }
     D2TxtFileItemProperties mercHireCol;
     private D2BitReader iReader;
     private ArrayList<D2Item> iCharItems;
@@ -148,43 +164,31 @@ public class D2Character extends D2ItemListAdapter {
     }
 
     private void readChar() throws Exception {
-        iReader.set_byte_pos(4);
+        iReader.set_byte_pos(D2SOffsets.VERSION);
         long lVersion = iReader.read(32);
         // System.err.println("Version: " + lVersion);
-        if (lVersion != 99 && lVersion != 105)
+        if (lVersion != D2SOffsets.VERSION_LOD && lVersion != D2SOffsets.VERSION_D2R_105)
             throw new Exception("Incorrect Character version: " + lVersion);
         // D2R 1.5+ (file version 99/105 corresponds to item-format marker 0x69) needs
         // the trailing has_advanced_stash_quantity / chronicle bits when parsing items.
         gomule.item.D2Item.sSaveVersion = 0x69;
-        iReader.set_byte_pos(8);
+        iReader.set_byte_pos(D2SOffsets.FILE_SIZE);
         long lSize = iReader.read(32);
         if (iReader.get_length() != lSize)
             throw new Exception("Incorrect FileSize: " + lSize);
         byte[] calculatedChecksum = iReader.calculateChecksum();
-        iReader.set_byte_pos(12);
+        iReader.set_byte_pos(D2SOffsets.CHECKSUM);
         byte[] checksumFromFile = iReader.get_bytes(4);
         if (!Arrays.equals(calculatedChecksum, checksumFromFile))
             throw new Exception("Incorrect Checksum");
-        iReader.set_byte_pos(16);
+        iReader.set_byte_pos(D2SOffsets.WEAPON_SET);
         // long lWeaponSet = iReader.read(32);
 
-        // ---- 根据版本选择 header 偏移 ----
-        // D2 LoD / 早期 D2R (version <= 0x68 即 <=104):
-        //   status=0x24, class=0x28, level=0x2B, name=0x10B
-        // D2R 1.5+ (version >= 0x69 即 >=105):
-        //   status=0x14, class=0x18, level=0x1B, name=0x12B
-        int statusOffset, classOffset, levelOffset, nameOffset;
-        if (lVersion >= 105) {
-            statusOffset = 0x14;
-            classOffset = 0x18;
-            levelOffset = 0x1B;
-            nameOffset = 0x12B;
-        } else {
-            statusOffset = 0x24;  // 36
-            classOffset = 0x28;   // 40
-            levelOffset = 0x2B;   // 43
-            nameOffset = 0x10B;   // 267
-        }
+        // ---- 根据版本选择 header 偏移 (see D2SOffsets for full table) ----
+        int statusOffset = D2SOffsets.statusOffset(lVersion);
+        int classOffset  = D2SOffsets.classOffset(lVersion);
+        int levelOffset  = D2SOffsets.levelOffset(lVersion);
+        int nameOffset   = D2SOffsets.nameOffset(lVersion);
 
         iReader.set_byte_pos(nameOffset);
         StringBuffer lCharName = new StringBuffer();
@@ -238,7 +242,9 @@ public class D2Character extends D2ItemListAdapter {
             throw new Exception("Invalid char level: " + iCharLevel + " (should be between 1-99)");
         iCharClass = D2TxtFile.getCharacterCode((int) lCharCode);
         iTitleString = " Lvl " + iCharLevel + " " + D2TxtFile.getCharacterCode((int) lCharCode);
-        iReader.set_byte_pos(177);
+        // D2R 1.5+ (version>=105) header is 16 bytes shorter → merc section moves
+        // from LOD_MERC=177 to V105_MERC=161 (see D2SOffsets)
+        iReader.set_byte_pos(D2SOffsets.mercOffset(lVersion));
         if (iReader.read(8) == 1)
             ;// MERC IS DEAD?
         iReader.skipBits(8);
@@ -264,10 +270,10 @@ public class D2Character extends D2ItemListAdapter {
         lWoo = iReader.findNextFlag("Woo!", 0);
         if (lWoo == -1)
             throw new Exception("Error: Act Quests block not found");
-        // D2R 1.5+ (version>=105) header is 16 bytes shorter than LoD
-        int lExpectedWoo = (lVersion >= 105) ? 319 : 335;
-        int lExpectedW4  = (lVersion >= 105) ? 698 : 714;
-        int lExpectedGF  = (lVersion >= 105) ? 749 : 765;
+        // D2R 1.5+ (version>=105) header is 16 bytes shorter than LoD (see D2SOffsets)
+        int lExpectedWoo = D2SOffsets.wooOffset(lVersion);
+        int lExpectedW4  = D2SOffsets.w4Offset(lVersion);
+        int lExpectedGF  = D2SOffsets.gfOffset(lVersion);
         if (lWoo != lExpectedWoo)
             D2Log.warn("D2Char", "Act Quests block off-position lWoo=%d expected=%d", lWoo, lExpectedWoo);
         iWS = iReader.findNextFlag("WS", lWoo);
@@ -980,9 +986,9 @@ public class D2Character extends D2ItemListAdapter {
                 col = (int) i.get_col();
                 width = (int) i.get_width();
                 height = (int) i.get_height();
-                if ((row + height) > 4)
+                if ((row + height) > INVSIZEY)
                     return false;
-                if ((col + width) > 10)
+                if ((col + width) > INVSIZEX)
                     return false;
                 for (j = row; j < row + height; j++) {
                     for (k = col; k < col + width; k++)
@@ -994,9 +1000,9 @@ public class D2Character extends D2ItemListAdapter {
                 col = (int) i.get_col();
                 width = (int) i.get_width();
                 height = (int) i.get_height();
-                if ((row + height) > 4)
+                if ((row + height) > CUBESIZEY)
                     return false;
-                if ((col + width) > 3)
+                if ((col + width) > CUBESIZEX)
                     return false;
                 for (j = row; j < row + height; j++) {
                     for (k = col; k < col + width; k++)
@@ -1100,9 +1106,9 @@ public class D2Character extends D2ItemListAdapter {
                 col = (int) i.get_col();
                 width = (int) i.get_width();
                 height = (int) i.get_height();
-                if ((row + height) > 4)
+                if ((row + height) > INVSIZEY)
                     return false;
-                if ((col + width) > 10)
+                if ((col + width) > INVSIZEX)
                     return false;
                 for (j = row; j < row + height; j++) {
                     for (k = col; k < col + width; k++)
@@ -1114,9 +1120,9 @@ public class D2Character extends D2ItemListAdapter {
                 col = (int) i.get_col();
                 width = (int) i.get_width();
                 height = (int) i.get_height();
-                if ((row + height) > 4)
+                if ((row + height) > CUBESIZEY)
                     return false;
-                if ((col + width) > 3)
+                if ((col + width) > CUBESIZEX)
                     return false;
                 for (j = row; j < row + height; j++) {
                     for (k = col; k < col + width; k++)
@@ -1398,6 +1404,10 @@ public class D2Character extends D2ItemListAdapter {
                     if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD))
                         return false;
                     break;
+                case BODY_NECK:
+                    if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK))
+                        return false;
+                    break;
                 case BODY_LARM:
                     if (pItem.isBodyLArm())
                         return false;
@@ -1408,6 +1418,26 @@ public class D2Character extends D2ItemListAdapter {
                     break;
                 case BODY_RARM:
                     if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM))
+                        return false;
+                    break;
+                case BODY_GLOVES:
+                    if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV))
+                        return false;
+                    break;
+                case BODY_RRING:
+                    if (pItem.isBodyRRin())
+                        return false;
+                    break;
+                case BODY_BELT:
+                    if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT))
+                        return false;
+                    break;
+                case BODY_LRING:
+                    if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN))
+                        return false;
+                    break;
+                case BODY_BOOTS:
+                    if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET))
                         return false;
                     break;
             }
@@ -1519,8 +1549,15 @@ public class D2Character extends D2ItemListAdapter {
             }
         }
         byte lWritenBytes[] = getCurrentStats();
+        // D2RMM requires corpse JM [4A 4D 00 00], jf [6A 66], and (if merc) merc JM [4A 4D 00 00]
+        // always present after char items. Game saves may omit these sections entirely.
+        // We write them explicitly, extracting only the kf (golem) section from iAfterItems.
+        byte[] kfSection = extractKFSection(iAfterItems);
+        // requiredSectionsSize: corpse JM (4) + jf (2) + optional merc JM (4) + merc items
+        int requiredSectionsSize = 6; // corpse [JM 00 00] + merc header [jf]
+        if (hasMerc()) requiredSectionsSize += 4 + lMercSize; // + [JM 00 00] + merc items
         byte[] lNewbytes = new byte[iBeforeStats.length + lWritenBytes.length + iBeforeItems.length + lCharSize
-                + iBetweenItems.length + lMercSize + iAfterItems.length];
+                + requiredSectionsSize + kfSection.length];
         int lPos = 0;
         System.arraycopy(iBeforeStats, 0, lNewbytes, lPos, iBeforeStats.length);
         lPos += iBeforeStats.length;
@@ -1540,9 +1577,16 @@ public class D2Character extends D2ItemListAdapter {
             System.arraycopy(item_bytes, 0, lNewbytes, lPos, item_bytes.length);
             lPos += item_bytes.length;
         }
+        // Corpse section: always empty (character is alive)
+        lNewbytes[lPos] = 0x4A; lNewbytes[lPos+1] = 0x4D; lNewbytes[lPos+2] = 0x00; lNewbytes[lPos+3] = 0x00;
+        lPos += 4;
+        // Merc section header: always present
+        lNewbytes[lPos] = 0x6A; lNewbytes[lPos+1] = 0x66;
+        lPos += 2;
+        // Merc item list: only when character has a merc
         if (hasMerc()) {
-            System.arraycopy(iBetweenItems, 0, lNewbytes, lPos, iBetweenItems.length);
-            lPos += iBetweenItems.length;
+            lNewbytes[lPos] = 0x4A; lNewbytes[lPos+1] = 0x4D; lNewbytes[lPos+2] = 0x00; lNewbytes[lPos+3] = 0x00;
+            lPos += 4;
             lMercItemCountPos = lPos - 2;
             for (int i = 0; i < iMercItems.size(); i++) {
                 byte[] item_bytes = ((D2Item) iMercItems.get(i)).get_bytes();
@@ -1550,8 +1594,9 @@ public class D2Character extends D2ItemListAdapter {
                 lPos += item_bytes.length;
             }
         }
-        if (iAfterItems.length > 0) {
-            System.arraycopy(iAfterItems, 0, lNewbytes, lPos, iAfterItems.length);
+        // kf (golem) section
+        if (kfSection.length > 0) {
+            System.arraycopy(kfSection, 0, lNewbytes, lPos, kfSection.length);
         }
         iReader.setBytes(lNewbytes); // iReader.getFileContent()
         iReader.set_byte_pos(lCharItemCountPos);
@@ -1567,36 +1612,21 @@ public class D2Character extends D2ItemListAdapter {
         // get all the bytes
         iReader.set_byte_pos(0);
         byte[] data = iReader.get_bytes(iReader.get_length());
-        // byte[] oldchecksum = { data[12], data[13], data[14], data[15] };
-        // clear the current checksum
-        byte[] checksum = { 0, 0, 0, 0 }; // byte checksum
-        iReader.setBytes(12, checksum);
+        // clear the current checksum field before recalculating
+        iReader.setBytes(D2SOffsets.CHECKSUM, new byte[]{0, 0, 0, 0});
         byte[] length = new byte[4];
         length[3] = (byte) ((0xff000000 & data.length) >>> 24);
         length[2] = (byte) ((0x00ff0000 & data.length) >>> 16);
         length[1] = (byte) ((0x0000ff00 & data.length) >>> 8);
         length[0] = (byte) (0x000000ff & data.length);
-        iReader.setBytes(8, length);
-        iReader.setBytes(12, iReader.calculateChecksum());
+        iReader.setBytes(D2SOffsets.FILE_SIZE, length);
+        iReader.setBytes(D2SOffsets.CHECKSUM, iReader.calculateChecksum());
         iReader.save();
         setModified(false);
     }
 
     public int getGoldBankMax() {
         return 2500000;
-        // int lMaxGold = 50000;
-        // for ( int lLvl = 9 ; lLvl <=29 ; lLvl+=10 ){
-        // if ( iCharLevel < lLvl )return lMaxGold;
-        // lMaxGold += 50000;
-        // }
-        // if ( iCharLevel == 30 )return 200000;
-        // if ( iCharLevel == 31 )return 800000;
-        // lMaxGold = 850000;
-        // for ( int lLvl = 33 ; lLvl <=99 ; lLvl+=2 ){
-        // if ( iCharLevel <= lLvl )return lMaxGold;
-        // lMaxGold += 50000;
-        // }
-        // return 0;
     }
 
     public void fullDump(PrintWriter pWriter) {
@@ -2022,6 +2052,38 @@ public class D2Character extends D2ItemListAdapter {
 
     public boolean hasMerc() {
         return cMercInfo != null;
+    }
+
+    /**
+     * Normalizes the bytes that follow character items so the file is compatible
+     * with D2RMM.  D2RMM always reads (in order):
+     *   1. Corpse section  : [4A 4D] (JM) + 2-byte count
+     *   2. Merc header     : [6A 66] (jf)
+     *   3. Merc item list  : [4A 4D] (JM) + 2-byte count  -- ONLY when merc_id != 0
+     *   4. Golem section   : [6B 66] (kf) + ...
+     *
+     * This method adds any missing sections in-place so that all three cases are
+     * handled idempotently:
+     *   - Original game file  [kf...] (missing corpse JM, jf, merc JM)
+     *   - Partially-fixed file [JM 00 00][jf][kf...] (missing merc JM after jf)
+     *   - Already correct file [JM 00 00][jf][JM 00 00][kf...] (no change)
+     */
+    /**
+     * Finds the kf (golem) section marker [0x6B 0x66] within {@code data} and
+     * returns a sub-array starting from that marker to the end of {@code data}.
+     * Any bytes before the kf marker (e.g. stale corpse/merc headers from a
+     * previous save) are discarded. If no kf marker is found the original array
+     * is returned unchanged so the golem data is never lost.
+     */
+    private byte[] extractKFSection(byte[] data) {
+        for (int i = 0; i < data.length - 1; i++) {
+            if (data[i] == 0x6B && data[i + 1] == 0x66) {
+                byte[] result = new byte[data.length - i];
+                System.arraycopy(data, i, result, 0, result.length);
+                return result;
+            }
+        }
+        return data;
     }
 
     public int getCharCode() {

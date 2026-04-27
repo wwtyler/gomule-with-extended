@@ -20,16 +20,19 @@
  ******************************************************************************/
 package gomule.gui;
 
-import gomule.item.D2Item;
-import gomule.item.D2dc6;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import gomule.item.D2Item;
+import gomule.item.D2dc6;
 
 /**
  * @author Marco
@@ -107,6 +110,24 @@ public class D2ImageCache {
         sDC6Images.put(lFileName, lImage);
 
         return lImage;
+    }
+
+    /**
+     * Returns the D2R sprite image for the given item code (e.g. "gcw", "r01").
+     * Looks up the asset path from hd/items/items.json and reads the .lowend.sprite file.
+     * Returns null if the sprite is not found or cannot be parsed.
+     */
+    public static Image getSpriteImage(String itemCode) {
+        return D2SpriteCache.getInstance().getImage(itemCode);
+    }
+
+    /**
+     * Returns the D2R sprite image for the given item code and variable-graphic variant index.
+     * When gfxNum >= 0 (item has variable graphics), tries the variant sprite first (e.g. ring1, ring2)
+     * then falls back to the base sprite. Pass item.get_gfx_num() as gfxNum.
+     */
+    public static Image getSpriteImage(String itemCode, int gfxNum) {
+        return D2SpriteCache.getInstance().getImage(itemCode, gfxNum);
     }
 
 

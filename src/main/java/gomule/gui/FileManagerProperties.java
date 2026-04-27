@@ -1,13 +1,14 @@
 package gomule.gui;
 
-import com.google.common.io.Closeables;
-import gomule.util.D2Project;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import com.google.common.io.Closeables;
+
+import gomule.util.D2Project;
 
 public class FileManagerProperties {
     public static File getFileManagerPropertiesFile() throws IOException {
@@ -16,7 +17,7 @@ public class FileManagerProperties {
             lProjectsDir.mkdir();
         }
 
-        File lProps = new File(D2Project.PROJECTS_DIR + File.separator + "projects.properties");
+        File lProps = new File(D2Project.PROJECTS_DIR + File.separator + "app.properties");
         if (!lProps.exists()) {
             lProps.createNewFile();
         }

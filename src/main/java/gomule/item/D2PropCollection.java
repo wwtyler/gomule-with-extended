@@ -22,6 +22,7 @@
 package gomule.item;
 
 import gomule.util.D2BitReader;
+import gomule.util.D2ColorCode;
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
 
@@ -352,7 +353,7 @@ public class D2PropCollection extends ArrayList<D2Prop> {
         for (int x = 0; x < size(); x++) {
             String val = ((D2Prop) get(x)).generateDisplay(qFlag, cLvl);
             if (val != null && !val.equals("")) {
-                arrOut.append(val).append("<br>&#10;");
+                arrOut.append(D2ColorCode.toHtml(val)).append("<br>&#10;");
             }
         }
 

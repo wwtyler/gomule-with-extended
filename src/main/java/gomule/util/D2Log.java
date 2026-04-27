@@ -1,5 +1,6 @@
 package gomule.util;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -11,6 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 
 /**
  * Tiny dependency-free logger for GoMule.
@@ -40,17 +42,46 @@ public final class D2Log {
     }
 
     private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+    /** Properties loaded once from {@code projects/app.properties} (best-effort). */
+    private static final Properties FILE_PROPS = loadFileProps();
     private static final Level THRESHOLD;
     private static final PrintWriter FILE;
 
     static {
         Level lvl = Level.INFO;
         try {
-            String p = System.getProperty("gomule.log.level");
+            String p = resolve("gomule.log.level", "log.level");
             if (p != null) lvl = Level.valueOf(p.trim().toUpperCase());
         } catch (Exception ignore) { /* keep INFO */ }
         THRESHOLD = lvl;
         FILE = openFile();
+    }
+
+    /**
+     * Look up a config value, preferring {@code -D} system properties over
+     * {@code projects/app.properties}. Returns {@code null} if unset.
+     */
+    private static String resolve(String sysKey, String propKey) {
+        String v = System.getProperty(sysKey);
+        if (v != null && !v.isEmpty()) return v;
+        if (FILE_PROPS != null) {
+            v = FILE_PROPS.getProperty(propKey);
+            if (v != null && !v.isEmpty()) return v;
+        }
+        return null;
+    }
+
+    private static Properties loadFileProps() {
+        // Anchored to D2Project.PROJECTS_DIR ("projects"); resolved relative to CWD.
+        Path p = Paths.get("projects", "app.properties");
+        if (!Files.isRegularFile(p)) return null;
+        Properties props = new Properties();
+        try (FileInputStream in = new FileInputStream(p.toFile())) {
+            props.load(in);
+            return props;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private D2Log() {}
@@ -115,7 +146,8 @@ public final class D2Log {
                     StandardOpenOption.WRITE);
             PrintWriter pw = new PrintWriter(w, false);
             pw.println("# GoMule log opened " + LocalDateTime.now()
-                    + "  threshold=" + THRESHOLD);
+                    + "  threshold=" + THRESHOLD + "  file=" + log.toAbsolutePath()
+                    + "  config=" + (FILE_PROPS != null ? "projects/app.properties" : "defaults"));
             pw.flush();
             return pw;
         } catch (Exception e) {
@@ -126,9 +158,15 @@ public final class D2Log {
 
     private static Path logFilePath() {
         try {
-            String override = System.getProperty("gomule.log.file");
-            if (override != null && !override.isEmpty()) return Paths.get(override);
-            // Anchor next to the running JAR (works for both fat-jar and IDE runs).
+            // 1. Full path override wins (sys prop > properties).
+            String fileOverride = resolve("gomule.log.file", "log.file");
+            if (fileOverride != null) return Paths.get(fileOverride);
+
+            // 2. Directory override (sys prop > properties); filename stays gomule.log.
+            String dirOverride = resolve("gomule.log.dir", "log.dir");
+            if (dirOverride != null) return Paths.get(dirOverride, "gomule.log");
+
+            // 3. Default: anchor next to the running JAR (works for both fat-jar and IDE runs).
             Path here = Paths.get(D2Log.class.getProtectionDomain()
                     .getCodeSource().getLocation().toURI());
             Path dir = Files.isDirectory(here) ? here : here.getParent();

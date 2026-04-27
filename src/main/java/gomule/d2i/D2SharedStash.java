@@ -1,24 +1,38 @@
 package gomule.d2i;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import gomule.gui.D2ItemListAdapter;
 import gomule.item.D2Item;
 import gomule.util.D2Backup;
 import gomule.util.D2BitReader;
 import gomule.util.D2Project;
 
-import java.io.PrintWriter;
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class D2SharedStash extends D2ItemListAdapter {
     private final List<D2SharedStashPane> panes;
     private final byte[] originalContent;
     private final D2SharedStashWriter sharedStashWriter;
+    private final D2MaterialsPane materialsPane;   // null if no sectionType=1 block
+    private final byte[] chronicleRawBytes;        // null if no sectionType=2 block
 
+    /** Backward-compatible 3-arg constructor used by tests (no materials/chronicle). */
     public D2SharedStash(String pFileName, List<D2SharedStashPane> panes, byte[] originalContent) {
+        this(pFileName, panes, originalContent, null, null);
+    }
+
+    public D2SharedStash(String pFileName, List<D2SharedStashPane> panes, byte[] originalContent,
+                         D2MaterialsPane materialsPane, byte[] chronicleRawBytes) {
         super(pFileName);
         this.panes = panes;
         this.originalContent = originalContent;
+        this.materialsPane = materialsPane;
+        this.chronicleRawBytes = chronicleRawBytes;
         this.sharedStashWriter = new D2SharedStashWriter(pFileName, originalContent);
     }
 
@@ -91,6 +105,36 @@ public class D2SharedStash extends D2ItemListAdapter {
 
     public void replacePane(int paneIndex, D2SharedStashPane newPane) {
         panes.set(paneIndex, newPane);
+    }
+
+    public D2MaterialsPane getMaterialsPane() {
+        return materialsPane;
+    }
+
+    public byte[] getChronicleRawBytes() {
+        return chronicleRawBytes;
+    }
+
+    public static class D2MaterialsPane {
+        private final List<D2Item> items;
+
+        D2MaterialsPane(List<D2Item> items) {
+            this.items = new ArrayList<>(items);
+        }
+
+        public List<D2Item> getItems() {
+            return items;
+        }
+
+        /** Removes {@code item} from this materials pane (if present). */
+        public void removeItem(D2Item item) {
+            items.remove(item);
+        }
+
+        /** Adds {@code item} to this materials pane (e.g. when returning a picked-up material). */
+        public void addItem(D2Item item) {
+            items.add(item);
+        }
     }
 
     public static class D2SharedStashPane {
@@ -191,21 +235,32 @@ public class D2SharedStash extends D2ItemListAdapter {
         private final long version;
         private final int gold;
         private final long length;
+        private final long sectionType;
 
-        public Header(long version, int gold, long length) {
+        public Header(long version, int gold, long length, long sectionType) {
             this.version = version;
             this.gold = gold;
             this.length = length;
+            this.sectionType = sectionType;
         }
 
         public static Header fromBytes(D2BitReader bitReader) {
-            bitReader.skipBytes(8);
+            // Header layout (relative offsets from section start — see D2IOffsets):
+            //   0-7:  magic(4) + reserved(4)  → skipBytes(8)
+            //   8:    version (1 byte)
+            //   9-11: padding (3 bytes)        → skipBytes(3)
+            //   12-14: gold (24 bits)
+            //   15:   padding (1 byte)         → skipBytes(1)
+            //   16-19: length (32 bits)
+            //   20-23: sectionType (32 bits)
+            bitReader.skipBytes(D2IOffsets.HDR_VERSION);   // skip to version (offset 8)
             long version = bitReader.read(8);
-            bitReader.skipBytes(3);
-            int gold = (int) bitReader.read(24);
-            bitReader.skipBytes(1);
-            long length = bitReader.read(32);
-            return new D2SharedStash.Header(version, gold, length);
+            bitReader.skipBytes(3);                        // padding after version
+            int gold = (int) bitReader.read(24);           // offset 12: gold (3 bytes)
+            bitReader.skipBytes(1);                        // padding after gold
+            long length = bitReader.read(32);              // offset 16: section length
+            long sectionType = bitReader.read(32);         // offset 20: section type (see D2IOffsets.SECTION_TYPE_*)
+            return new D2SharedStash.Header(version, gold, length, sectionType);
         }
 
         public long getVersion() {
@@ -220,12 +275,17 @@ public class D2SharedStash extends D2ItemListAdapter {
             return length;
         }
 
+        public long getSectionType() {
+            return sectionType;
+        }
+
         @Override
         public String toString() {
             return "Header{" +
                     "version=" + version +
                     ", gold=" + gold +
                     ", length=" + length +
+                    ", sectionType=" + sectionType +
                     '}';
         }
 
@@ -234,12 +294,12 @@ public class D2SharedStash extends D2ItemListAdapter {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Header header = (Header) o;
-            return version == header.version && gold == header.gold && length == header.length;
+            return version == header.version && gold == header.gold && length == header.length && sectionType == header.sectionType;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(version, gold, length);
+            return Objects.hash(version, gold, length, sectionType);
         }
     }
 }

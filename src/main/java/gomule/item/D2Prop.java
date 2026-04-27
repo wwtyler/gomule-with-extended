@@ -21,16 +21,18 @@
 
 package gomule.item;
 
-import gomule.D2Files;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import static java.util.Collections.singletonList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static java.util.Collections.singletonList;
+
+import gomule.D2Files;
+import gomule.util.D2Log;
+import randall.d2files.D2TxtFile;
+import randall.d2files.D2TxtFileItemProperties;
 
 public class D2Prop {
 
@@ -186,6 +188,21 @@ public class D2Prop {
             dispLoc = 2;
         }
 
+        // Self-contained D2R colour-coded template (e.g. MDK "ÿcV%+d 力量ÿc0"):
+        // substitute the value directly into the template instead of prepending externally,
+        // which would leave the value outside the colour span and %+d/%i as literal text.
+        if (isSelfContainedTemplate(oString)) {
+            switch (funcN) {
+                case 1: case 2: case 3: case 4: case 6: case 7: case 8: case 9: case 12:
+                case 19: case 29:
+                    return applyD2Template(oString, pVals[0]);
+                case 5: case 10:
+                    return applyD2Template(oString, (pVals[0] * 100) / 128);
+                case 20: case 21:
+                    return applyD2Template(oString, pVals[0] * -1);
+            }
+        }
+
         switch (funcN) {
 
             case (1):
@@ -334,13 +351,27 @@ public class D2Prop {
                     return oString;
                 }
 
-            case (13):
+            case (13): {
+                String charName13 = D2TxtFile.getCharacterCode(pVals[0]);
+                randall.d2files.D2TxtFileItemProperties charRow13 = D2TxtFile.CHARSTATS.searchColumns("class", charName13);
+                if (charRow13 != null) {
+                    String allSkillsKey = charRow13.get("StrAllSkills");
+                    if (allSkillsKey != null && !allSkillsKey.isEmpty()) {
+                        String allSkillsStr = D2Files.getInstance().getTranslations().getTranslation(allSkillsKey);
+                        if (isSelfContainedTemplate(allSkillsStr)) return applyD2Template(allSkillsStr, pVals[1]);
+                    }
+                }
+                return "+" + pVals[1] + " to " + charName13 + " Skill Levels";
+            }
 
-                return "+" + pVals[1] + " to " + D2TxtFile.getCharacterCode(pVals[0]) + " Skill Levels";
-
-            case (14):
-
+            case (14): {
+                String tabKey14 = getSkillTreeTranslationKey(pVals[0]);
+                if (tabKey14 != null) {
+                    String tabStr14 = D2Files.getInstance().getTranslations().getTranslation(tabKey14);
+                    if (isSelfContainedTemplate(tabStr14)) return applyD2Template(tabStr14, pVals[1]);
+                }
                 return "+" + pVals[1] + " to " + getSkillTree(pVals[0]);
+            }
 
             case (15):
 
@@ -391,16 +422,29 @@ public class D2Prop {
                         .filter(it -> it.get("stat2").isEmpty())
                         .collect(Collectors.toList());
                 if (matchingPropsRecords.isEmpty()) {
-                    if (oString.equals("Indestructible")) {
-                        matchingPropsRecords = singletonList(D2TxtFile.PROPS.searchColumns("code", "indestruct"));
-                    } else if (oString.equals("%+d%% Enhanced Maximum Damage")) {
-                        matchingPropsRecords = singletonList(D2TxtFile.PROPS.searchColumns("code", "dmg%"));
-                    } else if (oString.equals("%+d to Maximum Damage")) {
-                        matchingPropsRecords = singletonList(D2TxtFile.PROPS.searchColumns("code", "dmg-max"));
-                    } else if (oString.equals("%+d to Minimum Damage")) {
-                        matchingPropsRecords = singletonList(D2TxtFile.PROPS.searchColumns("code", "dmg-min"));
+                    // Locale-independent fallback: map by ItemStatCost.Stat (not by translated oString).
+                    // The English oString.equals(...) chain previously here failed on zhCN / colour-coded
+                    // strings such as 'ÿcV%+d 最大伤害ÿc0', causing "Unknown property" warnings.
+                    String statKey = itemStatCostRow.get("Stat");
+                    String propCode = switch (statKey) {
+                        case "indestructible"        -> "indestruct";
+                        case "item_maxdamage_percent"-> "dmg%";
+                        case "maxdamage"             -> "dmg-max";
+                        case "mindamage"             -> "dmg-min";
+                        default                      -> null;
+                    };
+                    if (propCode != null) {
+                        matchingPropsRecords = singletonList(D2TxtFile.PROPS.searchColumns("code", propCode));
                     } else {
-                        return "Unknown property";
+                        D2Log.warn("D2Prop",
+                                "Unknown property: no PROPS row matched stat='%s' (pNum=%d funcN=%d qFlag=%d dispLoc=%d oString='%s' pVals=%s descfunc='%s' descval='%s' descstrpos='%s')",
+                                itemStatCostRow.get("Stat"), pNum, funcN, qFlag, dispLoc,
+                                oString, Arrays.toString(pVals),
+                                itemStatCostRow.get("descfunc"),
+                                itemStatCostRow.get("descval"),
+                                itemStatCostRow.get("descstrpos"));
+                        return "Unknown property [stat=" + itemStatCostRow.get("Stat")
+                                + " pNum=" + pNum + "]";
                     }
                 }
                 D2TxtFileItemProperties o = matchingPropsRecords.getFirst();
@@ -454,104 +498,112 @@ public class D2Prop {
                                         .get("str name"))
                         + " " + oString;
 
-            case (27):
-                return "+" + pVals[1] + " to "
-                        + D2Files.getInstance()
-                                .getTranslations()
-                                .getTranslation(D2TxtFile.SKILL_DESC
-                                        .searchColumns(
-                                                "skilldesc",
-                                                D2TxtFile.SKILLS
-                                                        .getRow(pVals[0])
-                                                        .get("skilldesc"))
-                                        .get("str name"))
-                        + " "
-                        + D2Files.getInstance()
-                                .getTranslations()
-                                .getTranslation((D2TxtFile.SKILLS
-                                                                .getRow(D2TxtFile.SKILL_DESC
-                                                                        .getRow(pVals[0])
-                                                                        .getRowNum())
-                                                                .get("charclass")
-                                                                .charAt(0)
-                                                        + "")
-                                                .toUpperCase()
-                                        + D2TxtFile.SKILLS
-                                                .getRow(D2TxtFile.SKILL_DESC
-                                                        .getRow(pVals[0])
-                                                        .getRowNum())
-                                                .get("charclass")
-                                                .substring(1)
-                                        + "Only");
+            case (27): {
+                String skillName27 = D2Files.getInstance().getTranslations().getTranslation(
+                        D2TxtFile.SKILL_DESC.searchColumns("skilldesc",
+                                D2TxtFile.SKILLS.getRow(pVals[0]).get("skilldesc")).get("str name"));
+                String charclass27 = D2TxtFile.SKILLS.getRow(pVals[0]).get("charclass");
+                String classKey27 = (charclass27.charAt(0) + "").toUpperCase() + charclass27.substring(1) + "Only";
+                String classOnly27 = D2Files.getInstance().getTranslations().getTranslation(classKey27);
+                if (isSelfContainedTemplate(oString)) {
+                    return applyD2TemplateWithStrings(oString, pVals[1],
+                            stripD2rColorCodes(skillName27), stripD2rColorCodes(classOnly27));
+                }
+                return "+" + pVals[1] + " to " + skillName27 + " " + classOnly27;
+            }
 
-            case (28):
-                return "+" + pVals[1] + " to "
-                        + D2Files.getInstance()
-                                .getTranslations()
-                                .getTranslation(D2TxtFile.SKILL_DESC
-                                        .searchColumns(
-                                                "skilldesc",
-                                                D2TxtFile.SKILLS
-                                                        .getRow(pVals[0])
-                                                        .get("skilldesc"))
-                                        .get("str name"));
+            case (28): {
+                String skillName28 = D2Files.getInstance().getTranslations().getTranslation(
+                        D2TxtFile.SKILL_DESC.searchColumns("skilldesc",
+                                D2TxtFile.SKILLS.getRow(pVals[0]).get("skilldesc")).get("str name"));
+                if (isSelfContainedTemplate(oString)) {
+                    return applyD2TemplateWithStrings(oString, pVals[1], stripD2rColorCodes(skillName28));
+                }
+                return "+" + pVals[1] + " to " + skillName28;
+            }
 
             //UNOFFICIAL PROPERTIES
 
             //Enhanced Damage
-            case (30):
-
+            case (30): {
+                String s30 = D2Files.getInstance().getTranslations().getTranslation("strModEnhancedDamage");
+                if (isSelfContainedTemplate(s30)) return applyD2Template(s30, pVals[0]);
                 return pVals[0] + "% Enhanced Damage";
+            }
 
-            case (31):
-
+            case (31): {
+                String s31 = D2Files.getInstance().getTranslations().getTranslation("strModMinDamageRange");
+                if (isSelfContainedTemplate(s31)) return applyD2TemplateMulti(s31, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Damage";
+            }
 
-            case (32):
-
+            case (32): {
+                String s32 = D2Files.getInstance().getTranslations().getTranslation("strModFireDamageRange");
+                if (isSelfContainedTemplate(s32)) return applyD2TemplateMulti(s32, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Fire Damage";
+            }
 
-            case (33):
-
+            case (33): {
+                String s33 = D2Files.getInstance().getTranslations().getTranslation("strModLightningDamageRange");
+                if (isSelfContainedTemplate(s33)) return applyD2TemplateMulti(s33, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Lightning Damage";
+            }
 
-            case (34):
-
+            case (34): {
+                String s34 = D2Files.getInstance().getTranslations().getTranslation("strModMagicDamageRange");
+                if (isSelfContainedTemplate(s34)) return applyD2TemplateMulti(s34, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Magic Damage";
+            }
 
-            case (35):
-
+            case (35): {
+                // MDK string strModColdDamageRange does not include duration; display without frames
+                String s35 = D2Files.getInstance().getTranslations().getTranslation("strModColdDamageRange");
+                if (isSelfContainedTemplate(s35)) {
+                    return pVals[0] == pVals[1]
+                            ? applyD2TemplateMulti(s35, pVals[0], pVals[0])
+                            : applyD2TemplateMulti(s35, pVals[0], pVals[1]);
+                }
                 if (pVals[0] == pVals[1]) {
                     return "Adds " + pVals[0] + " Cold Damage Over " + Math.round((double) pVals[2] / 25.0) + " Secs (" + pVals[2] + " Frames)";
                 }
-
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Cold Damage Over " + Math.round((double) pVals[2] / 25.0) + " Secs (" + pVals[2] + " Frames)";
+            }
 
-            case (36):
-
+            case (36): {
+                // Compute actual poison damage and duration, then apply to MDK template
+                int poisMin, poisMax, durationSecs;
                 if (pVals.length == 4) {
-
-                    if (pVals[0] == pVals[1]) {
-                        return "Adds " + Math.round(pVals[0] * ((double) pVals[2] / (double) pVals[3]) / 256) + " Poison Damage Over " + (int) Math.floor(((double) pVals[2] / (double) pVals[3]) / 25.0) + " Secs (" + pVals[2] + " Frames)";
-                    }
-
-                    return "Adds " + Math.round(pVals[0] * ((double) pVals[2] / (double) pVals[3]) / 256) + " - " + Math.round(pVals[1] * ((double) pVals[2] / (double) pVals[3]) / 256) + " Poison Damage Over " + (int) Math.floor(((double) pVals[2] / (double) pVals[3]) / 25.0) + " Secs (" + pVals[2] + " Frames)";
-
+                    poisMin = (int) Math.round(pVals[0] * ((double) pVals[2] / (double) pVals[3]) / 256);
+                    poisMax = (int) Math.round(pVals[1] * ((double) pVals[2] / (double) pVals[3]) / 256);
+                    durationSecs = (int) Math.floor(((double) pVals[2] / (double) pVals[3]) / 25.0);
                 } else {
-
-                    if (pVals[0] == pVals[1]) {
-                        return "Adds " + Math.round(pVals[0] * (double) pVals[2] / 256) + " Poison Damage Over " + (int) Math.floor((double) pVals[2] / 25.0) + " Secs (" + pVals[2] + " Frames)";
-                    }
-
-                    return "Adds " + Math.round(pVals[0] * (double) pVals[2] / 256) + " - " + Math.round(pVals[1] * (double) pVals[2] / 256) + " Poison Damage Over " + (int) Math.floor((double) pVals[2] / 25.0) + " Secs (" + pVals[2] + " Frames)";
+                    poisMin = (int) Math.round(pVals[0] * (double) pVals[2] / 256);
+                    poisMax = (int) Math.round(pVals[1] * (double) pVals[2] / 256);
+                    durationSecs = (int) Math.floor((double) pVals[2] / 25.0);
                 }
-            case (37):
-
+                String s36key = (poisMin == poisMax) ? "strModPoisonDamage" : "strModPoisonDamageRange";
+                String s36 = D2Files.getInstance().getTranslations().getTranslation(s36key);
+                if (isSelfContainedTemplate(s36)) {
+                    return poisMin == poisMax
+                            ? applyD2TemplateMulti(s36, poisMin, durationSecs)
+                            : applyD2TemplateMulti(s36, poisMin, poisMax, durationSecs);
+                }
+                if (poisMin == poisMax) {
+                    return "Adds " + poisMin + " Poison Damage Over " + durationSecs + " Secs";
+                }
+                return "Adds " + poisMin + " - " + poisMax + " Poison Damage Over " + durationSecs + " Secs";
+            }
+            case (37): {
+                String s37 = D2Files.getInstance().getTranslations().getTranslation("strModAllResistances");
+                if (isSelfContainedTemplate(s37)) return applyD2Template(s37, pVals[0]);
                 return "All Resistances +" + pVals[0];
+            }
 
-            case (38):
-
-                return "All Stats +" + pVals[0];
+            case (38): {
+                String s38 = D2Files.getInstance().getTranslations().getTranslation("allattrib");
+                if (isSelfContainedTemplate(s38)) return applyD2Template(s38, pVals[0]);
+                return "全属性 +" + pVals[0];
+            }
 
             case (39):
 
@@ -570,7 +622,110 @@ public class D2Prop {
                 }
         }
 
+        D2Log.warn("D2Prop",
+                "Unrecognized property: no switch case for funcN=%d (pNum=%d qFlag=%d oString='%s' pVals=%s stat='%s' descfunc='%s' descval='%s')",
+                funcN, pNum, qFlag, oString, Arrays.toString(pVals),
+                itemStatCostRow.get("Stat"),
+                itemStatCostRow.get("descfunc"),
+                itemStatCostRow.get("descval"));
         return "Unrecognized property: " + this.pNum;
+    }
+
+    /**
+     * Returns true if the string is a self-contained D2R colour-coded display template
+     * (contains the ÿc prefix U+00FF followed by 'c').
+     */
+    private static boolean isSelfContainedTemplate(String s) {
+        return s != null && s.indexOf('\u00FF') >= 0;
+    }
+
+    /**
+     * Substitutes a single integer value into a D2R lng format string.
+     * <ul>
+     *   <li>{@code %+d} → {@code +val} or {@code val} (for negative, sign is included)</li>
+     *   <li>{@code %d}, {@code %i} → {@code val}</li>
+     *   <li>{@code %%} → literal {@code %}</li>
+     * </ul>
+     */
+    /**
+     * Strips D2R color codes (ÿcX sequences) from a string, returning plain text.
+     */
+    private static String stripD2rColorCodes(String s) {
+        if (s == null) return null;
+        int i = s.indexOf('\u00FF');
+        if (i < 0) return s;
+        StringBuilder sb = new StringBuilder(s.length());
+        int pos = 0;
+        while (pos < s.length()) {
+            char ch = s.charAt(pos);
+            if (ch == '\u00FF' && pos + 2 < s.length() && s.charAt(pos + 1) == 'c') {
+                pos += 3;
+            } else {
+                sb.append(ch);
+                pos++;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Applies a D2R template substituting one integer value (for %+d/%d/%i)
+     * and then string values (for %s) in order.
+     */
+    private static String applyD2TemplateWithStrings(String template, int numVal, String... strVals) {
+        String result = applyD2Template(template, numVal);
+        for (String sv : strVals) {
+            int idx = result.indexOf("%s");
+            if (idx < 0) break;
+            result = result.substring(0, idx) + (sv != null ? sv : "") + result.substring(idx + 2);
+        }
+        return result;
+    }
+
+    private static String applyD2Template(String template, int val) {
+        return template
+                .replace("%+d", val >= 0 ? "+" + val : String.valueOf(val))
+                .replace("%d",  String.valueOf(val))
+                .replace("%i",  String.valueOf(val))
+                .replace("%%",  "%");
+    }
+
+    /**
+     * Substitutes multiple values sequentially into a D2R lng format string.
+     * Each {@code %d} placeholder (not {@code %+d}) is replaced in order with the next value.
+     * {@code %%} is converted to a literal {@code %} after all substitutions.
+     */
+    private static String applyD2TemplateMulti(String template, int... vals) {
+        StringBuilder sb = new StringBuilder(template);
+        int searchFrom = 0;
+        for (int v : vals) {
+            // Try %+d first (only if present at current position)
+            int plusIdx = sb.indexOf("%+d", searchFrom);
+            int plainIdx = sb.indexOf("%d", searchFrom);
+            int idx;
+            boolean isPlus;
+            if (plusIdx >= 0 && (plainIdx < 0 || plusIdx <= plainIdx)) {
+                idx = plusIdx;
+                isPlus = true;
+            } else if (plainIdx >= 0) {
+                idx = plainIdx;
+                isPlus = false;
+            } else {
+                break;
+            }
+            String replacement = isPlus
+                    ? (v >= 0 ? "+" + v : String.valueOf(v))
+                    : String.valueOf(v);
+            int len = isPlus ? 3 : 2;
+            sb.replace(idx, idx + len, replacement);
+            searchFrom = idx + replacement.length();
+        }
+        // Replace %% → %
+        int pct;
+        while ((pct = sb.indexOf("%%")) >= 0) {
+            sb.replace(pct, pct + 2, "%");
+        }
+        return sb.toString();
     }
 
     public void applyOp(int cLvl) {
@@ -592,6 +747,33 @@ public class D2Prop {
                 }
         }
         opApplied = true;
+    }
+
+    private static String getSkillTreeTranslationKey(int n) {
+        switch (n) {
+            case 0:  return "StrSklTabItem3";  // Amazon: Bow and Crossbow
+            case 1:  return "StrSklTabItem2";  // Amazon: Passive and Magic
+            case 2:  return "StrSklTabItem1";  // Amazon: Javelin and Spear
+            case 8:  return "StrSklTabItem15"; // Sorceress: Fire
+            case 9:  return "StrSklTabItem14"; // Sorceress: Lightning
+            case 10: return "StrSklTabItem13"; // Sorceress: Cold
+            case 16: return "StrSklTabItem8";  // Necromancer: Curses
+            case 17: return "StrSklTabItem7";  // Necromancer: Poison and Bone
+            case 18: return "StrSklTabItem9";  // Necromancer: Summoning
+            case 24: return "StrSklTabItem6";  // Paladin: Combat Skills
+            case 25: return "StrSklTabItem5";  // Paladin: Offensive Auras
+            case 26: return "StrSklTabItem4";  // Paladin: Defensive Auras
+            case 32: return "StrSklTabItem11"; // Barbarian: Combat Skills
+            case 33: return "StrSklTabItem12"; // Barbarian: Masteries
+            case 34: return "StrSklTabItem10"; // Barbarian: Warcries
+            case 40: return "StrSklTabItem16"; // Druid: Summoning
+            case 41: return "StrSklTabItem17"; // Druid: Shape-shifting
+            case 42: return "StrSklTabItem18"; // Druid: Elemental
+            case 48: return "StrSklTabItem19"; // Assassin: Traps
+            case 49: return "StrSklTabItem20"; // Assassin: Shadow Discipline
+            case 50: return "StrSklTabItem21"; // Assassin: Martial Arts
+            default: return null;
+        }
     }
 
     public String getSkillTree(int lSkillNr) {

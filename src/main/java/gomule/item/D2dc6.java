@@ -21,11 +21,12 @@
 
 package gomule.item;
 
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 import gomule.util.D2BitReader;
 import gomule.util.D2Palette;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class D2dc6 {
 
@@ -89,7 +90,7 @@ public class D2dc6 {
         br.read(32);
         int width = (int) br.read(32);
         int height = (int) br.read(32);
-//        int offset_x = (int) br.read(32);
+        if (width <= 0 || height <= 0) return null;
         br.read(32);
 //        int offset_y = (int) br.read(32);
         br.read(32);

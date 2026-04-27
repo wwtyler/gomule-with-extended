@@ -136,7 +136,7 @@ public class D2FileManager extends JFrame {
         setExtendedState(parseInt(iProperties.getProperty("win-state", "0")));
         lSplit.setDividerLocation(parseInt(iProperties.getProperty("win-ldiv-loc", "200")));
         rSplit.setDividerLocation(parseInt(iProperties.getProperty("win-rdiv-loc", "814")));
-        rSplit.setResizeWeight(1.0);
+        rSplit.setResizeWeight(0.85);
         iContentPane.add(rSplit, BorderLayout.CENTER);
         setContentPane(iContentPane);
         setBounds(new Rectangle(
@@ -244,7 +244,6 @@ public class D2FileManager extends JFrame {
     private void createLeftPane() {
 
         iViewProject = new D2ViewProject(this);
-        iViewProject.setPreferredSize(new Dimension(190, 500));
         iViewProject.setProject(iProject);
         iViewProject.refreshTreeModel(true, true, true);
         iLeftPane = new RandallPanel();
@@ -252,7 +251,6 @@ public class D2FileManager extends JFrame {
         iProjectModel = new DefaultComboBoxModel();
         checkProjectsModel();
         iChangeProject = new JComboBox(iProjectModel);
-        iChangeProject.setPreferredSize(new Dimension(190, 20));
         iChangeProject.setSelectedItem(iProject.getProjectName());
         iChangeProject.addItemListener(new ItemListener() {
 
@@ -266,7 +264,6 @@ public class D2FileManager extends JFrame {
         });
 
         RandallPanel projControl = new RandallPanel();
-        projControl.setPreferredSize(new Dimension(190, 150));
         projControl.setBorder(new TitledBorder(
                 null, ("Project Control"), TitledBorder.LEFT, TitledBorder.TOP, iLeftPane.getFont(), Color.gray));
 
@@ -474,7 +471,7 @@ public class D2FileManager extends JFrame {
 
         iLeftPane.addToPanel(iChangeProject, 0, 0, 1, RandallPanel.HORIZONTAL);
         iLeftPane.addToPanel(iViewProject, 0, 1, 1, RandallPanel.BOTH);
-        iLeftPane.addToPanel(projControl, 0, 2, 1, RandallPanel.NONE);
+        iLeftPane.addToPanel(projControl, 0, 2, 1, RandallPanel.HORIZONTAL);
     }
 
     private void flavieDump(ArrayList dFileNames, boolean singleDump) {
@@ -529,7 +526,6 @@ public class D2FileManager extends JFrame {
     private void createRightPane() {
 
         iRightPane = new JPanel();
-        iRightPane.setPreferredSize(new Dimension(190, 768));
         iRightPane.setMinimumSize(new Dimension(190, 0));
         iRightPane.setLayout(new BoxLayout(iRightPane, BoxLayout.Y_AXIS));
         try {
@@ -553,10 +549,7 @@ public class D2FileManager extends JFrame {
         itemControl.setBorder(new TitledBorder(
                 null, ("Item Control"), TitledBorder.LEFT, TitledBorder.TOP, iRightPane.getFont(), Color.gray));
 
-        itemControl.setPreferredSize(new Dimension(190, 160));
-        itemControl.setSize(new Dimension(190, 160));
-        itemControl.setMaximumSize(new Dimension(190, 160));
-        itemControl.setMinimumSize(new Dimension(190, 160));
+        itemControl.setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
         pickAll = new JButton("Pick All");
         pickAll.addActionListener(new ActionListener() {
@@ -717,10 +710,7 @@ public class D2FileManager extends JFrame {
         RandallPanel charControl = new RandallPanel();
         charControl.setBorder(new TitledBorder(
                 null, ("Output Control"), TitledBorder.LEFT, TitledBorder.TOP, iRightPane.getFont(), Color.gray));
-        charControl.setPreferredSize(new Dimension(190, 80));
-        charControl.setSize(new Dimension(190, 80));
-        charControl.setMaximumSize(new Dimension(190, 80));
-        charControl.setMinimumSize(new Dimension(190, 80));
+        charControl.setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
         dumpBut = new JButton("Perform txt Dump");
         dumpBut.addActionListener(new ActionListener() {
@@ -829,6 +819,72 @@ public class D2FileManager extends JFrame {
         fileMenu.add(saveAll);
         fileMenu.addSeparator();
         fileMenu.add(switchLookAndFeelMenu);
+        fileMenu.addSeparator();
+
+        // 布局配置切换菜单（需要重启生效）
+        // 注意：createMenubar() 在构造器中被调用，iProperties 此时尚未初始化，
+        // 因此直接读取属性文件，而不通过 iProperties 字段。
+        JMenu switchLayoutMenu = new JMenu("Switch Layout Profile");
+        String savedLayoutName;
+        try {
+            savedLayoutName = FileManagerProperties.loadFileManagerProperties()
+                    .getProperty(LayoutProfile.PROPERTY_NAME);
+        } catch (Exception ex) {
+            savedLayoutName = null;
+        }
+        LayoutProfile currentLayout = LayoutProfile.fromName(savedLayoutName);
+        for (LayoutProfile profile : LayoutProfile.values()) {
+            JMenuItem layoutItem = new JMenuItem(profile.displayName);
+            if (profile == currentLayout) {
+                layoutItem.setFont(layoutItem.getFont().deriveFont(java.awt.Font.BOLD));
+            }
+            switchLayoutMenu.add(layoutItem);
+            layoutItem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    int check = JOptionPane.showConfirmDialog(
+                            null,
+                            "GoMule will exit to switch layout profile, you'll need to manually start GoMule again. Any unsaved changes will be automatically saved.",
+                            "",
+                            OK_CANCEL_OPTION);
+                    if (check == 0) {
+                        iProperties.setProperty(LayoutProfile.PROPERTY_NAME, profile.name());
+                        FileManagerProperties.saveFileManagerProperties(iProperties);
+                        D2FileManager.getInstance().closeListener();
+                    }
+                }
+            });
+        }
+        fileMenu.add(switchLayoutMenu);
+
+        // 面板绘制主题切换菜单（立即生效，无需重启）
+        JMenu switchThemeMenu = new JMenu("Switch Panel Theme");
+        PanelTheme currentTheme = PanelTheme.active;
+        for (PanelTheme theme : PanelTheme.values()) {
+            JMenuItem themeItem = new JMenuItem(theme.displayName);
+            if (theme == currentTheme) {
+                themeItem.setFont(themeItem.getFont().deriveFont(java.awt.Font.BOLD));
+            }
+            switchThemeMenu.add(themeItem);
+            themeItem.addActionListener(e -> {
+                PanelTheme.active = theme;
+                // 保存到 app.properties
+                try {
+                    Properties themeProps = FileManagerProperties.loadFileManagerProperties();
+                    themeProps.setProperty(PanelTheme.PROPERTY_NAME, theme.name());
+                    FileManagerProperties.saveFileManagerProperties(themeProps);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                // 重建所有已打开的角色窗口背景
+                for (JInternalFrame frame : iDesktopPane.getAllFrames()) {
+                    if (frame instanceof D2ViewChar vc) {
+                        vc.rebuildBackground();
+                    }
+                }
+            });
+        }
+        fileMenu.add(switchThemeMenu);
         fileMenu.addSeparator();
         fileMenu.add(exitProg);
 
@@ -1143,6 +1199,18 @@ public class D2FileManager extends JFrame {
             iProperties.setProperty("win-y", String.valueOf(bounds.y));
             iProperties.setProperty("win-height", String.valueOf(bounds.height));
             iProperties.setProperty("win-width", String.valueOf(bounds.width));
+        }
+        // Merge any keys that were manually added to the file after GoMule started
+        // (e.g. ui.scale, ui.menu.font.size) so they aren't lost when we save.
+        try {
+            Properties diskProps = FileManagerProperties.loadFileManagerProperties();
+            for (String key : diskProps.stringPropertyNames()) {
+                if (!iProperties.containsKey(key)) {
+                    iProperties.setProperty(key, diskProps.getProperty(key));
+                }
+            }
+        } catch (Exception ignored) {
+            // best-effort: if re-read fails, proceed with in-memory state
         }
         FileManagerProperties.saveFileManagerProperties(iProperties);
         closeWindows();

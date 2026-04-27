@@ -1,13 +1,16 @@
 package gomule.gui.sharedStash;
 
+import java.awt.GridLayout;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import gomule.d2i.D2SharedStash;
 import gomule.gui.D2FileManager;
 import randall.util.RandallPanel;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 class SharedStashGoldTransferPanel extends JPanel {
     private final SharedStashPanel sharedStashPanel;
@@ -15,8 +18,6 @@ class SharedStashGoldTransferPanel extends JPanel {
     public SharedStashGoldTransferPanel(SharedStashPanel sharedStashPanel) {
         super(new GridLayout(0, 1));
         this.sharedStashPanel = sharedStashPanel;
-        setSize(300, 100);
-        setPreferredSize(new Dimension(300, 100));
         JTextField transferGoldAmount = new JTextField("10000");
         JButton transferGoldOut = new JButton("From Stash");
         transferGoldOut.addActionListener(pEvent -> transferGoldOut(getGoldAmount(transferGoldAmount)));
