@@ -141,7 +141,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     private AbstractButton iQualAll;
     private JCheckBox iQualOther;
 
-    private JButton iCusFilter;
+    private final JButton iCusFilter;
 
     public D2ViewStash(D2FileManager pMainFrame, String pFileName) {
         super(pFileName, true, true, false, true);
@@ -241,12 +241,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iReqMaxDex.getDocument().addDocumentListener(iStashFilter);
         iCusFilter = new JButton("Filter...");
 
-        iCusFilter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                new CustomFilterPanel().filterPopUp();
-            }
-
-        });
+        iCusFilter.addActionListener(pEvent -> new CustomFilterPanel().filterPopUp());
 
         iRequerementFilter.addToPanel(new JLabel("Contains"), 0, 0, 1, RandallPanel.NONE);
         iRequerementFilter.addToPanel(freeTextSearch, 1, 0, 1, RandallPanel.HORIZONTAL);
@@ -337,9 +332,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 }
             });
 
-            iTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
+        iTable.getSelectionModel().addListSelectionListener(e -> {
                     if (iTable.getSelectedRowCount() == 1) {
 
                         String dispStr = D2ItemRenderer.itemDumpHtml(iItemModel.getItem(iTable.getSelectedRow()), true)
@@ -356,8 +349,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     } else {
                         iItemText.setText("");
                     }
-                }
-            });
+                });
         }
         if (iTable.getRowCount() > 0) {
             iTable.setRowSelectionInterval(0, 0);
@@ -445,80 +437,69 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iDeleteDups = new JButton("Delete Dupes");
         iDelete.setEnabled(D2FileManager.getInstance().getProject().getAllowDelete());
         iDeleteDups.setEnabled(D2FileManager.getInstance().getProject().getAllowDelete());
-        iPickup.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                pickupSelected();
-            }
-        });
+        iPickup.addActionListener(pEvent -> pickupSelected());
         lButtonPanel.addToPanel(iPickup, 0, 0, 1, RandallPanel.HORIZONTAL);
 
         iDropOne = new JButton("Drop");
-        iDropOne.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                D2Item pItem = D2ViewClipboard.removeItem();
-                iStash.addItem(pItem);
-                selectItem(pItem);
-            }
+        iDropOne.addActionListener(pEvent -> {
+            D2Item pItem = D2ViewClipboard.removeItem();
+            iStash.addItem(pItem);
+            selectItem(pItem);
         });
         lButtonPanel.addToPanel(iDropOne, 1, 0, 1, RandallPanel.HORIZONTAL);
 
         iDropAll = new JButton("Drop All");
-        iDropAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                D2Item lastItemAdded = null;
+        iDropAll.addActionListener(pEvent -> {
+            D2Item lastItemAdded = null;
+            try {
+                iStash.ignoreItemListEvents();
+                ArrayList<D2Item> lItemList = D2ViewClipboard.removeAllItems();
+                while (!lItemList.isEmpty()) {
+                    lastItemAdded = (D2Item) lItemList.removeFirst();
+                    iStash.addItem(lastItemAdded);
+                }
+            } finally {
+                iStash.listenItemListEvents();
+            }
+            itemListChanged();
+            if (lastItemAdded != null) selectItem(lastItemAdded);
+        });
+        lButtonPanel.addToPanel(iDropAll, 2, 0, 1, RandallPanel.HORIZONTAL);
+
+        iDelete.addActionListener(pEvent -> {
+            ArrayList<D2Item> lItemList = new ArrayList<>();
+
+            int lRows[] = iTable.getSelectedRows();
+
+            if (lRows.length > 0) {
+                for (int i = 0; i < lRows.length; i++) {
+                    lItemList.add(iItemModel.getItem(lRows[i]));
+                }
                 try {
                     iStash.ignoreItemListEvents();
-                    ArrayList<D2Item> lItemList = D2ViewClipboard.removeAllItems();
-                    while (!lItemList.isEmpty()) {
-                        lastItemAdded = (D2Item) lItemList.removeFirst();
-                        iStash.addItem(lastItemAdded);
+                    for (int i = 0; i < lItemList.size(); i++) {
+                        int check = JOptionPane.showConfirmDialog(null, "Delete " + lItemList.get(i).getName() + "?");
+
+                        if (check == 0) {
+                            iStash.removeItem(lItemList.get(i));
+                        }
                     }
+
                 } finally {
                     iStash.listenItemListEvents();
                 }
                 itemListChanged();
-                if (lastItemAdded != null) selectItem(lastItemAdded);
-            }
-        });
-        lButtonPanel.addToPanel(iDropAll, 2, 0, 1, RandallPanel.HORIZONTAL);
-
-        iDelete.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                ArrayList<D2Item> lItemList = new ArrayList<>();
-
-                int lRows[] = iTable.getSelectedRows();
-
-                if (lRows.length > 0) {
-                    for (int i = 0; i < lRows.length; i++) {
-                        lItemList.add(iItemModel.getItem(lRows[i]));
-                    }
-                    try {
-                        iStash.ignoreItemListEvents();
-                        for (int i = 0; i < lItemList.size(); i++) {
-                            int check = JOptionPane.showConfirmDialog(null, "Delete " + lItemList.get(i).getName() + "?");
-
-                            if (check == 0) {
-                                iStash.removeItem(lItemList.get(i));
-                            }
-                        }
-
-                    } finally {
-                        iStash.listenItemListEvents();
-                    }
-                    itemListChanged();
-                }
             }
         });
         lButtonPanel.addToPanel(iDelete, 3, 0, 1, RandallPanel.HORIZONTAL);
 
 
-        iDeleteDups.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                int check = JOptionPane.showConfirmDialog(null, "WARNING: WILL DELETE ALL DUAL FPS. CONTINUE?");
+        iDeleteDups.addActionListener(pEvent -> {
+            int check = JOptionPane.showConfirmDialog(null, "WARNING: WILL DELETE ALL DUAL FPS. CONTINUE?");
 
-                if (check != 0) {
-                    return;
-                }
+            if (check != 0) {
+                return;
+            }
 
                 HashMap<String, D2Item> lItemList = new HashMap<>();
 
@@ -547,7 +528,6 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 }
                 itemListChanged();
 
-            }
         });
         if (isStash()) {
             lButtonPanel.addToPanel(iDeleteDups, 4, 0, 1, RandallPanel.HORIZONTAL);
@@ -1062,32 +1042,11 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         }
 
 
-                        if (lItem.getItemQuality().equals("normal")) {
-
-                            if (!iQualNorm.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
-                            }
-
-                        } else if (lItem.getItemQuality().equals("exceptional")) {
-
-                            if (!iQualExce.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
-                            }
-
-                        } else if (lItem.getItemQuality().equals("elite")) {
-
-
-                            if (!iQualEli.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
-                            }
-
-                        } else if (lItem.getItemQuality().equals("none")) {
-
-
-                            if (!iQualOther.isSelected() && !iQualAll.isSelected()) {
-                                lAdd1 = false;
-                            }
-
+                        switch (lItem.getItemQuality()) {
+                            case "normal" -> { if (!iQualNorm.isSelected() && !iQualAll.isSelected()) lAdd1 = false; }
+                            case "exceptional" -> { if (!iQualExce.isSelected() && !iQualAll.isSelected()) lAdd1 = false; }
+                            case "elite" -> { if (!iQualEli.isSelected() && !iQualAll.isSelected()) lAdd1 = false; }
+                            case "none" -> { if (!iQualOther.isSelected() && !iQualAll.isSelected()) lAdd1 = false; }
                         }
 
                         if (!lItem.isEthereal()) {
@@ -1121,41 +1080,13 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         if (iTypeSocketed.isSelected()) {
 
                             switch ((int) lItem.getSocketNrTotal()) {
-
-                                case 0:
-                                    lAdd1 = false;
-                                    break;
-                                case 1:
-                                    if (!iCatSock1.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-                                case 2:
-                                    if (!iCatSock2.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-                                case 3:
-                                    if (!iCatSock3.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-                                case 4:
-                                    if (!iCatSock4.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-                                case 5:
-                                    if (!iCatSock5.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-                                case 6:
-                                    if (!iCatSock6.isSelected() && !iCatSockAll.isSelected()) {
-                                        lAdd1 = false;
-                                    }
-                                    break;
-
+                                case 0 -> lAdd1 = false;
+                                case 1 -> { if (!iCatSock1.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
+                                case 2 -> { if (!iCatSock2.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
+                                case 3 -> { if (!iCatSock3.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
+                                case 4 -> { if (!iCatSock4.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
+                                case 5 -> { if (!iCatSock5.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
+                                case 6 -> { if (!iCatSock6.isSelected() && !iCatSockAll.isSelected()) lAdd1 = false; }
                             }
 
 
@@ -1272,37 +1203,35 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         }
 
         public void sort() {
-            Collections.sort(iItems, new Comparator() {
-                public int compare(Object pObj1, Object pObj2) {
-                    D2Item lItem1 = (D2Item) pObj1;
-                    D2Item lItem2 = (D2Item) pObj2;
-                    try {
-                        for (int i = 0; i < iSortList.size(); i++) {
-                            Object lSort = iSortList.get(i);
+            Collections.sort(iItems, (pObj1, pObj2) -> {
+                D2Item lItem1 = (D2Item) pObj1;
+                D2Item lItem2 = (D2Item) pObj2;
+                try {
+                    for (int i = 0; i < iSortList.size(); i++) {
+                        Object lSort = iSortList.get(i);
 
-                            if (lSort == HEADER[0]) {
-                                return lItem1.getName().compareTo(lItem2.getName());
-                            } else if (lSort == HEADER[1]) {
-                                return lItem1.getReqLvl() - lItem2.getReqLvl();
-                            } else if (lSort == HEADER[2]) {
-                                return lItem1.getReqStr() - lItem2.getReqStr();
-                            } else if (lSort == HEADER[3]) {
-                                return lItem1.getReqDex() - lItem2.getReqDex();
-                            } else if (lSort == HEADER[4]) {
-                                String lFileName1 = ((D2ItemListAll) iStash).getFilename(lItem1);
-                                String lFileName2 = ((D2ItemListAll) iStash).getFilename(lItem2);
-                                return lFileName1.compareTo(lFileName2);
-                            }
+                        if (lSort == HEADER[0]) {
+                            return lItem1.getName().compareTo(lItem2.getName());
+                        } else if (lSort == HEADER[1]) {
+                            return lItem1.getReqLvl() - lItem2.getReqLvl();
+                        } else if (lSort == HEADER[2]) {
+                            return lItem1.getReqStr() - lItem2.getReqStr();
+                        } else if (lSort == HEADER[3]) {
+                            return lItem1.getReqDex() - lItem2.getReqDex();
+                        } else if (lSort == HEADER[4]) {
+                            String lFileName1 = ((D2ItemListAll) iStash).getFilename(lItem1);
+                            String lFileName2 = ((D2ItemListAll) iStash).getFilename(lItem2);
+                            return lFileName1.compareTo(lFileName2);
                         }
-
-                        return 0;
-                    } catch (Exception e) {
-                        D2FileManager.displayTextDialog(
-                                "Error",
-                                "Failed to open stash due to:\n" + D2ItemRenderer.itemDump(lItem1, false) + "\nor:\n"
-                                        + D2ItemRenderer.itemDump(lItem2, false));
-                        throw e;
                     }
+
+                    return 0;
+                } catch (Exception e) {
+                    D2FileManager.displayTextDialog(
+                            "Error",
+                            "Failed to open stash due to:\n" + D2ItemRenderer.itemDump(lItem1, false) + "\nor:\n"
+                                    + D2ItemRenderer.itemDump(lItem2, false));
+                    throw e;
                 }
             });
             fireTableChanged();
@@ -1324,20 +1253,13 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         @Override
         public String getColumnName(int pCol) {
-            switch (pCol) {
-                case 0:
-                    return "Name";
-                case 1:
-                    return "lvl";
-                case 2:
-                    return "str";
-                case 3:
-                    return "dex";
-//            case 4:
-//                return "Type";
-                default:
-                    return "";
-            }
+            return switch (pCol) {
+                case 0 -> "Name";
+                case 1 -> "lvl";
+                case 2 -> "str";
+                case 3 -> "dex";
+                default -> "";
+            };
         }
 
         @Override
@@ -1353,22 +1275,18 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         @Override
         public Object getValueAt(int pRow, int pCol) {
             D2Item lItem = (D2Item) iItems.get(pRow);
-            switch (pCol) {
-                case 0:
-                    return new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
-                case 1:
-                    return new D2CellValue(getStringValue(lItem.getReqLvl()), lItem, iFileManager.getProject());
-                case 2:
-                    return new D2CellValue(getStringValue(lItem.getReqStr()), lItem, iFileManager.getProject());
-                case 3:
-                    return new D2CellValue(getStringValue(lItem.getReqDex()), lItem, iFileManager.getProject());
-                case 4:
+            return switch (pCol) {
+                case 0 -> new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
+                case 1 -> new D2CellValue(getStringValue(lItem.getReqLvl()), lItem, iFileManager.getProject());
+                case 2 -> new D2CellValue(getStringValue(lItem.getReqStr()), lItem, iFileManager.getProject());
+                case 3 -> new D2CellValue(getStringValue(lItem.getReqDex()), lItem, iFileManager.getProject());
+                case 4 -> {
                     String lFileName = ((D2ItemListAll) iStash).getFilename(lItem);
                     String lType = (lFileName.toLowerCase().endsWith(".d2s")) ? "C" : "S";
-                    return new D2CellValue(lType, lFileName, lItem, iFileManager.getProject());
-                default:
-                    return "";
-            }
+                    yield new D2CellValue(lType, lFileName, lItem, iFileManager.getProject());
+                }
+                default -> "";
+            };
         }
 
         private String getStringValue(int pValue) {
@@ -1520,68 +1438,53 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             JButton fOk = new JButton("Ok");
 
 
-            fOk.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent pEvent) {
-                    for (int lFilterNr = 0; lFilterNr < iItemModel.iCusFilterList.size(); lFilterNr++) {
-                        D2ItemModelCusFilter lFilter = (D2ItemModelCusFilter) iItemModel.iCusFilterList.get(lFilterNr);
-                        lFilter.filterString = fStrIn[lFilterNr].getText();
-                        try {
-                            if (fNumIn[lFilterNr].getText().equals("")) {
+            fOk.addActionListener(pEvent -> {
+                for (int lFilterNr = 0; lFilterNr < iItemModel.iCusFilterList.size(); lFilterNr++) {
+                    D2ItemModelCusFilter lFilter = (D2ItemModelCusFilter) iItemModel.iCusFilterList.get(lFilterNr);
+                    lFilter.filterString = fStrIn[lFilterNr].getText();
+                    try {
+                        if (fNumIn[lFilterNr].getText().equals("")) {
 
-                                lFilter.filterVal = -1337;
+                            lFilter.filterVal = -1337;
 
-                            } else {
-                                lFilter.filterVal = Integer.parseInt(fNumIn[lFilterNr].getText());
-                            }
-
-                            lFilter.filterOn = true;
-                            //					iItemModel.filterString = "getting magic";
-                            //					iItemModel.filterVal = 10;
-
-
-                        } catch (NumberFormatException e) {
-                            D2Log.error("D2ViewStash", e, "invalid filter number");
-                            lFilter.filterVal = 0;
-                            fNumIn[lFilterNr].setBackground(EXCEPTION_COLOR);
-                            return;
+                        } else {
+                            lFilter.filterVal = Integer.parseInt(fNumIn[lFilterNr].getText());
                         }
+
+                        lFilter.filterOn = true;
+
+
+                    } catch (NumberFormatException e) {
+                        D2Log.error("D2ViewStash", e, "invalid filter number");
+                        lFilter.filterVal = 0;
+                        fNumIn[lFilterNr].setBackground(EXCEPTION_COLOR);
+                        return;
                     }
-                    itemListChanged();
-
-                    dispose();
                 }
+                itemListChanged();
 
+                dispose();
             });
 
             JButton fClear = new JButton("Clear");
 
-            fClear.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent pEvent) {
-                    for (int i = 0; i < iItemModel.iCusFilterList.size(); i++) {
-                        fNumIn[i].setBackground(WHITE);
-                        D2ItemModelCusFilter lFilter = (D2ItemModelCusFilter) iItemModel.iCusFilterList.get(i);
-                        lFilter.filterOn = false;
-                        lFilter.filterString = "";
-                        lFilter.filterVal = 0;
-                        fStrIn[i].setText("");
-                        fNumIn[i].setText("");
-                    }
-
-                    itemListChanged();
+            fClear.addActionListener(pEvent -> {
+                for (int i = 0; i < iItemModel.iCusFilterList.size(); i++) {
+                    fNumIn[i].setBackground(WHITE);
+                    D2ItemModelCusFilter lFilter = (D2ItemModelCusFilter) iItemModel.iCusFilterList.get(i);
+                    lFilter.filterOn = false;
+                    lFilter.filterString = "";
+                    lFilter.filterVal = 0;
+                    fStrIn[i].setText("");
+                    fNumIn[i].setText("");
                 }
 
+                itemListChanged();
             });
 
             JButton fCancel = new JButton("Cancel");
 
-            fCancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent pEvent) {
-
-                    dispose();
-
-                }
-
-            });
+            fCancel.addActionListener(pEvent -> dispose());
 
             setContentPane(lContent);
 //			hRoot.add(Box.createRigidArea(new Dimension(250,0)));
@@ -1619,6 +1522,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 iFilterNr = pFilterNr;
             }
 
+            @Override
             public void actionPerformed(ActionEvent pE) {
                 if (fMax[iFilterNr].isSelected()) {
                     fMax[iFilterNr].setSelected(false);
@@ -1637,6 +1541,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 iFilterNr = pFilterNr;
             }
 
+            @Override
             public void actionPerformed(ActionEvent pE) {
                 if (fMin[iFilterNr].isSelected()) {
                     fMin[iFilterNr].setSelected(false);
