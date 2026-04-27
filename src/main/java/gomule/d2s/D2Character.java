@@ -98,7 +98,7 @@ public class D2Character extends D2ItemListAdapter {
     private D2Item iCharCursorItem;
     private D2Item golemItem;
     private ArrayList<D2Item> iMercItems;
-    private ArrayList<D2Item> iCorpseItems = new ArrayList<>();
+    private final ArrayList<D2Item> iCorpseItems = new ArrayList<>();
     private String iCharName;
     private String iTitleString;
     private String cClass;
@@ -114,9 +114,9 @@ public class D2Character extends D2ItemListAdapter {
     private boolean[] iEquipped;
     private boolean[] iMerc;
     private boolean[] iCorpse;
-    private boolean[][][] iQuests = new boolean[3][5][6];
-    private boolean[] cowKingDead = new boolean[3];
-    private boolean[][][] iWaypoints = new boolean[3][5][9];
+    private final boolean[][][] iQuests = new boolean[3][5][6];
+    private final boolean[] cowKingDead = new boolean[3];
+    private final boolean[][][] iWaypoints = new boolean[3][5][9];
     private int[][] initSkills;
     private int[][] cSkills;
     private Point[] iSkillLocs;
@@ -127,13 +127,13 @@ public class D2Character extends D2ItemListAdapter {
     // private ArrayList fullSetProps = new ArrayList();
     // private int[][] setTracker = new int[33][2];
     // 原始套装33套
-    private int[][] setTracker = new int[64][2];
+    private final int[][] setTracker = new int[64][2];
     private ArrayList<D2Prop> plSkill;
     // D2R: stat ID 9-bit, max 512; ItemStatCost 已扩展到 388 项
-    private long[] iReadStats = new long[512];
-    private int[] cStats = new int[512];
+    private final long[] iReadStats = new long[512];
+    private final int[] cStats = new int[512];
     private HashMap<String, Object> cMercInfo;
-    private int[] mStats = new int[512];
+    private final int[] mStats = new int[512];
 
     private int lWoo;
     private int iWS;
@@ -151,8 +151,8 @@ public class D2Character extends D2ItemListAdapter {
         super(pFileName);
         if (iFileName == null || !iFileName.toLowerCase().endsWith(".d2s"))
             throw new Exception("Incorrect Character file name");
-        iCharItems = new ArrayList<D2Item>();
-        iMercItems = new ArrayList<D2Item>();
+        iCharItems = new ArrayList<>();
+        iMercItems = new ArrayList<>();
         iReader = new D2BitReader(iFileName);
         String basename = new java.io.File(iFileName).getName();
         try (D2LogContext ctx = D2LogContext.push("file", basename)) {
@@ -191,7 +191,7 @@ public class D2Character extends D2ItemListAdapter {
         int nameOffset   = D2SOffsets.nameOffset(lVersion);
 
         iReader.set_byte_pos(nameOffset);
-        StringBuffer lCharName = new StringBuffer();
+        StringBuilder lCharName = new StringBuilder();
         for (int i = 0; i < 16; i++) {
             long lChar = iReader.read(8);
             if (lChar != 0)
@@ -249,7 +249,7 @@ public class D2Character extends D2ItemListAdapter {
             ;// MERC IS DEAD?
         iReader.skipBits(8);
         if (iReader.read(32) != 0) {
-            cMercInfo = new HashMap<String, Object>();
+            cMercInfo = new HashMap<>();
             iReader.skipBits(16);
             ArrayList<D2TxtFileItemProperties> hireResults = D2TxtFile.HIRE.searchColumnsMultipleHits("Id",
                     Long.toString(iReader.read(16)));
@@ -262,7 +262,7 @@ public class D2Character extends D2ItemListAdapter {
             iReader.skipBits(-32);
             extractMercName(iReader.read(16), hireCol);
             iReader.skipBits(16);
-            cMercInfo.put("xp", Long.valueOf(iReader.read(32)));
+            cMercInfo.put("xp", iReader.read(32));
             setMercLevel(hireCol);
         } else {
             iReader.skipBits(64);
@@ -363,7 +363,7 @@ public class D2Character extends D2ItemListAdapter {
 
     private void resetStats() {
 
-        plSkill = new ArrayList<D2Prop>();
+        plSkill = new ArrayList<>();
         cStats[0] = getCharInitStr();
         cStats[2] = getCharInitNrg();
         cStats[4] = getCharInitDex();
@@ -567,7 +567,7 @@ public class D2Character extends D2ItemListAdapter {
         D2FileReader skillReader = new D2FileReader(skillInitialBytes);
         skillReader.getCounterInt(8);
         skillReader.getCounterInt(8);
-        int tree = 0;
+        int tree;
         for (int x = 0; x < 30; x = x + 1) {
             tree = Integer.parseInt((D2TxtFile.SKILL_DESC.searchColumns("skilldesc",
                     D2TxtFile.SKILLS.getRow(initRow.getRowNum() + x).get("skilldesc"))).get("SkillPage"));
@@ -873,8 +873,6 @@ public class D2Character extends D2ItemListAdapter {
                         updateCharStats("D", getCharItem(x));
                     }
                 }
-
-                return;
         }
     }
 
@@ -894,8 +892,9 @@ public class D2Character extends D2ItemListAdapter {
         }
     }
 
+    @Override
     public ArrayList<D2Item> getItemList() {
-        ArrayList<D2Item> lList = new ArrayList<D2Item>();
+        ArrayList<D2Item> lList = new ArrayList<>();
         if (iCharItems != null)
             lList.addAll(iCharItems);
         if (iMercItems != null)
@@ -903,14 +902,14 @@ public class D2Character extends D2ItemListAdapter {
         return lList;
     }
 
+    @Override
     public boolean containsItem(D2Item pItem) {
         if (iCharItems.contains(pItem))
             return true;
-        if (iMercItems.contains(pItem))
-            return true;
-        return false;
+        return iMercItems.contains(pItem);
     }
 
+    @Override
     public void removeItem(D2Item pItem) {
         if (iCharItems.remove(pItem)) {
             unmarkCharGrid(pItem);
@@ -1062,7 +1061,7 @@ public class D2Character extends D2ItemListAdapter {
     }
 
     public ArrayList<D2Item> getBeltPotions() {
-        ArrayList<D2Item> lList = new ArrayList<D2Item>();
+        ArrayList<D2Item> lList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 int y = getCharItemIndex(2, i, j);
@@ -1529,6 +1528,7 @@ public class D2Character extends D2ItemListAdapter {
         return -1;
     }
 
+    @Override
     public void saveInternal(D2Project pProject) {
         // backup file
         D2Backup.backup(pProject, iFileName, iReader);
@@ -1629,12 +1629,13 @@ public class D2Character extends D2ItemListAdapter {
         return 2500000;
     }
 
+    @Override
     public void fullDump(PrintWriter pWriter) {
         pWriter.println(fullDumpStr());
     }
 
     public String fullDumpStr() {
-        StringBuffer out = new StringBuffer();
+        StringBuilder out = new StringBuilder();
         out.append(getStatString());
         out.append("\n\n");
 
@@ -1836,7 +1837,7 @@ public class D2Character extends D2ItemListAdapter {
     public long getMercExp() {
         if (!cMercInfo.containsKey("xp"))
             return 0;
-        return ((Long) cMercInfo.get("xp")).longValue();
+        return (Long) cMercInfo.get("xp");
     }
 
     public String getMercRace() {
@@ -1848,24 +1849,24 @@ public class D2Character extends D2ItemListAdapter {
     public int getMercLevel() {
         if (!cMercInfo.containsKey("lvl"))
             return 0;
-        return ((Integer) cMercInfo.get("lvl")).intValue();
+        return (Integer) cMercInfo.get("lvl");
     }
 
     private void setMercLevel(D2TxtFileItemProperties hireCol) {
 
         int xpPLev = Integer.parseInt(hireCol.get("Exp/Lvl"));
-        long xpOut = 0;
+        long xpOut;
         int lev = 0;
         do {
             xpOut = xpPLev * lev * lev * (lev + 1);
-            if (xpOut > ((Long) cMercInfo.get("xp")).longValue()) {
+            if (xpOut > (Long) cMercInfo.get("xp")) {
                 lev = lev - 1;
                 break;
             } else {
                 lev = lev + 1;
             }
         } while (true);
-        cMercInfo.put("lvl", Integer.valueOf(lev));
+        cMercInfo.put("lvl", lev);
     }
 
     public String getMercDead() {
@@ -1913,6 +1914,7 @@ public class D2Character extends D2ItemListAdapter {
                 * (getCharDex() - 15)) / (iCharLevel * 2));
     }
 
+    @Override
     public void addItem(D2Item item) {
         equipItem(item);
     }
@@ -1956,6 +1958,7 @@ public class D2Character extends D2ItemListAdapter {
         generateItemStats(item, mStats, null, -1, 0);
     }
 
+    @Override
     public int getNrItems() {
         return iCharItems.size() + iMercItems.size();
     }
@@ -2042,10 +2045,12 @@ public class D2Character extends D2ItemListAdapter {
         setModified(true);
     }
 
+    @Override
     public boolean isSC() {
         return !iHC;
     }
 
+    @Override
     public boolean isHC() {
         return iHC;
     }
@@ -2098,6 +2103,7 @@ public class D2Character extends D2ItemListAdapter {
         return iTitleString;
     }
 
+    @Override
     public String getFilename() {
         return iFileName;
     }
