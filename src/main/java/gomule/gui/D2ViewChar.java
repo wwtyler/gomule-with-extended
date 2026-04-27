@@ -32,8 +32,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -202,6 +200,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         super(pFileName, false, true, false, true);
 
         addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 iFileManager.saveAll();
                 closeView();
@@ -354,63 +353,31 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         iGoldTransferBtns = new JButton[8];
 
         iGoldTransferBtns[0] = new JButton("to char");
-        iGoldTransferBtns[0].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferToChar(10000);
-            }
-        });
+        iGoldTransferBtns[0].addActionListener(pEvent -> transferToChar(10000));
         JTextField lField10000 = new JTextField("10.000");
         lField10000.setEditable(false);
         iGoldTransferBtns[1] = new JButton("from char");
-        iGoldTransferBtns[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferFromChar(10000);
-            }
-        });
+        iGoldTransferBtns[1].addActionListener(pEvent -> transferFromChar(10000));
 
         iGoldTransferBtns[2] = new JButton("to char");
-        iGoldTransferBtns[2].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferToChar(100000);
-            }
-        });
+        iGoldTransferBtns[2].addActionListener(pEvent -> transferToChar(100000));
         JTextField lField100000 = new JTextField("100.000");
         lField100000.setEditable(false);
         iGoldTransferBtns[3] = new JButton("from char");
-        iGoldTransferBtns[3].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferFromChar(100000);
-            }
-        });
+        iGoldTransferBtns[3].addActionListener(pEvent -> transferFromChar(100000));
 
         iGoldTransferBtns[4] = new JButton("to char");
-        iGoldTransferBtns[4].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferToChar(1000000);
-            }
-        });
+        iGoldTransferBtns[4].addActionListener(pEvent -> transferToChar(1000000));
         JTextField lField1000000 = new JTextField("1.000.000");
         lField1000000.setEditable(false);
         iGoldTransferBtns[5] = new JButton("from char");
-        iGoldTransferBtns[5].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferFromChar(1000000);
-            }
-        });
+        iGoldTransferBtns[5].addActionListener(pEvent -> transferFromChar(1000000));
 
         iGoldTransferBtns[6] = new JButton("to char");
-        iGoldTransferBtns[6].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferToChar(getTransferFree());
-            }
-        });
+        iGoldTransferBtns[6].addActionListener(pEvent -> transferToChar(getTransferFree()));
         iTransferFree = new JTextField("10000");
         iGoldTransferBtns[7] = new JButton("from char");
-        iGoldTransferBtns[7].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                transferFromChar(getTransferFree());
-            }
-        });
+        iGoldTransferBtns[7].addActionListener(pEvent -> transferFromChar(getTransferFree()));
 
         lTransferPanel.addToPanel(iGoldTransferBtns[0], 0, 0, 1, RandallPanel.NONE);
         lTransferPanel.addToPanel(lField10000, 1, 0, 1, RandallPanel.HORIZONTAL);
@@ -456,17 +423,9 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         JScrollPane lScroll = new JScrollPane(iMessage);
         RandallPanel lMessagePanel = new RandallPanel();
         JButton lConnect = new JButton("Connect");
-        lConnect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                connect();
-            }
-        });
+        lConnect.addActionListener(pEvent -> connect());
         JButton lDisconnect = new JButton("Disconnect");
-        lDisconnect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                disconnect(null);
-            }
-        });
+        lDisconnect.addActionListener(pEvent -> disconnect(null));
 
         lMessagePanel.addToPanel(lConnect, 0, 0, 1, RandallPanel.HORIZONTAL);
         lMessagePanel.addToPanel(lDisconnect, 1, 0, 1, RandallPanel.HORIZONTAL);
@@ -493,7 +452,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
     }
 
-    public void connect() {
+    @Override
+    public final void connect() {
         if (iCharacter != null) {
             return;
         }
@@ -512,8 +472,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             iGoldBank.setText(Integer.toString(iCharacter.getGoldBank()));
             iGoldBankMax.setText(Integer.toString(iCharacter.getGoldBankMax()));
 
-            for (int i = 0; i < iGoldTransferBtns.length; i++) {
-                iGoldTransferBtns[i].setEnabled(true);
+            for (JButton btn : iGoldTransferBtns) {
+                btn.setEnabled(true);
             }
 
             itemListChanged();
@@ -524,6 +484,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         }
     }
 
+    @Override
     public void disconnect(Exception pEx) {
         if (iCharacter != null) {
             iFileManager.removeItemList(iFileName, this);
@@ -535,9 +496,9 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
         if (pEx != null) {
             lText += "\n";
-            StackTraceElement trace[] = pEx.getStackTrace();
-            for (int i = 0; i < trace.length; i++) {
-                lText += "\tat " + trace[i] + "\n";
+            StackTraceElement[] trace = pEx.getStackTrace();
+            for (StackTraceElement ste : trace) {
+                lText += "\tat " + ste + "\n";
             }
         }
         iMessage.setText(lText);
@@ -547,8 +508,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         iGoldBank.setText("");
         iGoldBankMax.setText("");
 
-        for (int i = 0; i < iGoldTransferBtns.length; i++) {
-            iGoldTransferBtns[i].setEnabled(false);
+        for (JButton btn : iGoldTransferBtns) {
+            btn.setEnabled(false);
         }
 
         itemListChanged();
@@ -638,32 +599,39 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         }
     }
 
+    @Override
     public boolean isHC() {
         return iCharacter.isHC();
     }
 
+    @Override
     public boolean isSC() {
         return iCharacter.isSC();
     }
 
+    @Override
     public String getFileName() {
         return iFileName;
     }
 
+    @Override
     public boolean isModified() {
         return iCharacter != null && iCharacter.isModified();
     }
 
+    @Override
     public D2ItemList getItemLists() {
         return iCharacter;
     }
 
+    @Override
     public void closeView() {
         disconnect(null);
         iFileManager.removeFromOpenWindows(this);
     }
 
-    public void itemListChanged() {
+    @Override
+    public final void itemListChanged() {
 
         String lTitle;
         if (iCharacter == null) {
@@ -745,24 +713,9 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         int rMax = 0;
         int cMax = 0;
         switch (areaCode) {
-            case 0:
-                // stash
-                dPanel = 5;
-                rMax = STASHSIZEY;
-                cMax = STASHSIZEX;
-                break;
-            case 1:
-                // inv
-                dPanel = 1;
-                rMax = D2Character.INVSIZEY;
-                cMax = D2Character.INVSIZEX;
-                break;
-            case 2:
-                // cube
-                dPanel = 4;
-                rMax = D2Character.CUBESIZEY;
-                cMax = D2Character.CUBESIZEX;
-                break;
+            case 0 -> { dPanel = 5; rMax = STASHSIZEY; cMax = STASHSIZEX; } // stash
+            case 1 -> { dPanel = 1; rMax = D2Character.INVSIZEY; cMax = D2Character.INVSIZEX; } // inv
+            case 2 -> { dPanel = 4; rMax = D2Character.CUBESIZEY; cMax = D2Character.CUBESIZEX; } // cube
         }
         try {
             for (int z = dropList.size() - 1; z > -1; z--) {
@@ -794,6 +747,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
     class MyMouse extends MouseAdapter {
 
+        @Override
         public void mouseClicked(MouseEvent e) {
 
             if (lTabs.getSelectedIndex() == 6) {
@@ -997,26 +951,10 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             // has an item on it
             if (iPanel < 10) {
                 switch (iPanel) {
-                    case 1: // inventory
-                        iRow = (x - INV_X) / (GRID_SIZE + GRID_SPACER);
-                        iCol = (y - INV_Y) / (GRID_SIZE + GRID_SPACER);
-
-                        break;
-                    case 2: // belted
-                        iRow = (x - BELT_GRID_X) / (GRID_SIZE + GRID_SPACER);
-                        iCol = 3 - ((y - BELT_GRID_Y) / (GRID_SIZE + GRID_SPACER));
-
-                        break;
-                    case 4: // cube
-                        iRow = (x - CUBE_X) / (GRID_SIZE + GRID_SPACER);
-                        iCol = (y - CUBE_Y) / (GRID_SIZE + GRID_SPACER);
-
-                        break;
-                    case 5: // stash
-                        iRow = (x - STASH_X) / (GRID_SIZE + GRID_SPACER);
-                        iCol = (y - STASH_Y) / (GRID_SIZE + GRID_SPACER);
-
-                        break;
+                    case 1 -> { iRow = (x - INV_X) / (GRID_SIZE + GRID_SPACER); iCol = (y - INV_Y) / (GRID_SIZE + GRID_SPACER); } // inventory
+                    case 2 -> { iRow = (x - BELT_GRID_X) / (GRID_SIZE + GRID_SPACER); iCol = 3 - ((y - BELT_GRID_Y) / (GRID_SIZE + GRID_SPACER)); } // belted
+                    case 4 -> { iRow = (x - CUBE_X) / (GRID_SIZE + GRID_SPACER); iCol = (y - CUBE_Y) / (GRID_SIZE + GRID_SPACER); } // cube
+                    case 5 -> { iRow = (x - STASH_X) / (GRID_SIZE + GRID_SPACER); iCol = (y - STASH_Y) / (GRID_SIZE + GRID_SPACER); } // stash
                 }
             }
             // equipped
@@ -1136,6 +1074,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             addMouseListener(new MouseAdapter() {
 
 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1310,15 +1249,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1523,6 +1465,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -1543,14 +1486,11 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     int sy = (int) Math.round(td.y * s);
                     int sw = (int) Math.round(td.w * s);
                     int sh = (int) Math.round(td.h * s);
-                    int tx;
-                    if (td.halign == 0) { // left
-                        tx = sx + (int) Math.round(td.padX * s);
-                    } else if (td.halign == 2) { // right
-                        tx = sx + sw - fm.stringWidth(td.text) - (int) Math.round(td.padX * s);
-                    } else { // center
-                        tx = sx + (sw - fm.stringWidth(td.text)) / 2;
-                    }
+                    int tx = switch (td.halign) {
+                        case 0 -> sx + (int) Math.round(td.padX * s); // left
+                        case 2 -> sx + sw - fm.stringWidth(td.text) - (int) Math.round(td.padX * s); // right
+                        default -> sx + (sw - fm.stringWidth(td.text)) / 2; // center
+                    };
                     int ty;
                     if (td.valign == 0) { // top
                         ty = sy + (int) Math.round(td.padY * s) + fm.getAscent();
@@ -1811,6 +1751,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             this.nativeH = BG_MERC_HEIGHT;
 
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -1890,15 +1831,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2037,6 +1981,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -2061,6 +2006,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             this.nativeH = 247;
 
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2084,15 +2030,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2246,6 +2195,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -2271,6 +2221,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             // this.build();
 
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2302,10 +2253,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 }
 
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2317,114 +2270,63 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
 
             switch ((int) iCharacter.getCharCode()) {
-
-
-                case 0:
+                case 0 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("AmaArr.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("AmaPass.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("AmaJav.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("AmaArr.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("AmaPass.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("AmaJav.jpg");
                     }
                     // cClass = "ama";
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("SorFir.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("SorLig.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("SorCol.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("SorFir.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("SorLig.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("SorCol.jpg");
                     }
                     // cClass = "sor";
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("NecCur.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("NecPoi.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("NecSum.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("NecCur.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("NecPoi.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("NecSum.jpg");
                     }
                     // cClass = "nec";
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("PalCom.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("PalOff.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("PalDef.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("PalCom.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("PalOff.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("PalDef.jpg");
                     }
                     // cClass = "pal";
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("BarCom.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("BarMas.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("BarWar.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("BarCom.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("BarMas.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("BarWar.jpg");
                     }
                     // cClass = "bar";
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("DruSum.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("DruSha.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("DruEle.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("DruSum.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("DruSha.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("DruEle.jpg");
                     }
                     // cClass = "dru";
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("AssTra.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("AssSha.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("AssMar.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("AssTra.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("AssSha.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("AssMar.jpg");
                     }
                     // cClass = "ass";
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     // Warlock (MDK V3 official-expansion class).
                     // Skill tab order from charstats.txt: StrSklTabItem24, StrSklTabItem22,
                     // StrSklTabItem23
@@ -2435,21 +2337,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     // with real Warlock skill-tree backgrounds extracted from CASC
                     // (data/hd/global/ui/spells/skill_trees/waskilltree.sprite).
                     switch (iSkillSlot) {
-                        case 0:
-                            lEmptyBackground = D2ImageCache.getImage("WarDem.jpg");
-                            break;
-                        case 1:
-                            lEmptyBackground = D2ImageCache.getImage("WarEld.jpg");
-                            break;
-                        case 2:
-                            lEmptyBackground = D2ImageCache.getImage("WarCha.jpg");
-                            break;
-
+                        case 0 -> lEmptyBackground = D2ImageCache.getImage("WarDem.jpg");
+                        case 1 -> lEmptyBackground = D2ImageCache.getImage("WarEld.jpg");
+                        case 2 -> lEmptyBackground = D2ImageCache.getImage("WarCha.jpg");
                     }
                     // cClass = "war";
-                    break;
-
-
+                }
             }
 
 
@@ -2488,7 +2381,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         private void drawText(Graphics2D lGraphics, int skillSlot) {
 
             switch (iSkillSlot) {
-                case 0:
+                case 0 -> {
                     lGraphics.drawString(iCharacter.getCharSkillRem() + "", 238, 69);
                     for (int x = 0; x < 10; x = x + 1) {
                         lGraphics.setColor(Color.white);
@@ -2503,8 +2396,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                 iCharacter.getSkillLocs()[x].y + 2);
 
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     lGraphics.drawString(iCharacter.getCharSkillRem() + "", 238, 69);
                     for (int x = 0; x < 10; x = x + 1) {
                         lGraphics.setColor(Color.white);
@@ -2522,8 +2415,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                 iCharacter.getSkillLocs()[x + 10].y + 2);
 
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     lGraphics.drawString(iCharacter.getCharSkillRem() + "", 238, 69);
                     for (int x = 0; x < 10; x = x + 1) {
                         lGraphics.setColor(Color.white);
@@ -2541,13 +2434,13 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                 iCharacter.getSkillLocs()[x + 20].x + 11,
                                 iCharacter.getSkillLocs()[x + 20].y + 2);
                     }
-                    break;
-
+                }
             }
 
 
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -2586,6 +2479,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             addMouseListener(new MouseAdapter() {
 
 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2616,10 +2510,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 }
 
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2663,6 +2559,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             }
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -2704,6 +2601,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             addMouseListener(new MouseAdapter() {
 
 
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2734,10 +2632,12 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 }
 
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
@@ -2791,6 +2691,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
@@ -2814,6 +2715,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             this.nativeH = BG_CURSOR_HEIGHT;
 
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseReleased(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2848,15 +2750,18 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     }
                 }
 
+                @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursorNormal();
                 }
 
+                @Override
                 public void mouseExited(MouseEvent e) {
                     setCursorNormal();
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
                 public void mouseMoved(MouseEvent pEvent) {
                     if (iCharacter == null) {
                         return;
@@ -2917,6 +2822,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             repaint();
         }
 
+        @Override
         public void paint(Graphics pGraphics) {
             super.paint(pGraphics);
             drawScaled(pGraphics, iBackground);
