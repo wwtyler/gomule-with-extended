@@ -58,6 +58,7 @@ import static gomule.d2s.D2Character.STASHSIZEX;
 import static gomule.d2s.D2Character.STASHSIZEY;
 import gomule.item.D2Item;
 import gomule.item.D2ItemRenderer;
+import gomule.util.D2Log;
 import gomule.util.ScaledPainterPanel;
 import randall.util.RandallPanel;
 
@@ -295,7 +296,6 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         iMercPainter = new D2MercPainterPanel();
 
         Box mercMainBox = Box.createHorizontalBox();
-        Box mercMainBox2 = Box.createHorizontalBox();
         Box mercStatsBox = Box.createHorizontalBox();
         Box mercLabelBox = Box.createVerticalBox();
         Box mercValueBox = Box.createVerticalBox();
@@ -480,7 +480,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             iMessage.setText("Character loaded");
         } catch (Exception pEx) {
             disconnect(pEx);
-            pEx.printStackTrace();
+            D2Log.error("D2ViewChar", pEx, "connect failed");
         }
     }
 
@@ -1166,7 +1166,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                             lItemPanel.getRow(), lItemPanel.getColumn(),
                                             lDropItem)) {
                                         switch (lItemPanel.getPanel()) {
-                                            case 2:
+                                            case 2 -> {
                                                 lDropItem.set_location((short) 2);
                                                 lDropItem.set_body_position((short) 0);
                                                 lDropItem
@@ -1174,16 +1174,14 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                                                                 + lItemPanel.getRow()));
                                                 lDropItem.set_row((short) 0);
                                                 lDropItem.set_panel((short) 0);
-                                                break;
-                                            case 1:
-                                            case 4:
-                                            case 5:
+                                            }
+                                            case 1, 4, 5 -> {
                                                 lDropItem.set_location((short) 0);
                                                 lDropItem.set_body_position((short) 0);
                                                 lDropItem.set_row((short) lItemPanel.getColumn());
                                                 lDropItem.set_col((short) lItemPanel.getRow());
                                                 lDropItem.set_panel((short) lItemPanel.getPanel());
-                                                break;
+                                            }
                                         }
                                         drop = true;
                                     }
@@ -1367,97 +1365,91 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 for (int i = 0; i < iCharacter.getCharItemNr(); i++) {
                     D2Item temp_item = iCharacter.getCharItem(i);
                     int location = temp_item.get_location();
-                    if (location == 0) {
-                        int panel = temp_item.get_panel();
-                        int x = temp_item.get_col();
-                        int y = temp_item.get_row();
-                        int w = temp_item.get_width(), h = temp_item.get_height();
-                        switch (panel) {
-                            case 1: { // inventory
-                                int px = INV_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = INV_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
-                            case 4: { // cube
-                                int px = CUBE_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = CUBE_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
-                            case 5: { // stash
-                                int px = STASH_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = STASH_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
+                    switch (location) {
+                        case 0 -> {
+                            int panel = temp_item.get_panel();
+                            int x = temp_item.get_col();
+                            int y = temp_item.get_row();
+                            int w = temp_item.get_width(), h = temp_item.get_height();
+                            switch (panel) {
+                                case 1 -> { // inventory
+                                    int px = INV_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = INV_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                                case 4 -> { // cube
+                                    int px = CUBE_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = CUBE_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                                case 5 -> { // stash
+                                    int px = STASH_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = STASH_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                            }
                         }
-                    } else if (location == 2) { // belt (all 1x1)
-                        int x = temp_item.get_col();
-                        int y = x / 4;
-                        x = x % 4;
-                        int bpx = BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER;
-                        int bpy = BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER;
-                        fillItemSlotBg(lGraphics, bpx, bpy, 1, 1);
-                        placeItemImage(lGraphics, spriteItems, temp_item, bpx, bpy, 1, 1);
-                    } else { // on the body
-                        int body_position = temp_item.get_body_position();
-                        int w, h, wbias, hbias;
-                        switch (body_position) {
-                            case 1: // head (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, HEAD_X, HEAD_Y, 2, 2);
-                                break;
-                            case 2: // neck/amulet (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, NECK_X, NECK_Y, 1, 1);
-                                break;
-                            case 3: // body (2x3)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BODY_X, BODY_Y, 2, 3);
-                                break;
-                            case 4:
-                            case 11: // right arm
-                                if ((iWeaponSlot == 1 && body_position == 4)
-                                        || (iWeaponSlot == 2 && body_position == 11)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
-                                    wbias = 0;
-                                    hbias = 0;
-                                    if (w == 1) wbias += GRID_SIZE / 2;
-                                    if (h == 3) hbias += GRID_SIZE / 2;
-                                    else if (h == 2) hbias += GRID_SIZE;
-                                    placeItemImage(lGraphics, spriteItems, temp_item,
-                                            R_ARM_X + wbias, R_ARM_Y + hbias, w, h);
+                        case 2 -> { // belt (all 1x1)
+                            int x = temp_item.get_col();
+                            int y = x / 4;
+                            x = x % 4;
+                            int bpx = BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER;
+                            int bpy = BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER;
+                            fillItemSlotBg(lGraphics, bpx, bpy, 1, 1);
+                            placeItemImage(lGraphics, spriteItems, temp_item, bpx, bpy, 1, 1);
+                        }
+                        default -> { // on the body
+                            int body_position = temp_item.get_body_position();
+                            int w, h, wbias, hbias;
+                            switch (body_position) {
+                                case 1 -> // head (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, HEAD_X, HEAD_Y, 2, 2);
+                                case 2 -> // neck/amulet (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, NECK_X, NECK_Y, 1, 1);
+                                case 3 -> // body (2x3)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BODY_X, BODY_Y, 2, 3);
+                                case 4, 11 -> { // right arm
+                                    if ((iWeaponSlot == 1 && body_position == 4)
+                                            || (iWeaponSlot == 2 && body_position == 11)) {
+                                        w = temp_item.get_width();
+                                        h = temp_item.get_height();
+                                        wbias = 0;
+                                        hbias = 0;
+                                        if (w == 1) wbias += GRID_SIZE / 2;
+                                        if (h == 3) hbias += GRID_SIZE / 2;
+                                        else if (h == 2) hbias += GRID_SIZE;
+                                        placeItemImage(lGraphics, spriteItems, temp_item,
+                                                R_ARM_X + wbias, R_ARM_Y + hbias, w, h);
+                                    }
                                 }
-                                break;
-                            case 5:
-                            case 12: // left arm
-                                if ((iWeaponSlot == 1 && body_position == 5)
-                                        || (iWeaponSlot == 2 && body_position == 12)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
-                                    wbias = 0;
-                                    hbias = 0;
-                                    if (w == 1) wbias += GRID_SIZE / 2;
-                                    if (h == 3) hbias += GRID_SIZE / 2;
-                                    else if (h == 2) hbias += GRID_SIZE;
-                                    placeItemImage(lGraphics, spriteItems, temp_item,
-                                            L_ARM_X + wbias, L_ARM_Y + hbias, w, h);
+                                case 5, 12 -> { // left arm
+                                    if ((iWeaponSlot == 1 && body_position == 5)
+                                            || (iWeaponSlot == 2 && body_position == 12)) {
+                                        w = temp_item.get_width();
+                                        h = temp_item.get_height();
+                                        wbias = 0;
+                                        hbias = 0;
+                                        if (w == 1) wbias += GRID_SIZE / 2;
+                                        if (h == 3) hbias += GRID_SIZE / 2;
+                                        else if (h == 2) hbias += GRID_SIZE;
+                                        placeItemImage(lGraphics, spriteItems, temp_item,
+                                                L_ARM_X + wbias, L_ARM_Y + hbias, w, h);
+                                    }
                                 }
-                                break;
-                            case 6: // left ring (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, L_RING_X, L_RING_Y, 1, 1);
-                                break;
-                            case 7: // right ring (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, R_RING_X, R_RING_Y, 1, 1);
-                                break;
-                            case 8: // belt equip (2x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BELT_X, BELT_Y, 2, 1);
-                                break;
-                            case 9: // boots (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BOOTS_X, BOOTS_Y, 2, 2);
-                                break;
-                            case 10: // gloves (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, GLOVES_X, GLOVES_Y, 2, 2);
-                                break;
+                                case 6 -> // left ring (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, L_RING_X, L_RING_Y, 1, 1);
+                                case 7 -> // right ring (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, R_RING_X, R_RING_Y, 1, 1);
+                                case 8 -> // belt equip (2x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BELT_X, BELT_Y, 2, 1);
+                                case 9 -> // boots (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BOOTS_X, BOOTS_Y, 2, 2);
+                                case 10 -> // gloves (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, GLOVES_X, GLOVES_Y, 2, 2);
+                            }
                         }
                     }
                 }
@@ -1592,25 +1584,23 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             int hw = aw / 2;
             int hh = ah / 2;
             switch (iconType) {
-                case "HELM": {
+                case "HELM" -> {
                     // 圆弧盔顶 + 面甲横条 + 护颊
                     int r = Math.min(hw, hh) * 3 / 5;
                     g.drawArc(cx - r, cy - r, r * 2, r * 2, 10, 160);
                     g.drawLine(cx - r - 2, cy + r / 3, cx + r + 2, cy + r / 3);
                     g.drawLine(cx - r, cy, cx - r - 2, cy + r / 3);
                     g.drawLine(cx + r, cy, cx + r + 2, cy + r / 3);
-                    break;
                 }
-                case "AMULET": {
+                case "AMULET" -> {
                     // 菱形（项链坠）
                     int d = Math.min(hw, hh) * 2 / 3;
                     g.drawLine(cx, cy - d, cx + d, cy);
                     g.drawLine(cx + d, cy, cx, cy + d);
                     g.drawLine(cx, cy + d, cx - d, cy);
                     g.drawLine(cx - d, cy, cx, cy - d);
-                    break;
                 }
-                case "TORSO": {
+                case "TORSO" -> {
                     // 板甲：梯形肩 + 侧边 + 腰线 + 中线
                     int sw2 = hw * 3 / 4, bw = hw * 5 / 6;
                     int ty = cy - hh * 2 / 3, by = cy + hh * 2 / 3;
@@ -1619,25 +1609,22 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     g.drawLine(cx - sw2, ty, cx - bw, by);
                     g.drawLine(cx + sw2, ty, cx + bw, by);
                     g.drawLine(cx, ty + 4, cx, by - 4);
-                    break;
                 }
-                case "WEAPON": {
+                case "WEAPON" -> {
                     // 剑：对角剑身 + 十字护手 + 圆柄端
                     int reach = Math.min(hw, hh) * 4 / 5;
                     g.drawLine(cx - reach / 2, cy + reach, cx + reach / 2, cy - reach);
                     g.drawLine(cx - reach / 2, cy + reach / 5, cx + reach / 2, cy - reach / 2);
                     g.drawOval(cx - reach / 2 - 2, cy + reach - 3, 5, 5);
-                    break;
                 }
-                case "SHIELD": {
+                case "SHIELD" -> {
                     // 盾牌五边形
                     int sw3 = hw * 2 / 3, sh3 = hh * 2 / 3;
                     int[] xs = {cx - sw3, cx + sw3, cx + sw3, cx, cx - sw3};
                     int[] ys = {cy - sh3, cy - sh3, cy, cy + sh3, cy};
                     g.drawPolygon(xs, ys, 5);
-                    break;
                 }
-                case "GLOVES": {
+                case "GLOVES" -> {
                     // 掌心矩形 + 三根手指
                     int gw = hw * 2 / 3, gh = hh / 2;
                     g.drawRoundRect(cx - gw, cy - gh / 2, gw * 2, gh, 3, 3);
@@ -1645,31 +1632,27 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     for (int i = -1; i <= 1; i++) {
                         g.drawRect(cx + i * fw - fw / 2, cy - gh / 2 - fh, fw - 1, fh);
                     }
-                    break;
                 }
-                case "BELT_EQUIP": {
+                case "BELT_EQUIP" -> {
                     // 腰带扣：圆角外框 + 中央扣环
                     int bw = hw * 2 / 3, bh = hh / 3;
                     g.drawRoundRect(cx - bw, cy - bh, bw * 2, bh * 2, 4, 4);
                     g.drawOval(cx - bh / 2, cy - bh / 2, bh, bh);
-                    break;
                 }
-                case "BOOTS": {
+                case "BOOTS" -> {
                     // 靴子：靴筒竖线 + 斜向靴底 + 靴筒顶横线
                     int bh2 = hh * 2 / 3, tx = cx - hw / 4;
                     g.drawLine(tx, cy - bh2, tx, cy + bh2 / 3);
                     g.drawLine(tx, cy + bh2 / 3, cx + hw * 2 / 3, cy + bh2);
                     g.drawLine(tx, cy - bh2, cx + hw / 4, cy - bh2);
-                    break;
                 }
-                case "RING": {
+                case "RING" -> {
                     // 戒指：单圆环
                     int r = Math.min(hw, hh) * 2 / 3;
                     g.drawOval(cx - r, cy - r, r * 2, r * 2);
-                    break;
                 }
-                default:
-                    break;
+                default -> {
+                }
             }
             g.setStroke(new BasicStroke(1.0f));
         }
@@ -1929,16 +1912,13 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                     int body_position = temp_item.get_body_position();
                     int w, h, wbias, hbias;
                     switch (body_position) {
-                        case 1: // head (2x2)
+                        case 1 -> // head (2x2)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_HEAD_X, MERC_HEAD_Y, 2, 2);
-                            break;
-                        case 2: // neck/amulet (1x1)
+                        case 2 -> // neck/amulet (1x1)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_NECK_X, MERC_NECK_Y, 1, 1);
-                            break;
-                        case 3: // body (2x3)
+                        case 3 -> // body (2x3)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_BODY_X, MERC_BODY_Y, 2, 3);
-                            break;
-                        case 4: // right arm (left visual column)
+                        case 4 -> { // right arm (left visual column)
                             w = temp_item.get_width();
                             h = temp_item.get_height();
                             wbias = 0;
@@ -1948,8 +1928,8 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             else if (h == 2) hbias += GRID_SIZE;
                             placeItemImage(lGraphics, spriteItems, temp_item,
                                     MERC_R_ARM_X + wbias, MERC_R_ARM_Y + hbias, w, h);
-                            break;
-                        case 5: // left arm (right visual column)
+                        }
+                        case 5 -> { // left arm (right visual column)
                             w = temp_item.get_width();
                             h = temp_item.get_height();
                             wbias = 0;
@@ -1959,22 +1939,17 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                             else if (h == 2) hbias += GRID_SIZE;
                             placeItemImage(lGraphics, spriteItems, temp_item,
                                     MERC_L_ARM_X + wbias, MERC_L_ARM_Y + hbias, w, h);
-                            break;
-                        case 6: // left ring (1x1)
+                        }
+                        case 6 -> // left ring (1x1)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_L_RING_X, MERC_L_RING_Y, 1, 1);
-                            break;
-                        case 7: // right ring (1x1)
+                        case 7 -> // right ring (1x1)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_R_RING_X, MERC_R_RING_Y, 1, 1);
-                            break;
-                        case 8: // belt (2x1)
+                        case 8 -> // belt (2x1)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_BELT_X, MERC_BELT_Y, 2, 1);
-                            break;
-                        case 9: // boots (2x2)
+                        case 9 -> // boots (2x2)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_BOOTS_X, MERC_BOOTS_Y, 2, 2);
-                            break;
-                        case 10: // gloves (2x2)
+                        case 10 -> // gloves (2x2)
                             placeItemImage(lGraphics, spriteItems, temp_item, MERC_GLOVES_X, MERC_GLOVES_Y, 2, 2);
-                            break;
                     }
                 }
             }
@@ -2097,97 +2072,91 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 for (int i = 0; i < iCharacter.getCorpseItemNr(); i++) {
                     D2Item temp_item = iCharacter.getCorpseItem(i);
                     int location = temp_item.get_location();
-                    if (location == 0) {
-                        int panel = temp_item.get_panel();
-                        int x = temp_item.get_col();
-                        int y = temp_item.get_row();
-                        int w = temp_item.get_width(), h = temp_item.get_height();
-                        switch (panel) {
-                            case 1: { // inventory
-                                int px = INV_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = INV_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
-                            case 4: { // cube
-                                int px = CUBE_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = CUBE_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
-                            case 5: { // stash
-                                int px = STASH_X + x * GRID_SIZE + x * GRID_SPACER;
-                                int py = STASH_Y + y * GRID_SIZE + y * GRID_SPACER;
-                                fillItemSlotBg(lGraphics, px, py, w, h);
-                                placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
-                                break; }
+                    switch (location) {
+                        case 0 -> {
+                            int panel = temp_item.get_panel();
+                            int x = temp_item.get_col();
+                            int y = temp_item.get_row();
+                            int w = temp_item.get_width(), h = temp_item.get_height();
+                            switch (panel) {
+                                case 1 -> { // inventory
+                                    int px = INV_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = INV_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                                case 4 -> { // cube
+                                    int px = CUBE_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = CUBE_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                                case 5 -> { // stash
+                                    int px = STASH_X + x * GRID_SIZE + x * GRID_SPACER;
+                                    int py = STASH_Y + y * GRID_SIZE + y * GRID_SPACER;
+                                    fillItemSlotBg(lGraphics, px, py, w, h);
+                                    placeItemImage(lGraphics, spriteItems, temp_item, px, py, w, h);
+                                }
+                            }
                         }
-                    } else if (location == 2) { // belt (all 1x1)
-                        int x = temp_item.get_col();
-                        int y = x / 4;
-                        x = x % 4;
-                        int bpx = BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER;
-                        int bpy = BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER;
-                        fillItemSlotBg(lGraphics, bpx, bpy, 1, 1);
-                        placeItemImage(lGraphics, spriteItems, temp_item, bpx, bpy, 1, 1);
-                    } else { // on the body
-                        int body_position = temp_item.get_body_position();
-                        int w, h, wbias, hbias;
-                        switch (body_position) {
-                            case 1: // head (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, HEAD_X, HEAD_Y, 2, 2);
-                                break;
-                            case 2: // neck/amulet (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, NECK_X, NECK_Y, 1, 1);
-                                break;
-                            case 3: // body (2x3)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BODY_X, BODY_Y, 2, 3);
-                                break;
-                            case 4:
-                            case 11: // right arm
-                                if ((iWeaponSlot == 1 && body_position == 4)
-                                        || (iWeaponSlot == 2 && body_position == 11)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
-                                    wbias = 0;
-                                    hbias = 0;
-                                    if (w == 1) wbias += GRID_SIZE / 2;
-                                    if (h == 3) hbias += GRID_SIZE / 2;
-                                    else if (h == 2) hbias += GRID_SIZE;
-                                    placeItemImage(lGraphics, spriteItems, temp_item,
-                                            R_ARM_X + wbias, R_ARM_Y + hbias, w, h);
+                        case 2 -> { // belt (all 1x1)
+                            int x = temp_item.get_col();
+                            int y = x / 4;
+                            x = x % 4;
+                            int bpx = BELT_GRID_X + x * GRID_SIZE + x * GRID_SPACER;
+                            int bpy = BELT_GRID_Y + (3 - y) * GRID_SIZE + (3 - y) * GRID_SPACER;
+                            fillItemSlotBg(lGraphics, bpx, bpy, 1, 1);
+                            placeItemImage(lGraphics, spriteItems, temp_item, bpx, bpy, 1, 1);
+                        }
+                        default -> { // on the body
+                            int body_position = temp_item.get_body_position();
+                            int w, h, wbias, hbias;
+                            switch (body_position) {
+                                case 1 -> // head (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, HEAD_X, HEAD_Y, 2, 2);
+                                case 2 -> // neck/amulet (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, NECK_X, NECK_Y, 1, 1);
+                                case 3 -> // body (2x3)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BODY_X, BODY_Y, 2, 3);
+                                case 4, 11 -> { // right arm
+                                    if ((iWeaponSlot == 1 && body_position == 4)
+                                            || (iWeaponSlot == 2 && body_position == 11)) {
+                                        w = temp_item.get_width();
+                                        h = temp_item.get_height();
+                                        wbias = 0;
+                                        hbias = 0;
+                                        if (w == 1) wbias += GRID_SIZE / 2;
+                                        if (h == 3) hbias += GRID_SIZE / 2;
+                                        else if (h == 2) hbias += GRID_SIZE;
+                                        placeItemImage(lGraphics, spriteItems, temp_item,
+                                                R_ARM_X + wbias, R_ARM_Y + hbias, w, h);
+                                    }
                                 }
-                                break;
-                            case 5:
-                            case 12: // left arm
-                                if ((iWeaponSlot == 1 && body_position == 5)
-                                        || (iWeaponSlot == 2 && body_position == 12)) {
-                                    w = temp_item.get_width();
-                                    h = temp_item.get_height();
-                                    wbias = 0;
-                                    hbias = 0;
-                                    if (w == 1) wbias += GRID_SIZE / 2;
-                                    if (h == 3) hbias += GRID_SIZE / 2;
-                                    else if (h == 2) hbias += GRID_SIZE;
-                                    placeItemImage(lGraphics, spriteItems, temp_item,
-                                            L_ARM_X + wbias, L_ARM_Y + hbias, w, h);
+                                case 5, 12 -> { // left arm
+                                    if ((iWeaponSlot == 1 && body_position == 5)
+                                            || (iWeaponSlot == 2 && body_position == 12)) {
+                                        w = temp_item.get_width();
+                                        h = temp_item.get_height();
+                                        wbias = 0;
+                                        hbias = 0;
+                                        if (w == 1) wbias += GRID_SIZE / 2;
+                                        if (h == 3) hbias += GRID_SIZE / 2;
+                                        else if (h == 2) hbias += GRID_SIZE;
+                                        placeItemImage(lGraphics, spriteItems, temp_item,
+                                                L_ARM_X + wbias, L_ARM_Y + hbias, w, h);
+                                    }
                                 }
-                                break;
-                            case 6: // left ring (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, L_RING_X, L_RING_Y, 1, 1);
-                                break;
-                            case 7: // right ring (1x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, R_RING_X, R_RING_Y, 1, 1);
-                                break;
-                            case 8: // belt equip (2x1)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BELT_X, BELT_Y, 2, 1);
-                                break;
-                            case 9: // boots (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, BOOTS_X, BOOTS_Y, 2, 2);
-                                break;
-                            case 10: // gloves (2x2)
-                                placeItemImage(lGraphics, spriteItems, temp_item, GLOVES_X, GLOVES_Y, 2, 2);
-                                break;
+                                case 6 -> // left ring (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, L_RING_X, L_RING_Y, 1, 1);
+                                case 7 -> // right ring (1x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, R_RING_X, R_RING_Y, 1, 1);
+                                case 8 -> // belt equip (2x1)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BELT_X, BELT_Y, 2, 1);
+                                case 9 -> // boots (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, BOOTS_X, BOOTS_Y, 2, 2);
+                                case 10 -> // gloves (2x2)
+                                    placeItemImage(lGraphics, spriteItems, temp_item, GLOVES_X, GLOVES_Y, 2, 2);
+                            }
                         }
                     }
                 }
@@ -2371,14 +2340,14 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
             lGraphics.drawImage(lEmptyBackground, 0, 0, D2SkillPainterPanel.this);
 
             if (iCharacter != null) {
-                drawText(lGraphics, iSkillSlot);
+                drawText(lGraphics);
 
             }
 
             repaint();
         }
 
-        private void drawText(Graphics2D lGraphics, int skillSlot) {
+        private void drawText(Graphics2D lGraphics) {
 
             switch (iSkillSlot) {
                 case 0 -> {
@@ -2670,18 +2639,15 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
 
             for (int f = 0; f < 3; f = f + 1) {
+                int xOffset = switch (f) {
+                    case 1 -> 10;
+                    case 2 -> 20;
+                    default -> 0;
+                };
                 for (int y = 0; y < iCharacter.getWaypoints()[f][questSlot - 1].length; y = y + 1) {
                     if (iCharacter.getWaypoints()[f][questSlot - 1][y]) {
-                        if (f == 0) {
-                            lGraphics.drawImage(tick, questLoc[y].x, questLoc[y].y,
-                                    D2WayPainterPanel.this);
-                        } else if (f == 1) {
-                            lGraphics.drawImage(tick, questLoc[y].x + 10, questLoc[y].y,
-                                    D2WayPainterPanel.this);
-                        } else if (f == 2) {
-                            lGraphics.drawImage(tick, questLoc[y].x + 20, questLoc[y].y,
-                                    D2WayPainterPanel.this);
-                        }
+                        lGraphics.drawImage(tick, questLoc[y].x + xOffset, questLoc[y].y,
+                                D2WayPainterPanel.this);
                     }
 
                 }
