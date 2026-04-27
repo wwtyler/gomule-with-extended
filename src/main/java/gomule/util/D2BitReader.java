@@ -22,9 +22,11 @@
 package gomule.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Vector;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 // this class is for reading and writing on
 // a bit level. i'd rename it, but then i'd
@@ -56,38 +58,23 @@ public class D2BitReader {
         return filename;
     }
 
-    // load the file into a byte-array in
-    // memory to avoid future file i/o
-    // load it into a vector first then copy it
-    // to a properly sized byte array
-    public boolean load_file() {
+    // load the file into a byte-array in memory to avoid future file i/o.
+    // Final to allow safe invocation from constructor.
+    public final boolean load_file() {
         try {
             File lFile = new File(filename);
             if (lFile.exists()) {
                 if (!lFile.canRead()) {
                     return false;
                 }
-                FileInputStream in = new FileInputStream(filename);
-                byte[] data = new byte[1024];
-                Vector<Byte> v = new Vector<Byte>();
-                do {
-                    int num = in.read(data);
-                    if (num == -1)
-                        break;
-                    for (int i = 0; i < num; i++)
-                        v.add(Byte.valueOf(data[i]));
-                } while (true);
-                filedata = new byte[v.size()];
-                for (int i = 0; i < v.size(); i++)
-                    filedata[i] = ((Byte) v.elementAt(i)).byteValue();
-                in.close();
+                filedata = Files.readAllBytes(lFile.toPath());
                 return true;
             } else {
                 // new empty file
                 filedata = new byte[0];
                 return true;
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Error loading file " + filename
                     + " into memory");
             return false;
@@ -116,7 +103,7 @@ public class D2BitReader {
          * v.add(new Integer(i+offset)); System.out.println(filedata[i+offset]);
          * offset += i+1; data = data.substring(i+1); }while(true);
          */
-        Vector<Integer> v = new Vector<Integer>();
+        List<Integer> v = new ArrayList<>();
         for (int i = 0; i < filedata.length; i++) {
             if (filedata[i] == target[0]) {
                 boolean found = true;
@@ -126,13 +113,13 @@ public class D2BitReader {
                     }
                 }
                 if (found) {
-                    v.add(Integer.valueOf(i));
+                    v.add(i);
                 }
             }
         }
         int[] idata = new int[v.size()];
         for (int i = 0; i < v.size(); i++) {
-            idata[i] = ((Integer) v.elementAt(i)).intValue();
+            idata[i] = v.get(i);
         }
         return idata;
     }
@@ -388,21 +375,17 @@ public class D2BitReader {
 //    }
 
     public void save() {
-        try {
-            FileOutputStream out = new FileOutputStream(filename);
+        try (FileOutputStream out = new FileOutputStream(filename)) {
             out.write(filedata);
-            out.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             throw new RuntimeException("Error saving file " + filename, ex);
         }
     }
 
     public void save(String f) {
-        try {
-            FileOutputStream out = new FileOutputStream(f);
+        try (FileOutputStream out = new FileOutputStream(f)) {
             out.write(filedata);
-            out.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             throw new RuntimeException("Error saving file " + filename, ex);
         }
     }
