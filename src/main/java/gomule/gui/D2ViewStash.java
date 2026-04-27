@@ -20,8 +20,54 @@
  ******************************************************************************/
 package gomule.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIDefaults;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+
 import gomule.d2s.D2Character;
 import gomule.d2x.D2Stash;
+import static gomule.gui.D2FileManager.displayErrorDialog;
 import gomule.item.D2BodyLocations;
 import gomule.item.D2Item;
 import gomule.item.D2ItemRenderer;
@@ -32,19 +78,6 @@ import gomule.util.D2Log;
 import gomule.util.D2UI;
 import randall.util.RandallPanel;
 import randall.util.RandallUtil;
-
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.Serial;
-import java.util.List;
-import java.util.*;
-
-import static gomule.gui.D2FileManager.displayErrorDialog;
 
 /**
  * @author Marco
@@ -372,7 +405,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
 
     @Override
-    public void connect() {
+    public final void connect() {
         try {
             iStash = iFileManager.addItemList(iFileName, this);
             itemListChanged();
@@ -980,7 +1013,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             return -1;
         }
 
-        public void refreshData() {
+        public final void refreshData() {
             int lMaxReqLvl = -1;
             int lMaxReqStr = -1;
             int lMaxReqDex = -1;
