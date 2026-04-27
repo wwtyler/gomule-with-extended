@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class DataFileBuilder {
-    private Flavie iFlavie;
+    private final Flavie iFlavie;
 //	private FlavieSettingsPanel	iFlaviePanel;
 
     public DataFileBuilder(Flavie pFlavie) {
@@ -46,13 +46,12 @@ public class DataFileBuilder {
         return "Unknown";
     }
 
-    @SuppressWarnings("null")
     public ArrayList<Object> readDataFileObjects(String pFileName, ArrayList<Object> pDatFile) throws Exception {
         if (pFileName == null || "".equals(pFileName.trim())) {
             throw new Exception("No data file set, please set the data file in the Flavie tab");
         }
 
-        ArrayList<Object> lList = new ArrayList<Object>();
+        ArrayList<Object> lList = new ArrayList<>();
 
         File lData = new File(pFileName);
 
@@ -70,7 +69,7 @@ public class DataFileBuilder {
         CatObject lCat = null;
         SubCatObject lSubCat = null;
 
-        ArrayList<TotalObject> lTotalObjectList = new ArrayList<TotalObject>();
+        ArrayList<TotalObject> lTotalObjectList = new ArrayList<>();
 
         String lLine = lIn.readLine();
         while (lLine != null) {
@@ -122,7 +121,8 @@ public class DataFileBuilder {
                 pDatFile.add(lCat);
             } else if (lLine.startsWith("*")) {
                 lSubCat = new SubCatObject(lLine.substring(1), lCat);
-                lCat.addSubCat(lSubCat);
+                if (lCat != null)
+                    lCat.addSubCat(lSubCat);
                 pDatFile.add(lSubCat);
             } else {
                 ArrayList<String> lItem = RandallUtil.split(lLine, ",", false);
@@ -130,7 +130,9 @@ public class DataFileBuilder {
                     // Ok, found a item definition
                     ItemObject lItemObject = new ItemObject((String) lItem.getFirst(), "", lSubCat);
                     lList.add(lItemObject);
-                    lSubCat.addItemObject(lItemObject);
+                    if (lSubCat != null) {
+                        lSubCat.addItemObject(lItemObject);
+                    }
                     pDatFile.add(lItemObject);
                 } else if (lItem.size() == 2 || lItem.size() == 3) {
                     if ("Fire Skills".equals(lItem.getFirst())) {
@@ -166,7 +168,9 @@ public class DataFileBuilder {
                         }
                     }
                     lList.add(lItemObject);
-                    lSubCat.addItemObject(lItemObject);
+                    if (lSubCat != null) {
+                        lSubCat.addItemObject(lItemObject);
+                    }
                     pDatFile.add(lItemObject);
                 }
             }

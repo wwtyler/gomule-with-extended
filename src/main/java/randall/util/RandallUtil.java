@@ -22,57 +22,11 @@ package randall.util;
 
 import java.io.File;
 import java.util.ArrayList;
-@SuppressWarnings("null")
 public class RandallUtil {
-//	private static final String ICON_PATH = "/randall/images/";
-//	private static HashMap iIcons = new HashMap();
-
-//   public static ImageIcon getIcon( String iconName )
-//    throws IOException
-//    {
-//        if( iIcons.containsKey( iconName))
-//        {
-//            return (ImageIcon) iIcons.get( iconName);
-//        }
-//
-//        ImageIcon icon = null;
-//        icon = loadImageIcon( iconName);
-//        iIcons.put( iconName, icon);
-//        return icon;
-//    }
-
-//    private static ImageIcon loadImageIcon( String iconName)
-//    throws IOException
-//	{
-//	    ImageIcon icon = null;
-//	    //Class klasse = getClass();
-//	    InputStream inputStream =  InputStream.class.getResourceAsStream(ICON_PATH + iconName);
-//	    if (inputStream != null)
-//	    {
-//	        byte[] buffer = new byte[0];
-//	        byte[] tmpbuf = new byte[1024];
-//	        while (true)
-//	        {
-//	            int laenge = inputStream.read(tmpbuf);
-//	            if (laenge <= 0)
-//	            {
-//	                break;
-//	            }
-//	            byte[] newbuf = new byte[buffer.length + laenge];
-//	            System.arraycopy(buffer, 0, newbuf, 0, buffer.length);
-//	            System.arraycopy(tmpbuf, 0, newbuf, buffer.length, laenge);
-//	            buffer = newbuf;
-//	        }
-//	        //create image
-//	        icon = new ImageIcon(buffer);
-//	        inputStream.close();
-//	    }
-//	    return icon;
-//	}
 
     public static String merge(ArrayList<String> pArrayList, String pJoin) {
         String lReturn = "";
-        if (pArrayList.size() > 0) {
+        if (!pArrayList.isEmpty()) {
             lReturn += (String) pArrayList.getFirst();
             for (int i = 1; i < pArrayList.size(); i++) {
                 lReturn += pJoin + (String) pArrayList.get(i);
@@ -96,7 +50,7 @@ public class RandallUtil {
 //	}
 
     public static ArrayList<String> split(String pString, String pSeparator, boolean pIgnoreCase) {
-        ArrayList<String> lSplit = new ArrayList<String>();
+        ArrayList<String> lSplit = new ArrayList<>();
         int lIndex = 0;
         int lSeparator;
         String lSubString;
@@ -110,17 +64,17 @@ public class RandallUtil {
             pCompSep = (pSeparator == null) ? "," : pSeparator.toLowerCase();
         } else {
             pCompStr = pString;
-            pCompSep = pSeparator;
+            pCompSep = (pSeparator == null) ? "," : pSeparator;
         }
 
         // In case of lengths not being equal, split while not ignoring case.
         if (pString != null && pCompStr != null && pCompStr.length() != pString.length()) {
             // The compare without lowercase
             pCompStr = pString;
-            pCompSep = pSeparator;
+            pCompSep = (pSeparator == null) ? "," : pSeparator;
         }
 
-        if (pString != null) {
+        if (pString != null && pCompStr != null) {
             while (lIndex < pString.length()) {
                 // find first Separator starting from lIndex
                 lSeparator = pCompStr.indexOf(pCompSep, lIndex); // pCompStr.length()
@@ -129,7 +83,7 @@ public class RandallUtil {
                     lIndex = pString.length();
                 } else {
                     lSubString = pString.substring(lIndex, lSeparator);
-                    lIndex = lSeparator + pSeparator.length();
+                    lIndex = lSeparator + pCompSep.length();
                 }
                 lSplit.add(lSubString.trim());
             }
