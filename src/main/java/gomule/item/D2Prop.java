@@ -135,7 +135,6 @@ public class D2Prop {
 
     }
 
-    @SuppressWarnings("null")
     public String generateDisplay(int qFlag, int cLvl) {
 
         if (this.qFlag != qFlag) {
@@ -163,29 +162,33 @@ public class D2Prop {
         }
 
         //Max Durability
-        if (pNum == 73) {
-            oString = "Maximum Durability";
-            funcN = 1;
-        } else if (pNum == 92) {
-            oString = "Required Level";
-            funcN = 1;
-            dispLoc = 2;
-        } else if (pNum == 356) {
-            funcN = 40;
-        } else if (pNum == 26 || pNum == 8) {
-            oString = "Replenishes Mana";
-            funcN = 2;
-            dispLoc = 2;
-        } else if (pNum == 6) {
-            oString = "Replenishes Health";
-            funcN = 2;
-            dispLoc = 2;
-        } else if (pNum == 126) {
-            if (pVals.length > 1) {
-                pVals[0] = pVals[1];
+        switch (pNum) {
+            case 73 -> {
+                oString = "Maximum Durability";
+                funcN = 1;
             }
-        } else if (pNum == 112) {
-            dispLoc = 2;
+            case 92 -> {
+                oString = "Required Level";
+                funcN = 1;
+                dispLoc = 2;
+            }
+            case 356 -> funcN = 40;
+            case 26, 8 -> {
+                oString = "Replenishes Mana";
+                funcN = 2;
+                dispLoc = 2;
+            }
+            case 6 -> {
+                oString = "Replenishes Health";
+                funcN = 2;
+                dispLoc = 2;
+            }
+            case 126 -> {
+                if (pVals.length > 1) {
+                    pVals[0] = pVals[1];
+                }
+            }
+            case 112 -> dispLoc = 2;
         }
 
         // Self-contained D2R colour-coded template (e.g. MDK "ÿcV%+d 力量ÿc0"):
@@ -193,165 +196,118 @@ public class D2Prop {
         // which would leave the value outside the colour span and %+d/%i as literal text.
         if (isSelfContainedTemplate(oString)) {
             switch (funcN) {
-                case 1: case 2: case 3: case 4: case 6: case 7: case 8: case 9: case 12:
-                case 19: case 29:
-                    return applyD2Template(oString, pVals[0]);
-                case 5: case 10:
-                    return applyD2Template(oString, (pVals[0] * 100) / 128);
-                case 20: case 21:
-                    return applyD2Template(oString, pVals[0] * -1);
+                case 1, 2, 3, 4, 6, 7, 8, 9, 12, 19, 29 ->
+                    { return applyD2Template(oString, pVals[0]); }
+                case 5, 10 ->
+                    { return applyD2Template(oString, (pVals[0] * 100) / 128); }
+                case 20, 21 ->
+                    { return applyD2Template(oString, pVals[0] * -1); }
             }
         }
 
         switch (funcN) {
 
-            case (1):
-                if (dispLoc == 1) {
-                    if (oString.indexOf("%d") != -1) {
-                        return oString.replaceAll("%d", Integer.toString(pVals[0]));
-                    } else {
-                        if (pVals[0] > -1) {
-                            return "+" + pVals[0] + " " + oString;
+            case 1 -> {
+                return switch (dispLoc) {
+                    case 1 -> {
+                        if (oString != null && oString.contains("%d")) {
+                            yield oString.replaceAll("%d", Integer.toString(pVals[0]));
+                        } else if (pVals[0] > -1) {
+                            yield "+" + pVals[0] + " " + oString;
                         } else {
-                            return pVals[0] + " " + oString;
+                            yield pVals[0] + " " + oString;
                         }
                     }
-                } else if (dispLoc == 2) {
-
-                    if (pVals[0] > -1) {
-                        return oString + " +" + pVals[0];
-                    } else {
-                        return oString + " " + pVals[0];
-                    }
-
-
-                } else {
-                    return oString;
-                }
-            case (2):
-                if (dispLoc == 1) {
-                    return pVals[0] + "% " + oString;
-                } else if (dispLoc == 2) {
-                    return oString + " " + pVals[0] + "%";
-                } else {
-                    return oString;
-                }
-
-            case (3):
-                if (dispLoc == 1) {
-                    return pVals[0] + " " + oString;
-
-                } else if (dispLoc == 2) {
-                    return oString + " " + pVals[0];
-                } else {
-                    return oString;
-                }
-
-            case (4):
-                if (dispLoc == 1) {
-
-                    if (pVals[0] > -1) {
-                        return "+" + pVals[0] + "% " + oString;
-                    } else {
-                        return pVals[0] + "% " + oString;
-                    }
-
-
-                } else if (dispLoc == 2) {
-
-                    if (pVals[0] > -1) {
-                        return oString + " +" + pVals[0] + "%";
-                    } else {
-                        return oString + " " + pVals[0] + "%";
-                    }
-
-                } else {
-                    return oString;
-                }
-
-            case (5):
+                    case 2 -> pVals[0] > -1 ? oString + " +" + pVals[0] : oString + " " + pVals[0];
+                    default -> oString;
+                };
+            }
+            case 2 -> {
+                return switch (dispLoc) {
+                    case 1 -> pVals[0] + "% " + oString;
+                    case 2 -> oString + " " + pVals[0] + "%";
+                    default -> oString;
+                };
+            }
+            case 3 -> {
+                return switch (dispLoc) {
+                    case 1 -> pVals[0] + " " + oString;
+                    case 2 -> oString + " " + pVals[0];
+                    default -> oString;
+                };
+            }
+            case 4 -> {
+                return switch (dispLoc) {
+                    case 1 -> pVals[0] > -1 ? "+" + pVals[0] + "% " + oString : pVals[0] + "% " + oString;
+                    case 2 -> pVals[0] > -1 ? oString + " +" + pVals[0] + "%" : oString + " " + pVals[0] + "%";
+                    default -> oString;
+                };
+            }
+            case 5 -> {
+                if (oString == null) return null;
                 return oString.formatted(((pVals[0] * 100) / 128));
-
-            case (6):
-                if (dispLoc == 1) {
-                    return "+" + pVals[0] + " " + oString + " "
+            }
+            case 6 -> {
+                return switch (dispLoc) {
+                    case 1 -> "+" + pVals[0] + " " + oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"));
-
-                } else if (dispLoc == 2) {
-                    return oString + " "
+                    case 2 -> oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"))
                             + " +" + pVals[0];
-                } else {
-                    return oString;
-                }
-
-            case (7):
-                if (dispLoc == 1) {
-                    return pVals[0] + "% " + oString + " "
+                    default -> oString;
+                };
+            }
+            case 7 -> {
+                return switch (dispLoc) {
+                    case 1 -> pVals[0] + "% " + oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"));
-
-                } else if (dispLoc == 2) {
-                    return oString + " "
+                    case 2 -> oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"))
                             + pVals[0] + "%";
-                } else {
-                    return oString;
-                }
-
-            case (8):
-                if (dispLoc == 1) {
-                    return "+" + pVals[0] + "% " + oString + " "
+                    default -> oString;
+                };
+            }
+            case 8 -> {
+                return switch (dispLoc) {
+                    case 1 -> "+" + pVals[0] + "% " + oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"));
-
-                } else if (dispLoc == 2) {
-                    return oString + " "
+                    case 2 -> oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"))
                             + " +" + pVals[0] + "%";
-                } else {
-                    return oString;
-                }
-
-            case (9):
-                if (dispLoc == 1) {
-                    return pVals[0] + " " + oString + " "
+                    default -> oString;
+                };
+            }
+            case 9 -> {
+                return switch (dispLoc) {
+                    case 1 -> pVals[0] + " " + oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"));
-
-                } else if (dispLoc == 2) {
-                    return oString + " "
+                    case 2 -> oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"))
                             + " " + pVals[0];
-                } else {
-                    return oString;
-                }
-
-            case (10):
-                if (dispLoc == 1) {
-                    return (pVals[0] * 100) / 128 + "% " + oString + " "
+                    default -> oString;
+                };
+            }
+            case 10 -> {
+                return switch (dispLoc) {
+                    case 1 -> (pVals[0] * 100) / 128 + "% " + oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"));
-
-                } else if (dispLoc == 2) {
-                    return oString + " "
+                    case 2 -> oString + " "
                             + D2Files.getInstance().getTranslations().getTranslation(itemStatCostRow.get("descstr2"))
                             + (pVals[0] * 100) / 128 + "%";
-                } else {
-                    return oString;
-                }
-
-            case (11):
-
+                    default -> oString;
+                };
+            }
+            case 11 -> {
                 return "Repairs 1 Durability in " + (100 / pVals[0]) + " Seconds";
-
-            case (12):
-                if (dispLoc == 1) {
-                    return "+" + pVals[0] + " " + oString;
-
-                } else if (dispLoc == 2) {
-                    return oString + " +" + pVals[0];
-                } else {
-                    return oString;
-                }
-
-            case (13): {
+            }
+            case 12 -> {
+                return switch (dispLoc) {
+                    case 1 -> "+" + pVals[0] + " " + oString;
+                    case 2 -> oString + " +" + pVals[0];
+                    default -> oString;
+                };
+            }
+            case 13 -> {
                 String charName13 = D2TxtFile.getCharacterCode(pVals[0]);
                 randall.d2files.D2TxtFileItemProperties charRow13 = D2TxtFile.CHARSTATS.searchColumns("class", charName13);
                 if (charRow13 != null) {
@@ -363,8 +319,7 @@ public class D2Prop {
                 }
                 return "+" + pVals[1] + " to " + charName13 + " Skill Levels";
             }
-
-            case (14): {
+            case 14 -> {
                 String tabKey14 = getSkillTreeTranslationKey(pVals[0]);
                 if (tabKey14 != null) {
                     String tabStr14 = D2Files.getInstance().getTranslations().getTranslation(tabKey14);
@@ -372,9 +327,8 @@ public class D2Prop {
                 }
                 return "+" + pVals[1] + " to " + getSkillTree(pVals[0]);
             }
-
-            case (15):
-
+            case 15 -> {
+                if (oString == null) return null;
                 oString = oString.replaceFirst("%d%", Integer.toString(pVals[2]));
                 oString = oString.replaceAll("%d", Integer.toString(pVals[0]));
                 D2TxtFileItemProperties lRow = D2TxtFile.SKILLS.getRow(pVals[1]);
@@ -391,9 +345,9 @@ public class D2Prop {
                     lString = "Unknown";
                 }
                 return oString.replaceAll("%s", lString);
-
-            case (16):
-
+            }
+            case 16 -> {
+                if (oString == null) return null;
                 oString = oString.replaceAll("%d", Integer.toString(pVals[1]));
                 return oString.replaceAll(
                         "%s",
@@ -406,17 +360,14 @@ public class D2Prop {
                                                         .getRow(pVals[0])
                                                         .get("skilldesc"))
                                         .get("str name")));
-
-            case (17):
-
+            }
+            case 17 -> {
                 return "By time!? Oh shi....";
-
-
-            case (18):
+            }
+            case 18 -> {
                 return "By time!? Oh shi....";
-
-            case (19):
-            case (29):
+            }
+            case 19, 29 -> {
                 List<D2TxtFileItemProperties> matchingPropsRecords = ((ArrayList<D2TxtFileItemProperties>) D2TxtFile.PROPS.searchColumnsMultipleHits("stat1", itemStatCostRow.get("Stat")))
                         .stream()
                         .filter(it -> it.get("stat2").isEmpty())
@@ -455,35 +406,31 @@ public class D2Prop {
                 } else {
                     return value;
                 }
+            }
+            case 20 -> {
+                return switch (dispLoc) {
+                    case 1 -> (pVals[0] * -1) + "% " + oString;
+                    case 2 -> oString + " " + (pVals[0] * -1) + "%";
+                    default -> oString;
+                };
+            }
+            case 21 -> {
+                return switch (dispLoc) {
+                    case 1 -> (pVals[0] * -1) + " " + oString;
+                    case 2 -> oString + " " + (pVals[0] * -1);
+                    default -> oString;
+                };
+            }
 
-            case (20):
-                if (dispLoc == 1) {
-                    return (pVals[0] * -1) + "% " + oString;
-                } else if (dispLoc == 2) {
-                    return oString + " " + (pVals[0] * -1) + "%";
-                } else {
-                    return oString;
-                }
-
-
-            case (21):
-                if (dispLoc == 1) {
-                    return (pVals[0] * -1) + " " + oString;
-                } else if (dispLoc == 2) {
-                    return oString + " " + (pVals[0] * -1);
-                } else {
-                    return oString;
-                }
-
-            case (23):
+            case 23 -> {
                 return pVals[1] + "% " + oString + " "
                         + D2Files.getInstance()
                                 .getTranslations()
                                 .getTranslation(
                                         D2TxtFile.MONSTATS.getRow(pVals[0]).get("NameStr"));
-
-            case (24):
-
+            }
+            case 24 -> {
+                if (oString == null) return null;
                 oString = oString.replaceFirst("%d", Integer.toString(pVals[2]));
                 oString = oString.replaceAll("%d", Integer.toString(pVals[3]));
                 return "Level " + pVals[0] + " "
@@ -497,8 +444,8 @@ public class D2Prop {
                                                         .get("skilldesc"))
                                         .get("str name"))
                         + " " + oString;
-
-            case (27): {
+            }
+            case 27 -> {
                 String skillName27 = D2Files.getInstance().getTranslations().getTranslation(
                         D2TxtFile.SKILL_DESC.searchColumns("skilldesc",
                                 D2TxtFile.SKILLS.getRow(pVals[0]).get("skilldesc")).get("str name"));
@@ -511,8 +458,7 @@ public class D2Prop {
                 }
                 return "+" + pVals[1] + " to " + skillName27 + " " + classOnly27;
             }
-
-            case (28): {
+            case 28 -> {
                 String skillName28 = D2Files.getInstance().getTranslations().getTranslation(
                         D2TxtFile.SKILL_DESC.searchColumns("skilldesc",
                                 D2TxtFile.SKILLS.getRow(pVals[0]).get("skilldesc")).get("str name"));
@@ -521,41 +467,35 @@ public class D2Prop {
                 }
                 return "+" + pVals[1] + " to " + skillName28;
             }
-
             //UNOFFICIAL PROPERTIES
 
             //Enhanced Damage
-            case (30): {
+            case 30 -> {
                 String s30 = D2Files.getInstance().getTranslations().getTranslation("strModEnhancedDamage");
                 if (isSelfContainedTemplate(s30)) return applyD2Template(s30, pVals[0]);
                 return pVals[0] + "% Enhanced Damage";
             }
-
-            case (31): {
+            case 31 -> {
                 String s31 = D2Files.getInstance().getTranslations().getTranslation("strModMinDamageRange");
                 if (isSelfContainedTemplate(s31)) return applyD2TemplateMulti(s31, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Damage";
             }
-
-            case (32): {
+            case 32 -> {
                 String s32 = D2Files.getInstance().getTranslations().getTranslation("strModFireDamageRange");
                 if (isSelfContainedTemplate(s32)) return applyD2TemplateMulti(s32, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Fire Damage";
             }
-
-            case (33): {
+            case 33 -> {
                 String s33 = D2Files.getInstance().getTranslations().getTranslation("strModLightningDamageRange");
                 if (isSelfContainedTemplate(s33)) return applyD2TemplateMulti(s33, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Lightning Damage";
             }
-
-            case (34): {
+            case 34 -> {
                 String s34 = D2Files.getInstance().getTranslations().getTranslation("strModMagicDamageRange");
                 if (isSelfContainedTemplate(s34)) return applyD2TemplateMulti(s34, pVals[0], pVals[1]);
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Magic Damage";
             }
-
-            case (35): {
+            case 35 -> {
                 // MDK string strModColdDamageRange does not include duration; display without frames
                 String s35 = D2Files.getInstance().getTranslations().getTranslation("strModColdDamageRange");
                 if (isSelfContainedTemplate(s35)) {
@@ -569,7 +509,7 @@ public class D2Prop {
                 return "Adds " + pVals[0] + " - " + pVals[1] + " Cold Damage Over " + Math.round((double) pVals[2] / 25.0) + " Secs (" + pVals[2] + " Frames)";
             }
 
-            case (36): {
+            case 36 -> {
                 // Compute actual poison damage and duration, then apply to MDK template
                 int poisMin, poisMax, durationSecs;
                 if (pVals.length == 4) {
@@ -593,33 +533,26 @@ public class D2Prop {
                 }
                 return "Adds " + poisMin + " - " + poisMax + " Poison Damage Over " + durationSecs + " Secs";
             }
-            case (37): {
+            case 37 -> {
                 String s37 = D2Files.getInstance().getTranslations().getTranslation("strModAllResistances");
                 if (isSelfContainedTemplate(s37)) return applyD2Template(s37, pVals[0]);
                 return "All Resistances +" + pVals[0];
             }
-
-            case (38): {
+            case 38 -> {
                 String s38 = D2Files.getInstance().getTranslations().getTranslation("allattrib");
                 if (isSelfContainedTemplate(s38)) return applyD2Template(s38, pVals[0]);
                 return "全属性 +" + pVals[0];
             }
-
-            case (39):
-
+            case 39 -> {
                 return "Level " + pVals[1] + " " + D2TxtFile.getCharacterCode(pVals[0]);
-
-            case (40):
-
+            }
+            case 40 -> {
                 switch (pVals[0]) {
-
-                    case 0:
-                        return "Found In Normal Difficulty";
-                    case 1:
-                        return "Found In Nightmare Difficulty";
-                    case 2:
-                        return "Found In Hell Difficulty";
+                    case 0 -> { return "Found In Normal Difficulty"; }
+                    case 1 -> { return "Found In Nightmare Difficulty"; }
+                    case 2 -> { return "Found In Hell Difficulty"; }
                 }
+            }
         }
 
         D2Log.warn("D2Prop",
@@ -737,113 +670,69 @@ public class D2Prop {
 
         switch (op) {
 
-            case (2):
-            case (4):
-            case (5):
-
+            case 2, 4, 5 -> {
                 if (D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op base").equals("level")) {
 
                     pVals[0] = (int) Math.floor(((double) (pVals[0] * cLvl)) / ((double) (Math.pow(2, Integer.parseInt(D2TxtFile.ITEM_STAT_COST.getRow(pNum).get("op param"))))));
                 }
+            }
         }
         opApplied = true;
     }
 
     private static String getSkillTreeTranslationKey(int n) {
-        switch (n) {
-            case 0:  return "StrSklTabItem3";  // Amazon: Bow and Crossbow
-            case 1:  return "StrSklTabItem2";  // Amazon: Passive and Magic
-            case 2:  return "StrSklTabItem1";  // Amazon: Javelin and Spear
-            case 8:  return "StrSklTabItem15"; // Sorceress: Fire
-            case 9:  return "StrSklTabItem14"; // Sorceress: Lightning
-            case 10: return "StrSklTabItem13"; // Sorceress: Cold
-            case 16: return "StrSklTabItem8";  // Necromancer: Curses
-            case 17: return "StrSklTabItem7";  // Necromancer: Poison and Bone
-            case 18: return "StrSklTabItem9";  // Necromancer: Summoning
-            case 24: return "StrSklTabItem6";  // Paladin: Combat Skills
-            case 25: return "StrSklTabItem5";  // Paladin: Offensive Auras
-            case 26: return "StrSklTabItem4";  // Paladin: Defensive Auras
-            case 32: return "StrSklTabItem11"; // Barbarian: Combat Skills
-            case 33: return "StrSklTabItem12"; // Barbarian: Masteries
-            case 34: return "StrSklTabItem10"; // Barbarian: Warcries
-            case 40: return "StrSklTabItem16"; // Druid: Summoning
-            case 41: return "StrSklTabItem17"; // Druid: Shape-shifting
-            case 42: return "StrSklTabItem18"; // Druid: Elemental
-            case 48: return "StrSklTabItem19"; // Assassin: Traps
-            case 49: return "StrSklTabItem20"; // Assassin: Shadow Discipline
-            case 50: return "StrSklTabItem21"; // Assassin: Martial Arts
-            default: return null;
-        }
+        return switch (n) {
+            case 0  -> "StrSklTabItem3";  // Amazon: Bow and Crossbow
+            case 1  -> "StrSklTabItem2";  // Amazon: Passive and Magic
+            case 2  -> "StrSklTabItem1";  // Amazon: Javelin and Spear
+            case 8  -> "StrSklTabItem15"; // Sorceress: Fire
+            case 9  -> "StrSklTabItem14"; // Sorceress: Lightning
+            case 10 -> "StrSklTabItem13"; // Sorceress: Cold
+            case 16 -> "StrSklTabItem8";  // Necromancer: Curses
+            case 17 -> "StrSklTabItem7";  // Necromancer: Poison and Bone
+            case 18 -> "StrSklTabItem9";  // Necromancer: Summoning
+            case 24 -> "StrSklTabItem6";  // Paladin: Combat Skills
+            case 25 -> "StrSklTabItem5";  // Paladin: Offensive Auras
+            case 26 -> "StrSklTabItem4";  // Paladin: Defensive Auras
+            case 32 -> "StrSklTabItem11"; // Barbarian: Combat Skills
+            case 33 -> "StrSklTabItem12"; // Barbarian: Masteries
+            case 34 -> "StrSklTabItem10"; // Barbarian: Warcries
+            case 40 -> "StrSklTabItem16"; // Druid: Summoning
+            case 41 -> "StrSklTabItem17"; // Druid: Shape-shifting
+            case 42 -> "StrSklTabItem18"; // Druid: Elemental
+            case 48 -> "StrSklTabItem19"; // Assassin: Traps
+            case 49 -> "StrSklTabItem20"; // Assassin: Shadow Discipline
+            case 50 -> "StrSklTabItem21"; // Assassin: Martial Arts
+            default -> null;
+        };
     }
 
     public String getSkillTree(int lSkillNr) {
 
-        switch (lSkillNr) {
-            case 0:
-                return "Bow and Crossbow Skills (Amazon Only)";
-
-            case 1:
-                return "Passive and Magic Skills (Amazon Only)";
-
-            case 2:
-                return "Javelin and Spear Skills (Amazon Only)";
-
-            case 8:
-                return "Fire Skills (Sorceress Only)";
-
-            case 9:
-                return "Lightning Skills (Sorceress Only)";
-
-            case 10:
-                return "Cold Skills (Sorceress Only)";
-
-            case 16:
-                return "Curses (Necromancer only)";
-
-            case 17:
-                return "Poison and Bone Skills (Necromancer Only)";
-
-            case 18:
-                return "Summoning Skills (Necromancer Only)";
-
-            case 24:
-                return "Combat Skills (Paladin Only)";
-
-            case 25:
-                return "Offensive Aura Skills (Paladin Only)";
-
-            case 26:
-                return "Defensive Aura Skills (Paladin Only)";
-
-            case 32:
-                return "Combat Skills (Barbarian Only)";
-
-            case 33:
-                return "Masteries Skills (Barbarian Only)";
-
-            case 34:
-                return "Warcry Skills (Barbarian Only)";
-
-            case 40:
-                return "Summoning Skills (Druid Only)";
-
-            case 41:
-                return "Shape-Shifting Skills (Druid Only)";
-
-            case 42:
-                return "Elemental Skills (Druid Only)";
-
-            case 48:
-                return "Trap Skills (Assassin Only)";
-
-            case 49:
-                return "Shadow Discipline Skills (Assassin Only)";
-
-            case 50:
-                return "Martial Art Skills (Assassin Only)";
-
-        }
-        return "Unknown Tree (P 188)";
+        return switch (lSkillNr) {
+            case 0  -> "Bow and Crossbow Skills (Amazon Only)";
+            case 1  -> "Passive and Magic Skills (Amazon Only)";
+            case 2  -> "Javelin and Spear Skills (Amazon Only)";
+            case 8  -> "Fire Skills (Sorceress Only)";
+            case 9  -> "Lightning Skills (Sorceress Only)";
+            case 10 -> "Cold Skills (Sorceress Only)";
+            case 16 -> "Curses (Necromancer only)";
+            case 17 -> "Poison and Bone Skills (Necromancer Only)";
+            case 18 -> "Summoning Skills (Necromancer Only)";
+            case 24 -> "Combat Skills (Paladin Only)";
+            case 25 -> "Offensive Aura Skills (Paladin Only)";
+            case 26 -> "Defensive Aura Skills (Paladin Only)";
+            case 32 -> "Combat Skills (Barbarian Only)";
+            case 33 -> "Masteries Skills (Barbarian Only)";
+            case 34 -> "Warcry Skills (Barbarian Only)";
+            case 40 -> "Summoning Skills (Druid Only)";
+            case 41 -> "Shape-Shifting Skills (Druid Only)";
+            case 42 -> "Elemental Skills (Druid Only)";
+            case 48 -> "Trap Skills (Assassin Only)";
+            case 49 -> "Shadow Discipline Skills (Assassin Only)";
+            case 50 -> "Martial Art Skills (Assassin Only)";
+            default -> "Unknown Tree (P 188)";
+        };
 
     }
 
@@ -943,106 +832,39 @@ public class D2Prop {
 
         switch (pNum) {
 
-            case (0):
-                outStats[0] = outStats[0] + (pVals[0] * op);
-                break;
-            case (1):
-                outStats[2] = outStats[2] + (pVals[0] * op);
-                break;
-            case (2):
-                outStats[4] = outStats[4] + (pVals[0] * op);
-                break;
-            case (3):
-                outStats[6] = outStats[6] + (pVals[0] * op);
-                break;
-            case (7):
-                outStats[8] = outStats[8] + (pVals[0] * op);
-                break;
-            case (9):
-                outStats[10] = outStats[10] + (pVals[0] * op);
-                break;
-            case (11):
-                outStats[12] = outStats[12] + (pVals[0] * op);
-                break;
-            case (19):
-                outStats[14] = outStats[14] + (pVals[0] * op);
-                break;
-            case (20):
-                outStats[30] = outStats[30] + (pVals[0] * op);
-                break;
-            case (39):
-                outStats[18] = outStats[18] + (pVals[0] * op);
-                break;
-            case (41):
-                outStats[19] = outStats[19] + (pVals[0] * op);
-                break;
-            case (43):
-                outStats[20] = outStats[20] + (pVals[0] * op);
-                break;
-            case (45):
-                outStats[21] = outStats[21] + (pVals[0] * op);
-                break;
-            case (79):
-                outStats[28] = outStats[28] + (pVals[0] * op);
-                break;
-            case (80):
-                outStats[22] = outStats[22] + (pVals[0] * op);
-                break;
-            case (93):
-                outStats[26] = outStats[26] + (pVals[0] * op);
-                break;
-            case (96):
-                outStats[24] = outStats[24] + (pVals[0] * op);
-                break;
-            case (99):
-                outStats[27] = outStats[27] + (pVals[0] * op);
-                break;
-            case (105):
-                outStats[25] = outStats[25] + (pVals[0] * op);
-                break;
-            case (119):
-                outStats[15] = outStats[15] + (pVals[0] * op);
-                break;
-            case (216):
-                outStats[9] = outStats[9] + (pVals[0] * op);
-                break;
-            case (217):
-                outStats[11] = outStats[11] + (pVals[0] * op);
-                break;
-            case (220):
-                outStats[1] = outStats[1] + (pVals[0] * op);
-                break;
-            case (221):
-                outStats[5] = outStats[5] + (pVals[0] * op);
-                break;
-            case (222):
-                outStats[3] = outStats[3] + (pVals[0] * op);
-                break;
-            case (223):
-                outStats[7] = outStats[7] + (pVals[0] * op);
-                break;
-            case (224):
-                outStats[16] = outStats[16] + (pVals[0] * op);
-                break;
-            case (225):
-                outStats[17] = outStats[17] + (pVals[0] * op);
-                break;
-            case (239):
-                outStats[29] = outStats[29] + (pVals[0] * op);
-                break;
-            case (240):
-                outStats[23] = outStats[23] + (pVals[0] * op);
-                break;
-            case (242):
-                outStats[13] = outStats[13] + (pVals[0] * op);
-                break;
+            case 0   -> outStats[0]  = outStats[0]  + (pVals[0] * op);
+            case 1   -> outStats[2]  = outStats[2]  + (pVals[0] * op);
+            case 2   -> outStats[4]  = outStats[4]  + (pVals[0] * op);
+            case 3   -> outStats[6]  = outStats[6]  + (pVals[0] * op);
+            case 7   -> outStats[8]  = outStats[8]  + (pVals[0] * op);
+            case 9   -> outStats[10] = outStats[10] + (pVals[0] * op);
+            case 11  -> outStats[12] = outStats[12] + (pVals[0] * op);
+            case 19  -> outStats[14] = outStats[14] + (pVals[0] * op);
+            case 20  -> outStats[30] = outStats[30] + (pVals[0] * op);
+            case 39  -> outStats[18] = outStats[18] + (pVals[0] * op);
+            case 41  -> outStats[19] = outStats[19] + (pVals[0] * op);
+            case 43  -> outStats[20] = outStats[20] + (pVals[0] * op);
+            case 45  -> outStats[21] = outStats[21] + (pVals[0] * op);
+            case 79  -> outStats[28] = outStats[28] + (pVals[0] * op);
+            case 80  -> outStats[22] = outStats[22] + (pVals[0] * op);
+            case 93  -> outStats[26] = outStats[26] + (pVals[0] * op);
+            case 96  -> outStats[24] = outStats[24] + (pVals[0] * op);
+            case 99  -> outStats[27] = outStats[27] + (pVals[0] * op);
+            case 105 -> outStats[25] = outStats[25] + (pVals[0] * op);
+            case 119 -> outStats[15] = outStats[15] + (pVals[0] * op);
+            case 216 -> outStats[9]  = outStats[9]  + (pVals[0] * op);
+            case 217 -> outStats[11] = outStats[11] + (pVals[0] * op);
+            case 220 -> outStats[1]  = outStats[1]  + (pVals[0] * op);
+            case 221 -> outStats[5]  = outStats[5]  + (pVals[0] * op);
+            case 222 -> outStats[3]  = outStats[3]  + (pVals[0] * op);
+            case 223 -> outStats[7]  = outStats[7]  + (pVals[0] * op);
+            case 224 -> outStats[16] = outStats[16] + (pVals[0] * op);
+            case 225 -> outStats[17] = outStats[17] + (pVals[0] * op);
+            case 239 -> outStats[29] = outStats[29] + (pVals[0] * op);
+            case 240 -> outStats[23] = outStats[23] + (pVals[0] * op);
+            case 242 -> outStats[13] = outStats[13] + (pVals[0] * op);
             // + SKILLS
-            case (188):
-            case (126):
-            case (97):
-            case (107):
-            case (83):
-            case (127):
+            case 188, 126, 97, 107, 83, 127 -> {
                 if (plSkill != null) {
                     if (op == 1) {
                         plSkill.add(this);
@@ -1050,6 +872,7 @@ public class D2Prop {
                         plSkill.remove(this);
                     }
                 }
+            }
         }
     }
 }
