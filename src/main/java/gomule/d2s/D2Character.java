@@ -21,6 +21,12 @@
 
 package gomule.d2s;
 
+import java.awt.Point;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import gomule.D2Files;
 import gomule.gui.D2ItemListAdapter;
 import gomule.item.D2BodyLocations;
@@ -36,12 +42,6 @@ import randall.d2files.D2FileReader;
 import randall.d2files.D2FileWriter;
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
-
-import java.awt.*;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 //a character class
 //manages one character file
@@ -144,7 +144,6 @@ public class D2Character extends D2ItemListAdapter {
     private int iItemEnd;
     private byte iBeforeStats[];
     private byte iBeforeItems[];
-    private byte iBetweenItems[];
     private byte iAfterItems[];
 
     public D2Character(String pFileName) throws Exception {
@@ -155,6 +154,7 @@ public class D2Character extends D2ItemListAdapter {
         iMercItems = new ArrayList<>();
         iReader = new D2BitReader(iFileName);
         String basename = new java.io.File(iFileName).getName();
+        //noinspection unused
         try (D2LogContext ctx = D2LogContext.push("file", basename)) {
             D2Log.info("D2Char", "loading character file (%d bytes)", iReader.get_length());
             readChar();
@@ -206,36 +206,19 @@ public class D2Character extends D2ItemListAdapter {
         iReader.read(8);
         iReader.set_byte_pos(classOffset);
         lCharCode = iReader.read(8);
-        switch ((int) lCharCode) {
-            case 0:
-                cClass = "ama";
-                break;
-            case 1:
-                cClass = "sor";
-                break;
-            case 2:
-                cClass = "nec";
-                break;
-            case 3:
-                cClass = "pal";
-                break;
-            case 4:
-                cClass = "bar";
-                break;
-            case 5:
-                cClass = "dru";
-                break;
-            case 6:
-                cClass = "ass";
-                break;
-            case 7:
+        cClass = switch ((int) lCharCode) {
+            case 0 -> "ama";
+            case 1 -> "sor";
+            case 2 -> "nec";
+            case 3 -> "pal";
+            case 4 -> "bar";
+            case 5 -> "dru";
+            case 6 -> "ass";
+            case 7 ->
                 // D2RMMMDKV3 新职业 Warlock
-                cClass = "war";
-                break;
-            default:
-                cClass = "unknown_" + lCharCode;
-                break;
-        }
+                "war";
+            default -> "unknown_" + lCharCode;
+        };
         iReader.set_byte_pos(levelOffset);
         iCharLevel = iReader.read(8);
         if (iCharLevel < 1 || iCharLevel > 99)
@@ -499,36 +482,36 @@ public class D2Character extends D2ItemListAdapter {
         // Sort Qs
         boolean[] tempQ = new boolean[6];
 
-        for (int x = 0; x < iQuests.length; x++) {
-            for (int y = 0; y < iQuests[x].length; y++) {
+        for (boolean[][] questRow : iQuests) {
+            for (int y = 0; y < questRow.length; y++) {
                 switch (y) {
-                    case 0:
-                        tempQ[0] = iQuests[x][y][0];
-                        tempQ[1] = iQuests[x][y][1];
-                        tempQ[2] = iQuests[x][y][3];
-                        tempQ[3] = iQuests[x][y][4];
-                        tempQ[4] = iQuests[x][y][2];
-                        tempQ[5] = iQuests[x][y][5];
-                        iQuests[x][y] = tempQ;
-                        break;
-                    case 2:
-                        tempQ[0] = iQuests[x][y][3];
-                        tempQ[1] = iQuests[x][y][2];
-                        tempQ[2] = iQuests[x][y][1];
-                        tempQ[3] = iQuests[x][y][0];
-                        tempQ[4] = iQuests[x][y][4];
-                        tempQ[5] = iQuests[x][y][5];
-                        iQuests[x][y] = tempQ;
-                        break;
-                    case 3:
-                        tempQ[0] = iQuests[x][y][0];
-                        tempQ[1] = iQuests[x][y][2];
-                        tempQ[2] = iQuests[x][y][1];
-                        tempQ[3] = iQuests[x][y][3];
-                        tempQ[4] = iQuests[x][y][4];
-                        tempQ[5] = iQuests[x][y][5];
-                        iQuests[x][y] = tempQ;
-                        break;
+                    case 0 -> {
+                        tempQ[0] = questRow[y][0];
+                        tempQ[1] = questRow[y][1];
+                        tempQ[2] = questRow[y][3];
+                        tempQ[3] = questRow[y][4];
+                        tempQ[4] = questRow[y][2];
+                        tempQ[5] = questRow[y][5];
+                        questRow[y] = tempQ;
+                    }
+                    case 2 -> {
+                        tempQ[0] = questRow[y][3];
+                        tempQ[1] = questRow[y][2];
+                        tempQ[2] = questRow[y][1];
+                        tempQ[3] = questRow[y][0];
+                        tempQ[4] = questRow[y][4];
+                        tempQ[5] = questRow[y][5];
+                        questRow[y] = tempQ;
+                    }
+                    case 3 -> {
+                        tempQ[0] = questRow[y][0];
+                        tempQ[1] = questRow[y][2];
+                        tempQ[2] = questRow[y][1];
+                        tempQ[3] = questRow[y][3];
+                        tempQ[4] = questRow[y][4];
+                        tempQ[5] = questRow[y][5];
+                        questRow[y] = tempQ;
+                    }
                 }
                 tempQ = new boolean[6];
             }
@@ -614,6 +597,7 @@ public class D2Character extends D2ItemListAdapter {
         for (int i = 0; i < num_items; i++) {
             int lItemStart = iReader.get_byte_pos();
             D2Item lItem;
+            //noinspection unused
             try (D2LogContext ictx = D2LogContext.push("item",
                     "#" + (i + 1) + "/" + num_items + "@0x" + Integer.toHexString(lItemStart))) {
                 try {
@@ -666,7 +650,7 @@ public class D2Character extends D2ItemListAdapter {
         iBeforeItems = iReader.get_bytes(lCharStart - iIF);
         if (lMercStart == -1) {
             // between
-            iBetweenItems = new byte[0];
+            // between: gap between char and merc items (no longer stored)
             // goto after char
             iReader.set_byte_pos(lCharEnd);
             // after items
@@ -675,7 +659,7 @@ public class D2Character extends D2ItemListAdapter {
             // goto after char
             iReader.set_byte_pos(lCharEnd);
             // between
-            iBetweenItems = iReader.get_bytes(lMercStart - lCharEnd);
+            // between: gap bytes between char and merc items sections
             // goto after merc
             iReader.set_byte_pos(lMercEnd);
             // after items
@@ -688,9 +672,7 @@ public class D2Character extends D2ItemListAdapter {
         iReader.set_byte_pos(iKF);
         iReader.skipBytes(2);
         switch ((int) iReader.read(8)) {
-            case 0:
-                golemItem = null;
-                return;
+            case 0 -> { golemItem = null; return; }
         }
         int lItemStart = iReader.findNextFlag("JM", iKF);
         if (lItemStart != -1) {
@@ -725,25 +707,25 @@ public class D2Character extends D2ItemListAdapter {
         for (int x = 0; x < getPlusSkills().size(); x = x + 1) {
             int[] pVals = ((D2Prop) getPlusSkills().get(x)).getPVals();
             switch (((D2Prop) getPlusSkills().get(x)).getPNum()) {
-                case (127):
-                    for (int s = 0; s < cSkills.length; s++) {
-                        for (int t = 0; t < cSkills[s].length; t = t + 1) {
-                            if (cSkills[s][t] > 0)
-                                cSkills[s][t] = cSkills[s][t] + pVals[0];
+                case 127 -> {
+                    for (int[] row : cSkills) {
+                        for (int t = 0; t < row.length; t++) {
+                            if (row[t] > 0)
+                                row[t] = row[t] + pVals[0];
                         }
                     }
-                    break;
-                case (83):
+                }
+                case 83 -> {
                     if (pVals[0] == this.getCharCode()) {
-                        for (int s = 0; s < cSkills.length; s++) {
-                            for (int t = 0; t < cSkills[s].length; t = t + 1) {
-                                if (cSkills[s][t] > 0)
-                                    cSkills[s][t] = cSkills[s][t] + pVals[1];
+                        for (int[] row : cSkills) {
+                            for (int t = 0; t < row.length; t++) {
+                                if (row[t] > 0)
+                                    row[t] = row[t] + pVals[1];
                             }
                         }
                     }
-                    break;
-                case (97):
+                }
+                case 97, 107 -> {
                     if (!D2TxtFile.SKILLS.getRow(pVals[0]).get("charclass").equals(cClass))
                         continue;
                     String page = D2TxtFile.SKILL_DESC.getRow(pVals[0]).get("SkillPage");
@@ -759,53 +741,34 @@ public class D2Character extends D2ItemListAdapter {
                     }
                     cSkills[Integer.parseInt(page) - 1][counter - 1] = cSkills[Integer.parseInt(page) - 1][counter - 1]
                             + pVals[1];
-                    break;
-
-                case (107):
-                    if (!D2TxtFile.SKILLS.getRow(pVals[0]).get("charclass").equals(cClass))
-                        continue;
-                    page = D2TxtFile.SKILL_DESC.getRow(pVals[0]).get("SkillPage");
-                    if (page.equals("") || Integer.parseInt(page) <= 0)
-                        continue;
-                    counter = 0;
-                    for (int z = pVals[0]; z > -1; z = z - 1) {
-                        if (D2TxtFile.SKILLS.getRow(z).get("charclass").equals(cClass)) {
-                            if (D2TxtFile.SKILL_DESC.getRow(z).get("SkillPage").equals(page)) {
-                                counter++;
-                            }
-                        }
-                    }
-                    cSkills[Integer.parseInt(page) - 1][counter - 1] = cSkills[Integer.parseInt(page) - 1][counter - 1]
-                            + pVals[1];
-                    break;
-
-                case (126):
+                }
+                case 126 -> {
                     switch ((int) lCharCode) {
-                        case 0:
+                        case 0 -> {
                             if (cSkills[0][1] > 0)
                                 cSkills[0][1] = cSkills[0][1] + pVals[0];
                             if (cSkills[0][4] > 0)
                                 cSkills[0][4] = cSkills[0][4] + pVals[0];
                             if (cSkills[0][8] > 0)
                                 cSkills[0][8] = cSkills[0][8] + pVals[0];
-                            break;
-                        case 1:
+                        }
+                        case 1 -> {
                             for (int t = 0; t < 10; t = t + 1) {
                                 if (cSkills[0][t] > 0)
                                     cSkills[0][t] = cSkills[0][t] + pVals[0];
                             }
-                            break;
-                        case 2:
+                        }
+                        case 2 -> {
                             if (cSkills[0][3] > 0)
                                 cSkills[0][3] = cSkills[0][3] + pVals[0];
                             if (cSkills[0][8] > 0)
                                 cSkills[0][8] = cSkills[0][8] + pVals[0];
-                            break;
-                        case 3:
+                        }
+                        case 3 -> {
                             if (cSkills[0][1] > 0)
                                 cSkills[0][1] = cSkills[0][1] + pVals[0];
-                            break;
-                        case 5:
+                        }
+                        case 5 -> {
                             if (cSkills[2][0] > 0)
                                 cSkills[2][0] = cSkills[2][0] + pVals[0];
                             if (cSkills[2][1] > 0)
@@ -818,8 +781,8 @@ public class D2Character extends D2ItemListAdapter {
                                 cSkills[2][6] = cSkills[2][6] + pVals[0];
                             if (cSkills[2][8] > 0)
                                 cSkills[2][8] = cSkills[2][8] + pVals[0];
-                            break;
-                        case 6:
+                        }
+                        case 6 -> {
                             if (cSkills[2][2] > 0)
                                 cSkills[2][2] = cSkills[2][2] + pVals[0];
                             if (cSkills[2][6] > 0)
@@ -830,10 +793,10 @@ public class D2Character extends D2ItemListAdapter {
                                 cSkills[0][4] = cSkills[0][4] + pVals[0];
                             if (cSkills[0][7] > 0)
                                 cSkills[0][7] = cSkills[0][7] + pVals[0];
-                            break;
+                        }
                     }
-                    break;
-                case (188):
+                }
+                case 188 -> {
                     for (int t = 0; t < 10; t = t + 1) {
                         if ((pVals[0] - (getCharCode() * 8)) > -1 && (pVals[0] - (getCharCode() * 8)) < 4) {
                             if (cSkills[pVals[0] - (getCharCode() * 8)][t] > 0)
@@ -841,6 +804,7 @@ public class D2Character extends D2ItemListAdapter {
                                         + pVals[1];
                         }
                     }
+                }
             }
         }
     }
@@ -848,7 +812,7 @@ public class D2Character extends D2ItemListAdapter {
     public void changeWep() {
 
         switch (curWep) {
-            case 0:
+            case 0 -> {
                 for (int x = 0; x < getCharItemNr(); x = x + 1) {
                     if (getCharItem(x).get_body_position() == 4 || getCharItem(x).get_body_position() == 5) {
                         updateCharStats("P", getCharItem(x));
@@ -860,8 +824,8 @@ public class D2Character extends D2ItemListAdapter {
                         updateCharStats("D", getCharItem(x));
                     }
                 }
-                return;
-            case 1:
+            }
+            case 1 -> {
                 for (int x = 0; x < iCharItems.size(); x = x + 1) {
                     if (getCharItem(x).get_body_position() == 11 || getCharItem(x).get_body_position() == 12) {
                         updateCharStats("P", getCharItem(x));
@@ -873,23 +837,19 @@ public class D2Character extends D2ItemListAdapter {
                         updateCharStats("D", getCharItem(x));
                     }
                 }
+            }
         }
     }
 
     public int getARClassBonus() {
-        if (getCharClass().equals("Barbarian") || getCharClass().equals("Paladin")) {
-            return 20;
-        } else if (getCharClass().equals("Assasin")) {
-            return 15;
-        } else if (getCharClass().equals("Amazon") || getCharClass().equals("Druid")) {
-            return 5;
-        } else if (getCharClass().equals("Necromancer")) {
-            return -10;
-        } else if (getCharClass().equals("Sorceress")) {
-            return -15;
-        } else {
-            return 99999999;
-        }
+        return switch (getCharClass()) {
+            case "Barbarian", "Paladin" -> 20;
+            case "Assasin" -> 15;
+            case "Amazon", "Druid" -> 5;
+            case "Necromancer" -> -10;
+            case "Sorceress" -> -15;
+            default -> 99999999;
+        };
     }
 
     @Override
@@ -953,34 +913,36 @@ public class D2Character extends D2ItemListAdapter {
         short panel = i.get_panel();
         int row, col, width, height, j, k;
         switch (panel) {
-            case 0: // equipped or on belt
+            case 0 -> { // equipped or on belt
                 int location = (int) i.get_location();
-                if (location == 2) {
-                    col = (int) i.get_col();
-                    row = col / 4;
-                    col = col % 4;
-                    width = (int) i.get_width();
-                    height = (int) i.get_height();
-                    if ((row + height) > 4)
-                        return false;
-                    if ((col + width) > 4)
-                        return false;
-                    for (j = row; j < row + height; j++) {
-                        for (k = col; k < col + width; k++)
-                            iBeltGrid[j][k] = true;
+                switch (location) {
+                    case 2 -> {
+                        col = (int) i.get_col();
+                        row = col / 4;
+                        col = col % 4;
+                        width = (int) i.get_width();
+                        height = (int) i.get_height();
+                        if ((row + height) > 4)
+                            return false;
+                        if ((col + width) > 4)
+                            return false;
+                        for (j = row; j < row + height; j++) {
+                            for (k = col; k < col + width; k++)
+                                iBeltGrid[j][k] = true;
+                        }
                     }
-                } else if (location == 6) {
-
-                } else {
-                    int body_position = (int) i.get_body_position();
-                    if (iEquipped[body_position] == true) {
-                        return false;
-                    } else {
-                        iEquipped[body_position] = true;
+                    case 6 -> {} // in socket, nothing to do
+                    default -> {
+                        int body_position = (int) i.get_body_position();
+                        if (iEquipped[body_position] == true) {
+                            return false;
+                        } else {
+                            iEquipped[body_position] = true;
+                        }
                     }
                 }
-                break;
-            case BODY_INV_CONTENT: // inventory
+            }
+            case BODY_INV_CONTENT -> { // inventory
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -993,8 +955,8 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iInventoryGrid[j][k] = true;
                 }
-                break;
-            case BODY_CUBE_CONTENT: // cube
+            }
+            case BODY_CUBE_CONTENT -> { // cube
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -1007,8 +969,8 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iCubeGrid[j][k] = true;
                 }
-                break;
-            case BODY_STASH_CONTENT: // stash
+            }
+            case BODY_STASH_CONTENT -> { // stash
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -1021,7 +983,7 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iStashGrid[j][k] = true;
                 }
-                break;
+            }
         }
         return true;
     }
@@ -1042,20 +1004,21 @@ public class D2Character extends D2ItemListAdapter {
     public boolean markCorpseGrid(D2Item i) {
         short panel = i.get_panel();
         switch (panel) {
-            case 0: // equipped or on belt
+            case 0 -> { // equipped or on belt
                 int location = (int) i.get_location();
-                if (location == 2) {
-                } else if (location == 6) {
-                    // in socket
-                } else {
-                    int body_position = (int) i.get_body_position();
-                    if (iCorpse[body_position] == true) {
-                        return false;
-                    } else {
-                        iCorpse[body_position] = true;
+                switch (location) {
+                    case 2 -> {} // on belt, nothing to clear
+                    case 6 -> {} // in socket
+                    default -> {
+                        int body_position = (int) i.get_body_position();
+                        if (iCorpse[body_position] == true) {
+                            return false;
+                        } else {
+                            iCorpse[body_position] = true;
+                        }
                     }
                 }
-                break;
+            }
         }
         return true;
     }
@@ -1076,31 +1039,33 @@ public class D2Character extends D2ItemListAdapter {
         short panel = i.get_panel();
         int row, col, width, height, j, k;
         switch (panel) {
-            case 0: // equipped or on belt
+            case 0 -> { // equipped or on belt
                 int location = (int) i.get_location();
                 // on the belt
-                if (location == 2) {
-                    col = (int) i.get_col();
-                    row = col / 4;
-                    col = col % 4;
-                    width = (int) i.get_width();
-                    height = (int) i.get_height();
-                    if ((row + height) > 4)
-                        return false;
-                    if ((col + width) > 4)
-                        return false;
-                    for (j = row; j < row + height; j++) {
-                        for (k = col; k < col + width; k++)
-                            iBeltGrid[j][k] = false;
+                switch (location) {
+                    case 2 -> {
+                        col = (int) i.get_col();
+                        row = col / 4;
+                        col = col % 4;
+                        width = (int) i.get_width();
+                        height = (int) i.get_height();
+                        if ((row + height) > 4)
+                            return false;
+                        if ((col + width) > 4)
+                            return false;
+                        for (j = row; j < row + height; j++) {
+                            for (k = col; k < col + width; k++)
+                                iBeltGrid[j][k] = false;
+                        }
                     }
-                } else if (location == 6) {
-                    // in socket?
-                } else {
-                    int body_position = (int) i.get_body_position();
-                    iEquipped[body_position] = false;
+                    case 6 -> {} // in socket?
+                    default -> {
+                        int body_position = (int) i.get_body_position();
+                        iEquipped[body_position] = false;
+                    }
                 }
-                break;
-            case BODY_INV_CONTENT: // inventory
+            }
+            case BODY_INV_CONTENT -> { // inventory
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -1113,8 +1078,8 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iInventoryGrid[j][k] = false;
                 }
-                break;
-            case BODY_CUBE_CONTENT: // cube
+            }
+            case BODY_CUBE_CONTENT -> { // cube
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -1127,8 +1092,8 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iCubeGrid[j][k] = false;
                 }
-                break;
-            case BODY_STASH_CONTENT: // stash
+            }
+            case BODY_STASH_CONTENT -> { // stash
                 row = (int) i.get_row();
                 col = (int) i.get_col();
                 width = (int) i.get_width();
@@ -1141,7 +1106,7 @@ public class D2Character extends D2ItemListAdapter {
                     for (k = col; k < col + width; k++)
                         iStashGrid[j][k] = false;
                 }
-                break;
+            }
         }
         return true;
     }
@@ -1188,15 +1153,15 @@ public class D2Character extends D2ItemListAdapter {
         int w = pItem.get_width();
         int h = pItem.get_height();
         switch (panel) {
-            case BODY_INV_CONTENT:
+            case BODY_INV_CONTENT -> {
                 for (i = x; i < x + w; i++) {
                     for (j = y; j < y + h; j++) {
                         if (j >= iInventoryGrid.length || i >= iInventoryGrid[j].length || iInventoryGrid[j][i])
                             return false;
                     }
                 }
-                break;
-            case BODY_BELT_CONTENT:
+            }
+            case BODY_BELT_CONTENT -> {
                 if (!pItem.isBelt())
                     return false;
                 for (i = x; i < x + w; i++) {
@@ -1205,23 +1170,23 @@ public class D2Character extends D2ItemListAdapter {
                             return false;
                     }
                 }
-                break;
-            case BODY_CUBE_CONTENT:
+            }
+            case BODY_CUBE_CONTENT -> {
                 for (i = x; i < x + w; i++) {
                     for (j = y; j < y + h; j++) {
                         if (j >= iCubeGrid.length || i >= iCubeGrid[j].length || iCubeGrid[j][i])
                             return false;
                     }
                 }
-                break;
-            case BODY_STASH_CONTENT:
+            }
+            case BODY_STASH_CONTENT -> {
                 for (i = x; i < x + w; i++) {
                     for (j = y; j < y + h; j++) {
                         if (j >= iStashGrid.length || i >= iStashGrid[j].length || iStashGrid[j][i])
                             return false;
                     }
                 }
-                break;
+            }
         }
         return true;
     }
@@ -1233,78 +1198,49 @@ public class D2Character extends D2ItemListAdapter {
             if (iCorpse[panel - 10])
                 return true;
             switch (panel) {
-                case BODY_HEAD:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD))
-                        return false;
-                    break;
-                case BODY_NECK:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK))
-                        return false;
-                    break;
-                case BODY_LARM:
-                case BODY_LARM2:
-                    if (pItem.isBodyLArm())
-                        return false;
-                    break;
-                case BODY_TORSO:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS))
-                        return false;
-                    break;
-                case BODY_RARM:
-                case BODY_RARM2:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM))
-                        return false;
-                    break;
-                case BODY_GLOVES:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV))
-                        return false;
-                    break;
-                case BODY_RRING:
-                    if (pItem.isBodyRRin())
-                        return false;
-                    break;
-                case BODY_BELT:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT))
-                        return false;
-                    break;
-                case BODY_LRING:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN))
-                        return false;
-                    break;
-                case BODY_BOOTS:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET))
-                        return false;
-                    break;
-                case BODY_CURSOR:
-                    return false;
+                case BODY_HEAD -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD)) return false; }
+                case BODY_NECK -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK)) return false; }
+                case BODY_LARM, BODY_LARM2 -> { if (pItem.isBodyLArm()) return false; }
+                case BODY_TORSO -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS)) return false; }
+                case BODY_RARM, BODY_RARM2 -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM)) return false; }
+                case BODY_GLOVES -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV)) return false; }
+                case BODY_RRING -> { if (pItem.isBodyRRin()) return false; }
+                case BODY_BELT -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT)) return false; }
+                case BODY_LRING -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN)) return false; }
+                case BODY_BOOTS -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET)) return false; }
+                case BODY_CURSOR -> { return false; }
             }
             return true;
         }
         switch (panel) {
-            case BODY_INV_CONTENT:
+            case BODY_INV_CONTENT -> {
                 if (y >= 0 && y < iInventoryGrid.length) {
                     if (x >= 0 && x < iInventoryGrid[y].length)
                         return iInventoryGrid[y][x];
                 }
                 return false;
-            case BODY_BELT_CONTENT:
+            }
+            case BODY_BELT_CONTENT -> {
                 if (y >= 0 && y < iBeltGrid.length) {
                     if (x >= 0 && x < iBeltGrid[y].length)
                         return iBeltGrid[y][x];
                 }
                 return false;
-            case BODY_CUBE_CONTENT:
+            }
+            case BODY_CUBE_CONTENT -> {
                 if (y >= 0 && y < iCubeGrid.length) {
                     if (x >= 0 && x < iCubeGrid[y].length)
                         return iCubeGrid[y][x];
                 }
                 return false;
-            case BODY_STASH_CONTENT:
+            }
+            case BODY_STASH_CONTENT -> {
                 if (y >= 0 && y < iStashGrid.length) {
                     if (x >= 0 && x < iStashGrid[y].length)
                         return iStashGrid[y][x];
                 }
                 return false;
+            }
         }
         return true;
     }
@@ -1316,78 +1252,49 @@ public class D2Character extends D2ItemListAdapter {
             if (iEquipped[panel - 10])
                 return true;
             switch (panel) {
-                case BODY_HEAD:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD))
-                        return false;
-                    break;
-                case BODY_NECK:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK))
-                        return false;
-                    break;
-                case BODY_LARM:
-                case BODY_LARM2:
-                    if (pItem.isBodyLArm())
-                        return false;
-                    break;
-                case BODY_TORSO:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS))
-                        return false;
-                    break;
-                case BODY_RARM:
-                case BODY_RARM2:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM))
-                        return false;
-                    break;
-                case BODY_GLOVES:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV))
-                        return false;
-                    break;
-                case BODY_RRING:
-                    if (pItem.isBodyRRin())
-                        return false;
-                    break;
-                case BODY_BELT:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT))
-                        return false;
-                    break;
-                case BODY_LRING:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN))
-                        return false;
-                    break;
-                case BODY_BOOTS:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET))
-                        return false;
-                    break;
-                case BODY_CURSOR:
-                    return false;
+                case BODY_HEAD -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD)) return false; }
+                case BODY_NECK -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK)) return false; }
+                case BODY_LARM, BODY_LARM2 -> { if (pItem.isBodyLArm()) return false; }
+                case BODY_TORSO -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS)) return false; }
+                case BODY_RARM, BODY_RARM2 -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM)) return false; }
+                case BODY_GLOVES -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV)) return false; }
+                case BODY_RRING -> { if (pItem.isBodyRRin()) return false; }
+                case BODY_BELT -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT)) return false; }
+                case BODY_LRING -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN)) return false; }
+                case BODY_BOOTS -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET)) return false; }
+                case BODY_CURSOR -> { return false; }
             }
             return true;
         }
         switch (panel) {
-            case BODY_INV_CONTENT:
+            case BODY_INV_CONTENT -> {
                 if (y >= 0 && y < iInventoryGrid.length) {
                     if (x >= 0 && x < iInventoryGrid[y].length)
                         return iInventoryGrid[y][x];
                 }
                 return false;
-            case BODY_BELT_CONTENT:
+            }
+            case BODY_BELT_CONTENT -> {
                 if (y >= 0 && y < iBeltGrid.length) {
                     if (x >= 0 && x < iBeltGrid[y].length)
                         return iBeltGrid[y][x];
                 }
                 return false;
-            case BODY_CUBE_CONTENT:
+            }
+            case BODY_CUBE_CONTENT -> {
                 if (y >= 0 && y < iCubeGrid.length) {
                     if (x >= 0 && x < iCubeGrid[y].length)
                         return iCubeGrid[y][x];
                 }
                 return false;
-            case BODY_STASH_CONTENT:
+            }
+            case BODY_STASH_CONTENT -> {
                 if (y >= 0 && y < iStashGrid.length) {
                     if (x >= 0 && x < iStashGrid[y].length)
                         return iStashGrid[y][x];
                 }
                 return false;
+            }
         }
         return true;
     }
@@ -1399,46 +1306,16 @@ public class D2Character extends D2ItemListAdapter {
             if (iMerc[panel - 10 - 1])
                 return true;
             switch (panel) {
-                case BODY_HEAD:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD))
-                        return false;
-                    break;
-                case BODY_NECK:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK))
-                        return false;
-                    break;
-                case BODY_LARM:
-                    if (pItem.isBodyLArm())
-                        return false;
-                    break;
-                case BODY_TORSO:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS))
-                        return false;
-                    break;
-                case BODY_RARM:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM))
-                        return false;
-                    break;
-                case BODY_GLOVES:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV))
-                        return false;
-                    break;
-                case BODY_RRING:
-                    if (pItem.isBodyRRin())
-                        return false;
-                    break;
-                case BODY_BELT:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT))
-                        return false;
-                    break;
-                case BODY_LRING:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN))
-                        return false;
-                    break;
-                case BODY_BOOTS:
-                    if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET))
-                        return false;
-                    break;
+                case BODY_HEAD -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_HEAD)) return false; }
+                case BODY_NECK -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_NECK)) return false; }
+                case BODY_LARM -> { if (pItem.isBodyLArm()) return false; }
+                case BODY_TORSO -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_TORS)) return false; }
+                case BODY_RARM -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_RARM)) return false; }
+                case BODY_GLOVES -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_GLOV)) return false; }
+                case BODY_RRING -> { if (pItem.isBodyRRin()) return false; }
+                case BODY_BELT -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_BELT)) return false; }
+                case BODY_LRING -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_LRIN)) return false; }
+                case BODY_BOOTS -> { if (pItem.isBodyLocation(D2BodyLocations.BODY_FEET)) return false; }
             }
             return true;
         }
@@ -1667,8 +1544,8 @@ public class D2Character extends D2ItemListAdapter {
             }
         }
 
-        for (int x = 0; x < skillTrees.length; x++) {
-            out.append(skillTrees[x]);
+        for (String skillTree : skillTrees) {
+            out.append(skillTree);
             out.append("\n");
         }
 
@@ -1679,7 +1556,7 @@ public class D2Character extends D2ItemListAdapter {
                 out.append("\n");
             }
         }
-        out.append("Mercenary:" + "\n");
+        out.append("Mercenary:\n");
         out.append("\n");
 
         out.append(getMercStatString());
@@ -1744,7 +1621,7 @@ public class D2Character extends D2ItemListAdapter {
 
         for (int x = 0; x < sItem.getPropCollection().size(); x++) {
             switch (op) {
-                case (1):
+                case 1 -> {
                     if ((((D2Prop) sItem.getPropCollection().get(x)).getQFlag() <= (trackVal[0])
                             && ((D2Prop) sItem.getPropCollection().get(x)).getQFlag() > 1
                             && ((D2Prop) sItem.getPropCollection().get(x)).getQFlag() < 7)) {
@@ -1764,8 +1641,8 @@ public class D2Character extends D2ItemListAdapter {
                         ((D2Prop) sItem.getPropCollection().get(x))
                                 .setQFlag(((D2Prop) sItem.getPropCollection().get(x)).getQFlag() + 10);
                     }
-                    break;
-                case (-1):
+                }
+                case -1 -> {
                     if ((((D2Prop) sItem.getPropCollection().get(x)).getQFlag() >= (trackVal[0] + 10)
                             && ((D2Prop) sItem.getPropCollection().get(x)).getQFlag() > 11
                             && ((D2Prop) sItem.getPropCollection().get(x)).getQFlag() < 17)) {
@@ -1785,7 +1662,7 @@ public class D2Character extends D2ItemListAdapter {
                         ((D2Prop) sItem.getPropCollection().get(x))
                                 .setQFlag(((D2Prop) sItem.getPropCollection().get(x)).getQFlag() - 10);
                     }
-                    break;
+                }
             }
         }
         sItem.refreshItemMods();
