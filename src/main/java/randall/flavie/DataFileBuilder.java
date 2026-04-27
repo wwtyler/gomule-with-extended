@@ -20,12 +20,12 @@
  ******************************************************************************/
 package randall.flavie;
 
-import randall.util.RandallUtil;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import randall.util.RandallUtil;
 
 /**
  * @author Marco

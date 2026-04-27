@@ -29,7 +29,7 @@ import gomule.item.D2Item;
 import gomule.util.D2UI;
 import gomule.util.ScaledPainterPanel;
 
-public class SharedStashPanel extends ScaledPainterPanel {
+public final class SharedStashPanel extends ScaledPainterPanel {
 
     public static final int BG_WIDTH = 524;
     public static final int BG_HEIGHT = 470;
@@ -122,6 +122,7 @@ public class SharedStashPanel extends ScaledPainterPanel {
         repaint();
     }
 
+    @SuppressWarnings("unused")
     private void drawProceduralBackground(Graphics2D g) {
         Color bgColor     = new Color(108, 84, 54);
         Color panelColor  = new Color(118, 95, 62);

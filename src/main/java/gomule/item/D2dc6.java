@@ -31,7 +31,7 @@ import gomule.util.D2Palette;
 public class D2dc6 {
 
     private BufferedImage b;
-    private D2BitReader br;
+    private final D2BitReader br;
 //    private String filename;
 
     public D2dc6(String f) {

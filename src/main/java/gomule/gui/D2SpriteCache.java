@@ -84,7 +84,7 @@ public class D2SpriteCache {
 
         Object cached = imageCache.get(key);
         if (cached == SENTINEL_NOT_FOUND) return null;
-        if (cached instanceof BufferedImage) return (BufferedImage) cached;
+        if (cached instanceof BufferedImage image) return image;
 
         ensureItemsJsonLoaded();
 
@@ -150,7 +150,7 @@ public class D2SpriteCache {
             props.setProperty(PROP_SPRITE_DIRS, String.join(";", paths));
             FileManagerProperties.saveFileManagerProperties(props);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Failed to save sprite directories: " + e.getMessage());
         }
         loadDataDirs();
         imageCache.clear();

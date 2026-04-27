@@ -53,7 +53,7 @@ public class DirectD2Files {
 
     public void readDirectD2Files(ArrayList<ItemObject> pDataObjects, ArrayList<String> pFileNames) throws Exception {
         String errStr = "";
-        File lMatchedDir = new File(Flavie.sMatchedDir);
+        File lMatchedDir = new File(Flavie.MATCHED_DIR);
         if (lMatchedDir.exists() && !lMatchedDir.isDirectory()) {
             throw new Exception("If there is a file called matched in the Flavie directory, please delete it");
         }
@@ -61,7 +61,7 @@ public class DirectD2Files {
             throw new Exception("The directory called matched is missing, please create it");
         }
 
-        File lDualFP = new File(Flavie.sMatchedDir + "matched.dualFP.txt");
+        File lDualFP = new File(Flavie.MATCHED_DIR + "matched.dualFP.txt");
         if (!lDualFP.exists()) {
             lDualFP.createNewFile();
         }
@@ -144,7 +144,6 @@ public class DirectD2Files {
         }
     }
 
-    @SuppressWarnings("null")
     public void matchItem(ArrayList<ItemObject> pDataObjects, D2Item pItem, PrintStream pOutDualFP) {
         if (pItem.getName() == null) {
             System.err.println("Item: null");
@@ -152,7 +151,6 @@ public class DirectD2Files {
         ItemObject lFound = null;
         String[] matchStr = null;
 
-//		if ( pItem.getFingerprint() == null /*|| !iFlavie.iAllItems.containsKey(pItem.getAllItemsHash())*/ )
         {
             if (iFlavie.checkFilters(pItem)) {
                 if (pItem.getFingerprint() != null) {

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -150,7 +151,7 @@ public final class D2Log {
                     + "  config=" + (FILE_PROPS != null ? "projects/app.properties" : "defaults"));
             pw.flush();
             return pw;
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("[D2Log] Failed to open log file: " + e);
             return null;
         }
@@ -172,8 +173,10 @@ public final class D2Log {
             Path dir = Files.isDirectory(here) ? here : here.getParent();
             if (dir == null) dir = Paths.get(".");
             return dir.resolve("logs").resolve("gomule.log");
-        } catch (Exception e) {
+        } catch (URISyntaxException | SecurityException | NullPointerException e) {
             return Paths.get("logs", "gomule.log");
         }
     }
+
+
 }

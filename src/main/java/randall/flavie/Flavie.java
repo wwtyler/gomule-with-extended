@@ -14,7 +14,7 @@
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along with
- * gomlue; if not, write to the Free Software Foundation, Inc., 51 Franklin St,
+ * gomule; if not, write to the Free Software Foundation, Inc., 51 Franklin St,
  * Fifth Floor, Boston, MA 02110-1301 USA
  *
  ******************************************************************************/
@@ -42,7 +42,7 @@ import randall.util.RandallUtil;
  */
 @SuppressWarnings({"rawtypes","unchecked","resource"})
 public class Flavie {
-    public static final String sMatchedDir = "." + File.separator;
+    public static final String MATCHED_DIR = "." + File.separator;
     protected HashMap<String, D2Item> iAllItemsFP = new HashMap<>();
     protected HashMap<String, Long> iRuneCount = new HashMap<>();
 //    private String iStyleFile;

@@ -57,7 +57,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         if (iDupeOut != null) {
             throw new Exception("Dupe file allready initialised");
         }
-        iDupeOut = new PrintStream(new FileOutputStream(Flavie.sMatchedDir + "matched.dupe.txt"));
+        iDupeOut = new PrintStream(new FileOutputStream(Flavie.MATCHED_DIR + "matched.dupe.txt"));
         iDupeCounter = 0;
 //		iDupeOut.println("Start dupe detection");
     }

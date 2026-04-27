@@ -20,21 +20,27 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) handleLeftClick(e);
-        if (e.getButton() == MouseEvent.BUTTON3) handleRightClick(e);
+        if (e.getButton() == MouseEvent.BUTTON1)
+            handleLeftClick(e);
+        if (e.getButton() == MouseEvent.BUTTON3)
+            handleRightClick(e);
     }
 
     private void handleRightClick(MouseEvent e) {
         D2SharedStash sharedStash = sharedStashPanel.getSharedStash();
-        if (sharedStash == null) return;
-        if (sharedStashPanel.isMaterialsTabSelected()) return;
+        if (sharedStash == null)
+            return;
+        if (sharedStashPanel.isMaterialsTabSelected())
+            return;
         int col = SharedStashPanel.getColForXCoord(e.getX());
         int row = SharedStashPanel.getRowForYCoord(e.getY());
-        if (col < 0 || row < 0 || col > 16 || row > 13) return;
+        if (col < 0 || row < 0 || col > 16 || row > 13)
+            return;
         D2SharedStash.D2SharedStashPane stashPane = sharedStashPanel.getSelectedStashPane();
         D2Item item = stashPane.getItemCovering(col, row);
         if (item != null) {
-            new ItemRightClickMenu(item, this::deleteMenuItemAction).show(sharedStashPanel, e.getX(), e.getY() + 35);
+            new ItemRightClickMenu(item, this::deleteMenuItemAction).show(sharedStashPanel,
+                    e.getX(), e.getY() + 35);
         }
     }
 
@@ -44,10 +50,12 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
 
     private void handleLeftClick(MouseEvent e) {
         D2SharedStash sharedStash = sharedStashPanel.getSharedStash();
-        if (sharedStash == null) return;
+        if (sharedStash == null)
+            return;
         Integer possibleStashTabClick = getPossibleStashTabClick(e.getX(), e.getY());
         setStashTab(possibleStashTabClick);
-        if (isClickOnGoldButton(e.getX(), e.getY())) showGoldDialog();
+        if (isClickOnGoldButton(e.getX(), e.getY()))
+            showGoldDialog();
 
         if (sharedStashPanel.isMaterialsTabSelected()) {
             D2Item clipItem = D2ViewClipboard.getItem();
@@ -65,7 +73,8 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
 
         int col = SharedStashPanel.getColForXCoord(e.getX());
         int row = SharedStashPanel.getRowForYCoord(e.getY());
-        if (col < 0 || row < 0 || col > 16 || row > 13) return;
+        if (col < 0 || row < 0 || col > 16 || row > 13)
+            return;
         D2SharedStash.D2SharedStashPane stashPane = sharedStashPanel.getSelectedStashPane();
         D2Item item = stashPane.getItemCovering(col, row);
         if (item != null) {
@@ -76,9 +85,9 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
     }
 
     /**
-     * Picks up one item from a materials-pane stack and places it on the clipboard.
-     * If qty > 1 the original stack is decremented and a fresh single-qty copy is
-     * sent to the clipboard. If qty == 1 the item itself is removed and sent directly.
+     * Picks up one item from a materials-pane stack and places it on the clipboard. If qty > 1 the
+     * original stack is decremented and a fresh single-qty copy is sent to the clipboard. If qty ==
+     * 1 the item itself is removed and sent directly.
      */
     private void pickOneMaterialToClipboard(D2Item matItem, D2SharedStash sharedStash) {
         int qty = matItem.getAdvancedStashQuantity();
@@ -94,7 +103,7 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
                 singleItem.setAdvancedStashQuantity(1);
                 D2ViewClipboard.addItem(singleItem);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                System.err.println("Failed to create single-qty item copy: " + ex.getMessage());
                 return; // do not mark modified if copy failed
             }
         }
@@ -104,13 +113,14 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
     }
 
     /**
-     * Returns a clipboard material item to the materials pane.
-     * If an existing stack with the same item code is found, its quantity is incremented by 1.
-     * Otherwise the item is inserted directly into the pane.
+     * Returns a clipboard material item to the materials pane. If an existing stack with the same
+     * item code is found, its quantity is incremented by 1. Otherwise the item is inserted directly
+     * into the pane.
      */
     private void tryReturnMaterialToPane(D2Item clipItem, D2SharedStash sharedStash) {
         D2SharedStash.D2MaterialsPane pane = sharedStash.getMaterialsPane();
-        if (pane == null) return;
+        if (pane == null)
+            return;
         String code = clipItem.getItemCode() == null ? null : clipItem.getItemCode().trim();
         D2Item existing = null;
         if (code != null) {
@@ -137,16 +147,20 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
     }
 
     private void showGoldDialog() {
-        JOptionPane.showConfirmDialog(sharedStashPanel, new SharedStashGoldTransferPanel(sharedStashPanel), "Transfer Gold",
+        JOptionPane.showConfirmDialog(sharedStashPanel,
+                new SharedStashGoldTransferPanel(sharedStashPanel), "Transfer Gold",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 
-    private void tryMoveItemFromClipboard(D2SharedStash.D2SharedStashPane stashPane, int col, int row) {
+    private void tryMoveItemFromClipboard(D2SharedStash.D2SharedStashPane stashPane, int col,
+            int row) {
         D2SharedStash sharedStash = sharedStashPanel.getSharedStash();
         D2Item item = D2ViewClipboard.getItem();
         if (stashPane.canDropItem(col, row, item)) {
-            D2SharedStash.D2SharedStashPane d2SharedStashPane = stashPane.addItem(col, row, D2ViewClipboard.removeItem());
-            sharedStash.replacePane(sharedStashPanel.getSelectedStashPaneIndex(), d2SharedStashPane);
+            D2SharedStash.D2SharedStashPane d2SharedStashPane =
+                    stashPane.addItem(col, row, D2ViewClipboard.removeItem());
+            sharedStash.replacePane(sharedStashPanel.getSelectedStashPaneIndex(),
+                    d2SharedStashPane);
             sharedStash.setModified(true);
             sharedStashPanel.setCursorPickupItem();
         }
@@ -166,15 +180,18 @@ class SharedStashPanelMouseClickHandler extends MouseAdapter {
     }
 
     private void setStashTab(Integer possibleStashTabClick) {
-        if (possibleStashTabClick == null) return;
-        if (sharedStashPanel.getSelectedStashPaneIndex() == possibleStashTabClick) return;
+        if (possibleStashTabClick == null)
+            return;
+        if (sharedStashPanel.getSelectedStashPaneIndex() == possibleStashTabClick)
+            return;
         sharedStashPanel.setSelectedStashPaneIndex(possibleStashTabClick);
         sharedStashPanel.build();
     }
 
     private Integer getPossibleStashTabClick(int x, int y) {
         D2SharedStash stash = sharedStashPanel.getSharedStash();
-        if (stash == null) return null;
+        if (stash == null)
+            return null;
         boolean hasMaterials = stash.getMaterialsPane() != null;
         int numNormal = stash.getPanes().size();
         int numTabs = Math.max(1, Math.min(numNormal + (hasMaterials ? 1 : 0), 8));

@@ -4,33 +4,36 @@
  *
  * This file is part of gomule.
  *
- * gomule is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ * gomule is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * gomule is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * gomule is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * gomlue; if not, write to the Free Software Foundation, Inc., 51 Franklin St,
- * Fifth Floor, Boston, MA 02110-1301 USA
+ * You should have received a copy of the GNU General Public License along with gomlue; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
+ * USA
  *
  ******************************************************************************/
 package randall.util;
 
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.Serial;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
 public class RandallPanel extends JPanel {
-    public static final Integer NONE = Integer.valueOf(100);
-    public static final Integer HORIZONTAL = Integer.valueOf(101);
-    public static final Integer VERTICAL = Integer.valueOf(102);
-    public static final Integer BOTH = Integer.valueOf(103);
+    public static final Integer NONE = 100;
+    public static final Integer HORIZONTAL = 101;
+    public static final Integer VERTICAL = 102;
+    public static final Integer BOTH = 103;
     public static final int ANCHOR_NORTHWEST = GridBagConstraints.NORTHWEST;
     public static final int ANCHOR_NORTHEAST = GridBagConstraints.NORTHEAST;
     /**
@@ -43,7 +46,7 @@ public class RandallPanel extends JPanel {
     private int iYPos = 0;
 
     private int iMargin = 1;
-//	private boolean iMarginAllSides = false;
+    // private boolean iMarginAllSides = false;
 
     // sub panel -> all elements on X or Y of 0 does not get a top or left margin
     private boolean iSubPanel = false;
@@ -100,14 +103,14 @@ public class RandallPanel extends JPanel {
         iMargin = pMargin;
     }
 
-//	public void setMarginAllSides(boolean pMarginAllSides)
-//	{
-//		iMarginAllSides = pMarginAllSides;
-//	}
+    // public void setMarginAllSides(boolean pMarginAllSides)
+    // {
+    // iMarginAllSides = pMarginAllSides;
+    // }
 
     /**
-     * Set the right column nr for the sub panel
-     * (does not add left/upper margin when left/up coordinate is 0)
+     * Set the right column nr for the sub panel (does not add left/upper margin when left/up
+     * coordinate is 0)
      */
     public void setSubPanel() {
         iSubPanel = true;
@@ -121,19 +124,23 @@ public class RandallPanel extends JPanel {
         addToPanel(pComponent, pX, pY, pSizeX, 1, pConstraint, -1.0, -1.0, -1);
     }
 
-    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, double pWeightX, Object pConstraint) {
+    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, double pWeightX,
+            Object pConstraint) {
         addToPanel(pComponent, pX, pY, pSizeX, 1, pConstraint, pWeightX, -1.0, -1);
     }
 
-    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY, Object pConstraint) {
+    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY,
+            Object pConstraint) {
         addToPanel(pComponent, pX, pY, pSizeX, pSizeY, pConstraint, -1.0, -1.0, -1);
     }
 
-    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY, Object pConstraint, int pConstraintAnchor) {
+    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY,
+            Object pConstraint, int pConstraintAnchor) {
         addToPanel(pComponent, pX, pY, pSizeX, pSizeY, pConstraint, -1.0, -1.0, pConstraintAnchor);
     }
 
-    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY, Object pConstraint, double pWeightX, double pWeightY, int pConstraintAnchor) {
+    public void addToPanel(JComponent pComponent, int pX, int pY, int pSizeX, int pSizeY,
+            Object pConstraint, double pWeightX, double pWeightY, int pConstraintAnchor) {
         double lWeightX = 0.0;
         double lWeightY = 0.0;
         int lGridbagConstraint = GridBagConstraints.NONE;
@@ -142,10 +149,10 @@ public class RandallPanel extends JPanel {
         int lMarginTop = iMargin;
         int lMarginLeft = iMargin;
         int lMarginBottom = 0;
-//        if ( iMarginAllSides )
-//        {
-//			lMarginBottom = iMargin;
-//        }
+        // if ( iMarginAllSides )
+        // {
+        // lMarginBottom = iMargin;
+        // }
         int lMarginRight = iMargin;
 
         if (pConstraint == HORIZONTAL) {
@@ -188,14 +195,15 @@ public class RandallPanel extends JPanel {
             }
         }
 
-//        if ( pComponent instanceof JCheckBox )
-//        {
-//        	lMarginLeft -= 4;
-//        }
+        // if ( pComponent instanceof JCheckBox )
+        // {
+        // lMarginLeft -= 4;
+        // }
 
-        this.add(pComponent, new GridBagConstraints(pX, pY, pSizeX, pSizeY, lWeightX, lWeightY
-                , lGridbagAnchor, lGridbagConstraint,
-                new Insets(lMarginTop, lMarginLeft, lMarginBottom, lMarginRight), 0, 0));
+        this.add(pComponent,
+                new GridBagConstraints(pX, pY, pSizeX, pSizeY, lWeightX, lWeightY, lGridbagAnchor,
+                        lGridbagConstraint,
+                        new Insets(lMarginTop, lMarginLeft, lMarginBottom, lMarginRight), 0, 0));
 
         this.iYPos = pY + 1;
 

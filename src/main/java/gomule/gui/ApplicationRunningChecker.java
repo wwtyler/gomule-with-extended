@@ -1,13 +1,13 @@
 package gomule.gui;
 
-import com.google.common.base.Charsets;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 public class ApplicationRunningChecker implements Runnable {
 
@@ -19,6 +19,9 @@ public class ApplicationRunningChecker implements Runnable {
         this.runtime = runtime;
         this.applicationName = applicationName;
         this.action = action;
+    }
+
+    public void start() {
         Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setDaemon(true).build()).scheduleWithFixedDelay(this, 0, 5, TimeUnit.MINUTES);
     }
 
@@ -26,7 +29,7 @@ public class ApplicationRunningChecker implements Runnable {
     public void run() {
         try {
             Process proc = runtime.exec(new String[]{"cmd", "/c", "tasklist"});
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream(), Charsets.UTF_8))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream(), StandardCharsets.UTF_8))) {
                 boolean isApplicationRunning = reader.lines()
                         .anyMatch(s -> s.startsWith(applicationName));
                 if (isApplicationRunning) action.run();

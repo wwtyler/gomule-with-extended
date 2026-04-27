@@ -29,11 +29,11 @@ import java.util.ArrayList;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 public class TotalObject {
-    private String iDisplay;
-    private String iShort;
-    private String iStyle;
+    private final String iDisplay;
+    private final String iShort;
+    private final String iStyle;
 
-    private ArrayList iChildren = new ArrayList();
+    private final ArrayList iChildren = new ArrayList();
 
     public TotalObject(String pDisplay, String pShort, String pStyle) {
         iDisplay = pDisplay;
@@ -77,10 +77,11 @@ public class TotalObject {
         PercentageCounter lCounter = new PercentageCounter();
 
         for (int i = 0; i < iChildren.size(); i++) {
-            if (iChildren.get(i) instanceof TotalObject) {
-                lCounter.add(((TotalObject) iChildren.get(i)).getPercentageCounter());
-            } else if (iChildren.get(i) instanceof CatObject) {
-                lCounter.add(((CatObject) iChildren.get(i)).getCounter());
+            switch (iChildren.get(i)) {
+                case TotalObject totalObject -> lCounter.add(totalObject.getPercentageCounter());
+                case CatObject catObject -> lCounter.add(catObject.getCounter());
+                default -> {
+                }
             }
         }
 

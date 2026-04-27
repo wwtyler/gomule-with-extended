@@ -219,15 +219,15 @@ public class D2SharedStash extends D2ItemListAdapter {
             item.set_body_position((short) 0);
             item.set_panel((short) 5);
             item.setCharLvl(75);
-            List<D2Item> items = new ArrayList<>(this.items);
-            items.add(item);
-            return D2SharedStashPane.fromItems(items, gold);
+            List<D2Item> newItems = new ArrayList<>(this.items);
+            newItems.add(item);
+            return D2SharedStashPane.fromItems(newItems, gold);
         }
 
         public D2SharedStashPane removeItem(D2Item item) {
-            List<D2Item> items = new ArrayList<>(this.items);
-            items.remove(item);
-            return D2SharedStashPane.fromItems(items, gold);
+            List<D2Item> newItems = new ArrayList<>(this.items);
+            newItems.remove(item);
+            return D2SharedStashPane.fromItems(newItems, gold);
         }
     }
 

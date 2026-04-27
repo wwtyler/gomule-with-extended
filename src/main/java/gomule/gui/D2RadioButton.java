@@ -6,8 +6,9 @@
  */
 package gomule.gui;
 
-import javax.swing.*;
 import java.io.Serial;
+
+import javax.swing.JRadioButton;
 
 /**
  * @author Marco
@@ -21,7 +22,7 @@ public class D2RadioButton extends JRadioButton {
      */
     @Serial
     private static final long serialVersionUID = 3895689813117999958L;
-    private Object iData;
+    private final Object iData;
 
     public D2RadioButton(Object pData) {
         super(pData.toString());

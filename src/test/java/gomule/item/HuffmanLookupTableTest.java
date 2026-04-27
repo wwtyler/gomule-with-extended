@@ -1,12 +1,13 @@
 package gomule.item;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.io.BaseEncoding;
-import gomule.util.D2BitReader;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.io.BaseEncoding;
+
+import gomule.util.D2BitReader;
 
 public class HuffmanLookupTableTest {
 

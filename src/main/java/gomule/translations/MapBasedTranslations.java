@@ -16,7 +16,6 @@ public class MapBasedTranslations implements Translations {
         this.translationData = translationData;
     }
 
-    @SuppressWarnings("null")
     public static Translations loadTranslations(InputStream inputStream) {
         return loadTranslations(inputStream, "zhCN");
     }
@@ -28,7 +27,6 @@ public class MapBasedTranslations implements Translations {
      * @param inputStream the JSON input (D2R lng strings array format)
      * @param locale      the locale field name to read (e.g. {@code "zhCN"}, {@code "enUS"})
      */
-    @SuppressWarnings("null")
     public static Translations loadTranslations(InputStream inputStream, String locale) {
         try {
             // Use a mutable HashMap to tolerate duplicate keys in mod translation files

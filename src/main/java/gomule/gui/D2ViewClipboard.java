@@ -20,6 +20,27 @@
  ******************************************************************************/
 package gomule.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 import gomule.d2x.D2Stash;
 import gomule.item.D2Item;
 import gomule.item.D2ItemRenderer;
@@ -27,17 +48,6 @@ import gomule.util.D2CellStringRenderer;
 import gomule.util.D2CellValue;
 import gomule.util.D2Project;
 import randall.util.RandallPanel;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-import java.awt.*;
-import java.io.File;
-import java.io.Serial;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2ItemListListener {

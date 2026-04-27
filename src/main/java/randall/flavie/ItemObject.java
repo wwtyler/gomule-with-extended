@@ -23,9 +23,9 @@ package randall.flavie;
 import java.util.ArrayList;
 @SuppressWarnings({"rawtypes","unchecked"})
 public class ItemObject {
-    private String iName;
-    private String iInfo;
-    private ArrayList iItemInstances = new ArrayList();
+    private final String iName;
+    private final String iInfo;
+    private final ArrayList iItemInstances = new ArrayList();
     private SubCatObject iSubCatObject;
     private boolean iRuneWord = false;
     private String iItemType;
@@ -55,6 +55,7 @@ public class ItemObject {
         return iItemInstances;
     }
 
+    @Override
     public String toString() {
         return iName;
     }

@@ -41,9 +41,9 @@ import gomule.item.D2dc6;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2ImageCache {
-    private static HashMap<String, Image> sImages = new HashMap<>();
-    private static HashMap<String, Image> sDC6Images = new HashMap<>();
-    private static HashMap<String, Icon> sIcon = new HashMap<>();
+    private static final HashMap<String, Image> sImages = new HashMap<>();
+    private static final HashMap<String, Image> sDC6Images = new HashMap<>();
+    private static final HashMap<String, Icon> sIcon = new HashMap<>();
 
     public static Image getImage(String pImageName) {
         return getImageAbsolute("resources" + File.separator + pImageName);
@@ -54,10 +54,9 @@ public class D2ImageCache {
             return (Image) sImages.get(pImageName);
         }
 
-        Image lImage = null;
+        Image lImage;
         try {
             Image lLoadImage = ImageIO.read(new java.io.File(pImageName));
-            new ImageIcon(lLoadImage);
 
             lImage = new BufferedImage(lLoadImage.getWidth(null), lLoadImage.getHeight(null), BufferedImage.TYPE_3BYTE_BGR);
             Graphics2D lGraphics = (Graphics2D) lImage.getGraphics();
@@ -80,7 +79,7 @@ public class D2ImageCache {
             return (Icon) sIcon.get(pImageName);
         }
 
-        Icon lIcon = null;
+        Icon lIcon;
         try {
             Image lLoadImage = ImageIO.read(new java.io.File(pImageName));
             lIcon = new ImageIcon(lLoadImage);
