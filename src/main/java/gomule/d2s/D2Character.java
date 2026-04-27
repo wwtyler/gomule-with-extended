@@ -154,8 +154,8 @@ public class D2Character extends D2ItemListAdapter {
         iMercItems = new ArrayList<>();
         iReader = new D2BitReader(iFileName);
         String basename = new java.io.File(iFileName).getName();
-        //noinspection unused
-        try (@SuppressWarnings("unused") D2LogContext ctx = D2LogContext.push("file", basename)) {
+        try (D2LogContext ctx = D2LogContext.push("file", basename)) {
+            ctx.getClass();
             D2Log.info("D2Char", "loading character file (%d bytes)", iReader.get_length());
             readChar();
         }
@@ -597,9 +597,9 @@ public class D2Character extends D2ItemListAdapter {
         for (int i = 0; i < num_items; i++) {
             int lItemStart = iReader.get_byte_pos();
             D2Item lItem;
-            //noinspection unused
-            try (@SuppressWarnings("unused") D2LogContext ictx = D2LogContext.push("item",
+            try (D2LogContext ictx = D2LogContext.push("item",
                     "#" + (i + 1) + "/" + num_items + "@0x" + Integer.toHexString(lItemStart))) {
+                ictx.getClass();
                 try {
                     lItem = new D2Item(iFileName, iReader, iCharLevel);
                 } catch (Exception ex) {
