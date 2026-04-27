@@ -30,8 +30,6 @@ import randall.util.RandallPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -97,25 +95,21 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
             addToPanel(lPane, 0, 3, 2, RandallPanel.BOTH);
             addToPanel(iIconLabel, 0, 4, 2, RandallPanel.BOTH);
 
-            iTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-                public void valueChanged(ListSelectionEvent arg0) {
-
-                    if (!arg0.getValueIsAdjusting()) {
-                        if (iTable.getSelectedRow() > -1) {
-                            D2Item iItem = (D2Item) iItems.get(iTable.getSelectedRow());
-                            Image spriteImg = D2ImageCache.getSpriteImage(iItem.getItemCode(), iItem.get_gfx_num());
-                            iIcon.setImage(spriteImg != null ? spriteImg : D2ImageCache.getDC6Image(iItem));
-                            if (iIconLabel.getIcon() == null) {
-                                iIconLabel.setIcon(iIcon);
-                            }
-                            iIconLabel.setToolTipText(D2ItemRenderer.itemDumpHtml(iItem, false));
-                            iIconLabel.repaint();
-                        } else {
-                            iIconLabel.setIcon(null);
-                            iIconLabel.setToolTipText("");
-                            iIconLabel.repaint();
+            iTable.getSelectionModel().addListSelectionListener(arg0 -> {
+                if (!arg0.getValueIsAdjusting()) {
+                    if (iTable.getSelectedRow() > -1) {
+                        D2Item iItem = (D2Item) iItems.get(iTable.getSelectedRow());
+                        Image spriteImg = D2ImageCache.getSpriteImage(iItem.getItemCode(), iItem.get_gfx_num());
+                        iIcon.setImage(spriteImg != null ? spriteImg : D2ImageCache.getDC6Image(iItem));
+                        if (iIconLabel.getIcon() == null) {
+                            iIconLabel.setIcon(iIcon);
                         }
+                        iIconLabel.setToolTipText(D2ItemRenderer.itemDumpHtml(iItem, false));
+                        iIconLabel.repaint();
+                    } else {
+                        iIconLabel.setIcon(null);
+                        iIconLabel.setToolTipText("");
+                        iIconLabel.repaint();
                     }
                 }
             });
@@ -183,15 +177,17 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         items.forEach(it -> iMouseItem.addItemInternal(it));
     }
 
+    @Override
     public void itemListChanged() {
         fireTableChanged();
     }
 
+    @Override
     public String getFileName() {
         return iFileName;
     }
 
-    public void setProject(D2Project pProject) throws Exception {
+    public final void setProject(D2Project pProject) throws Exception {
         if (iStash != null) {
             iStash.removeD2ItemListListener(this);
             iStash = null;
@@ -216,22 +212,27 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         }
     }
 
+    @Override
     public boolean isModified() {
         return iStash != null && iStash.isModified();
     }
 
+    @Override
     public D2ItemList getItemLists() {
         return iStash;
     }
 
+    @Override
     public void closeView() {
         iStash.removeD2ItemListListener(this);
     }
 
+    @Override
     public boolean isSC() {
         return true;
     }
 
+    @Override
     public boolean isHC() {
         return true;
     }
@@ -303,10 +304,12 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
         iItemModel.fireTableChanged();
     }
 
+    @Override
     public void connect() {
         throw new RuntimeException("Internal error: wrong calling");
     }
 
+    @Override
     public void disconnect(Exception pEx) {
         throw new RuntimeException("Internal error: wrong calling");
     }
@@ -317,64 +320,67 @@ public class D2ViewClipboard extends RandallPanel implements D2ItemContainer, D2
     }
 
     class D2ItemModel implements TableModel {
-        private ArrayList<TableModelListener> iTableModelListeners = new ArrayList<TableModelListener>();
+        private final ArrayList<TableModelListener> iTableModelListeners = new ArrayList<>();
         private ArrayList<D2Item> iItems;
 
         public D2ItemModel(ArrayList<D2Item> pItems) {
             setItems(pItems);
         }
 
-        public void setItems(ArrayList<D2Item> pItems) {
+        public final void setItems(ArrayList<D2Item> pItems) {
             iItems = pItems;
         }
 
+        @Override
         public int getRowCount() {
             return iItems.size();
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public String getColumnName(int pCol) {
-            switch (pCol) {
-                case 0:
-                    return "Name";
-                case 1:
-                    return "Fingerprint";
-                default:
-                    return "";
-            }
+            return switch (pCol) {
+                case 0 -> "Name";
+                case 1 -> "Fingerprint";
+                default -> "";
+            };
         }
 
+        @Override
         public Class getColumnClass(int pCol) {
             return String.class;
         }
 
+        @Override
         public boolean isCellEditable(int pRow, int pCol) {
             return false;
         }
 
+        @Override
         public Object getValueAt(int pRow, int pCol) {
             D2Item lItem = (D2Item) iItems.get(pRow);
-            switch (pCol) {
-                case 0:
-                    return new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
-                case 1:
-                    return new D2CellValue(lItem.getFingerprint(), lItem, iFileManager.getProject());
-                default:
-                    return "";
-            }
+            return switch (pCol) {
+                case 0 -> new D2CellValue(lItem.getItemName(), lItem, iFileManager.getProject());
+                case 1 -> new D2CellValue(lItem.getFingerprint(), lItem, iFileManager.getProject());
+                default -> "";
+            };
         }
 
+        @Override
         public void setValueAt(Object pValue, int pRow, int pCol) {
             // Do nothing
         }
 
+        @Override
         public void addTableModelListener(TableModelListener pListener) {
             iTableModelListeners.add(pListener);
         }
 
+        @Override
         public void removeTableModelListener(TableModelListener pListener) {
             iTableModelListeners.remove(pListener);
         }
