@@ -28,6 +28,7 @@ import gomule.item.D2ItemRenderer;
 import gomule.item.D2WeaponTypes;
 import gomule.util.D2CellStringRenderer;
 import gomule.util.D2CellValue;
+import gomule.util.D2Log;
 import gomule.util.D2UI;
 import randall.util.RandallPanel;
 import randall.util.RandallUtil;
@@ -58,16 +59,16 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     public static final Color BLACK = Color.BLACK;
     public static final Color WHITE = Color.white;
     private static final Color EXCEPTION_COLOR = Color.RED;
-    private D2FileManager iFileManager;
+    private final D2FileManager iFileManager;
     private D2ItemList iStash;
-    private String iFileName;
-    private String iStashName;
+    private final String iFileName;
+    private final String iStashName;
 
-    private D2StashFilter iStashFilter;
+    private final D2StashFilter iStashFilter;
     private D2ItemModel iItemModel;
     private JTable iTable;
 
-    private JPanel iContentPane;
+    private final JPanel iContentPane;
 
     private JEditorPane iItemText;
 
@@ -116,11 +117,11 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     private JRadioButton iCatMiscOther;
     private JRadioButton iCatMiscAll;
 
-    private RandallPanel iRequerementFilter;
-    private JTextField iReqMaxLvl;
-    private JTextField freeTextSearch;
-    private JTextField iReqMaxStr;
-    private JTextField iReqMaxDex;
+    private final RandallPanel iRequerementFilter;
+    private final JTextField iReqMaxLvl;
+    private final JTextField freeTextSearch;
+    private final JTextField iReqMaxStr;
+    private final JTextField iReqMaxDex;
     private JButton iDelete;
     private JButton iDeleteDups;
     private JCheckBox iTypeSocketed;
@@ -189,8 +190,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 //            iTable.getTableHeader().setFont( new Font(lFont.getName(), lFont.getStyle(), lFont.getSize()-2) );
         iTable.getTableHeader().addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
-                if (e.getSource() instanceof JTableHeader) {
-                    JTableHeader lHeader = (JTableHeader) e.getSource();
+                if (e.getSource() instanceof JTableHeader lHeader) {
                     int lHeaderCol = lHeader.columnAtPoint(new Point(e.getX(), e.getY()));
 
                     lHeaderCol = lHeader.getColumnModel().getColumn(lHeaderCol).getModelIndex();
@@ -456,7 +456,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                 try {
                     iStash.ignoreItemListEvents();
                     ArrayList<D2Item> lItemList = D2ViewClipboard.removeAllItems();
-                    while (lItemList.size() > 0) {
+                    while (!lItemList.isEmpty()) {
                         lastItemAdded = (D2Item) lItemList.removeFirst();
                         iStash.addItem(lastItemAdded);
                     }
@@ -471,7 +471,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
         iDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent pEvent) {
-                Vector lItemList = new Vector();
+                ArrayList<D2Item> lItemList = new ArrayList<>();
 
                 int lRows[] = iTable.getSelectedRows();
 
@@ -482,10 +482,10 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     try {
                         iStash.ignoreItemListEvents();
                         for (int i = 0; i < lItemList.size(); i++) {
-                            int check = JOptionPane.showConfirmDialog(null, "Delete " + ((D2Item) lItemList.get(i)).getName() + "?");
+                            int check = JOptionPane.showConfirmDialog(null, "Delete " + lItemList.get(i).getName() + "?");
 
                             if (check == 0) {
-                                iStash.removeItem((D2Item) lItemList.get(i));
+                                iStash.removeItem(lItemList.get(i));
                             }
                         }
 
@@ -507,7 +507,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                     return;
                 }
 
-                HashMap<String, D2Item> lItemList = new HashMap<String, D2Item>();
+                HashMap<String, D2Item> lItemList = new HashMap<>();
 
                 for (int i = 0; i < iTable.getRowCount(); i++) {
                     if (iItemModel.getItem(i).getFingerprint() != null && !iItemModel.getItem(i).getFingerprint().equals("")) {
@@ -525,9 +525,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
                         }
                     }
 
-                    Iterator it = lItemList.keySet().iterator();
-                    while (it.hasNext()) {
-                        ((D2Stash) iStash).addItem(((D2Item) lItemList.get(it.next())));
+                    for (D2Item lItem : lItemList.values()) {
+                        ((D2Stash) iStash).addItem(lItem);
                     }
 
                 } finally {
@@ -549,7 +548,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
     }
 
     protected void pickupSelected() {
-        Vector lItemList = new Vector();
+        ArrayList<D2Item> lItemList = new ArrayList<>();
 
         int lRows[] = iTable.getSelectedRows();
 
@@ -560,8 +559,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
             try {
                 iStash.ignoreItemListEvents();
                 for (int i = 0; i < lItemList.size(); i++) {
-                    iStash.removeItem((D2Item) lItemList.get(i));
-                    D2ViewClipboard.addItem((D2Item) lItemList.get(i));
+                    iStash.removeItem(lItemList.get(i));
+                    D2ViewClipboard.addItem(lItemList.get(i));
                 }
             } finally {
                 iStash.listenItemListEvents();
@@ -712,7 +711,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         ButtonGroup lCatArmorBtnGroup = new ButtonGroup();
         RandallPanel lCategoriesArmor = new RandallPanel(true);
 
-        iArmorFilterList = new ArrayList<D2RadioButton>();
+        iArmorFilterList = new ArrayList<>();
         ArrayList<D2BodyLocations> lArmorFilterList = D2BodyLocations.getArmorFilterList();
         for (int i = 0; i < lArmorFilterList.size(); i++) {
             D2BodyLocations lArmor = (D2BodyLocations) lArmorFilterList.get(i);
@@ -740,8 +739,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         iWeaponFilterList = new ArrayList();
         ArrayList lWeaponFilterList = D2WeaponTypes.getWeaponTypeList();
         for (int i = 0; i < lWeaponFilterList.size(); i++) {
-            if (lWeaponFilterList.get(i) instanceof D2WeaponTypes) {
-                D2WeaponTypes lWeapon = (D2WeaponTypes) lWeaponFilterList.get(i);
+            if (lWeaponFilterList.get(i) instanceof D2WeaponTypes lWeapon) {
                 D2RadioButton lBtn = new D2RadioButton(lWeapon);
                 lBtn.addActionListener(iStashFilter);
                 lCurrentRow.addToPanel(lBtn, i, 0, 1, RandallPanel.HORIZONTAL);
@@ -948,8 +946,8 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
         private final ArrayList iCusFilterList = new ArrayList();
         //        private D2ItemList   iStash;
         private ArrayList iItems;
-        private ArrayList iTableModelListeners = new ArrayList();
-        private ArrayList iSortList = new ArrayList();
+        private final ArrayList iTableModelListeners = new ArrayList();
+        private final ArrayList iSortList = new ArrayList();
 
         public D2ItemModel() {
 //            iStash = pStash;
@@ -1511,7 +1509,7 @@ public class D2ViewStash extends JInternalFrame implements D2ItemContainer, D2It
 
 
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            D2Log.error("D2ViewStash", e, "invalid filter number");
                             lFilter.filterVal = 0;
                             fNumIn[lFilterNr].setBackground(EXCEPTION_COLOR);
                             return;
