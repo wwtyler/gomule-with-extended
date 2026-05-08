@@ -20,42 +20,86 @@
  ******************************************************************************/
 package gomule.gui;
 
-import com.google.common.collect.Streams;
-import gomule.d2i.D2SharedStash;
-import gomule.d2i.D2SharedStashReader;
-import gomule.d2s.D2Character;
-import gomule.d2x.D2Stash;
-import gomule.gui.sharedStash.D2ViewSharedStash;
-import gomule.item.D2Item;
-import gomule.util.D2Project;
-import randall.d2files.D2TxtFile;
-import randall.flavie.Flavie;
-import randall.util.RandallPanel;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serial;
+import static java.lang.Integer.parseInt;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Queue;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static java.lang.Integer.parseInt;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+
+import com.google.common.collect.Streams;
+
+import gomule.d2i.D2SharedStash;
+import gomule.d2i.D2SharedStashReader;
+import gomule.d2s.D2Character;
+import gomule.d2x.D2Stash;
+import gomule.gui.sharedStash.D2ViewSharedStash;
+import gomule.item.D2Item;
+import gomule.util.D2Log;
+import gomule.util.D2Project;
+import gomule.util.D2UI;
+import randall.d2files.D2TxtFile;
+import randall.util.RandallPanel;
 
 /**
  * this class is the top-level administrative window.
@@ -75,11 +119,11 @@ public class D2FileManager extends JFrame {
     private final D2SharedStashReader sharedStashReader;
     private final JSplitPane lSplit;
     private final JSplitPane rSplit;
-    private HashMap<String, D2ItemList> iItemLists = new HashMap<String, D2ItemList>();
+    private final HashMap<String, D2ItemList> iItemLists = new HashMap<>();
     private ArrayList<D2ItemContainer> iOpenWindows;
     private JMenuBar iMenuBar;
-    private JPanel iContentPane;
-    private JDesktopPane iDesktopPane;
+    private final JPanel iContentPane;
+    private final JDesktopPane iDesktopPane;
     private JToolBar iToolbar;
     private Properties iProperties;
     private D2Project iProject;
@@ -118,9 +162,9 @@ public class D2FileManager extends JFrame {
     private D2FileManager() {
         D2TxtFile.constructTxtFiles("d2111");
         sharedStashReader = new D2SharedStashReader();
-        iOpenWindows = new ArrayList<D2ItemContainer>();
+        iOpenWindows = new ArrayList<>();
         iContentPane = new JPanel();
-        iDesktopPane = new JDesktopPane();
+        iDesktopPane = new ScrollableDesktopPane();
         iDesktopPane.setDragMode(1);
 
         iContentPane.setLayout(new BorderLayout());
@@ -130,7 +174,10 @@ public class D2FileManager extends JFrame {
         createLeftPane();
         createRightPane();
 
-        lSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, iLeftPane, iDesktopPane);
+        JScrollPane desktopScrollPane = new JScrollPane(iDesktopPane,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        lSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, iLeftPane, desktopScrollPane);
         rSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, lSplit, iRightPane);
 
         setExtendedState(parseInt(iProperties.getProperty("win-state", "0")));
@@ -148,10 +195,12 @@ public class D2FileManager extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.getGlassPane().setVisible(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closeListener();
             }
 
+            @Override
             public void windowActivated(WindowEvent e) {
                 checkAll(false);
             }
@@ -165,7 +214,7 @@ public class D2FileManager extends JFrame {
                         this,
                         "Diablo 2 Resurrected is currently running, changes in GoMule are unlikely to be applied and you may lose changes when you exit D2R.",
                         "Warning: D2R.exe Running",
-                        JOptionPane.INFORMATION_MESSAGE));
+                        JOptionPane.INFORMATION_MESSAGE)).start();
     }
 
     private void setTitle(boolean saved) {
@@ -181,13 +230,12 @@ public class D2FileManager extends JFrame {
     }
 
     public static void displayErrorDialog(Window pParent, Exception pException) {
-        pException.printStackTrace();
 
         String lText = "Error\n\n" + pException.getMessage() + "\n";
 
         StackTraceElement trace[] = pException.getStackTrace();
-        for (int i = 0; i < trace.length; i++) {
-            lText += "\tat " + trace[i] + "\n";
+        for (StackTraceElement trace1 : trace) {
+            lText += "\tat " + trace1 + "\n";
         }
 
         displayTextDialog(pParent, "Error", lText);
@@ -233,9 +281,9 @@ public class D2FileManager extends JFrame {
             lProjectsDir.mkdir();
         } else {
             File lList[] = lProjectsDir.listFiles();
-            for (int i = 0; i < lList.length; i++) {
-                if (lList[i].isDirectory() && lList[i].canRead() && lList[i].canWrite()) {
-                    iProjectModel.addElement(lList[i].getName());
+            for (File lList1 : lList) {
+                if (lList1.isDirectory() && lList1.canRead() && lList1.canWrite()) {
+                    iProjectModel.addElement(lList1.getName());
                 }
             }
         }
@@ -252,14 +300,10 @@ public class D2FileManager extends JFrame {
         checkProjectsModel();
         iChangeProject = new JComboBox(iProjectModel);
         iChangeProject.setSelectedItem(iProject.getProjectName());
-        iChangeProject.addItemListener(new ItemListener() {
-
-            public void itemStateChanged(ItemEvent arg0) {
-
-                if (arg0.getStateChange() == ItemEvent.SELECTED) {
-                    closeWindows();
-                    setProject((String) iChangeProject.getSelectedItem());
-                }
+        iChangeProject.addItemListener((ItemEvent arg0) -> {
+            if (arg0.getStateChange() == ItemEvent.SELECTED) {
+                closeWindows();
+                setProject((String) iChangeProject.getSelectedItem());
             }
         });
 
@@ -270,6 +314,7 @@ public class D2FileManager extends JFrame {
         JButton newProj = new JButton("New Proj");
 
         newProj.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
 
                 String lNewName = JOptionPane.showInputDialog(
@@ -300,167 +345,141 @@ public class D2FileManager extends JFrame {
                 Pattern projectNamePattern = Pattern.compile("[^/?*:;{}\\\\]+", Pattern.UNIX_LINES);
                 Matcher projectNamePatternMatcher = projectNamePattern.matcher(lNewName);
 
-                if (!projectNamePatternMatcher.matches()) {
-                    return false;
-                }
-                return true;
+                return projectNamePatternMatcher.matches();
             }
         });
 
         JButton delProj = new JButton("Del Proj");
 
-        delProj.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (iChangeProject.getSelectedItem().equals("GoMule")) {
+        delProj.addActionListener((ActionEvent arg0) -> {
+            if (iChangeProject.getSelectedItem().equals("GoMule")) {
+                JOptionPane.showMessageDialog(
+                        iContentPane, "Cannot delete default project!", "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            D2Project delProjName = iProject;
+            if (JOptionPane.showConfirmDialog(
+                    iContentPane,
+                    "Are you sure you want to delete this project? (Your clipboard will be lost!)",
+                    "Really?",
+                    JOptionPane.YES_NO_OPTION)
+                    == 0) {
+                setProject("GoMule");
+                if (!delProjName.delProj()) {
                     JOptionPane.showMessageDialog(
-                            iContentPane, "Cannot delete default project!", "Error!", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                D2Project delProjName = iProject;
-                if (JOptionPane.showConfirmDialog(
-                                iContentPane,
-                                "Are you sure you want to delete this project? (Your clipboard will be lost!)",
-                                "Really?",
-                                JOptionPane.YES_NO_OPTION)
-                        == 0) {
-                    setProject("GoMule");
-                    if (!delProjName.delProj()) {
-                        JOptionPane.showMessageDialog(
-                                iContentPane, "Error deleting project!", "Error!", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        checkProjectsModel();
-                    }
+                            iContentPane, "Error deleting project!", "Error!", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    checkProjectsModel();
                 }
             }
         });
 
         JButton clProj = new JButton("Clear Proj");
 
-        clProj.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (JOptionPane.showConfirmDialog(
-                                iContentPane,
-                                "Are you sure you want to clear this project?",
-                                "Really?",
-                                JOptionPane.YES_NO_OPTION)
-                        == 0) {
-                    closeWindows();
-                    if (!iProject.clearProj()) {
-                        JOptionPane.showMessageDialog(
-                                iContentPane, "Error clearing project!", "Error!", JOptionPane.ERROR_MESSAGE);
-                    }
+        clProj.addActionListener((ActionEvent arg0) -> {
+            if (JOptionPane.showConfirmDialog(
+                    iContentPane,
+                    "Are you sure you want to clear this project?",
+                    "Really?",
+                    JOptionPane.YES_NO_OPTION)
+                    == 0) {
+                closeWindows();
+                if (!iProject.clearProj()) {
+                    JOptionPane.showMessageDialog(
+                            iContentPane, "Error clearing project!", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         JButton lFlavie = new JButton("Proj Flavie Report");
 
-        lFlavie.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
+        lFlavie.addActionListener((ActionEvent pEvent) -> {
+            ArrayList<String> dFileNames = new ArrayList<>();
 
-                ArrayList dFileNames = new ArrayList();
-
-                ArrayList lCharList = iProject.getCharList();
-                if (lCharList != null) {
-                    dFileNames.addAll(lCharList);
-                }
-                ArrayList lStashList = iProject.getStashList();
-                if (lStashList != null) {
-                    dFileNames.addAll(lStashList);
-                }
-                ArrayList sharedStashList = iProject.getSharedStashList();
-                if (sharedStashList != null) {
-                    dFileNames.addAll(sharedStashList);
-                }
-                if (dFileNames.size() < 1) {
-                    JOptionPane.showMessageDialog(
-                            iContentPane, "No Chars/Stashes in Project!", "Fail!", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    flavieDump(dFileNames, false);
-                }
+            ArrayList<String> lCharList = iProject.getCharList();
+            if (lCharList != null) {
+                dFileNames.addAll(lCharList);
+            }
+            ArrayList<String> lStashList = iProject.getStashList();
+            if (lStashList != null) {
+                dFileNames.addAll(lStashList);
+            }
+            ArrayList<String> sharedStashList = iProject.getSharedStashList();
+            if (sharedStashList != null) {
+                dFileNames.addAll(sharedStashList);
+            }
+            if (dFileNames.size() < 1) {
+                JOptionPane.showMessageDialog(
+                        iContentPane, "No Chars/Stashes in Project!", "Fail!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                flavieDump(dFileNames, false);
             }
         });
 
         JButton projTextDump = new JButton("Proj Txt Dump");
 
-        projTextDump.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                workCursor();
-                ArrayList lDumpList = iProject.getCharList();
-                String errStr = "";
-                if (lDumpList != null) {
-                    for (int x = 0; x < lDumpList.size(); x++) {
-                        try {
-                            D2Character d2Char = new D2Character((String) lDumpList.get(x));
-                            if (!projTxtDump(
-                                    (String) lDumpList.get(x),
-                                    (D2ItemList) d2Char,
-                                    iProject.getProjectName() + "Dumps")) {
-                                errStr = errStr + "Char: " + (String) lDumpList.get(x) + " failed.\n";
-                            }
-                        } catch (Exception e) {
-                            errStr = errStr + "Char: " + (String) lDumpList.get(x) + " failed.\n";
-                            e.printStackTrace();
+        projTextDump.addActionListener((ActionEvent pEvent) -> {
+            workCursor();
+            ArrayList lDumpList = iProject.getCharList();
+            String errStr = "";
+            if (lDumpList != null) {
+                for (int x1 = 0; x1 < lDumpList.size(); x1++) {
+                    try {
+                        D2Character d2Char = new D2Character((String) lDumpList.get(x1));
+                        if (!projTxtDump((String) lDumpList.get(x1), (D2ItemList) d2Char, iProject.getProjectName() + "Dumps")) {
+                            errStr = errStr + "Char: " + (String) lDumpList.get(x1) + " failed.\n";
                         }
+                    } catch (Exception e) {
+                        errStr = errStr + "Char: " + (String) lDumpList.get(x1) + " failed.\n";
                     }
                 }
-
-                lDumpList = iProject.getStashList();
-                if (lDumpList != null) {
-                    for (int x = 0; x < lDumpList.size(); x++) {
-                        try {
-                            D2Stash d2Stash = new D2Stash((String) lDumpList.get(x));
-                            if (!projTxtDump(
-                                    (String) lDumpList.get(x),
-                                    (D2ItemList) d2Stash,
-                                    iProject.getProjectName() + "Dumps")) {
-                                errStr = errStr + "Stash: " + (String) lDumpList.get(x) + " failed.\n";
-                            }
-                        } catch (Exception e) {
-                            errStr = errStr + "Stash: " + (String) lDumpList.get(x) + " failed.\n";
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                lDumpList = iProject.getSharedStashList();
-                if (lDumpList != null) {
-                    for (int x = 0; x < lDumpList.size(); x++) {
-                        try {
-                            D2SharedStash d2SharedStash =
-                                    new D2SharedStashReader().readStash((String) lDumpList.get(x));
-                            if (!projTxtDump(
-                                    (String) lDumpList.get(x),
-                                    (D2ItemList) d2SharedStash,
-                                    iProject.getProjectName() + "Dumps")) {
-                                errStr = errStr + "Shared Stash: " + (String) lDumpList.get(x) + " failed.\n";
-                            }
-                        } catch (Exception e) {
-                            errStr = errStr + "Shared Stash: " + (String) lDumpList.get(x) + " failed.\n";
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                if ((iProject.getCharList().size() + iProject.getStashList().size()) < 1) {
-                    JOptionPane.showMessageDialog(
-                            iContentPane, "No Chars/Stashes in Project!", "Fail!", JOptionPane.ERROR_MESSAGE);
-                } else if (errStr.equals("")) {
-                    JOptionPane.showMessageDialog(
-                            iContentPane,
-                            "Dumps generated successfully.\nOutput Folder: " + System.getProperty("user.dir")
-                                    + File.separatorChar + iProject.getProjectName() + "Dumps",
-                            "Success!",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(
-                            iContentPane,
-                            "Some txt dumps failed (error msg below).\nOutput Folder: " + System.getProperty("user.dir")
-                                    + File.separatorChar + iProject.getProjectName() + "Dumps" + "\n\nError: \n"
-                                    + errStr,
-                            "Fail!",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                defaultCursor();
             }
+            lDumpList = iProject.getStashList();
+            if (lDumpList != null) {
+                for (int x2 = 0; x2 < lDumpList.size(); x2++) {
+                    try {
+                        D2Stash d2Stash = new D2Stash((String) lDumpList.get(x2));
+                        if (!projTxtDump((String) lDumpList.get(x2), (D2ItemList) d2Stash, iProject.getProjectName() + "Dumps")) {
+                            errStr = errStr + "Stash: " + (String) lDumpList.get(x2) + " failed.\n";
+                        }
+                    } catch (Exception e) {
+                        errStr = errStr + "Stash: " + (String) lDumpList.get(x2) + " failed.\n";
+                    }
+                }
+            }
+            lDumpList = iProject.getSharedStashList();
+            if (lDumpList != null) {
+                for (int x3 = 0; x3 < lDumpList.size(); x3++) {
+                    try {
+                        D2SharedStash d2SharedStash = new D2SharedStashReader().readStash((String) lDumpList.get(x3));
+                        if (!projTxtDump((String) lDumpList.get(x3), (D2ItemList) d2SharedStash, iProject.getProjectName() + "Dumps")) {
+                            errStr = errStr + "Shared Stash: " + (String) lDumpList.get(x3) + " failed.\n";
+                        }
+                    } catch (Exception e) {
+                        errStr = errStr + "Shared Stash: " + (String) lDumpList.get(x3) + " failed.\n";
+                    }
+                }
+            }
+            if ((iProject.getCharList().size() + iProject.getStashList().size()) < 1) {
+                JOptionPane.showMessageDialog(
+                        iContentPane, "No Chars/Stashes in Project!", "Fail!", JOptionPane.ERROR_MESSAGE);
+            } else if (errStr.equals("")) {
+                JOptionPane.showMessageDialog(
+                        iContentPane,
+                        "Dumps generated successfully.\nOutput Folder: " + System.getProperty("user.dir")
+                                + File.separatorChar + iProject.getProjectName() + "Dumps",
+                        "Success!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(
+                        iContentPane,
+                        "Some txt dumps failed (error msg below).\nOutput Folder: " + System.getProperty("user.dir")
+                                + File.separatorChar + iProject.getProjectName() + "Dumps" + "\n\nError: \n"
+                                + errStr,
+                        "Fail!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            defaultCursor();
         });
 
         projControl.addToPanel(newProj, 0, 0, 1, RandallPanel.HORIZONTAL);
@@ -474,49 +493,26 @@ public class D2FileManager extends JFrame {
         iLeftPane.addToPanel(projControl, 0, 2, 1, RandallPanel.HORIZONTAL);
     }
 
-    private void flavieDump(ArrayList dFileNames, boolean singleDump) {
+    private void flavieDump(ArrayList<String> dFileNames, boolean singleDump) {
         try {
             String reportName;
             if (singleDump) {
-                String fileName = ((D2ItemContainer)
-                                iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                        .getFileName();
-                if (fileName.endsWith(".d2s")) {
-                    reportName = (((D2ViewChar) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                                    .getChar()
-                                    .getCharName()
-                            + iProject.getReportName());
-
-                } else if (fileName.endsWith(".d2i")) {
-                    reportName = ((((D2ViewSharedStash)
-                                            iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()))))
-                                    .getSharedStashName()
-                            + iProject.getReportName());
-                    reportName = reportName.replace(".d2i", "");
+                D2ItemContainer selected = iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()));
+                String fileName = selected.getFileName();
+                if (fileName.endsWith(".d2s") && selected instanceof D2ViewChar viewChar) {
+                    reportName = viewChar.getChar().getCharName() + iProject.getReportName();
+                } else if (fileName.endsWith(".d2i") && selected instanceof D2ViewSharedStash sharedStash) {
+                    reportName = sharedStash.getSharedStashName().replace(".d2i", "") + iProject.getReportName();
+                } else if (selected instanceof D2ViewStash stash) {
+                    reportName = stash.getStashName().replace(".d2x", "") + iProject.getReportName();
                 } else {
-                    reportName =
-                            ((((D2ViewStash) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()))))
-                                            .getStashName()
-                                    + iProject.getReportName());
-                    reportName = reportName.replace(".d2x", "");
+                    reportName = iProject.getProjectName() + iProject.getReportName();
                 }
             } else {
                 reportName = iProject.getProjectName() + iProject.getReportName();
             }
-            new Flavie(
-                    reportName,
-                    iProject.getReportTitle(),
-                    iProject.getDataName(),
-                    iProject.getStyleName(),
-                    dFileNames,
-                    iProject.isCountAll(),
-                    iProject.isCountEthereal(),
-                    iProject.isCountStash(),
-                    iProject.isCountChar());
-            //			JOptionPane.showMessageDialog(iContentPane,
-            //			"Flavie says reports generated successfully.\nFile: " + System.getProperty("user.dir") +
-            // File.separatorChar + reportName + ".html",
-            //			"Success!", JOptionPane.INFORMATION_MESSAGE);
+            D2Log.info("FlavieDump", "Generating Flavie report for %d files with report name: %s", dFileNames.size(), reportName);
+            
         } catch (Exception pEx) {
             JOptionPane.showMessageDialog(iContentPane, "Flavie report failed!", "Fail!", JOptionPane.ERROR_MESSAGE);
             displayErrorDialog(pEx);
@@ -531,7 +527,6 @@ public class D2FileManager extends JFrame {
         try {
             iClipboard = D2ViewClipboard.getInstance(this);
         } catch (Exception pEx) {
-            pEx.printStackTrace();
             JTextArea lText = new JTextArea();
             lText.setText(pEx.getMessage());
             JScrollPane lScroll = new JScrollPane(lText);
@@ -539,6 +534,7 @@ public class D2FileManager extends JFrame {
             iContentPane.add(lScroll, BorderLayout.CENTER);
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     System.exit(0);
                 }
@@ -552,132 +548,118 @@ public class D2FileManager extends JFrame {
         itemControl.setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
         pickAll = new JButton("Pick All");
-        pickAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    D2ItemContainer d2ItemContainer =
-                            (D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()));
-                    D2ItemList iList = d2ItemContainer.getItemLists();
-                    iList.ignoreItemListEvents();
-                    try {
-
-                        if (iList.getFilename().endsWith(".d2s") && getProject().getIgnoreItems()) {
-
-                            for (int x = 0; x < iList.getNrItems(); x++) {
-
-                                if (((D2Item) iList.getItemList().get(x)).isMoveable()) {
-                                    moveToClipboard(
-                                            ((D2Item) iList.getItemList().get(x)), iList);
-                                    x--;
-                                }
-                            }
-
-                        } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
-                            D2ViewSharedStash viewSharedStash = stash;
-                            D2ViewClipboard.addItems(
-                                    viewSharedStash.getSharedStashPanel().removeAllItems());
-                        } else {
-
-                            for (int x = 0; x < iList.getNrItems(); x++) {
-                                moveToClipboard(((D2Item) iList.getItemList().get(x)), iList);
-                                x--;
+        pickAll.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                D2ItemContainer d2ItemContainer =
+                        (D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()));
+                D2ItemList iList = d2ItemContainer.getItemLists();
+                iList.ignoreItemListEvents();
+                try {
+                    if (iList.getFilename().endsWith(".d2s") && getProject().getIgnoreItems()) {
+                        for (int x1 = 0; x1 < iList.getNrItems(); x1++) {
+                            if (((D2Item) iList.getItemList().get(x1)).isMoveable()) {
+                                moveToClipboard((D2Item) iList.getItemList().get(x1), iList);
+                                x1--;
                             }
                         }
-                    } finally {
-                        iList.listenItemListEvents();
-                        iList.fireD2ItemListEvent();
+                    } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
+                        D2ViewSharedStash viewSharedStash = stash;
+                        D2ViewClipboard.addItems(
+                                viewSharedStash.getSharedStashPanel().removeAllItems());
+                    } else {
+                        for (int x2 = 0; x2 < iList.getNrItems(); x2++) {
+                            moveToClipboard((D2Item) iList.getItemList().get(x2), iList);
+                            x2--;
+                        }
                     }
+                } finally {
+                    iList.listenItemListEvents();
+                    iList.fireD2ItemListEvent();
                 }
             }
         });
 
         dropAll = new JButton("Drop All");
-        dropAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    D2ItemContainer d2ItemContainer =
-                            (D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()));
-                    D2ItemList iList = d2ItemContainer.getItemLists();
-                    iList.ignoreItemListEvents();
-                    try {
-                        if (((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                                .getFileName()
-                                .endsWith(".d2s")) {
-
-                            D2ViewChar iCharacter = ((D2ViewChar)
-                                    iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())));
-                            for (int x = 2; x > -1; x--) {
-                                iCharacter.putOnCharacter(x, D2ViewClipboard.getItemList());
-                            }
-                        } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
-                            D2ViewSharedStash viewSharedStash = stash;
-                            //noinspection unchecked
-                            List<D2Item> successfullyAddedItems =
-                                    viewSharedStash.getSharedStashPanel().tryToAddItems(D2ViewClipboard.getItemList());
-                            successfullyAddedItems.forEach(D2ViewClipboard::removeItem);
-                        } else {
-                            ArrayList lItemList = D2ViewClipboard.removeAllItems();
-                            while (lItemList.size() > 0) {
-                                iList.addItem((D2Item) lItemList.removeFirst());
-                            }
+        dropAll.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                D2ItemContainer d2ItemContainer =
+                        (D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()));
+                D2ItemList iList = d2ItemContainer.getItemLists();
+                iList.ignoreItemListEvents();
+                try {
+                    if (((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
+                            .getFileName()
+                            .endsWith(".d2s")) {
+                        D2ViewChar iCharacter = ((D2ViewChar)
+                                iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())));
+                        for (int x1 = 2; x1 > -1; x1--) {
+                            iCharacter.putOnCharacter(x1, D2ViewClipboard.getItemList());
                         }
-                    } finally {
-                        iList.listenItemListEvents();
-                        iList.fireD2ItemListEvent();
+                    } else if (d2ItemContainer instanceof D2ViewSharedStash stash) {
+                        D2ViewSharedStash viewSharedStash = stash;
+                        //noinspection unchecked
+                        List<D2Item> successfullyAddedItems =
+                                viewSharedStash.getSharedStashPanel().tryToAddItems(D2ViewClipboard.getItemList());
+                        successfullyAddedItems.forEach(D2ViewClipboard::removeItem);
+                    } else {
+                        ArrayList lItemList = D2ViewClipboard.removeAllItems();
+                        while (!lItemList.isEmpty()) {
+                            iList.addItem((D2Item) lItemList.removeFirst());
+                        }
                     }
+                } finally {
+                    iList.listenItemListEvents();
+                    iList.fireD2ItemListEvent();
                 }
             }
         });
 
         pickFrom = new JButton("Pickup From ...");
         pickChooser = new JComboBox(new String[] {"Stash", "Inventory", "Cube", "Equipped"});
-        pickFrom.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    D2ItemList iList = ((D2ItemContainer)
-                                    iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                            .getItemLists();
-                    iList.ignoreItemListEvents();
-                    try {
-                        for (int x = 0; x < iList.getNrItems(); x++) {
-                            D2Item remItem = ((D2Item) iList.getItemList().get(x));
-                            if (!remItem.isMoveable()
-                                    && pickChooser.getSelectedIndex() != 3
-                                    && getProject().getIgnoreItems()) {
-                                continue;
+        pickFrom.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                D2ItemList iList = ((D2ItemContainer)
+                        iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
+                        .getItemLists();
+                iList.ignoreItemListEvents();
+                try {
+                    for (int x1 = 0; x1 < iList.getNrItems(); x1++) {
+                        D2Item remItem = (D2Item) iList.getItemList().get(x1);
+                        if (!remItem.isMoveable()
+                                && pickChooser.getSelectedIndex() != 3
+                                && getProject().getIgnoreItems()) {
+                            continue;
+                        }
+                        switch (pickChooser.getSelectedIndex()) {
+                            case 0 -> {
+                                if (remItem.get_location() == 0 && remItem.get_panel() == 5) {
+                                    moveToClipboard(remItem, iList);
+                                    x1--;
+                                }
                             }
-                            switch (pickChooser.getSelectedIndex()) {
-                                case 0:
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 5) {
-                                        moveToClipboard(remItem, iList);
-                                        x--;
-                                    }
-                                    break;
-                                case 1:
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 1) {
-                                        moveToClipboard(remItem, iList);
-                                        x--;
-                                    }
-                                    break;
-                                case 2:
-                                    if (remItem.get_location() == 0 && remItem.get_panel() == 4) {
-                                        moveToClipboard(remItem, iList);
-                                        x--;
-                                    }
-                                    break;
-                                case 3:
-                                    if (remItem.get_location() == 1) {
-                                        moveToClipboard(remItem, iList);
-                                        x--;
-                                    }
-                                    break;
+                            case 1 -> {
+                                if (remItem.get_location() == 0 && remItem.get_panel() == 1) {
+                                    moveToClipboard(remItem, iList);
+                                    x1--;
+                                }
+                            }
+                            case 2 -> {
+                                if (remItem.get_location() == 0 && remItem.get_panel() == 4) {
+                                    moveToClipboard(remItem, iList);
+                                    x1--;
+                                }
+                            }
+                            case 3 -> {
+                                if (remItem.get_location() == 1) {
+                                    moveToClipboard(remItem, iList);
+                                    x1--;
+                                }
                             }
                         }
-                    } finally {
-                        iList.listenItemListEvents();
-                        iList.fireD2ItemListEvent();
                     }
+                } finally {
+                    iList.listenItemListEvents();
+                    iList.fireD2ItemListEvent();
                 }
             }
         });
@@ -685,14 +667,11 @@ public class D2FileManager extends JFrame {
         dropTo = new JButton("Drop To ...");
         dropChooser = new JComboBox(new String[] {"Stash", "Inventory", "Cube"});
 
-        dropTo.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    D2ViewChar iCharacter =
-                            ((D2ViewChar) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())));
-                    iCharacter.putOnCharacter(dropChooser.getSelectedIndex(), D2ViewClipboard.getItemList());
-                }
+        dropTo.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                D2ViewChar iCharacter =
+                        ((D2ViewChar) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())));
+                iCharacter.putOnCharacter(dropChooser.getSelectedIndex(), D2ViewClipboard.getItemList());
             }
         });
 
@@ -713,42 +692,36 @@ public class D2FileManager extends JFrame {
         charControl.setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
         dumpBut = new JButton("Perform txt Dump");
-        dumpBut.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    if (singleTxtDump(
-                            ((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                                    .getFileName())) {
-                        JOptionPane.showMessageDialog(
-                                iContentPane,
-                                "Char/Stash dump was a success.\nFile: "
-                                        + (((D2ItemContainer) iOpenWindows.get(
-                                                        iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                                                .getFileName())
-                                        + ".txt",
-                                "Success!",
-                                JOptionPane.INFORMATION_MESSAGE);
-
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                iContentPane, "Char/Stash dump failed!", "Fail!", JOptionPane.ERROR_MESSAGE);
-                    }
+        dumpBut.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                if (singleTxtDump(
+                        ((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
+                                .getFileName())) {
+                    JOptionPane.showMessageDialog(
+                            iContentPane,
+                            "Char/Stash dump was a success.\nFile: "
+                                    + (((D2ItemContainer) iOpenWindows.get(
+                                            iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
+                                            .getFileName())
+                                    + ".txt",
+                            "Success!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(
+                            iContentPane, "Char/Stash dump failed!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         flavieSingle = new JButton("Single Flavie Report");
-        flavieSingle.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-                if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
-                    ArrayList dFileNames = new ArrayList();
-                    dFileNames.add(
-                            ((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
-                                    .getFileName());
-                    flavieDump(dFileNames, true);
-                }
+        flavieSingle.addActionListener((ActionEvent arg0) -> {
+            if (iOpenWindows.indexOf(iDesktopPane.getSelectedFrame()) > -1) {
+                ArrayList dFileNames = new ArrayList();
+                dFileNames.add(
+                        ((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
+                                .getFileName());
+                flavieDump(dFileNames, true);
             }
         });
 
@@ -772,6 +745,7 @@ public class D2FileManager extends JFrame {
         D2ViewClipboard.addItem(remItem);
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     private void createMenubar() {
 
         iMenuBar = new JMenuBar();
@@ -829,7 +803,7 @@ public class D2FileManager extends JFrame {
         try {
             savedLayoutName = FileManagerProperties.loadFileManagerProperties()
                     .getProperty(LayoutProfile.PROPERTY_NAME);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             savedLayoutName = null;
         }
         LayoutProfile currentLayout = LayoutProfile.fromName(savedLayoutName);
@@ -873,18 +847,151 @@ public class D2FileManager extends JFrame {
                     Properties themeProps = FileManagerProperties.loadFileManagerProperties();
                     themeProps.setProperty(PanelTheme.PROPERTY_NAME, theme.name());
                     FileManagerProperties.saveFileManagerProperties(themeProps);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                } catch (IOException ex) {
                 }
-                // 重建所有已打开的角色窗口背景
+                // 重建所有已打开的角色窗口 & 共享仓库背景
                 for (JInternalFrame frame : iDesktopPane.getAllFrames()) {
-                    if (frame instanceof D2ViewChar vc) {
-                        vc.rebuildBackground();
+                    switch (frame) {
+                        case D2ViewChar vc -> vc.rebuildBackground();
+                        case D2ViewSharedStash ss -> ss.getSharedStashPanel().build();
+                        default -> {
+                        }
                     }
                 }
             });
         }
         fileMenu.add(switchThemeMenu);
+
+        // UI 缩放菜单（立即生效，无需重启）
+        JMenu switchScaleMenu = new JMenu("UI Scale");
+        double[] scalePresets    = {0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0};
+        String[] scaleLabels     = {"50%", "75%", "100%", "125%", "150%", "175%", "200%"};
+        double   initialScale    = D2UI.getUiScale();
+        for (int si = 0; si < scalePresets.length; si++) {
+            double preset = scalePresets[si];
+            JMenuItem scaleItem = new JMenuItem(scaleLabels[si]);
+            if (Math.abs(preset - initialScale) < 0.01) {
+                scaleItem.setFont(scaleItem.getFont().deriveFont(java.awt.Font.BOLD));
+            }
+            switchScaleMenu.add(scaleItem);
+            scaleItem.addActionListener(e -> {
+                D2UI.setUiScale(preset);
+                // 保存到 app.properties
+                try {
+                    Properties scaleProps = FileManagerProperties.loadFileManagerProperties();
+                    scaleProps.setProperty("ui.scale", String.valueOf(preset));
+                    FileManagerProperties.saveFileManagerProperties(scaleProps);
+                } catch (IOException ex) {
+                    // ignore save errors
+                }
+                // 重建所有已打开的角色窗口 & 共享仓库，并 pack() 使其按新缩放重新调整大小
+                for (JInternalFrame frame : iDesktopPane.getAllFrames()) {
+                    switch (frame) {
+                        case D2ViewChar vc -> { vc.rebuildBackground(); vc.pack(); }
+                        case D2ViewSharedStash ss -> { ss.getSharedStashPanel().build(); ss.pack(); }
+                        default -> { }
+                    }
+                }
+                // 触发 ScrollableDesktopPane 重新计算首选尺寸 → 滚动条更新
+                iDesktopPane.revalidate();
+                // 更新菜单项粗体标记（当前选中项加粗）
+                for (int j = 0; j < switchScaleMenu.getItemCount(); j++) {
+                    JMenuItem item = switchScaleMenu.getItem(j);
+                    if (item != null) {
+                        boolean active = Math.abs(scalePresets[j] - preset) < 0.01;
+                        item.setFont(active
+                                ? item.getFont().deriveFont(java.awt.Font.BOLD)
+                                : item.getFont().deriveFont(java.awt.Font.PLAIN));
+                    }
+                }
+            });
+        }
+        fileMenu.add(switchScaleMenu);
+
+        // 菜单/UI 字体大小（需要重启生效）
+        int[] fontPresets   = {12, 14, 16, 18, 20, 24, 28, 32};
+        String[] fontLabels = {"12pt", "14pt", "16pt", "18pt", "20pt", "24pt", "28pt", "32pt"};
+
+        int currentMenuFont;
+        int currentTooltipFont;
+        try {
+            Properties fontReadProps = FileManagerProperties.loadFileManagerProperties();
+            String mfs = fontReadProps.getProperty("ui.menu.font.size");
+            String tfs = fontReadProps.getProperty("ui.tooltip.font.size");
+            currentMenuFont    = (mfs != null && !mfs.isEmpty()) ? Integer.parseInt(mfs.trim()) : D2UI.getMenuFontSize();
+            currentTooltipFont = (tfs != null && !tfs.isEmpty()) ? Integer.parseInt(tfs.trim()) : D2UI.getTooltipFontSize();
+        } catch (Exception ex) {
+            currentMenuFont    = D2UI.getMenuFontSize();
+            currentTooltipFont = D2UI.getTooltipFontSize();
+        }
+        final int initMenuFont    = currentMenuFont;
+        final int initTooltipFont = currentTooltipFont;
+
+        JMenu switchMenuFontMenu = new JMenu("Menu Font Size (restart)");
+        for (int fi = 0; fi < fontPresets.length; fi++) {
+            int preset = fontPresets[fi];
+            JMenuItem fontItem = new JMenuItem(fontLabels[fi]);
+            if (preset == initMenuFont) {
+                fontItem.setFont(fontItem.getFont().deriveFont(Font.BOLD));
+            }
+            switchMenuFontMenu.add(fontItem);
+            fontItem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    int check = JOptionPane.showConfirmDialog(
+                            null,
+                            "GoMule will exit to apply the menu font size change, you'll need to manually start GoMule again. Any unsaved changes will be automatically saved.",
+                            "",
+                            OK_CANCEL_OPTION);
+                    if (check == 0) {
+                        try {
+                            Properties fontProps = FileManagerProperties.loadFileManagerProperties();
+                            fontProps.setProperty("ui.menu.font.size", String.valueOf(preset));
+                            FileManagerProperties.saveFileManagerProperties(fontProps);
+                        } catch (IOException ex) {
+                            // ignore save errors
+                        }
+                        D2FileManager.getInstance().closeListener();
+                    }
+                }
+            });
+        }
+        fileMenu.add(switchMenuFontMenu);
+
+        // Tooltip 字体大小（立即生效，无需重启）
+        JMenu switchTooltipFontMenu = new JMenu("Tooltip Font Size");
+        for (int fi = 0; fi < fontPresets.length; fi++) {
+            int preset = fontPresets[fi];
+            JMenuItem tipItem = new JMenuItem(fontLabels[fi]);
+            if (preset == initTooltipFont) {
+                tipItem.setFont(tipItem.getFont().deriveFont(Font.BOLD));
+            }
+            switchTooltipFontMenu.add(tipItem);
+            tipItem.addActionListener(e -> {
+                D2UI.setTooltipFontSize(preset);
+                UIManager.put("ToolTip.font", new Font(Font.SANS_SERIF, Font.PLAIN, preset));
+                // 保存到 app.properties
+                try {
+                    Properties tipProps = FileManagerProperties.loadFileManagerProperties();
+                    tipProps.setProperty("ui.tooltip.font.size", String.valueOf(preset));
+                    FileManagerProperties.saveFileManagerProperties(tipProps);
+                } catch (IOException ex) {
+                    // ignore save errors
+                }
+                // 更新菜单项粗体标记
+                for (int j = 0; j < switchTooltipFontMenu.getItemCount(); j++) {
+                    JMenuItem item = switchTooltipFontMenu.getItem(j);
+                    if (item != null) {
+                        boolean active = (fontPresets[j] == preset);
+                        item.setFont(active
+                                ? item.getFont().deriveFont(Font.BOLD)
+                                : item.getFont().deriveFont(Font.PLAIN));
+                    }
+                }
+            });
+        }
+        fileMenu.add(switchTooltipFontMenu);
+
         fileMenu.addSeparator();
         fileMenu.add(exitProg);
 
@@ -894,6 +1001,7 @@ public class D2FileManager extends JFrame {
 
         aboutMenu.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mousePressed(MouseEvent e) {
 
                 displayAbout();
@@ -902,6 +1010,7 @@ public class D2FileManager extends JFrame {
 
         projOpt.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseReleased(MouseEvent e) {
 
                 D2ProjectSettingsDialog lDialog = new D2ProjectSettingsDialog(D2FileManager.this);
@@ -911,13 +1020,14 @@ public class D2FileManager extends JFrame {
 
         openChar.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 openChar(true);
             }
         });
 
         newStash.addMouseListener(new MouseAdapter() {
-
+            @Override
             public void mouseReleased(MouseEvent e) {
                 newStash(true);
             }
@@ -925,6 +1035,7 @@ public class D2FileManager extends JFrame {
 
         openStash.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 openStash(true);
             }
@@ -932,13 +1043,14 @@ public class D2FileManager extends JFrame {
 
         saveAll.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 saveAll();
             }
         });
 
         exitProg.addMouseListener(new MouseAdapter() {
-
+            @Override
             public void mouseReleased(MouseEvent e) {
                 closeListener();
             }
@@ -983,19 +1095,15 @@ public class D2FileManager extends JFrame {
         JButton lOpenD2S = new JButton(D2ImageCache.getIcon("open.gif"));
         lOpenD2S.setToolTipText("<html><font color=white>Open Character</font></html>");
 
-        lOpenD2S.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openChar(true);
-            }
+        lOpenD2S.addActionListener((java.awt.event.ActionEvent e) -> {
+            openChar(true);
         });
         iToolbar.add(lOpenD2S);
 
         JButton lAddD2S = new JButton(D2ImageCache.getIcon("add.gif"));
         lAddD2S.setToolTipText("<html><font color=white>Add Character</font></html>");
-        lAddD2S.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openChar(false);
-            }
+        lAddD2S.addActionListener((java.awt.event.ActionEvent e) -> {
+            openChar(false);
         });
         iToolbar.add(lAddD2S);
         iToolbar.addSeparator();
@@ -1004,28 +1112,22 @@ public class D2FileManager extends JFrame {
 
         JButton lNewD2X = new JButton(D2ImageCache.getIcon("new.gif"));
         lNewD2X.setToolTipText("<html><font color=white>New ATMA Stash</font></html>");
-        lNewD2X.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                newStash(true);
-            }
+        lNewD2X.addActionListener((java.awt.event.ActionEvent e) -> {
+            newStash(true);
         });
         iToolbar.add(lNewD2X);
 
         JButton lOpenD2X = new JButton(D2ImageCache.getIcon("open.gif"));
         lOpenD2X.setToolTipText("<html><font color=white>Open ATMA Stash</font></html>");
-        lOpenD2X.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openStash(true);
-            }
+        lOpenD2X.addActionListener((java.awt.event.ActionEvent e) -> {
+            openStash(true);
         });
         iToolbar.add(lOpenD2X);
 
         JButton lAddD2X = new JButton(D2ImageCache.getIcon("add.gif"));
         lAddD2X.setToolTipText("<html><font color=white>Add ATMA Stash</font></html>");
-        lAddD2X.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openStash(false);
-            }
+        lAddD2X.addActionListener((java.awt.event.ActionEvent e) -> {
+            openStash(false);
         });
         iToolbar.add(lAddD2X);
 
@@ -1035,19 +1137,15 @@ public class D2FileManager extends JFrame {
         JButton openSharedStashButton = new JButton(D2ImageCache.getIcon("open.gif"));
         openSharedStashButton.setToolTipText("<html><font color=white>Open Shared Stash</font></html>");
 
-        openSharedStashButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openSharedStash(true);
-            }
+        openSharedStashButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            openSharedStash(true);
         });
         iToolbar.add(openSharedStashButton);
 
         JButton addSharedStashButton = new JButton(D2ImageCache.getIcon("add.gif"));
         addSharedStashButton.setToolTipText("<html><font color=white>Add Shared Stash</font></html>");
-        addSharedStashButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openSharedStash(false);
-            }
+        addSharedStashButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            openSharedStash(false);
         });
         iToolbar.add(addSharedStashButton);
 
@@ -1057,10 +1155,8 @@ public class D2FileManager extends JFrame {
 
         JButton lSaveAll = new JButton(D2ImageCache.getIcon("save.gif"));
         lSaveAll.setToolTipText("<html><font color=white>Save All</font></html>");
-        lSaveAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                saveAll();
-            }
+        lSaveAll.addActionListener((java.awt.event.ActionEvent e) -> {
+            saveAll();
         });
         iToolbar.add(lSaveAll);
 
@@ -1076,7 +1172,6 @@ public class D2FileManager extends JFrame {
                     try {
                         Desktop.getDesktop().browse(hyperlinkEvent.getURL().toURI());
                     } catch (IOException | URISyntaxException ex) {
-                        ex.printStackTrace();
                     }
                 }
             });
@@ -1086,10 +1181,8 @@ public class D2FileManager extends JFrame {
 
         JButton lCancelAll = new JButton(D2ImageCache.getIcon("cancel.gif"));
         lCancelAll.setToolTipText("<html><font color=white>Cancel (reload all)</font></html>");
-        lCancelAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelAll();
-            }
+        lCancelAll.addActionListener((java.awt.event.ActionEvent e) -> {
+            cancelAll();
         });
         iToolbar.add(lCancelAll);
         JButton rearrangeWindows = new JButton(D2ImageCache.getIcon("rearrange.gif"));
@@ -1175,7 +1268,7 @@ public class D2FileManager extends JFrame {
 
             iProject = new D2Project(this, lCurrent);
             //			iBtnProjectSelection.setText(lCurrent);
-        } catch (Exception pEx) {
+        } catch (IOException pEx) {
             displayErrorDialog(pEx);
             iProject = null;
             iProperties = null;
@@ -1209,7 +1302,7 @@ public class D2FileManager extends JFrame {
                     iProperties.setProperty(key, diskProps.getProperty(key));
                 }
             }
-        } catch (Exception ignored) {
+        } catch (IOException ignored) {
             // best-effort: if re-read fails, proceed with in-memory state
         }
         FileManagerProperties.saveFileManagerProperties(iProperties);
@@ -1229,7 +1322,7 @@ public class D2FileManager extends JFrame {
     }
 
     public boolean projTxtDump(String pFileName, D2ItemList lList, String folder) {
-        String lFileName = null;
+        String lFileName;
         if (folder == null) {
 
             lFileName = pFileName + ".txt";
@@ -1282,14 +1375,12 @@ public class D2FileManager extends JFrame {
                 File lFile = new File(lFileName);
                 System.err.println("File: " + lFile.getCanonicalPath());
 
-                PrintWriter lWriter = new PrintWriter(new FileWriter(lFile.getCanonicalPath()));
-
-                lList.fullDump(lWriter);
-                lWriter.flush();
-                lWriter.close();
+                try (PrintWriter lWriter = new PrintWriter(new FileWriter(lFile.getCanonicalPath()))) {
+                    lList.fullDump(lWriter);
+                    lWriter.flush();
+                }
                 return true;
-            } catch (Exception pEx) {
-                pEx.printStackTrace();
+            } catch (IOException pEx) {
             }
         }
         return false;
@@ -1297,7 +1388,7 @@ public class D2FileManager extends JFrame {
 
     public void closeWindows() {
         saveAll();
-        while (iOpenWindows.size() > 0) {
+        while (!iOpenWindows.isEmpty()) {
             D2ItemContainer lItemContainer = (D2ItemContainer) iOpenWindows.getFirst();
             if (lItemContainer != null) {
                 lItemContainer.closeView();
@@ -1338,9 +1429,7 @@ public class D2FileManager extends JFrame {
         checkAll(false);
 
         iClipboard.saveView();
-        Iterator lIterator = iItemLists.keySet().iterator();
-        while (lIterator.hasNext()) {
-            String lFileName = (String) lIterator.next();
+        for (String lFileName : iItemLists.keySet()) {
             D2ItemList lList = getItemList(lFileName);
             if (lList.isModified()) {
                 lList.save(iProject);
@@ -1369,11 +1458,9 @@ public class D2FileManager extends JFrame {
                 }
             }
 
-            Iterator lIterator = iItemLists.keySet().iterator();
-            while (lIterator.hasNext()) {
-                String lFileName = (String) lIterator.next();
+            for (String lFileName : iItemLists.keySet()) {
                 D2ItemList lList = (D2ItemList) iItemLists.get(lFileName);
-                if (!(lList instanceof D2ItemListAll) && !lList.checkTimestamp()) {
+                if (lList != null && !(lList instanceof D2ItemListAll) && !lList.checkTimestamp()) {
                     lChanges = true;
                     if (lList.isModified()) {
                         lModifiedChanges = true;
@@ -1423,7 +1510,6 @@ public class D2FileManager extends JFrame {
                 }
             }
         } catch (Exception pEx) {
-            pEx.printStackTrace();
         } finally {
             iIgnoreCheckAll = false;
             TITLE_SETTING_LIST_LISTENER.itemListChanged();
@@ -1497,7 +1583,6 @@ public class D2FileManager extends JFrame {
             frame.setSelected(true);
         } catch (PropertyVetoException e) {
             // Shouldn't worry too much if this happens I guess?
-            e.printStackTrace();
         }
     }
 
@@ -1511,6 +1596,7 @@ public class D2FileManager extends JFrame {
         ((JInternalFrame) pContainer).setOpaque(true);
         ((JInternalFrame) pContainer).addInternalFrameListener(new InternalFrameListener() {
 
+            @Override
             public void internalFrameActivated(InternalFrameEvent arg0) {
                 if (((D2ItemContainer) iOpenWindows.get(iOpenWindows.indexOf(iDesktopPane.getSelectedFrame())))
                         .getFileName()
@@ -1554,16 +1640,22 @@ public class D2FileManager extends JFrame {
                 }
             }
 
+            @Override
             public void internalFrameClosed(InternalFrameEvent arg0) {}
 
+            @Override
             public void internalFrameClosing(InternalFrameEvent arg0) {}
 
+            @Override
             public void internalFrameDeactivated(InternalFrameEvent arg0) {}
 
+            @Override
             public void internalFrameDeiconified(InternalFrameEvent arg0) {}
 
+            @Override
             public void internalFrameIconified(InternalFrameEvent arg0) {}
 
+            @Override
             public void internalFrameOpened(InternalFrameEvent arg0) {}
         });
         iViewProject.notifyFileOpened(pContainer.getFileName());
@@ -1664,7 +1756,7 @@ public class D2FileManager extends JFrame {
             }
         }
 
-        D2ViewStash lStashView = null;
+        D2ViewStash lStashView ;
         if (load) {
             if (lExisting != null) {
                 lStashView = ((D2ViewStash) lExisting);
@@ -1737,8 +1829,14 @@ public class D2FileManager extends JFrame {
     public void displayAbout() {
         JOptionPane.showMessageDialog(
                 this,
-                "A java-based Diablo II muling application\n\noriniginally created by Andy Theuninck (Gohanman)\nVersion 0.1a"
-                        + "\n\ncurrent release by Randall & Silospen\nVersion " + CURRENT_VERSION
+                """
+                A java-based Diablo II muling application
+                
+                oriniginally created by Andy Theuninck (Gohanman)
+                Version 0.1a
+                
+                current release by Randall & Silospen
+                Version """ + CURRENT_VERSION
                         + "\n\nAnd special thanks to:"
                         + "\n\tHakai_no_Tenshi & Gohanman for helping me out with the file formats"
                         + "\nRTB for all his help.\n\tThe Super Beta Testers:\nSkinhead On The MBTA\nnubikon\nOscuro\nThyiad\nMoiselvus\nPurpleLocust\nAnd anyone else I've forgotten..!",
@@ -1806,13 +1904,10 @@ public class D2FileManager extends JFrame {
         return lList;
     }
 
-    private static D2ItemListListener TITLE_SETTING_LIST_LISTENER = new D2ItemListListener() {
-        @Override
-        public void itemListChanged() {
-            boolean noModifiedWindows = D2FileManager.getInstance().iOpenWindows.stream()
-                    .noneMatch(it -> ((D2ItemContainer) it).isModified());
-            D2FileManager.getInstance().setTitle(noModifiedWindows);
-        }
+    private static final D2ItemListListener TITLE_SETTING_LIST_LISTENER = () -> {
+        boolean noModifiedWindows = D2FileManager.getInstance().iOpenWindows.stream()
+                .noneMatch(it -> ((D2ItemContainer) it).isModified());
+        D2FileManager.getInstance().setTitle(noModifiedWindows);
     };
 
     public D2ItemList getItemList(String pFileName) {
@@ -1843,11 +1938,4 @@ public class D2FileManager extends JFrame {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
-    class D2MenuListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent arg0) {
-
-            new RandallPanel();
-        }
-    }
 }

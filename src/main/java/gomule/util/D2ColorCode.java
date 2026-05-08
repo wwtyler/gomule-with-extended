@@ -17,6 +17,7 @@ import java.util.Map;
  *   ÿc6  black              ÿc7  tan gold           ÿc8  orange
  *   ÿc9  yellow (lightning) ÿca  dark green
  *   MDK ColorMod extended codes:
+ *   ÿc<  ember orange       ÿcA  olive defense      ÿcC  cyan utility
  *   ÿcC  亮绿 limeGreen      ÿcM  紫罗兰 violet      ÿcO  天蓝 skyBlue
  *   ÿcS  琥珀 amber          ÿcT  暗红 darkRed        ÿcU  青 cyan
  *   ÿcV  亮红 brightRed      ÿc;  紫 purple
@@ -43,12 +44,13 @@ public final class D2ColorCode {
         COLOR_MAP.put('8', "#FF8040"); // orange
         COLOR_MAP.put('9', "#FFFF00"); // yellow – lightning
         COLOR_MAP.put('a', "#208020"); // dark green
-        COLOR_MAP.put('A', "#208020"); // dark green (uppercase alias)
+        COLOR_MAP.put('A', "#5F8A00"); // olive green – TylerPack defense/fortify
+        COLOR_MAP.put('<', "#FF7043"); // ember orange – demon/undead damage
         COLOR_MAP.put('b', "#AAAAAA"); // light gray
         COLOR_MAP.put('B', "#AAAAAA");
         COLOR_MAP.put('c', "#6060C0"); // medium blue
-        // 'C' = 亮绿 limeGreen (MDK ColorMod)
-        COLOR_MAP.put('C', "#00E040");
+        // 'C' = 青蓝 cyan-blue (TylerPack agility / speed / utility)
+        COLOR_MAP.put('C', "#00C8FF");
         COLOR_MAP.put('D', "#C0C0C0"); // silver
         COLOR_MAP.put('E', "#FF80FF"); // pink
         COLOR_MAP.put('F', "#FF80FF");

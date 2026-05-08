@@ -20,14 +20,15 @@
  ******************************************************************************/
 package randall.d2files;
 
-import gomule.gui.D2FileManager;
-import gomule.item.D2Prop;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import gomule.gui.D2FileManager;
+import gomule.item.D2Prop;
 
 /**
  * @author Marco
@@ -66,7 +67,7 @@ public final class D2TxtFile {
     public static D2TxtFile ITEMRATIO;
     private static String sMod;
     private static boolean read = false;
-    private String iFileName;
+    private final String iFileName;
     private String[] iHeader;
     private String[][] iData;
 
@@ -110,31 +111,23 @@ public final class D2TxtFile {
     }
 
     public static String getCharacterCode(int pChar) {
-        switch (pChar) {
-            case 0:
-                return "Amazon";
-            case 1:
-                return "Sorceress";
-            case 2:
-                return "Necromancer";
-            case 3:
-                return "Paladin";
-            case 4:
-                return "Barbarian";
-            case 5:
-                return "Druid";
-            case 6:
-                return "Assassin";
-            case 7:
-                // D2RMMMDKV3 新职业
-                return "Warlock";
-        }
-        return "<none>";
+        return switch (pChar) {
+            case 0 -> "Amazon";
+            case 1 -> "Sorceress";
+            case 2 -> "Necromancer";
+            case 3 -> "Paladin";
+            case 4 -> "Barbarian";
+            case 5 -> "Druid";
+            case 6 -> "Assassin";
+            case 7 -> // D2RMMMDKV3 新职业
+                    "Warlock";
+            default -> "<none>";
+        };
     }
 
     public static ArrayList<D2Prop> propToStat(String pCode, String pMin, String pMax, String pParam, int qFlag) {
 
-        ArrayList<D2Prop> outArr = new ArrayList<D2Prop>();
+        ArrayList<D2Prop> outArr = new ArrayList<>();
         for (int x = 1; x < 8; x++) {
 
             String propsStatCode = D2TxtFile.PROPS.searchColumns("code", pCode).get("stat" + x);
@@ -155,7 +148,6 @@ public final class D2TxtFile {
                     return outArr;
                 }
             }
-            ;
 
             if (!pMax.equals("")) {
                 try {
@@ -164,7 +156,6 @@ public final class D2TxtFile {
                     return outArr;
                 }
             }
-            ;
 
             if (!pParam.equals("")) {
                 try {
@@ -173,11 +164,10 @@ public final class D2TxtFile {
                     return outArr;
                 }
             }
-            ;
 
-            if (propsStatCode.indexOf("max") != -1) {
+            if (propsStatCode.contains("max")) {
                 pVals[0] = pVals[1];
-            } else if (propsStatCode.indexOf("length") != -1) {
+            } else if (propsStatCode.contains("length")) {
                 if (pVals[2] != 0) {
                     pVals[0] = pVals[2];
                 }
@@ -219,34 +209,32 @@ public final class D2TxtFile {
 
     private void readInData() {
         try {
-            ArrayList<String[] > strArr = new ArrayList<String[] >();
-            FileReader lFileIn = new FileReader(sMod + File.separator + iFileName + ".txt");
-            BufferedReader lIn = new BufferedReader(lFileIn);
-            String lFirstLine = lIn.readLine();
+            ArrayList<String[]> strArr = new ArrayList<>();
+            try (FileReader lFileIn = new FileReader(sMod + File.separator + iFileName + ".txt");
+                 BufferedReader lIn = new BufferedReader(lFileIn)) {
+                String lFirstLine = lIn.readLine();
 
-            Pattern p = Pattern.compile("	");
-            iHeader = p.split(lFirstLine);
-            String lLine = lIn.readLine();
+                Pattern p = Pattern.compile("	");
+                iHeader = p.split(lFirstLine);
+                String lLine = lIn.readLine();
 
-            boolean lSkipExpansion = "UniqueItems".equals(iFileName) || "SetItems".equals(iFileName);
-            while (lLine != null) {
-                String[] lineArr = p.split(lLine);
-                if (lineArr.length > 0 && lSkipExpansion && lineArr[0].equals("Expansion")) {
+                boolean lSkipExpansion = "UniqueItems".equals(iFileName) || "SetItems".equals(iFileName);
+                while (lLine != null) {
+                    String[] lineArr = p.split(lLine);
+                    if (lineArr.length > 0 && lSkipExpansion && lineArr[0].equals("Expansion")) {
 
-                } else {
-//					iData.add(lSplit);
-                    strArr.add(lineArr);
+                    } else {
+//						iData.add(lSplit);
+                        strArr.add(lineArr);
+                    }
+                    lLine = lIn.readLine();
                 }
-                lLine = lIn.readLine();
             }
-
-            lFileIn.close();
-            lIn.close();
 
             iData = new String[strArr.size()][];
             strArr.toArray(iData);
 
-        } catch (Exception pEx) {
+        } catch (IOException pEx) {
             D2FileManager.displayErrorDialog(pEx);
         }
     }
@@ -317,7 +305,7 @@ public final class D2TxtFile {
     public D2TxtFileItemProperties searchRuneWord(ArrayList<String> pList) {
         int lRuneNr[] = new int[]{getCol("Rune1"), getCol("Rune2"), getCol("Rune3"), getCol("Rune4"), getCol("Rune5"), getCol("Rune6")};
         for (int i = 0; i < iData.length; i++) {
-            ArrayList<String> lRW = new ArrayList<String>();
+            ArrayList<String> lRW = new ArrayList<>();
             for (int j = 0; j < lRuneNr.length; j++) {
                 String lFile = iData[i][lRuneNr[j]];
 

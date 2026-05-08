@@ -1,10 +1,10 @@
-
 {
   "header": {
     "identifier": "aa55aa55",
     "version": 105,
-    "filesize": 1069,
-    "checksum": "db06088a",
+    "hex": "\n  0x0008: 81 04 00 00 c9 c0 f3 a4 00 00 00 00 00 02 00 00\n  0x0018: 07 10 1e 57 00 00 00 00 63 6d ef 69 ff ff ff ff\n  0x0028: 8a 81 00 00 ff ff 00 00 ff ff 00 00 ff ff 00 00\n  0x0038: ff ff 00 00 ff ff 00 00 ff ff 00 00 ff ff 00 00\n  0x0048: ff ff 00 00 ff ff 00 00 ff ff 00 00 ff ff 00 00\n  0x0058: ff ff 00 00 ff ff 00 00 ff ff 00 00 dc 00 00 00\n  0x0068: 91 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x0078: 39 02 02 01 01 25 ff ff 02 02 ff ff ff ff ff ff\n  0x0088: ff ff ff ff ff a7 ff ff ff ff ff ff ff ff ff ff\n  0x0098: 81 00 00 15 65 89 34 00 00 00 00 aa 77 25 8b 10\n  0x00a8: 00 08 00 d4 08 38 04 00 00 00 00 00 00 00 00 00\n  0x00b8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x00c8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x00d8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x00e8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x00f8: 03 00 00 73 73 74 20 a7 07 df 02 04 00 00 00 00\n  0x0108: 00 00 00 00 00 00 00 00 00 00 00 75 6e 67 20 ff\n  0x0118: 07 d9 03 00 00 00 00 63 61 70 20 ff 04 00 00 00\n  0x0128: 00 00 00 57 61 72 6c 6f 63 6b 00 00",
+    "filesize": 1153,
+    "checksum": "a4f3c0c9",
     "status": {
       "b1": false,
       "b2": false,
@@ -20,7 +20,7 @@
     "class_id": 7,
     "level": 87,
     "created": 0,
-    "last_played": 1777081776,
+    "last_played": 1777298787,
     "assigned_skill_ids": [
       33162,
       65535,
@@ -45,28 +45,28 @@
     "right_swap_skill": "Attack",
     "menu_appearance": {
       "head": {
-        "graphic": 255,
+        "graphic": 57,
         "tint": 255
       },
       "torso": {
-        "graphic": 255,
+        "graphic": 2,
         "tint": 255
       },
       "legs": {
-        "graphic": 255,
+        "graphic": 2,
         "tint": 255
       },
       "right_arm": {
-        "graphic": 255,
+        "graphic": 1,
         "tint": 255
       },
       "left_arm": {
-        "graphic": 255,
+        "graphic": 1,
         "tint": 255
       },
       "right_hand": {
-        "graphic": 255,
-        "tint": 255
+        "graphic": 37,
+        "tint": 167
       },
       "left_hand": {
         "graphic": 255,
@@ -77,11 +77,11 @@
         "tint": 255
       },
       "special1": {
-        "graphic": 255,
+        "graphic": 2,
         "tint": 255
       },
       "special2": {
-        "graphic": 255,
+        "graphic": 2,
         "tint": 255
       },
       "special3": {
@@ -119,7 +119,7 @@
     "merc_id": "8b2577aa",
     "merc_name_id": 16,
     "merc_type": 8,
-    "merc_experience": 70781130,
+    "merc_experience": 70781140,
     "unknown_before_realm": {
       "0": 0,
       "1": 0,
@@ -199,14 +199,14 @@
     "unknown_after_realm": {
       "0": 0,
       "1": 0,
-      "2": 0,
-      "3": 0,
-      "4": 0,
-      "5": 0,
-      "6": 0,
-      "7": 0,
-      "8": 0,
-      "9": 0,
+      "2": 115,
+      "3": 115,
+      "4": 116,
+      "5": 32,
+      "6": 167,
+      "7": 7,
+      "8": 223,
+      "9": 2,
       "10": 4,
       "11": 0,
       "12": 0,
@@ -219,28 +219,28 @@
       "19": 0,
       "20": 0,
       "21": 0,
-      "22": 4,
+      "22": 0,
       "23": 0,
       "24": 0,
       "25": 0,
-      "26": 0,
-      "27": 0,
-      "28": 0,
-      "29": 0,
-      "30": 0,
-      "31": 0,
-      "32": 0,
-      "33": 0,
+      "26": 117,
+      "27": 110,
+      "28": 103,
+      "29": 32,
+      "30": 255,
+      "31": 7,
+      "32": 217,
+      "33": 3,
       "34": 0,
       "35": 0,
       "36": 0,
       "37": 0,
-      "38": 0,
-      "39": 0,
-      "40": 0,
-      "41": 0,
-      "42": 0,
-      "43": 0,
+      "38": 99,
+      "39": 97,
+      "40": 112,
+      "41": 32,
+      "42": 255,
+      "43": 4,
       "44": 0,
       "45": 0,
       "46": 0,
@@ -2717,15 +2717,15 @@
     "dexterity": 70,
     "vitality": 202,
     "unused_stats": 90,
-    "current_hp": 1195.5,
+    "current_hp": 1435.50390625,
     "max_hp": 1195.5,
-    "current_mana": 278,
+    "current_mana": 362,
     "max_mana": 278,
     "current_stamina": 349,
     "max_stamina": 349,
     "level": 87,
-    "experience": 1248719440,
-    "gold": 69408
+    "experience": 1248719459,
+    "gold": 7761
   },
   "skills": [
     {
@@ -2894,6 +2894,7 @@
           "2": 0
         }
       },
+      "hex": "\n  0x0396: 10 00 a0 00 15 00 00 4f 26 00 10 00 a0 08 15 04\n  0x03a6: 00 cf 4f 00 10 00 a0 08 15 08 00 cf 4f 00 10 04\n  0x03b6: a0 08 15 0c 00 4f 26 00 10 00 80 00 05 00 e4 a7\n  0x03c6: 52 30 35 6b d9 a1 08 41 13 ff 01 10 00 80 00 05\n  0x03d6: 04 c4 a8 14 4e c9 b3 8b 28 02 b0 c4 7f 10 00 80\n  0x03e6: 00 05 20 c4 01 11 6e 07 59 87 ab 04 00 36 e6 e6\n  0x03f6: 06 1e 88 ff",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -2969,6 +2970,7 @@
           "2": 0
         }
       },
+      "hex": "\n  0x03a0: 10 00 a0 08 15 04 00 cf 4f 00 10 00 a0 08 15 08\n  0x03b0: 00 cf 4f 00 10 04 a0 08 15 0c 00 4f 26 00 10 00\n  0x03c0: 80 00 05 00 e4 a7 52 30 35 6b d9 a1 08 41 13 ff\n  0x03d0: 01 10 00 80 00 05 04 c4 a8 14 4e c9 b3 8b 28 02\n  0x03e0: b0 c4 7f 10 00 80 00 05 20 c4 01 11 6e 07 59 87\n  0x03f0: ab 04 00 36 e6 e6 06 1e 88 ff 00 10 00 80 00 05\n  0x0400: 50 e4 fc d8",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3044,6 +3046,7 @@
           "2": 0
         }
       },
+      "hex": "\n  0x03aa: 10 00 a0 08 15 08 00 cf 4f 00 10 04 a0 08 15 0c\n  0x03ba: 00 4f 26 00 10 00 80 00 05 00 e4 a7 52 30 35 6b\n  0x03ca: d9 a1 08 41 13 ff 01 10 00 80 00 05 04 c4 a8 14\n  0x03da: 4e c9 b3 8b 28 02 b0 c4 7f 10 00 80 00 05 20 c4\n  0x03ea: 01 11 6e 07 59 87 ab 04 00 36 e6 e6 06 1e 88 ff\n  0x03fa: 00 10 00 80 00 05 50 e4 fc d8 40 1d f1 01 19 b8\n  0x040a: d4 56 00 28",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3119,6 +3122,7 @@
           "2": 0
         }
       },
+      "hex": "\n  0x03b4: 10 04 a0 08 15 0c 00 4f 26 00 10 00 80 00 05 00\n  0x03c4: e4 a7 52 30 35 6b d9 a1 08 41 13 ff 01 10 00 80\n  0x03d4: 00 05 04 c4 a8 14 4e c9 b3 8b 28 02 b0 c4 7f 10\n  0x03e4: 00 80 00 05 20 c4 01 11 6e 07 59 87 ab 04 00 36\n  0x03f4: e6 e6 06 1e 88 ff 00 10 00 80 00 05 50 e4 fc d8\n  0x0404: 40 1d f1 01 19 b8 d4 56 00 28 39 e0 c2 42 01 43\n  0x0414: e1 92 98 00",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3195,6 +3199,7 @@
         },
         "tome_extra_5": 1
       },
+      "hex": "\n  0x03be: 10 00 80 00 05 00 e4 a7 52 30 35 6b d9 a1 08 41\n  0x03ce: 13 ff 01 10 00 80 00 05 04 c4 a8 14 4e c9 b3 8b\n  0x03de: 28 02 b0 c4 7f 10 00 80 00 05 20 c4 01 11 6e 07\n  0x03ee: 59 87 ab 04 00 36 e6 e6 06 1e 88 ff 00 10 00 80\n  0x03fe: 00 05 50 e4 fc d8 40 1d f1 01 19 b8 d4 56 00 28\n  0x040e: 39 e0 c2 42 01 43 e1 92 98 00 aa f0 1f 10 00 80\n  0x041e: 00 05 98 e4",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3284,6 +3289,7 @@
         },
         "tome_extra_5": 0
       },
+      "hex": "\n  0x03d1: 10 00 80 00 05 04 c4 a8 14 4e c9 b3 8b 28 02 b0\n  0x03e1: c4 7f 10 00 80 00 05 20 c4 01 11 6e 07 59 87 ab\n  0x03f1: 04 00 36 e6 e6 06 1e 88 ff 00 10 00 80 00 05 50\n  0x0401: e4 fc d8 40 1d f1 01 19 b8 d4 56 00 28 39 e0 c2\n  0x0411: 42 01 43 e1 92 98 00 aa f0 1f 10 00 80 00 05 98\n  0x0421: e4 b0 2b 98 25 38 04 52 04 3a d0 d0 e0 3f 10 28\n  0x0431: 80 00 05 c8",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3372,81 +3378,7 @@
           "2": 0
         }
       },
-      "identified": 1,
-      "socketed": 0,
-      "new": 0,
-      "is_ear": 0,
-      "starter_item": 0,
-      "simple_item": 1,
-      "ethereal": 0,
-      "personalized": 0,
-      "given_runeword": 0,
-      "has_chronicle_data": false,
-      "version": "101",
-      "location_id": 0,
-      "equipped_id": 0,
-      "position_x": 7,
-      "position_y": 2,
-      "alt_position_id": 5,
-      "type": "hp4",
-      "categories": [
-        "Healing Potion",
-        "Potion",
-        "Miscellaneous"
-      ],
-      "type_id": 4,
-      "nr_of_items_in_sockets": 0,
-      "has_advanced_stash_quantity": false,
-      "type_name": "Greater Healing Potion|HP4",
-      "inv_file": null,
-      "inv_height": 1,
-      "inv_width": 1,
-      "item_quality": "normal"
-    },
-    {
-      "offset": 8040,
-      "_unknown_data": {
-        "b0_3": {
-          "0": 0,
-          "1": 0,
-          "2": 0,
-          "3": 0
-        },
-        "b5_10": {
-          "0": 0,
-          "1": 0,
-          "2": 0,
-          "3": 0,
-          "4": 0,
-          "5": 0
-        },
-        "b12": {
-          "0": 0
-        },
-        "b14_15": {
-          "0": 0,
-          "1": 0
-        },
-        "b18_20": {
-          "0": 0,
-          "1": 0,
-          "2": 0
-        },
-        "b23": {
-          "0": 1
-        },
-        "b25": {
-          "0": 0
-        },
-        "b27": {
-          "0": 0
-        },
-        "b29_31": {
-          "0": 0,
-          "1": 0,
-          "2": 0
-        }
-      },
+      "hex": "\n  0x03e3: 10 00 80 00 05 20 c4 01 11 6e 07 59 87 ab 04 00\n  0x03f3: 36 e6 e6 06 1e 88 ff 00 10 00 80 00 05 50 e4 fc\n  0x0403: d8 40 1d f1 01 19 b8 d4 56 00 28 39 e0 c2 42 01\n  0x0413: 43 e1 92 98 00 aa f0 1f 10 00 80 00 05 98 e4 b0\n  0x0423: 2b 98 25 38 04 52 04 3a d0 d0 e0 3f 10 28 80 00\n  0x0433: 05 c8 44 bc 19 8e 6f 2b 45 c6 87 fa 78 00 03 03\n  0x0443: 11 e0 f5 c1",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3460,113 +3392,86 @@
       "version": "101",
       "location_id": 0,
       "equipped_id": 0,
-      "position_x": 2,
+      "position_x": 8,
       "position_y": 0,
       "alt_position_id": 1,
-      "type": "box",
+      "type": "9wc",
       "categories": [
-        "Quest"
+        "Polearm",
+        "Spears and Polearms",
+        "Melee Weapon",
+        "Weapon"
       ],
-      "type_id": 4,
-      "quest_difficulty": 0,
+      "type_id": 3,
       "nr_of_items_in_sockets": 0,
-      "id": 2118130951,
-      "level": 13,
-      "quality": 2,
+      "id": 3282863031,
+      "level": 85,
+      "quality": 4,
       "multiple_pictures": 0,
       "class_specific": 0,
-      "normal_12_bits": null,
+      "magic_prefix": 0,
+      "magic_suffix": 795,
+      "magic_suffix_name": "of the Lamprey",
       "timestamp": 0,
+      "max_durability": 55,
+      "current_durability": 55,
       "has_quantity": false,
-      "magic_attributes": [],
-      "has_advanced_stash_quantity": false,
-      "type_name": "Horadric Cube",
-      "inv_file": null,
-      "inv_height": 2,
-      "inv_width": 2,
-      "item_quality": "normal",
-      "displayed_magic_attributes": [],
-      "displayed_runeword_attributes": [],
-      "combined_magic_attributes": [],
-      "displayed_combined_magic_attributes": []
-    },
-    {
-      "offset": 8176,
-      "_unknown_data": {
-        "b0_3": {
-          "0": 0,
-          "1": 0,
-          "2": 0,
-          "3": 0
-        },
-        "b5_10": {
-          "0": 0,
-          "1": 0,
-          "2": 0,
-          "3": 0,
-          "4": 0,
-          "5": 0
-        },
-        "b12": {
-          "0": 0
-        },
-        "b14_15": {
-          "0": 0,
-          "1": 0
-        },
-        "b18_20": {
-          "0": 0,
-          "1": 0,
-          "2": 0
-        },
-        "b23": {
-          "0": 1
-        },
-        "b25": {
-          "0": 0
-        },
-        "b27": {
-          "0": 0
-        },
-        "b29_31": {
-          "0": 0,
-          "1": 0,
-          "2": 0
+      "magic_attributes": [
+        {
+          "id": 60,
+          "values": [
+            8
+          ],
+          "name": "lifedrainmindam"
         }
-      },
-      "identified": 1,
-      "socketed": 0,
-      "new": 0,
-      "is_ear": 0,
-      "starter_item": 0,
-      "simple_item": 1,
-      "ethereal": 0,
-      "personalized": 0,
-      "given_runeword": 0,
-      "has_chronicle_data": false,
-      "version": "101",
-      "location_id": 0,
-      "equipped_id": 0,
-      "position_x": 4,
-      "position_y": 0,
-      "alt_position_id": 1,
-      "type": "vps",
-      "categories": [
-        "Stamina Potion",
-        "Potion",
-        "Miscellaneous"
       ],
-      "type_id": 4,
-      "nr_of_items_in_sockets": 0,
       "has_advanced_stash_quantity": false,
-      "type_name": "Stamina Potion|VPS",
+      "base_damage": {
+        "twohandmindam": 30,
+        "twohandmaxdam": 70
+      },
+      "type_name": "Grim Scythe",
+      "reqstr": 140,
+      "reqdex": 140,
       "inv_file": null,
-      "inv_height": 1,
-      "inv_width": 1,
-      "item_quality": "normal"
+      "inv_height": 4,
+      "inv_width": 2,
+      "inv_transform": 2,
+      "item_quality": "exceptional",
+      "transform_color": "cred",
+      "displayed_magic_attributes": [
+        {
+          "id": 60,
+          "values": [
+            8
+          ],
+          "name": "lifedrainmindam",
+          "description": "ÿcT8% Life stolen per hitÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 60,
+          "values": [
+            8
+          ],
+          "name": "lifedrainmindam"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 60,
+          "values": [
+            8
+          ],
+          "name": "lifedrainmindam",
+          "description": "ÿcT8% Life stolen per hitÿc0"
+        }
+      ]
     },
     {
-      "offset": 8256,
+      "offset": 8152,
       "_unknown_data": {
         "b0_3": {
           "0": 0,
@@ -3609,6 +3514,7 @@
           "2": 0
         }
       },
+      "hex": "\n  0x03fb: 10 00 80 00 05 50 e4 fc d8 40 1d f1 01 19 b8 d4\n  0x040b: 56 00 28 39 e0 c2 42 01 43 e1 92 98 00 aa f0 1f\n  0x041b: 10 00 80 00 05 98 e4 b0 2b 98 25 38 04 52 04 3a\n  0x042b: d0 d0 e0 3f 10 28 80 00 05 c8 44 bc 19 8e 6f 2b\n  0x043b: 45 c6 87 fa 78 00 03 03 11 e0 f5 c1 03 24 a0 9d\n  0x044b: 98 96 62 da 8a 69 2d a6 25 1b 4c d8 fc 07 10 08\n  0x045b: 80 00 05 44",
       "identified": 1,
       "socketed": 0,
       "new": 0,
@@ -3625,28 +3531,758 @@
       "position_x": 4,
       "position_y": 1,
       "alt_position_id": 1,
-      "type": "key",
+      "type": "rin",
       "categories": [
-        "Key",
-        "Miscellaneous"
+        "Ring",
+        "Miscellaneous",
+        "Helm"
       ],
       "type_id": 4,
       "nr_of_items_in_sockets": 0,
-      "id": 2837704850,
+      "id": 2417955284,
       "level": 1,
+      "quality": 7,
+      "multiple_pictures": 1,
+      "picture_id": 4,
+      "class_specific": 0,
+      "unique_id": 1389,
+      "unique_name": "Ring of Engagement",
+      "timestamp": 0,
+      "has_quantity": false,
+      "magic_attributes": [
+        {
+          "id": 0,
+          "values": [
+            5
+          ],
+          "name": "strength"
+        },
+        {
+          "id": 7,
+          "values": [
+            14
+          ],
+          "name": "maxhp"
+        },
+        {
+          "id": 22,
+          "values": [
+            5
+          ],
+          "name": "maxdamage"
+        },
+        {
+          "id": 24,
+          "values": [
+            5
+          ],
+          "name": "secondary_maxdamage"
+        },
+        {
+          "id": 151,
+          "values": [
+            98,
+            1
+          ],
+          "name": "item_aura"
+        },
+        {
+          "id": 160,
+          "values": [
+            5
+          ],
+          "name": "item_throw_maxdamage"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Ring",
+      "inv_file": null,
+      "inv_height": 1,
+      "inv_width": 1,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 151,
+          "values": [
+            98,
+            1
+          ],
+          "name": "item_aura",
+          "description": "ÿc3ÿc9Level 1ÿc3 ÿcOMightÿc3 Aura When Equippedÿc0"
+        },
+        {
+          "id": 22,
+          "values": [
+            5
+          ],
+          "name": "maxdamage",
+          "description": "ÿcV+5 to Maximum Damageÿc0",
+          "visible": false
+        },
+        {
+          "id": 24,
+          "values": [
+            5
+          ],
+          "name": "secondary_maxdamage",
+          "description": "ÿcV+5 to Maximum Damageÿc0"
+        },
+        {
+          "id": 0,
+          "values": [
+            5
+          ],
+          "name": "strength",
+          "description": "ÿcV+5 to Strengthÿc0"
+        },
+        {
+          "id": 7,
+          "values": [
+            14
+          ],
+          "name": "maxhp",
+          "description": "ÿcV+14 to Lifeÿc0"
+        },
+        {
+          "id": 160,
+          "values": [
+            5
+          ],
+          "name": "item_throw_maxdamage"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 0,
+          "values": [
+            5
+          ],
+          "name": "strength"
+        },
+        {
+          "id": 7,
+          "values": [
+            14
+          ],
+          "name": "maxhp"
+        },
+        {
+          "id": 22,
+          "values": [
+            5
+          ],
+          "name": "maxdamage"
+        },
+        {
+          "id": 24,
+          "values": [
+            5
+          ],
+          "name": "secondary_maxdamage"
+        },
+        {
+          "id": 151,
+          "values": [
+            98,
+            1
+          ],
+          "name": "item_aura"
+        },
+        {
+          "id": 160,
+          "values": [
+            5
+          ],
+          "name": "item_throw_maxdamage"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 151,
+          "values": [
+            98,
+            1
+          ],
+          "name": "item_aura",
+          "description": "ÿc3ÿc9Level 1ÿc3 ÿcOMightÿc3 Aura When Equippedÿc0"
+        },
+        {
+          "id": 22,
+          "values": [
+            5
+          ],
+          "name": "maxdamage",
+          "description": "ÿcV+5 to Maximum Damageÿc0",
+          "visible": false
+        },
+        {
+          "id": 24,
+          "values": [
+            5
+          ],
+          "name": "secondary_maxdamage",
+          "description": "ÿcV+5 to Maximum Damageÿc0"
+        },
+        {
+          "id": 0,
+          "values": [
+            5
+          ],
+          "name": "strength",
+          "description": "ÿcV+5 to Strengthÿc0"
+        },
+        {
+          "id": 7,
+          "values": [
+            14
+          ],
+          "name": "maxhp",
+          "description": "ÿcV+14 to Lifeÿc0"
+        },
+        {
+          "id": 160,
+          "values": [
+            5
+          ],
+          "name": "item_throw_maxdamage"
+        }
+      ]
+    },
+    {
+      "offset": 8408,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "hex": "\n  0x041b: 10 00 80 00 05 98 e4 b0 2b 98 25 38 04 52 04 3a\n  0x042b: d0 d0 e0 3f 10 28 80 00 05 c8 44 bc 19 8e 6f 2b\n  0x043b: 45 c6 87 fa 78 00 03 03 11 e0 f5 c1 03 24 a0 9d\n  0x044b: 98 96 62 da 8a 69 2d a6 25 1b 4c d8 fc 07 10 08\n  0x045b: 80 00 05 44 e5 ae 1b 2a d6 3a 2c 28 82 06 30 30\n  0x046b: 10 ff 01 4a 4d 00 00 6a 66 4a 4d 00 00 6b 66 00\n  0x047b: 01 00 6c 66",
+      "identified": 1,
+      "socketed": 0,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 6,
+      "position_y": 2,
+      "alt_position_id": 1,
+      "type": "rng",
+      "categories": [
+        "Armor",
+        "Any Armor"
+      ],
+      "type_id": 1,
+      "nr_of_items_in_sockets": 0,
+      "id": 2165180774,
+      "level": 20,
       "quality": 2,
       "multiple_pictures": 0,
       "class_specific": 0,
       "normal_12_bits": null,
       "timestamp": 0,
-      "has_quantity": true,
-      "quantity": 3,
+      "defense_rating": 48,
+      "max_durability": 26,
+      "current_durability": 26,
+      "has_quantity": false,
       "magic_attributes": [],
       "has_advanced_stash_quantity": false,
-      "type_name": "Key|KEY",
+      "type_name": "Ring Mail",
+      "reqstr": 36,
       "inv_file": null,
-      "inv_height": 1,
-      "inv_width": 1,
+      "inv_height": 3,
+      "inv_width": 2,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [],
+      "displayed_combined_magic_attributes": []
+    },
+    {
+      "offset": 8568,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "hex": "\n  0x042f: 10 28 80 00 05 c8 44 bc 19 8e 6f 2b 45 c6 87 fa\n  0x043f: 78 00 03 03 11 e0 f5 c1 03 24 a0 9d 98 96 62 da\n  0x044f: 8a 69 2d a6 25 1b 4c d8 fc 07 10 08 80 00 05 44\n  0x045f: e5 ae 1b 2a d6 3a 2c 28 82 06 30 30 10 ff 01 4a\n  0x046f: 4d 00 00 6a 66 4a 4d 00 00 6b 66 00 01 00 6c 66\n  0x047f: 00 00",
+      "identified": 1,
+      "socketed": 1,
+      "new": 1,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 2,
+      "position_y": 3,
+      "alt_position_id": 1,
+      "type": "cap",
+      "categories": [
+        "Merc Equip",
+        "Any Armor",
+        "Helm"
+      ],
+      "type_id": 1,
+      "nr_of_items_in_sockets": 0,
+      "id": 580237255,
+      "level": 99,
+      "quality": 7,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "unique_id": 1002,
+      "unique_name": "Trickster's Guise",
+      "timestamp": 0,
+      "defense_rating": 5,
+      "max_durability": 12,
+      "current_durability": 12,
+      "has_quantity": false,
+      "total_nr_of_sockets": 1,
+      "magic_attributes": [
+        {
+          "id": 1,
+          "values": [
+            15
+          ],
+          "name": "energy"
+        },
+        {
+          "id": 31,
+          "values": [
+            20
+          ],
+          "name": "armorclass"
+        },
+        {
+          "id": 36,
+          "values": [
+            8
+          ],
+          "name": "damageresist"
+        },
+        {
+          "id": 39,
+          "values": [
+            11
+          ],
+          "name": "fireresist"
+        },
+        {
+          "id": 41,
+          "values": [
+            11
+          ],
+          "name": "lightresist"
+        },
+        {
+          "id": 43,
+          "values": [
+            11
+          ],
+          "name": "coldresist"
+        },
+        {
+          "id": 45,
+          "values": [
+            11
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 201,
+          "values": [
+            3,
+            38,
+            27
+          ],
+          "name": "item_skillongethit"
+        }
+      ],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Cap",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 2,
+      "inv_transform": 8,
+      "item_quality": "normal",
+      "displayed_magic_attributes": [
+        {
+          "id": 201,
+          "values": [
+            3,
+            38,
+            27
+          ],
+          "name": "item_skillongethit",
+          "description": "ÿc3ÿc227% Chance to castÿc3 ÿc9level 3ÿc3 ÿcOCharged Boltÿc3 when struckÿc0"
+        },
+        {
+          "id": 31,
+          "values": [
+            20
+          ],
+          "name": "armorclass",
+          "description": "ÿcA+20 Defenseÿc0"
+        },
+        {
+          "id": 1,
+          "values": [
+            15
+          ],
+          "name": "energy",
+          "description": "ÿcO+15 to Energyÿc0"
+        },
+        {
+          "id": 43,
+          "values": [
+            11
+          ],
+          "name": "coldresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 41,
+          "values": [
+            11
+          ],
+          "name": "lightresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 39,
+          "values": [
+            11
+          ],
+          "name": "fireresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 45,
+          "values": [
+            11
+          ],
+          "name": "poisonresist",
+          "description": "ÿc4All Resistances +11ÿc0"
+        },
+        {
+          "id": 36,
+          "values": [
+            8
+          ],
+          "name": "damageresist",
+          "description": "ÿc4Physical Damage Received Reduced by 8%ÿc0"
+        }
+      ],
+      "displayed_runeword_attributes": [],
+      "combined_magic_attributes": [
+        {
+          "id": 1,
+          "values": [
+            15
+          ],
+          "name": "energy"
+        },
+        {
+          "id": 31,
+          "values": [
+            20
+          ],
+          "name": "armorclass"
+        },
+        {
+          "id": 36,
+          "values": [
+            8
+          ],
+          "name": "damageresist"
+        },
+        {
+          "id": 39,
+          "values": [
+            11
+          ],
+          "name": "fireresist"
+        },
+        {
+          "id": 41,
+          "values": [
+            11
+          ],
+          "name": "lightresist"
+        },
+        {
+          "id": 43,
+          "values": [
+            11
+          ],
+          "name": "coldresist"
+        },
+        {
+          "id": 45,
+          "values": [
+            11
+          ],
+          "name": "poisonresist"
+        },
+        {
+          "id": 201,
+          "values": [
+            3,
+            38,
+            27
+          ],
+          "name": "item_skillongethit"
+        }
+      ],
+      "displayed_combined_magic_attributes": [
+        {
+          "id": 201,
+          "values": [
+            3,
+            38,
+            27
+          ],
+          "name": "item_skillongethit",
+          "description": "ÿc3ÿc227% Chance to castÿc3 ÿc9level 3ÿc3 ÿcOCharged Boltÿc3 when struckÿc0"
+        },
+        {
+          "id": 31,
+          "values": [
+            20
+          ],
+          "name": "armorclass",
+          "description": "ÿcA+20 Defenseÿc0"
+        },
+        {
+          "id": 1,
+          "values": [
+            15
+          ],
+          "name": "energy",
+          "description": "ÿcO+15 to Energyÿc0"
+        },
+        {
+          "id": 43,
+          "values": [
+            11
+          ],
+          "name": "coldresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 41,
+          "values": [
+            11
+          ],
+          "name": "lightresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 39,
+          "values": [
+            11
+          ],
+          "name": "fireresist",
+          "description": "ÿc4All Resistances +11ÿc0",
+          "visible": false
+        },
+        {
+          "id": 45,
+          "values": [
+            11
+          ],
+          "name": "poisonresist",
+          "description": "ÿc4All Resistances +11ÿc0"
+        },
+        {
+          "id": 36,
+          "values": [
+            8
+          ],
+          "name": "damageresist",
+          "description": "ÿc4Physical Damage Received Reduced by 8%ÿc0"
+        }
+      ]
+    },
+    {
+      "offset": 8904,
+      "_unknown_data": {
+        "b0_3": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "b5_10": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "b12": {
+          "0": 0
+        },
+        "b14_15": {
+          "0": 0,
+          "1": 0
+        },
+        "b18_20": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "b23": {
+          "0": 1
+        },
+        "b25": {
+          "0": 0
+        },
+        "b27": {
+          "0": 0
+        },
+        "b29_31": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "hex": "\n  0x0459: 10 08 80 00 05 44 e5 ae 1b 2a d6 3a 2c 28 82 06\n  0x0469: 30 30 10 ff 01 4a 4d 00 00 6a 66 4a 4d 00 00 6b\n  0x0479: 66 00 01 00 6c 66 00 00",
+      "identified": 1,
+      "socketed": 1,
+      "new": 0,
+      "is_ear": 0,
+      "starter_item": 0,
+      "simple_item": 0,
+      "ethereal": 0,
+      "personalized": 0,
+      "given_runeword": 0,
+      "has_chronicle_data": false,
+      "version": "101",
+      "location_id": 0,
+      "equipped_id": 0,
+      "position_x": 1,
+      "position_y": 5,
+      "alt_position_id": 1,
+      "type": "lgl",
+      "categories": [
+        "Gloves",
+        "Any Armor",
+        "Helm"
+      ],
+      "type_id": 1,
+      "nr_of_items_in_sockets": 0,
+      "id": 371026709,
+      "level": 20,
+      "quality": 2,
+      "multiple_pictures": 0,
+      "class_specific": 0,
+      "normal_12_bits": null,
+      "timestamp": 0,
+      "defense_rating": 3,
+      "max_durability": 12,
+      "current_durability": 12,
+      "has_quantity": false,
+      "total_nr_of_sockets": 1,
+      "magic_attributes": [],
+      "has_advanced_stash_quantity": false,
+      "type_name": "Leather Gloves",
+      "inv_file": null,
+      "inv_height": 2,
+      "inv_width": 2,
+      "inv_transform": 8,
       "item_quality": "normal",
       "displayed_magic_attributes": [],
       "displayed_runeword_attributes": [],
@@ -3659,4 +4295,3 @@
   "has_demon": 0,
   "item_bonuses": []
 }
-

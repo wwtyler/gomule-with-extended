@@ -32,29 +32,48 @@ import java.util.Properties;
 public final class D2UI {
 
     private static final Properties FILE_PROPS = loadFileProps();
-    private static final double UI_SCALE       = computeUiScale();
-    private static final int    TOOLTIP_FONT   = computeTooltipFontSize();
-    private static final int    MENU_FONT      = computeMenuFontSize();
+    private static double           uiScale     = computeUiScale();
+    private static int              tooltipFont  = computeTooltipFontSize();
+    private static int              menuFont     = computeMenuFontSize();
 
     private D2UI() {}
 
     /** UI scale factor for inventory/stash painter panels. */
-    public static double getUiScale() { return UI_SCALE; }
+    public static double getUiScale() { return uiScale; }
+
+    /**
+     * Update the UI scale factor at runtime (clamped to 0.5–3.0).
+     * Callers must trigger a rebuild/repack of all open inventory panels
+     * after calling this method.
+     */
+    public static void setUiScale(double scale) {
+        uiScale = Math.max(0.5, Math.min(3.0, scale));
+    }
 
     /** Tooltip font size in points. */
-    public static int getTooltipFontSize() { return TOOLTIP_FONT; }
+    public static int getTooltipFontSize() { return tooltipFont; }
+
+    /** Update tooltip font size at runtime (clamped 8–48). */
+    public static void setTooltipFontSize(int size) {
+        tooltipFont = Math.max(8, Math.min(48, size));
+    }
 
     /**
      * Default font size for all Swing UI components (menus, buttons, labels…).
      * Returns 0 when the user has not set the property (keep L&F default).
      */
-    public static int getMenuFontSize() { return MENU_FONT; }
+    public static int getMenuFontSize() { return menuFont; }
+
+    /** Update menu/component font size at runtime (clamped 8–48; 0 = L&F default). */
+    public static void setMenuFontSize(int size) {
+        menuFont = (size <= 0) ? 0 : Math.max(8, Math.min(48, size));
+    }
 
     /** Scale an int dimension by {@link #getUiScale()} (HALF_UP rounding). */
-    public static int sx(int n) { return (int) Math.round(n * UI_SCALE); }
+    public static int sx(int n) { return (int) Math.round(n * uiScale); }
 
     /** Reverse-scale a screen-space int back to native coordinates. */
-    public static int unsx(int n) { return (int) Math.round(n / UI_SCALE); }
+    public static int unsx(int n) { return (int) Math.round(n / uiScale); }
 
     private static Properties loadFileProps() {
         // 1. Load global app.properties (base layer)

@@ -25,7 +25,7 @@ public class TranslationsLoader {
 
     // Default lng directories — separate from sprite.data.dirs
     private static final String DEFAULT_LNG_DIRS =
-            "D:\\BlizGames\\Diablo II Resurrected\\mods\\D2RMMMDKV3\\D2RMMMDKV3.mpq\\data" + ";" +
+            "D:\\BlizGames\\Diablo II Resurrected\\mods\\TylerPack\\TylerPack.mpq\\data" + ";" +
             "D:\\260305\\D2RM_Ladiks Casc Viewer\\Work\\data\\data";
 
     /** File names to scan in {@code local/lng/strings/} within each data dir. */
@@ -60,7 +60,6 @@ public class TranslationsLoader {
             props.setProperty(PROP_LOCALE, locale);
             FileManagerProperties.saveFileManagerProperties(props);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -96,7 +95,7 @@ public class TranslationsLoader {
         list.add(MapBasedTranslations.loadTranslations(getResource("d2Files/D2R_1.0/translations/ui-controller.json")));
         list.add(MapBasedTranslations.loadTranslations(getResource("d2Files/D2R_1.0/translations/custom-gomule.json")));
 
-        return new CompositeTranslations(list.toArray(new Translations[0]));
+        return new CompositeTranslations(list.toArray(Translations[]::new));
     }
 
     /** Returns the configured lng data directories (in order). */
@@ -128,7 +127,6 @@ public class TranslationsLoader {
             props.setProperty(PROP_LNG_DIRS, String.join(";", paths));
             FileManagerProperties.saveFileManagerProperties(props);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

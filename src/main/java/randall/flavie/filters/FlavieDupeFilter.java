@@ -3,16 +3,16 @@
  */
 package randall.flavie.filters;
 
-import randall.flavie.D2ItemInterface;
-import randall.flavie.Flavie;
-import randall.util.RandallUtil;
-
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import randall.flavie.D2ItemInterface;
+import randall.flavie.Flavie;
+import randall.util.RandallUtil;
 
 /**
  * @author mbr
@@ -21,12 +21,12 @@ import java.util.HashMap;
 public class FlavieDupeFilter implements FlavieItemFilter {
     //	private String			iDupeFile;
     private PrintStream iDupeOut = null;
-    private HashMap iDupeList = new HashMap();
+    private final HashMap iDupeList = new HashMap();
     private int iDupeCounter = 0;
 
     public FlavieDupeFilter(String pDupeName, Reader pDupeFile) throws Exception {
 //		iDupeFile = pDupeFile;
-        BufferedReader lIn = new BufferedReader(pDupeFile);
+        try (BufferedReader lIn = new BufferedReader(pDupeFile)) {
         String lLine = lIn.readLine();
         while (lLine != null) {
             // skip empty lines
@@ -45,7 +45,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
             }
             lLine = lIn.readLine();
         }
-        lIn.close();
+        }
         System.err.println("Dupelist " + pDupeName + " contains " + iDupeList.size() + " items.");
     }
 
@@ -53,6 +53,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         return iDupeList;
     }
 
+    @Override
     public void initialize() throws Exception {
         if (iDupeOut != null) {
             throw new Exception("Dupe file allready initialised");
@@ -62,6 +63,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
 //		iDupeOut.println("Start dupe detection");
     }
 
+    @Override
     public void finish() throws Exception {
         if (iDupeOut == null) {
             throw new Exception("Dupe file not initialised");
@@ -71,6 +73,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         iDupeOut = null;
     }
 
+    @Override
     public boolean check(D2ItemInterface pItemFound) {
         if (iDupeList.containsKey(pItemFound.getFingerprint())) {
             iDupeOut.println("Item " + pItemFound.getFingerprint() + "/" + pItemFound.getName() + " from file " + pItemFound.getFileName() + " is listed as a dupe");
@@ -80,6 +83,7 @@ public class FlavieDupeFilter implements FlavieItemFilter {
         return true;
     }
 
+    @Override
     public boolean check(String pFingerprint, String pItemname) {
         if (iDupeList.containsKey(pFingerprint)) {
             iDupeOut.println("Item " + pFingerprint + "/" + pItemname + " is listed as a dupe");

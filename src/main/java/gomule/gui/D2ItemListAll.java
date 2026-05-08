@@ -6,13 +6,14 @@
  */
 package gomule.gui;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import gomule.d2s.D2Character;
 import gomule.d2x.D2Stash;
 import gomule.item.D2Item;
+import gomule.util.D2Log;
 import gomule.util.D2Project;
-
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  * @author Marco
@@ -24,15 +25,15 @@ public class D2ItemListAll implements D2ItemList {
     private D2FileManager iFileManager;
     private D2Project iProject;
 
-    private ArrayList<D2ItemList> iList = new ArrayList<D2ItemList>();
-    private ArrayList<D2ItemListListener> iD2ItemListListenerList = new ArrayList<D2ItemListListener>();
+    private ArrayList<D2ItemList> iList = new ArrayList<>();
+    private ArrayList<D2ItemListListener> iD2ItemListListenerList = new ArrayList<>();
     private boolean iIgnoreItemListEvents = false;
 
     public D2ItemListAll(D2FileManager pFileManager, D2Project pProject) {
         iFileManager = pFileManager;
         iProject = pProject;
 
-        ArrayList<String> lFileNames = new ArrayList<String>();
+        ArrayList<String> lFileNames = new ArrayList<>();
 
         lFileNames.addAll(iProject.getCharList());
         lFileNames.addAll(iProject.getStashList());
@@ -43,7 +44,7 @@ public class D2ItemListAll implements D2ItemList {
                 iList.add(lList);
             } catch (Exception pEx) {
                 System.err.println("Error with: " + ((String) lFileNames.get(i)));
-                pEx.printStackTrace();
+                D2Log.error("D2ItemListAll", pEx, "Error loading file: %s", lFileNames.get(i));
             }
         }
         fireD2ItemListEvent();
@@ -60,7 +61,7 @@ public class D2ItemListAll implements D2ItemList {
             iList.add(lList);
             fireD2ItemListEvent();
         } catch (Exception pEx) {
-            pEx.printStackTrace();
+            D2Log.error("D2ItemListAll", pEx, "connect failed: %s", pFileName);
         }
     }
 
@@ -81,7 +82,7 @@ public class D2ItemListAll implements D2ItemList {
                 fireD2ItemListEvent();
             }
         } catch (Exception pEx) {
-            pEx.printStackTrace();
+            D2Log.error("D2ItemListAll", pEx, "disconnect failed: %s", pFileName);
         }
     }
 
@@ -89,6 +90,7 @@ public class D2ItemListAll implements D2ItemList {
         return iList;
     }
 
+    @Override
     public String getFilename() {
         return "all";
     }
@@ -109,6 +111,7 @@ public class D2ItemListAll implements D2ItemList {
         return null;
     }
 
+    @Override
     public boolean containsItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -120,6 +123,7 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
+    @Override
     public void removeItem(D2Item pItem) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -131,8 +135,9 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
+    @Override
     public ArrayList<D2Item> getItemList() {
-        ArrayList<D2Item> lList = new ArrayList<D2Item>();
+        ArrayList<D2Item> lList = new ArrayList<>();
 
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -143,6 +148,7 @@ public class D2ItemListAll implements D2ItemList {
         return lList;
     }
 
+    @Override
     public int getNrItems() {
         int lNrItems = 0;
 
@@ -155,6 +161,7 @@ public class D2ItemListAll implements D2ItemList {
         return lNrItems;
     }
 
+    @Override
     public boolean isModified() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -167,6 +174,7 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
+    @Override
     public void addD2ItemListListener(D2ItemListListener pListener) {
         iD2ItemListListenerList.add(pListener);
         D2ItemList lItemList;
@@ -176,6 +184,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
+    @Override
     public void removeD2ItemListListener(D2ItemListListener pListener) {
         iD2ItemListListenerList.remove(pListener);
         D2ItemList lItemList;
@@ -185,7 +194,8 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
-    public void fireD2ItemListEvent() {
+    @Override
+    public final void fireD2ItemListEvent() {
         if (iIgnoreItemListEvents) {
             return;
         }
@@ -195,6 +205,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
+    @Override
     public boolean hasD2ItemListListener() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -207,6 +218,7 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
+    @Override
     public void save(D2Project pProject) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -217,6 +229,7 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
+    @Override
     public boolean isSC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -229,6 +242,7 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
+    @Override
     public boolean isHC() {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -241,6 +255,7 @@ public class D2ItemListAll implements D2ItemList {
         return false;
     }
 
+    @Override
     public void fullDump(PrintWriter pWriter) {
         D2ItemList lItemList;
         for (int i = 0; i < iList.size(); i++) {
@@ -249,23 +264,28 @@ public class D2ItemListAll implements D2ItemList {
         }
     }
 
+    @Override
     public void initTimestamp() {
         throw new RuntimeException("Internal error: wrong calling");
     }
 
+    @Override
     public boolean checkTimestamp() {
 //        throw new RuntimeException("Internal error: wrong calling");
         return true;
     }
 
+    @Override
     public void ignoreItemListEvents() {
         iIgnoreItemListEvents = true;
     }
 
+    @Override
     public void listenItemListEvents() {
         iIgnoreItemListEvents = false;
     }
 
+    @Override
     public void addItem(D2Item pItem) {
         //Do Nothing!
     }

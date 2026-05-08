@@ -25,6 +25,7 @@ import gomule.d2i.D2SharedStash;
 import gomule.gui.D2FileManager;
 import gomule.gui.D2ImageCache;
 import gomule.gui.LayoutProfile;
+import gomule.gui.PanelTheme;
 import gomule.item.D2Item;
 import gomule.util.D2UI;
 import gomule.util.ScaledPainterPanel;
@@ -45,10 +46,13 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     // ── Tooltip size cache ────────────────────────────────────────────────────
     // Stores the last measured JToolTip preferred size so clampToWindow() uses
     // actual dimensions instead of a hardcoded estimate.
-    private String  lastMeasuredTipText = null;
-    private int     cachedTipW = 360, cachedTipH = 450;
+    private String lastMeasuredTipText = null;
+    private int cachedTipW = 360, cachedTipH = 450;
 
-    /** Sprites for the materials pane, drawn directly at screen coords in paint() to avoid double-scaling blur. */
+    /**
+     * Sprites for the materials pane, drawn directly at screen coords in paint() to avoid
+     * double-scaling blur.
+     */
     private final java.util.List<MatSpriteDraw> matSprites = new java.util.ArrayList<>();
     /** Quantity count labels for material slots; drawn after sprites in paint() to stay on top. */
     private final java.util.List<MatCountDraw> matCounts = new java.util.ArrayList<>();
@@ -60,27 +64,45 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         final int x, y, w, h; // native (unscaled) coords
         final String label;
         final boolean active;
+
         TabDraw(int x, int y, int w, int h, String label, boolean active) {
-            this.x = x; this.y = y; this.w = w; this.h = h;
-            this.label = label; this.active = active;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.label = label;
+            this.active = active;
         }
     }
 
     private static final class MatSpriteDraw {
         final Image img;
         final int x, y, w, h; // native (unscaled) coords
-        final boolean ghost;  // true when qty==0 — drawn semi-transparent
+        final boolean ghost; // true when qty==0 — drawn semi-transparent
+
         MatSpriteDraw(Image img, int x, int y, int w, int h, boolean ghost) {
-            this.img = img; this.x = x; this.y = y; this.w = w; this.h = h; this.ghost = ghost;
+            this.img = img;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.ghost = ghost;
         }
     }
 
-    /** Quantity labels for material slots; drawn in paint() after sprites so they are never covered. */
+    /**
+     * Quantity labels for material slots; drawn in paint() after sprites so they are never covered.
+     */
     private static final class MatCountDraw {
         final String text;
         final int x, y, w, h; // native (unscaled) slot coords
+
         MatCountDraw(String text, int x, int y, int w, int h) {
-            this.text = text; this.x = x; this.y = y; this.w = w; this.h = h;
+            this.text = text;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
         }
     }
 
@@ -105,34 +127,42 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         goldValueStr = "";
         GraphicsConfiguration gc = fileManager.getGraphicsConfiguration();
         if (gc == null) {
-            gc = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getDefaultScreenDevice().getDefaultConfiguration();
+            gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+                    .getDefaultConfiguration();
         }
         background = gc.createCompatibleImage(BG_WIDTH, BG_HEIGHT, Transparency.TRANSLUCENT);
         Graphics2D lGraphics = (Graphics2D) background.getGraphics();
         if (LayoutProfile.proceduralBackground) {
-            lGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            lGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            lGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            lGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             drawProceduralBackground(lGraphics);
         } else {
-            Image lEmptyBackground = D2ImageCache.getImage("stash" + (selectedStashPaneIndex + 1) + "-16x13.jpg");
-            lGraphics.drawImage(lEmptyBackground, 0, 0, this);
+            Image lEmptyBackground =
+                    D2ImageCache.getImage("stash" + (selectedStashPaneIndex + 1) + "-16x13.jpg");
+            if (lEmptyBackground != null) {
+                lGraphics.drawImage(lEmptyBackground, 0, 0, this);
+            }
         }
-        if (getSharedStash() != null) placeItemsInView();
+        if (getSharedStash() != null)
+            placeItemsInView();
         repaint();
     }
 
-    @SuppressWarnings("unused")
     private void drawProceduralBackground(Graphics2D g) {
-        Color bgColor     = new Color(108, 84, 54);
-        Color panelColor  = new Color(118, 95, 62);
-        Color borderColor = new Color(192, 155, 105);
-        Color gridLine    = new Color(142, 116, 78);
-        Color tabActive   = new Color(135, 108, 72);
-        Color tabInactive = new Color(85, 68, 45);
-        Color goldBar     = new Color(120, 95, 62);
-        Color textBright  = new Color(248, 215, 148);
-        Color textDim     = new Color(240, 205, 132);
+        PanelTheme theme = PanelTheme.active;
+        Color bgColor = theme.bg;
+        Color panelColor = theme.gridBg;
+        Color borderColor = theme.gridBorder;
+        Color gridLine = theme.gridLine;
+        Color tabActive = theme.weaponActiveBg;
+        Color tabInactive = theme.weaponInactiveBg;
+        Color goldBar = theme.equipZoneBg;
+        @SuppressWarnings("unused")
+        Color textBright = theme.weaponActiveText;
+        @SuppressWarnings("unused")
+        Color textDim = theme.weaponInactiveText;
 
         // Full background
         g.setColor(bgColor);
@@ -143,10 +173,12 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         g.fillRect(18, 15, BG_WIDTH - 36, 20);
         g.setColor(borderColor);
         g.drawRect(18, 15, BG_WIDTH - 36, 20);
-        // "Gold:" label and value are drawn directly in paint() at screen coords to avoid double-scale blur
+        // "Gold:" label and value are drawn directly in paint() at screen coords to avoid
+        // double-scale blur
 
         // Tabs (y=38..54) — include materials tab if present
-        boolean hasMaterialsTab = getSharedStash() != null && getSharedStash().getMaterialsPane() != null;
+        boolean hasMaterialsTab =
+                getSharedStash() != null && getSharedStash().getMaterialsPane() != null;
         int numNormalPanes = (getSharedStash() != null) ? getSharedStash().getPanes().size() : 5;
         int numTabs = numNormalPanes + (hasMaterialsTab ? 1 : 0);
         numTabs = Math.max(1, Math.min(numTabs, 8));
@@ -157,7 +189,7 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             boolean active = (i == selectedStashPaneIndex);
             g.setColor(active ? tabActive : tabInactive);
             g.fillRect(tabX, tabY, tabWidth - 1, tabH);
-            g.setColor(borderColor);
+            g.setColor(active ? theme.weaponActiveBorder : theme.weaponInactiveBorder);
             g.drawRect(tabX, tabY, tabWidth - 1, tabH);
             boolean isMaterialsTab = hasMaterialsTab && i == numTabs - 1;
             String label = isMaterialsTab ? "M" : String.valueOf(i + 1);
@@ -166,10 +198,10 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         }
 
         // Grid area (16 cols × 13 rows) — or plain panel for materials tab
-        int gridX    = getXCoordForCol(0);        // 17
-        int gridY    = getYCoordForRow(0);        // 59
-        int gridEndX = getXCoordForCol(15) + 28;  // 502
-        int gridEndY = getYCoordForRow(12) + 28;  // 453
+        int gridX = getXCoordForCol(0); // 17
+        int gridY = getYCoordForRow(0); // 59
+        int gridEndX = getXCoordForCol(15) + 28; // 502
+        int gridEndY = getYCoordForRow(12) + 28; // 453
         g.setColor(panelColor);
         g.fillRect(gridX, gridY, gridEndX - gridX, gridEndY - gridY);
         if (!isMaterialsTabSelected()) {
@@ -193,9 +225,11 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             return;
         }
         D2SharedStash.D2SharedStashPane pane = getSelectedStashPane();
-        if (pane == null) return;
+        if (pane == null)
+            return;
         pane.getItems().forEach(item -> {
-            if (item.get_location() != 0 && item.get_body_position() != 0 && item.get_panel() != 5) return;
+            if (item.get_location() != 0 && item.get_body_position() != 0 && item.get_panel() != 5)
+                return;
             int col = item.get_col();
             int row = item.get_row();
             int x = getXCoordForCol(col);
@@ -212,7 +246,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
                 matSprites.add(new MatSpriteDraw(sprite, x, y, slotW, slotH, false));
             } else {
                 Image image = D2ImageCache.getDC6Image(item);
-                if (image != null) bg.drawImage(image, x, y, this);
+                if (image != null)
+                    bg.drawImage(image, x, y, this);
             }
         });
         // Draw gold amount
@@ -227,42 +262,44 @@ public final class SharedStashPanel extends ScaledPainterPanel {
 
     // ── D2RMM AdvancedStashTab layout constants ──────────────────────────────
     // GEMS_GRID[quality][gemType] – rendered as 7 visual cols × 5 rows
-    private static final String[][] GEMS_GRID = {
-        {"gcw", "gcg", "gcr", "gcy", "gcv", "gcb", "skc"}, // Chipped
-        {"gfw", "gfg", "gfr", "gfy", "gfv", "gfb", "skf"}, // Flawed
-        {"gsw", "gsg", "gsr", "gsy", "gsv", "gsb", "sku"}, // Regular
-        {"glw", "glg", "glr", "gly", "gzv", "glb", "skl"}, // Flawless
-        {"gpw", "gpg", "gpr", "gpy", "gpv", "gpb", "skz"}, // Perfect
+    private static final String[][] GEMS_GRID = {{"gcw", "gcg", "gcr", "gcy", "gcv", "gcb", "skc"}, // Chipped
+            {"gfw", "gfg", "gfr", "gfy", "gfv", "gfb", "skf"}, // Flawed
+            {"gsw", "gsg", "gsr", "gsy", "gsv", "gsb", "sku"}, // Regular
+            {"glw", "glg", "glr", "gly", "gzv", "glb", "skl"}, // Flawless
+            {"gpw", "gpg", "gpr", "gpy", "gpv", "gpb", "skz"}, // Perfect
     };
     // RUNES_GRID[row][col] – rendered as 11 cols × 3 rows
-    private static final String[][] RUNES_GRID = {
-        {"r01", "r02", "r03", "r04", "r05", "r06", "r07", "r08", "r09", "r10", "r11"},
-        {"r12", "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", "r21", "r22"},
-        {"r23", "r24", "r25", "r26", "r27", "r28", "r29", "r30", "r31", "r32", "r33"},
-    };
+    private static final String[][] RUNES_GRID =
+            {{"r01", "r02", "r03", "r04", "r05", "r06", "r07", "r08", "r09", "r10", "r11"},
+                    {"r12", "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", "r21", "r22"},
+                    {"r23", "r24", "r25", "r26", "r27", "r28", "r29", "r30", "r31", "r32", "r33"},};
     // Right-section rows (ua=idols/figurines height=2; pk=keys height=2)
-    private static final String[] UA_CODES  = {"ua1", "ua2", "ua3", "ua4", "ua5"};
-    private static final String[] PK_CODES  = {"pk1", "pk2", "pk3"};
-    private static final String[] XA_CODES  = {"xa1", "xa2", "xa3", "xa4", "xa5"};
+    private static final String[] UA_CODES = {"ua1", "ua2", "ua3", "ua4", "ua5"};
+    private static final String[] PK_CODES = {"pk1", "pk2", "pk3"};
+    private static final String[] XA_CODES = {"xa1", "xa2", "xa3", "xa4", "xa5"};
     private static final String[] ORG_CODES = {"dhn", "bey", "mbr"};
     private static final String[] ESS_CODES = {"toa", "tes", "ceh", "bet", "fed"};
     private static final String[] POT_CODES = {"rvs", "rvl"};
 
     private void drawMaterialsPane() {
         D2SharedStash stash = getSharedStash();
-        if (stash == null) return;
+        if (stash == null)
+            return;
         D2SharedStash.D2MaterialsPane mats = stash.getMaterialsPane();
-        if (mats == null) return;
+        if (mats == null)
+            return;
 
         // Build code → item map (trim to handle 4-char padded codes)
         java.util.Map<String, D2Item> byCode = new java.util.HashMap<>();
         for (D2Item item : mats.getItems()) {
             String code = item.getItemCode();
-            if (code != null) byCode.put(code.trim(), item);
+            if (code != null)
+                byCode.put(code.trim(), item);
         }
 
         Graphics2D g = (Graphics2D) background.getGraphics();
-        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         final int SLOT = 28, GAP = 2, STEP = SLOT + GAP;
         final int x0 = getXCoordForCol(0); // 17
@@ -272,19 +309,20 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         for (int col = 0; col < 7; col++) {
             for (int row = 0; row < 5; row++) {
                 String code = GEMS_GRID[row][col];
-                drawMatSlot(g, x0 + col * STEP, y0 + row * STEP, SLOT, SLOT, code, byCode.get(code));
+                drawMatSlot(g, x0 + col * STEP, y0 + row * STEP, SLOT, SLOT, code,
+                        byCode.get(code));
             }
         }
 
         // ── 2. RIGHT SECTION (starts 6px after gems block) ───────────────────
-        int rx  = x0 + 7 * STEP + 6;   // x start of right section
-        int rx2 = rx + 5 * STEP + 6;   // x start of sub-right column
+        int rx = x0 + 7 * STEP + 6; // x start of right section
+        int rx2 = rx + 5 * STEP + 6; // x start of sub-right column
 
         // Row 1: ua1-5 (height=2) | pk1-3 (height=2)
         int ry = y0;
         int tallH = SLOT * 2 + GAP;
         for (int i = 0; i < UA_CODES.length; i++) {
-            drawMatSlot(g, rx  + i * STEP, ry, SLOT, tallH, UA_CODES[i], byCode.get(UA_CODES[i]));
+            drawMatSlot(g, rx + i * STEP, ry, SLOT, tallH, UA_CODES[i], byCode.get(UA_CODES[i]));
         }
         for (int i = 0; i < PK_CODES.length; i++) {
             drawMatSlot(g, rx2 + i * STEP, ry, SLOT, tallH, PK_CODES[i], byCode.get(PK_CODES[i]));
@@ -293,7 +331,7 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         // Row 2: xa1-5 | dhn, bey, mbr
         ry = y0 + tallH + 6;
         for (int i = 0; i < XA_CODES.length; i++) {
-            drawMatSlot(g, rx  + i * STEP, ry, SLOT, SLOT, XA_CODES[i], byCode.get(XA_CODES[i]));
+            drawMatSlot(g, rx + i * STEP, ry, SLOT, SLOT, XA_CODES[i], byCode.get(XA_CODES[i]));
         }
         for (int i = 0; i < ORG_CODES.length; i++) {
             drawMatSlot(g, rx2 + i * STEP, ry, SLOT, SLOT, ORG_CODES[i], byCode.get(ORG_CODES[i]));
@@ -302,7 +340,7 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         // Row 3: toa,tes,ceh,bet,fed | rvs,rvl
         ry += STEP + 4;
         for (int i = 0; i < ESS_CODES.length; i++) {
-            drawMatSlot(g, rx  + i * STEP, ry, SLOT, SLOT, ESS_CODES[i], byCode.get(ESS_CODES[i]));
+            drawMatSlot(g, rx + i * STEP, ry, SLOT, SLOT, ESS_CODES[i], byCode.get(ESS_CODES[i]));
         }
         for (int i = 0; i < POT_CODES.length; i++) {
             drawMatSlot(g, rx2 + i * STEP, ry, SLOT, SLOT, POT_CODES[i], byCode.get(POT_CODES[i]));
@@ -313,17 +351,22 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 11; col++) {
                 String code = RUNES_GRID[row][col];
-                drawMatSlot(g, x0 + col * STEP, ry_runes + row * STEP, SLOT, SLOT, code, byCode.get(code));
+                drawMatSlot(g, x0 + col * STEP, ry_runes + row * STEP, SLOT, SLOT, code,
+                        byCode.get(code));
             }
         }
     }
 
-    /** Draws a single material slot at (x,y) with size (w×h). item may be null (empty slot — shows ghost). */
-    private void drawMatSlot(Graphics2D g, int x, int y, int w, int h, String slotCode, D2Item item) {
+    /**
+     * Draws a single material slot at (x,y) with size (w×h). item may be null (empty slot — shows
+     * ghost).
+     */
+    private void drawMatSlot(Graphics2D g, int x, int y, int w, int h, String slotCode,
+            D2Item item) {
         // Background
-        g.setColor(new Color(70, 55, 35));
+        g.setColor(PanelTheme.active.slotBg);
         g.fillRect(x, y, w, h);
-        g.setColor(new Color(130, 100, 65));
+        g.setColor(PanelTheme.active.slotBorder);
         g.drawRect(x, y, w - 1, h - 1);
 
         if (item == null) {
@@ -353,25 +396,24 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     /**
-     * Anchors the tooltip to the item's grid-cell position so it stays fixed while
-     * the mouse moves within the same cell, then clamps the position inside the window
-     * using exact screen coordinates — matching the logic Swing's {@code PopupFactory}
-     * uses to decide whether to create a heavyweight (OS-level) popup.
+     * Anchors the tooltip to the item's grid-cell position so it stays fixed while the mouse moves
+     * within the same cell, then clamps the position inside the window using exact screen
+     * coordinates — matching the logic Swing's {@code PopupFactory} uses to decide whether to
+     * create a heavyweight (OS-level) popup.
      *
      * <h4>Why previous fixes were insufficient</h4>
      * <ul>
-     *   <li>Checking against <em>component</em> bottom only caught cases where the
-     *       component itself extended past the window — after the user drags the window
-     *       down, the window top-left on screen shifts, but the component's Swing-pixel
-     *       position within the window stays the same, so the component-bottom check
-     *       passed while the tooltip still overflowed the window on screen.</li>
-     *   <li>The previous {@code clampToRootPane} used a hardcoded {@code EST_H=300}
-     *       height estimate, which is too small for tall HTML item tooltips.</li>
+     * <li>Checking against <em>component</em> bottom only caught cases where the component itself
+     * extended past the window — after the user drags the window down, the window top-left on
+     * screen shifts, but the component's Swing-pixel position within the window stays the same, so
+     * the component-bottom check passed while the tooltip still overflowed the window on
+     * screen.</li>
+     * <li>The previous {@code clampToRootPane} used a hardcoded {@code EST_H=300} height estimate,
+     * which is too small for tall HTML item tooltips.</li>
      * </ul>
      *
-     * <h4>Fix</h4>
-     * Use {@link java.awt.Component#getLocationOnScreen()} for exact screen coordinates
-     * and measure the actual JToolTip preferred size (cached per tooltip text change).
+     * <h4>Fix</h4> Use {@link java.awt.Component#getLocationOnScreen()} for exact screen
+     * coordinates and measure the actual JToolTip preferred size (cached per tooltip text change).
      */
     @Override
     public Point getToolTipLocation(MouseEvent event) {
@@ -421,28 +463,29 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     /**
-     * Returns the native-pixel origin (top-left) of the materials-tab slot that
-     * contains the given native-pixel cursor position, or {@code null} if the
-     * cursor is not inside any slot.  Used to produce a stable tooltip anchor so
-     * the popup position does not change while the cursor moves within the slot.
+     * Returns the native-pixel origin (top-left) of the materials-tab slot that contains the given
+     * native-pixel cursor position, or {@code null} if the cursor is not inside any slot. Used to
+     * produce a stable tooltip anchor so the popup position does not change while the cursor moves
+     * within the slot.
      */
     private Point getMatSlotOriginAt(int nx, int ny) {
         final int SLOT = 28, STEP = 30;
         final int x0 = getXCoordForCol(0);
         final int y0 = getYCoordForRow(0);
-        final int tallH  = SLOT * 2 + 2;       // 58 — tall slots (ua, pk)
-        final int rx     = x0 + 7 * STEP + 6;  // right section start
-        final int rx2    = rx + 5 * STEP + 6;  // sub-right column start
-        final int ry2    = y0 + tallH + 6;      // row-2 top
-        final int ry3    = ry2 + STEP + 4;      // row-3 top (ess / pot)
-        final int ryRune = y0 + 5 * STEP + 6;  // runes grid top
+        final int tallH = SLOT * 2 + 2; // 58 — tall slots (ua, pk)
+        final int rx = x0 + 7 * STEP + 6; // right section start
+        final int rx2 = rx + 5 * STEP + 6; // sub-right column start
+        final int ry2 = y0 + tallH + 6; // row-2 top
+        final int ry3 = ry2 + STEP + 4; // row-3 top (ess / pot)
+        final int ryRune = y0 + 5 * STEP + 6; // runes grid top
 
         // ── 1. GEMS (7 cols × 5 rows) ────────────────────────────────────────
         if (nx >= x0 && ny >= y0 && ny < y0 + 5 * STEP) {
             int col = (nx - x0) / STEP, row = (ny - y0) / STEP;
             if (col >= 0 && col < 7 && row >= 0 && row < 5) {
                 int sx = x0 + col * STEP, sy = y0 + row * STEP;
-                if (nx < sx + SLOT && ny < sy + SLOT) return new Point(sx, sy);
+                if (nx < sx + SLOT && ny < sy + SLOT)
+                    return new Point(sx, sy);
             }
         }
 
@@ -451,7 +494,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx) / STEP;
             if (col >= 0 && col < UA_CODES.length) {
                 int sx = rx + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, y0);
+                if (nx < sx + SLOT)
+                    return new Point(sx, y0);
             }
         }
         // ── 2b. pk — 3 tall slots, row 1 ────────────────────────────────────
@@ -459,7 +503,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx2) / STEP;
             if (col >= 0 && col < PK_CODES.length) {
                 int sx = rx2 + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, y0);
+                if (nx < sx + SLOT)
+                    return new Point(sx, y0);
             }
         }
         // ── 2c. xa — 5 normal slots, row 2 ──────────────────────────────────
@@ -467,7 +512,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx) / STEP;
             if (col >= 0 && col < XA_CODES.length) {
                 int sx = rx + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, ry2);
+                if (nx < sx + SLOT)
+                    return new Point(sx, ry2);
             }
         }
         // ── 2d. org — 3 normal slots, row 2 ─────────────────────────────────
@@ -475,7 +521,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx2) / STEP;
             if (col >= 0 && col < ORG_CODES.length) {
                 int sx = rx2 + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, ry2);
+                if (nx < sx + SLOT)
+                    return new Point(sx, ry2);
             }
         }
         // ── 2e. ess — 5 normal slots, row 3 ─────────────────────────────────
@@ -483,7 +530,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx) / STEP;
             if (col >= 0 && col < ESS_CODES.length) {
                 int sx = rx + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, ry3);
+                if (nx < sx + SLOT)
+                    return new Point(sx, ry3);
             }
         }
         // ── 2f. pot — 2 normal slots (rvs, rvl), row 3 ──────────────────────
@@ -491,7 +539,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - rx2) / STEP;
             if (col >= 0 && col < POT_CODES.length) {
                 int sx = rx2 + col * STEP;
-                if (nx < sx + SLOT) return new Point(sx, ry3);
+                if (nx < sx + SLOT)
+                    return new Point(sx, ry3);
             }
         }
         // ── 3. RUNES (11 cols × 3 rows) ──────────────────────────────────────
@@ -499,32 +548,34 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             int col = (nx - x0) / STEP, row = (ny - ryRune) / STEP;
             if (col >= 0 && col < 11 && row >= 0 && row < 3) {
                 int sx = x0 + col * STEP, sy = ryRune + row * STEP;
-                if (nx < sx + SLOT && ny < sy + SLOT) return new Point(sx, sy);
+                if (nx < sx + SLOT && ny < sy + SLOT)
+                    return new Point(sx, sy);
             }
         }
         return null;
     }
 
     /**
-     * Clamps component-relative tooltip coordinates so the popup fits within the
-     * enclosing window, preventing Swing from switching to a HeavyweightPopup.
+     * Clamps component-relative tooltip coordinates so the popup fits within the enclosing window,
+     * preventing Swing from switching to a HeavyweightPopup.
      *
-     * <p>Uses <em>screen</em> coordinates (via {@link #getLocationOnScreen()} and
-     * {@link java.awt.Window#getLocationOnScreen()}) to match exactly what
-     * {@code PopupFactory} checks internally.  The tooltip dimensions come from a
-     * cached measurement of the current {@link javax.swing.JToolTip#getPreferredSize()},
-     * refreshed whenever the tooltip text changes.
+     * <p>
+     * Uses <em>screen</em> coordinates (via {@link #getLocationOnScreen()} and
+     * {@link java.awt.Window#getLocationOnScreen()}) to match exactly what {@code PopupFactory}
+     * checks internally. The tooltip dimensions come from a cached measurement of the current
+     * {@link javax.swing.JToolTip#getPreferredSize()}, refreshed whenever the tooltip text changes.
      */
     private Point clampToWindow(int tipX, int tipY, int cursorX, int cursorY) {
         refreshTipSizeCache();
 
         java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
-        if (window == null) return new Point(tipX, tipY);
+        if (window == null)
+            return new Point(tipX, tipY);
 
         java.awt.Point compScreen, winScreen;
         try {
             compScreen = getLocationOnScreen();
-            winScreen  = window.getLocationOnScreen();
+            winScreen = window.getLocationOnScreen();
         } catch (java.awt.IllegalComponentStateException ignored) {
             return new Point(tipX, tipY);
         }
@@ -544,8 +595,7 @@ public final class SharedStashPanel extends ScaledPainterPanel {
             // Anchoring to cursorY guarantees the tooltip bottom lands 4 px above the
             // cursor in every situation (bottom-row items, materials tab RVL, etc.).
             int flipped = cursorY - cachedTipH - 4;
-            tipY = (compScreen.y + flipped >= winScreen.y)
-                    ? flipped
+            tipY = (compScreen.y + flipped >= winScreen.y) ? flipped
                     : (winScreen.y - compScreen.y + 2); // last resort: pin to window top
         }
 
@@ -557,8 +607,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         // ── Safety guard: tooltip must never contain the cursor ──────────────
         // If the window is very small and the "pin to window top" fallback still
         // leaves the cursor inside the tooltip, shift the tooltip left of the cursor.
-        if (tipY <= cursorY && cursorY < tipY + cachedTipH
-                && tipX <= cursorX && cursorX < tipX + cachedTipW) {
+        if (tipY <= cursorY && cursorY < tipY + cachedTipH && tipX <= cursorX
+                && cursorX < tipX + cachedTipW) {
             tipX = cursorX - cachedTipW - 4;
         }
 
@@ -566,24 +616,27 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     /**
-     * Measures the current tooltip's preferred size and caches it.
-     * Called from {@link #clampToWindow} on every {@code getToolTipLocation} invocation,
-     * but the measurement itself only runs when the tooltip text changes.
+     * Measures the current tooltip's preferred size and caches it. Called from
+     * {@link #clampToWindow} on every {@code getToolTipLocation} invocation, but the measurement
+     * itself only runs when the tooltip text changes.
      */
     private void refreshTipSizeCache() {
         String text = getToolTipText();
-        if (text == null || text.equals(lastMeasuredTipText)) return;
+        if (text == null || text.equals(lastMeasuredTipText))
+            return;
         javax.swing.JToolTip tip = createToolTip();
         tip.setTipText(text);
         java.awt.Dimension d = tip.getPreferredSize();
-        if (d.width  > 0) cachedTipW = d.width  + 8; // small safety margin
-        if (d.height > 0) cachedTipH = d.height + 8;
+        if (d.width > 0)
+            cachedTipW = d.width + 8; // small safety margin
+        if (d.height > 0)
+            cachedTipH = d.height + 8;
         lastMeasuredTipText = text;
     }
 
     /**
-     * Pre-sets the tooltip background to black so that HeavyweightPopup (used near
-     * screen edges) shows a dark window immediately rather than flashing white.
+     * Pre-sets the tooltip background to black so that HeavyweightPopup (used near screen edges)
+     * shows a dark window immediately rather than flashing white.
      */
     @Override
     public javax.swing.JToolTip createToolTip() {
@@ -601,20 +654,23 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     /**
-     * Returns the D2Item in the materials pane whose slot contains pixel (px, py),
-     * or null if the point is not over any slot (or no item is present there).
-     * Uses the same coordinate constants as drawMaterialsPane().
+     * Returns the D2Item in the materials pane whose slot contains pixel (px, py), or null if the
+     * point is not over any slot (or no item is present there). Uses the same coordinate constants
+     * as drawMaterialsPane().
      */
     public D2Item getMatItemAt(int px, int py) {
         D2SharedStash stash = getSharedStash();
-        if (stash == null) return null;
+        if (stash == null)
+            return null;
         D2SharedStash.D2MaterialsPane mats = stash.getMaterialsPane();
-        if (mats == null) return null;
+        if (mats == null)
+            return null;
 
         java.util.Map<String, D2Item> byCode = new java.util.HashMap<>();
         for (D2Item item : mats.getItems()) {
             String code = item.getItemCode();
-            if (code != null) byCode.put(code.trim(), item);
+            if (code != null)
+                byCode.put(code.trim(), item);
         }
 
         final int SLOT = 28, GAP = 2, STEP = SLOT + GAP;
@@ -631,7 +687,7 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         }
 
         // Right section
-        int rx  = x0 + 7 * STEP + 6;
+        int rx = x0 + 7 * STEP + 6;
         int rx2 = rx + 5 * STEP + 6;
         int tallH = SLOT * 2 + GAP;
         int ry = y0;
@@ -639,33 +695,39 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         // Row 1 tall: ua1-5 | pk1-3
         for (int i = 0; i < UA_CODES.length; i++) {
             int sx = rx + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + tallH) return byCode.get(UA_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + tallH)
+                return byCode.get(UA_CODES[i]);
         }
         for (int i = 0; i < PK_CODES.length; i++) {
             int sx = rx2 + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + tallH) return byCode.get(PK_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + tallH)
+                return byCode.get(PK_CODES[i]);
         }
 
         // Row 2: xa1-5 | dhn,bey,mbr
         ry = y0 + tallH + 6;
         for (int i = 0; i < XA_CODES.length; i++) {
             int sx = rx + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT) return byCode.get(XA_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT)
+                return byCode.get(XA_CODES[i]);
         }
         for (int i = 0; i < ORG_CODES.length; i++) {
             int sx = rx2 + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT) return byCode.get(ORG_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT)
+                return byCode.get(ORG_CODES[i]);
         }
 
         // Row 3: toa,tes,ceh,bet,fed | rvs,rvl
         ry += STEP + 4;
         for (int i = 0; i < ESS_CODES.length; i++) {
             int sx = rx + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT) return byCode.get(ESS_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT)
+                return byCode.get(ESS_CODES[i]);
         }
         for (int i = 0; i < POT_CODES.length; i++) {
             int sx = rx2 + i * STEP;
-            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT) return byCode.get(POT_CODES[i]);
+            if (px >= sx && px < sx + SLOT && py >= ry && py < ry + SLOT)
+                return byCode.get(POT_CODES[i]);
         }
 
         // RUNES GRID: 11 cols × 3 rows (below gems)
@@ -692,12 +754,14 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     public static int getColForXCoord(int x) {
-        if (x < 17) return -1;
+        if (x < 17)
+            return -1;
         return ((2 * x) - 36) / 61;
     }
 
     public static int getRowForYCoord(int y) {
-        if (y < 59) return -1;
+        if (y < 59)
+            return -1;
         return ((2 * y) - 114) / 61;
     }
 
@@ -709,22 +773,23 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         if (LayoutProfile.proceduralBackground) {
             Graphics2D gg = (Graphics2D) pGraphics;
             double s = D2UI.getUiScale();
-            gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             int goldFontSize = Math.max(8, (int) Math.round(11 * s));
             Font goldFont = new Font("Arial", Font.BOLD, goldFontSize);
             gg.setFont(goldFont);
             FontMetrics gfm = gg.getFontMetrics();
             // Gold bar native coords: x=18, y=15, w=BG_WIDTH-36, h=20
-            int barY  = (int) Math.round(15 * s);
-            int barH  = (int) Math.round(20 * s);
+            int barY = (int) Math.round(15 * s);
+            int barH = (int) Math.round(20 * s);
             int baseline = barY + (barH + gfm.getAscent() - gfm.getDescent()) / 2;
             // "Gold:" left-aligned inside the bar
-            gg.setColor(new Color(240, 205, 132));
+            gg.setColor(PanelTheme.active.weaponInactiveText);
             gg.drawString("Gold:", (int) Math.round(25 * s), baseline);
             // Gold value right-aligned to right edge of the bar (native right = 18+488-8 = 498)
             if (!goldValueStr.isEmpty()) {
-                gg.setColor(new Color(248, 218, 142));
-                int valW  = gfm.stringWidth(goldValueStr);
+                gg.setColor(PanelTheme.active.weaponActiveText);
+                int valW = gfm.stringWidth(goldValueStr);
                 int rightX = (int) Math.round(498 * s) - valW;
                 gg.drawString(goldValueStr, rightX, baseline);
             }
@@ -733,10 +798,11 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         if (!tabDraws.isEmpty()) {
             Graphics2D tg = (Graphics2D) pGraphics;
             double s = D2UI.getUiScale();
-            tg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            tg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             tg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Color textBright = new Color(248, 215, 148);
-            Color textDim    = new Color(240, 205, 132);
+            Color textBright = PanelTheme.active.weaponActiveText;
+            Color textDim = PanelTheme.active.weaponInactiveText;
             int fontSize = Math.max(8, (int) Math.round(10 * s));
             Font tabFont = new Font("Arial", Font.BOLD, fontSize);
             tg.setFont(tabFont);
@@ -756,18 +822,20 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         if (!matSprites.isEmpty()) {
             Graphics2D sg = (Graphics2D) pGraphics;
             double s = D2UI.getUiScale();
-            sg.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            sg.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             sg.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             Composite originalComposite = sg.getComposite();
             for (MatSpriteDraw sd : matSprites) {
                 int iw = sd.img.getWidth(null);
                 int ih = sd.img.getHeight(null);
-                if (iw <= 0 || ih <= 0) continue;
+                if (iw <= 0 || ih <= 0)
+                    continue;
                 int sw = (int) Math.round(sd.w * s);
                 int sh = (int) Math.round(sd.h * s);
-                double imgScale = Math.min((double)(sw - 2) / iw, (double)(sh - 2) / ih);
-                int dw = (int)(iw * imgScale);
-                int dh = (int)(ih * imgScale);
+                double imgScale = Math.min((double) (sw - 2) / iw, (double) (sh - 2) / ih);
+                int dw = (int) (iw * imgScale);
+                int dh = (int) (ih * imgScale);
                 int dx = (int) Math.round(sd.x * s) + (sw - dw) / 2;
                 int dy = (int) Math.round(sd.y * s) + (sh - dh) / 2;
                 if (sd.ghost) {
@@ -783,7 +851,8 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         if (!matCounts.isEmpty()) {
             Graphics2D cg = (Graphics2D) pGraphics;
             double s = D2UI.getUiScale();
-            cg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            cg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             int fontSize = Math.max(7, (int) Math.round(9 * s));
             cg.setFont(new Font("Arial", Font.BOLD, fontSize));
             FontMetrics fm = cg.getFontMetrics();
@@ -814,16 +883,19 @@ public final class SharedStashPanel extends ScaledPainterPanel {
 
     public java.util.List<D2Item> removeAllItems() {
         D2SharedStash sharedStash = getSharedStash();
-        if (sharedStash == null || isMaterialsTabSelected()) return emptyList();
+        if (sharedStash == null || isMaterialsTabSelected())
+            return emptyList();
         D2SharedStash.D2SharedStashPane stashPane = getSelectedStashPane();
-        sharedStash.replacePane(selectedStashPaneIndex, D2SharedStash.D2SharedStashPane.fromItems(emptyList(), stashPane.getGold()));
+        sharedStash.replacePane(selectedStashPaneIndex,
+                D2SharedStash.D2SharedStashPane.fromItems(emptyList(), stashPane.getGold()));
         sharedStash.setModified(true);
         return stashPane.getItems();
     }
 
     public java.util.List<D2Item> tryToAddItems(java.util.List<D2Item> items) {
         D2SharedStash sharedStash = getSharedStash();
-        if (sharedStash == null || isMaterialsTabSelected()) return emptyList();
+        if (sharedStash == null || isMaterialsTabSelected())
+            return emptyList();
         D2SharedStash.D2SharedStashPane stashPane = getSelectedStashPane();
         java.util.List<D2Item> successfullyAddedItems = new ArrayList<>();
         for (D2Item item : items) {
@@ -835,8 +907,10 @@ public final class SharedStashPanel extends ScaledPainterPanel {
     }
 
     public D2SharedStash.D2SharedStashPane getSelectedStashPane() {
-        if (getSharedStash() == null) return null;
-        if (isMaterialsTabSelected()) return null;
+        if (getSharedStash() == null)
+            return null;
+        if (isMaterialsTabSelected())
+            return null;
         return getSharedStash().getPane(selectedStashPaneIndex);
     }
 
@@ -852,7 +926,9 @@ public final class SharedStashPanel extends ScaledPainterPanel {
         this.selectedStashPaneIndex = selectedStashPaneIndex;
     }
 
-    private D2SharedStash.D2SharedStashPane getD2SharedStashPane(D2SharedStash.D2SharedStashPane stashPane, java.util.List<D2Item> successfullyAddedItems, D2Item item) {
+    private D2SharedStash.D2SharedStashPane getD2SharedStashPane(
+            D2SharedStash.D2SharedStashPane stashPane,
+            java.util.List<D2Item> successfullyAddedItems, D2Item item) {
         for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 16; j++) {
                 if (stashPane.canDropItem(j, i, item)) {

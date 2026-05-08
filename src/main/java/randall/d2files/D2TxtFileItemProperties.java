@@ -27,8 +27,8 @@ package randall.d2files;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class D2TxtFileItemProperties {
-    private D2TxtFile iTxtFile;
-    private int iRowNr;
+    private final D2TxtFile iTxtFile;
+    private final int iRowNr;
 
     public D2TxtFileItemProperties(D2TxtFile pTxtFile, int pRowNr) {
         iTxtFile = pTxtFile; // iTxtFile.getRowNr()

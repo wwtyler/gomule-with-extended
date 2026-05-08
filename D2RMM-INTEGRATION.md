@@ -2,6 +2,10 @@
 
 > 本文档沉淀 GoMule 与 D2RMM mod 生态集成的设计、实现与坑点。
 > 后续修改 GoMule 布局/Sprite/材料 tab 相关功能前必读。
+>
+> 📝 **命名**：当前 D2RMM mod 集的正式名称是 **TylerPack**（历史别名 `D2RMMMDKV3` / `MDK V3`，同一东西）。部署目录已从 `mods\D2RMMMDKV3\D2RMMMDKV3.mpq\` 物理改名为 `mods\TylerPack\TylerPack.mpq\`；D2R 启动快捷方式需同步改为 `-mod TylerPack -txt`。
+>
+> 跨项目知识库：`d:\260305\.d2r-knowledge\` — GoMule 部分见 `gomule/README.md`；TylerPack 术语见 `shared/glossary.md`。
 
 ---
 
@@ -12,7 +16,7 @@
 | **mods/** | `D:\260305\D2RMM 1.9.0\mods` | D2RMM 管理的 mod 源代码（数十个 mod.js / config.json）。**所有 mod 编辑工作的真实源** |
 | **d2rmm/** | `D:\260305\d2rmm` | D2RMM 应用源码（Electron + React mod 管理器） |
 | **GoMule/** | `D:\260305\gomule-with-extended-stash-size\GoMule` | 本项目，Java Swing 角色/物品存档管理工具 |
-| **D2RMMMDKV3.mpq/** | `D:\BlizGames\Diablo II Resurrected\mods\D2RMMMDKV3\D2RMMMDKV3.mpq` | **D2RMM 编译部署目标**：所有 mods 经 D2RMM 处理后的产物，游戏从这里加载 |
+| **TylerPack.mpq/** （旧名 D2RMMMDKV3）| `D:\BlizGames\Diablo II Resurrected\mods\TylerPack\TylerPack.mpq` | **D2RMM 编译部署目标**：所有 mods 经 D2RMM 处理后的产物，游戏从这里加载 |
 
 ### 仅作参考的目录（不要默认使用）
 - `MDK.mpq/`、`YTE.mpq/` — 独立 mod，仅资源/实现参考。**任何任务都不应优先把它们当成模板或第一参考**
@@ -20,12 +24,12 @@
 
 ### 数据流
 ```
-mods/(*)/mod.js  ──D2RMM运行──►  D2RMMMDKV3.mpq/data/...  ──游戏加载──► 玩家
+mods/(*)/mod.js  ──D2RMM运行──►  TylerPack.mpq/data/...  ──游戏加载──► 玩家
                                           │
                                           └──GoMule读取──► 渲染 sprite / tooltip
 ```
 
-GoMule 读取的资源（sprite、翻译、布局参数）应优先指向 `D2RMMMDKV3.mpq/data/`，与玩家实际游戏体验保持一致。
+GoMule 读取的资源（sprite、翻译、布局参数）应优先指向 `TylerPack.mpq/data/`，与玩家实际游戏体验保持一致。
 
 ---
 
@@ -126,7 +130,7 @@ itemCode ──► items.json (assetMap) ──► asset string ──► resolv
 ### 数据目录配置
 - properties key：`sprite.data.dirs`（分号分隔，按顺序尝试）
 - 默认：
-  1. `D:\BlizGames\Diablo II Resurrected\mods\D2RMMMDKV3\D2RMMMDKV3.mpq\data`
+  1. `D:\BlizGames\Diablo II Resurrected\mods\TylerPack\TylerPack.mpq\data`
   2. `D:\260305\D2RM_Ladiks Casc Viewer\Work\data\data`
 
 ### 公共 API
@@ -171,7 +175,7 @@ D:\Code\jdk-21.0.9\bin\java.exe -jar GoMule.jar
 
 ## 7. 已知待办（暂搁置）
 
-- **词缀 tooltip 颜色集成** — 已确认 D2R `ÿcX` 颜色由 D2RMM `(3.1)ColorMod` 在 install 时**运行时注入** lng 文件，外部 `D2RMMMDKV3.mpq` 的物理 `item-modifiers.json` 可能无颜色（取决于用户是否启用并 install 过 ColorMod）。该问题涉及多源翻译合并、颜色覆盖优先级等复杂决策，**暂时搁置后续再完善**。
+- **词缀 tooltip 颜色集成** — 已确认 D2R `ÿcX` 颜色由 D2RMM `(3.1)ColorMod` 在 install 时**运行时注入** lng 文件，外部 `TylerPack.mpq` 的物理 `item-modifiers.json` 可能无颜色（取决于用户是否启用并 install 过 ColorMod）。该问题涉及多源翻译合并、颜色覆盖优先级等复杂决策，**暂时搁置后续再完善**。
 
 ---
 

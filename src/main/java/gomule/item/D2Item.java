@@ -21,19 +21,20 @@
 
 package gomule.item;
 
-import gomule.D2Files;
-import gomule.util.D2BitReader;
-import gomule.util.D2ItemException;
-import gomule.util.D2LogContext;
-import randall.d2files.D2TxtFile;
-import randall.d2files.D2TxtFileItemProperties;
-import randall.flavie.D2ItemInterface;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import gomule.D2Files;
+import gomule.util.D2BitReader;
+import gomule.util.D2ItemException;
+import gomule.util.D2Log;
+import gomule.util.D2LogContext;
+import randall.d2files.D2TxtFile;
+import randall.d2files.D2TxtFileItemProperties;
+import randall.flavie.D2ItemInterface;
 
 //an item class
 //manages one item
@@ -199,7 +200,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         } catch (D2ItemException pEx) {
             throw pEx;
         } catch (Exception pEx) {
-            pEx.printStackTrace();
+            D2Log.error("D2Item", pEx, "item parse error");
             throw new D2ItemException("Error: " + pEx.getMessage() + getExStr());
         }
     }
@@ -260,7 +261,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         int eClass = (int) pFile.read(3);
         int eLevel = (int) (pFile.read(7));
 
-        StringBuffer lCharName = new StringBuffer();
+        StringBuilder lCharName = new StringBuilder();
         for (int i = 0; i < 18; i++) {
             long lChar = pFile.read(7);
             if (lChar != 0) {
@@ -296,14 +297,18 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
     // read non ear data from the bytes,
     // setting class variables for easier access
+    @SuppressWarnings("ConvertToTryWithResources")
     private void readExtend(D2BitReader pFile) throws Exception {
         // 9,5 bytes already read (common data)
         item_type = huffmanLookupTable.readHuffmanEncodedString(pFile);
         // Push item-type onto the log context so any WARN/ERROR raised during the
         // remainder of this method (or anything it calls into, e.g. D2PropCollection)
         // is tagged [type='xxx']. Always popped via the outer try/finally below.
-        try (D2LogContext typeCtx = D2LogContext.push("type", "'" + item_type + "'")) {
+        D2LogContext lLogCtx = D2LogContext.push("type", "'" + item_type + "'");
+        try {
             readExtendBody(pFile);
+        } finally {
+            lLogCtx.close();
         }
     }
 
@@ -348,8 +353,6 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
                         item_type);
                 iItemQuality = "exceptional";
                 if (qualSearch == null) {
-                    qualSearch = D2TxtFile.ARMOR.searchColumns("ultracode",
-                            item_type);
                     iItemQuality = "elite";
                 }
             }
@@ -367,8 +370,6 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
                         item_type);
                 iItemQuality = "exceptional";
                 if (qualSearch == null) {
-                    qualSearch = D2TxtFile.WEAPONS.searchColumns("ultracode",
-                            item_type);
                     iItemQuality = "elite";
                 }
             }
@@ -434,6 +435,11 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         if (iType != null && iType2 != null && iType.startsWith("rune")) {
             readPropertiesGems();
             iRune = true;
+            String compactRuneName = D2Files.getInstance().getTranslations().getTranslationOrNull(item_type + "L");
+            if (compactRuneName != null) {
+                iItemName = compactRuneName;
+                iBaseItemName = compactRuneName;
+            }
         }
 
         D2TxtFileItemProperties lItemType = D2TxtFile.ITEM_TYPES.searchColumns(
@@ -453,11 +459,8 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         }
         if ("1".equals(lItemType.get("Beltable"))) {
             iBelt = true;
-            readPropertiesPots(pFile);
+            readPropertiesPots();
         }
-
-        @SuppressWarnings("unused")
-        int lLastItem = pFile.get_byte_pos();
 
         // D2R 1.5+ parent tail — MUST run BEFORE reading socketed children so that the
         // first child starts at the byte-aligned offset items.ts expects. Reference:
@@ -505,7 +508,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         }
 
         if (iRuneWord) {
-            ArrayList<String> lList = new ArrayList<String>();
+            ArrayList<String> lList = new ArrayList<>();
             for (int i = 0; i < iSocketedItems.size(); i++) {
                 lList.add(iSocketedItems.get(i).getRuneCode());
             }
@@ -592,27 +595,10 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
                 short low_quality = (short) pFile.read(3);
 
                 switch (low_quality) {
-
-                    case 0: {
-                        iItemName = "Crude " + iItemName;
-                        break;
-                    }
-
-                    case 1: {
-                        iItemName = "Cracked " + iItemName;
-                        break;
-                    }
-
-                    case 2: {
-                        iItemName = "Damaged " + iItemName;
-                        break;
-                    }
-
-                    case 3: {
-                        iItemName = "Low Quality " + iItemName;
-                        break;
-                    }
-
+                    case 0 -> iItemName = "Crude " + iItemName;
+                    case 1 -> iItemName = "Cracked " + iItemName;
+                    case 2 -> iItemName = "Damaged " + iItemName;
+                    case 3 -> iItemName = "Low Quality " + iItemName;
                 }
 
                 break;
@@ -997,7 +983,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         }
     }
 
-    private void readPropertiesPots(D2BitReader pfile) {
+    private void readPropertiesPots( ) {
 
         String[] statsToRead = {"stat1", "stat2"};
 
@@ -1024,20 +1010,20 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
         for (int x = 0; x < gemHeaders.length; x++) {
 
-            for (int y = 0; y < gemHeaders[x].length; y++) {
+            for (String gemHeaderCell : gemHeaders[x]) {
 
                 if (D2TxtFile.GEMS.searchColumns("code", item_type).get(
-                        gemHeaders[x][y] + "Code").equals(""))
+                        gemHeaderCell + "Code").equals(""))
                     continue;
                 iProps.addAll(D2TxtFile.propToStat(D2TxtFile.GEMS
                         .searchColumns("code", item_type).get(
-                                gemHeaders[x][y] + "Code"), D2TxtFile.GEMS
+                                gemHeaderCell + "Code"), D2TxtFile.GEMS
                         .searchColumns("code", item_type).get(
-                                gemHeaders[x][y] + "Min"), D2TxtFile.GEMS
+                                gemHeaderCell + "Min"), D2TxtFile.GEMS
                         .searchColumns("code", item_type).get(
-                                gemHeaders[x][y] + "Max"), D2TxtFile.GEMS
+                                gemHeaderCell + "Max"), D2TxtFile.GEMS
                         .searchColumns("code", item_type).get(
-                                gemHeaders[x][y] + "Param"), (x + 7)));
+                                gemHeaderCell + "Param"), (x + 7)));
             }
         }
     }
@@ -1050,20 +1036,21 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
             iProps.readProp(pFile, rootProp, qFlag);
 
-            if (rootProp == 17) {
-                iProps.readProp(pFile, 18, qFlag);
-            } else if (rootProp == 48) {
-                iProps.readProp(pFile, 49, qFlag);
-            } else if (rootProp == 50) {
-                iProps.readProp(pFile, 51, qFlag);
-            } else if (rootProp == 52) {
-                iProps.readProp(pFile, 53, qFlag);
-            } else if (rootProp == 54) {
-                iProps.readProp(pFile, 55, qFlag);
-                iProps.readProp(pFile, 56, qFlag);
-            } else if (rootProp == 57) {
-                iProps.readProp(pFile, 58, qFlag);
-                iProps.readProp(pFile, 59, qFlag);
+            switch (rootProp) {
+                case 17 -> iProps.readProp(pFile, 18, qFlag);
+                case 48 -> iProps.readProp(pFile, 49, qFlag);
+                case 50 -> iProps.readProp(pFile, 51, qFlag);
+                case 52 -> iProps.readProp(pFile, 53, qFlag);
+                case 54 -> {
+                    iProps.readProp(pFile, 55, qFlag);
+                    iProps.readProp(pFile, 56, qFlag);
+                }
+                case 57 -> {
+                    iProps.readProp(pFile, 58, qFlag);
+                    iProps.readProp(pFile, 59, qFlag);
+                }
+                default -> {
+                }
             }
             rootProp = (int) pFile.read(9);
         }
@@ -1246,10 +1233,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     }
 
     private boolean check_flag(int bit) {
-        if (((flags >>> (32 - bit)) & 1) == 1)
-            return true;
-        else
-            return false;
+        return ((flags >>> (32 - bit)) & 1) == 1;
     }
 
     private int getReq(String pReq) {
@@ -1258,7 +1242,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
             if (!lReq.equals("") && !lReq.equals("0")) {
                 try {
                     return Integer.parseInt(lReq);
-                } catch (Exception pEx) {
+                } catch (NumberFormatException pEx) {
                     // do nothing, no req
                 }
             }
@@ -1478,10 +1462,12 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         return iItemName;
     }
 
+    @Override
     public String getName() {
         return iItemName;
     }
 
+    @Override
     public String getFingerprint() {
         return iFP;
     }
@@ -1590,6 +1576,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         return null;
     }
 
+    @Override
     public boolean isEthereal() {
         return iEthereal;
     }
@@ -1640,11 +1627,11 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         return false;
     }
 
+    @Override
     public int compareTo(D2Item pObject) {
         if (pObject instanceof D2Item item) {
             String lItemName = item.iItemName;
-            if (iItemName == lItemName) {
-                // also both "null"
+            if (java.util.Objects.equals(iItemName, lItemName)) {
                 return 0;
             }
             if (iItemName == null) {
@@ -1665,32 +1652,19 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     public boolean isCharacterItem() {
 
         //Belt or equipped
-        if (get_location() == 1 || get_location() == 2) {
-            return true;
-        } else if (get_location() == 0) {
-            switch (get_panel()) {
-                case 1:
-                case 4:
-                case 5:
-                    return true;
-                default:
-                    return false;
-            }
-        } else {
-            return false;
-        }
+        return switch (get_location()) {
+            case 1, 2 -> true;
+            case 0 -> switch (get_panel()) {
+                case 1, 4, 5 -> true;
+                default -> false;
+            };
+            default -> false;
+        };
 
     }
 
     public boolean isEquipped() {
-
-        if (get_location() == 1) {
-            return true;
-        } else if (get_panel() == 1 && isCharm()) {
-            return true;
-        } else {
-            return false;
-        }
+        return get_location() == 1 || (get_panel() == 1 && isCharm());
     }
 
     public boolean isEquipped(int wepSlot) {
@@ -1704,10 +1678,8 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
                 if (get_body_position() == 11 || get_body_position() == 12) return true;
             }
             return false;
-        } else if (get_panel() == 1 && isCharm()) {
-            return true;
         } else {
-            return false;
+            return get_panel() == 1 && isCharm();
         }
     }
 
@@ -1720,12 +1692,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     }
 
     public boolean statModding() {
-
-        if (iJewel || iGem || iRune) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(iJewel || iGem || iRune);
     }
 
     public void setCharLvl(int pCharLvl) {
@@ -1804,11 +1771,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
     }
 
     public boolean isABelt() {
-        if (iType.equals("belt")) {
-            return true;
-        } else {
-            return false;
-        }
+        return iType.equals("belt");
     }
 
     public D2PropCollection getPropCollection() {
@@ -1823,10 +1786,12 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
         return quality;
     }
 
+    @Override
     public String getFileName() {
         return iFileName;
     }
 
+    @Override
     public boolean isCharacter() {
         return iIsChar;
     }
@@ -1843,7 +1808,7 @@ public class D2Item implements Comparable<D2Item>, D2ItemInterface {
 
     public boolean isMoveable() {
 
-        if (get_location() == 0 && get_panel() == 1 && (getName().toLowerCase().equals("horadric cube") || isCharm() || getName().toLowerCase().equals("key") || getName().toLowerCase().indexOf("tome of") != -1)) {
+        if (get_location() == 0 && get_panel() == 1 && (getName().toLowerCase().equals("horadric cube") || isCharm() || getName().toLowerCase().equals("key") || getName().toLowerCase().contains("tome of"))) {
             //Inv
         } else if (get_location() == 2) {
             //Belt

@@ -19,7 +19,7 @@ public class D2WeaponTypes {
     private String iType2;
     private String iDisplay;
 
-    public static final ArrayList<D2WeaponTypes> sListAll = new ArrayList<D2WeaponTypes>();
+    public static final ArrayList<D2WeaponTypes> sListAll = new ArrayList<>();
 
     public static final D2WeaponTypes WEAP_SWOR = new D2WeaponTypes("swor", "Sword");
     public static final D2WeaponTypes WEAP_SCEP = new D2WeaponTypes("scep", "Scepter");
@@ -78,21 +78,13 @@ public class D2WeaponTypes {
         iType = pType;
         iType2 = pType2;
         iDisplay = pDisplay;
-        sListAll.add(this);
     }
 
     public boolean isType(String pType) {
-        if (iType.equals(pType)) {
-            return true;
-        }
-
-        if (iType2 != null && iType2.equals(pType)) {
-            return true;
-        }
-
-        return false;
+        return iType.equals(pType) || (iType2 != null && iType2.equals(pType));
     }
 
+    @Override
     public String toString() {
         return iDisplay;
     }

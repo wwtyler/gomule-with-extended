@@ -789,24 +789,24 @@ of Craftsmanship	100	1	1	1	55	1				96	14	dmg-max		1	2										amul	ring								
 of Craftsmanship	100	1	1	22		19				96	14	dmg-max		3	4										amul	ring											0	0
 of Quality	100	1	1	53		49				96	14	dmg-max		5	12										amul	ring											0	0
 of Quality	100	1	1	77		61				96	14	dmg-max		10	20										amul	ring											0	0
-of Worth	100	1	1	1	10	1				96	15	dmg-min		4	8										weap							orb	wand				0	0
+of Worth	100	1	1	1	20	1				96	15	dmg-min		4	8										weap							orb	wand				0	0
 of Evisceration	100	1	1	85		79				88	14	dmg-max		101	120									blac	weap							wand	staf	orb			0	0
-of Measure	100	1	1	12	25	9				84	15	dmg-min		3	4										weap							orb	wand				0	0
+of Measure	100	1	1	12	30	9				84	15	dmg-min		3	4										weap							orb	wand				0	0
 of the Leech	100	1	1	6		4				84	27	lifesteal		4	5										weap							orb					0	0
 of the Locust	100	1	1	20		15				84	27	lifesteal		6	7									cred	weap							orb					0	0
 of the Lamprey	100	1	1	55		43				84	27	lifesteal		8	9									cred	mele							orb					0	0
 of the Bat	100	1	1	7		4				84	28	manasteal		4	5										weap							orb					0	0
 of the Wraith	100	1	1	21		16				84	28	manasteal		6	7									cred	weap												0	0
 of the Vampire	100	1	1	56		48				84	28	manasteal		8	9									cred	mele												0	0
-of the Apprentice	100	1	1	5		3				72	9	cast1		10	10										rod	ring	amul	orb	circ	tors	shld						0	0
-of Excellence	100	1	1	24	40	18				72	15	dmg-min		5	8										weap							orb	wand				0	0
+of the Apprentice	100	1	1	5		3				72	9	cast1		10	10										rod	ring	amul	orb	circ								0	0
+of Excellence	100	1	1	24	45	18				72	15	dmg-min		5	8										weap							orb	wand				0	0
 of Replenishing	100	1	1	5		3				72	39	rep-quant	5												thro												0	0
-of Flame	100	1	1	4	10	3				60	12	fire-min		1	1	fire-max		2	5						weap							wand	orb				0	0
-of Shock	100	1	1	4	10	3				60	13	ltng-min		1	1	ltng-max		6	8						weap							wand	orb				0	0
-of Craftsmanship	100	1	1	1	10	1				60	14	dmg-max		1	2										weap							wand	orb				0	0
-of Quality	100	1	1	4	20	3				60	14	dmg-max		3	4										weap							wand	orb				0	0
-of Maiming	100	1	1	7	30	5				60	14	dmg-max		5	6										weap							wand	orb				0	0
-of Slaying	100	1	1	11	40	8				60	14	dmg-max		7	8										weap							wand	orb				0	0
+of Flame	100	1	1	4	35	3				60	12	fire-min		1	1	fire-max		2	5						weap							wand	orb				0	0
+of Shock	100	1	1	4	35	3				60	13	ltng-min		1	1	ltng-max		6	8						weap							wand	orb				0	0
+of Craftsmanship	100	1	1	1	20	1				60	14	dmg-max		1	2										weap							wand	orb				0	0
+of Quality	100	1	1	4	30	3				60	14	dmg-max		3	4										weap							wand	orb				0	0
+of Maiming	100	1	1	7	40	5				60	14	dmg-max		5	6										weap							wand	orb				0	0
+of Slaying	100	1	1	11	55	8				60	14	dmg-max		7	8										weap							wand	orb				0	0
 of Gore	100	1	1	14	65	10				60	14	dmg-max		9	10										weap							wand	orb				0	0
 of Carnage	100	1	1	19	80	14				60	14	dmg-max		11	14									blac	weap							wand	orb				0	0
 of Slaughter	100	1	1	25		18				60	14	dmg-max		15	20									blac	weap							wand	orb				0	0
@@ -817,8 +817,8 @@ of Evisceration	100	1	1	73		65				60	14	dmg-max		81	100									blac	weap							
 of Performance	100	1	1	48	55	40				60	15	dmg-min		9	14									blac	weap							orb	wand				0	0
 of Propogation	100	1	1	24		18				60	39	rep-quant	10												thro												0	0
 of Warmth	100	1	1	10		7				48	11	half-freeze		1	1										shld	boot	glov	ring	amul	circ	orb						0	0
-of Fire	100	1	1	15	25	11				48	12	fire-min		1	4	fire-max		6	11						weap							wand	orb				0	0
-of Lightning	100	1	1	15	25	11				48	13	ltng-min		1	1	ltng-max		9	16						weap							wand	orb				0	0
+of Fire	100	1	1	15	50	11				48	12	fire-min		1	4	fire-max		6	11						weap							wand	orb				0	0
+of Lightning	100	1	1	15	50	11				48	13	ltng-min		1	1	ltng-max		9	16						weap							wand	orb				0	0
 of Maiming	100	1	1	42		34				48	14	dmg-max		1	4										shld												0	0
 of Transcendence	100	1	1	76	65	68				48	15	dmg-min		15	20									blac	weap							orb	wand				0	0
 of Dexterity	100	1	1	1	20	1				48	17	dex		1	2										amul	miss	circ										0	0
@@ -874,8 +874,8 @@ of Haste	100	1	1	22		16				48	35	move2		20	20										boot	circ											0	0
 of Speed	100	1	1	37		29				48	35	move3		30	30										boot	circ											0	0
 of Traveling	100	1	1	65		57				48	35	move3		30	30	stamdrain		80	90						boot												0	0
 of Acceleration	100	1	1	51		43				48	35	move3		40	40										boot												0	0
-of Burning	100	1	1	25	40	18				36	12	fire-min		5	9	fire-max		10	20					dred	weap							wand	orb				0	0
-of Thunder	100	1	1	25	40	18				36	13	ltng-min		1	1	ltng-max		17	40					dyel	weap							wand	orb				0	0
+of Burning	100	1	1	25	70	18				36	12	fire-min		5	9	fire-max		10	20					dred	weap							wand	orb				0	0
+of Thunder	100	1	1	25	70	18				36	13	ltng-min		1	1	ltng-max		17	40					dyel	weap							wand	orb				0	0
 of Maiming	100	1	1	65		51				36	14	dmg-max		5	8										shld												0	0
 of Maiming	100	1	1	80		68				36	14	dmg-max		9	12										shld												0	0
 of Transcendence	100	1	1	82		75				36	15	dmg-min		30	40									blac	weap							orb	wand				0	0
@@ -956,7 +956,7 @@ of Excellence	100	1	1	59		51				32	15	dmg-min		6	9										ring	amul	circ						
 of Performance	100	1	1	81		73				32	15	dmg-min		10	13										ring	amul	circ										0	0
 of Joyfulness	100	1	1	5	50	3				32	15	dmg-min		1	4									whit	jewl												0	0
 of Bliss	100	1	1	43		37				32	15	dmg-min		5	10									whit	jewl												0	0
-of the Magus	100	1	1	29		21				30	9	cast3		20	20										rod	orb	circ	tors	shld								0	0
+of the Magus	100	1	1	29		21				30	9	cast3		20	20										rod	orb	circ					scep					0	0
 of Blocking	100	1	1	1		1				26	8	block		10	19	block2		15	15						shld												0	0
 of Craftsmanship	100	1	1	1	7	1				25	14	dmg-max		1	2										circ												0	0
 of Craftsmanship	100	1	1	12	14	10				25	14	dmg-max		2	3										circ												0	0
@@ -1046,11 +1046,11 @@ of the Dragon's Spirit2	100	1	1	55		48				24	67	heal-kill		9	15										weap	be
 of the Soul2	100	1	1	75		75				24	67	heal-kill		16	25										weap	belt	ring	amul	circ								0	0
 of Bashing	100	1	1	16		12				20	5	reduce-ac		5	10										blun	miss						wand	staf	orb			0	0
 of Puncturing	100	1	1	6		4				20	5	reduce-ac		11	20										spea	knif	h2h	miss									0	0
-of Thorns	100	1	1	14	35	10				20	6	thorns		1	3										circ												0	0
-of Spikes	100	1	1	21	60	15				20	6	thorns		4	6									oran	circ												0	0
-of Razors	100	1	1	34	80	26				20	6	thorns		7	9									oran	circ												0	0
-of Swords	100	1	1	47		39				20	6	thorns		10	20									oran	circ												0	0
-of Readiness	100	1	1	5	20	3				20	7	swing1		10	10										weap							wand	orb				0	0
+of Thorns	100	1	1	14	35	10				20	6	thorns		1	3										tors	shld	belt	circ									0	0
+of Spikes	100	1	1	21	60	15				20	6	thorns		4	6									oran	tors	shld	belt	circ									0	0
+of Razors	100	1	1	34	80	26				20	6	thorns		7	9									oran	tors	shld	circ	belt									0	0
+of Swords	100	1	1	47		39				20	6	thorns		10	20									oran	tors	shld	circ	belt									0	0
+of Readiness	100	1	1	5		3				20	7	swing1		10	10										weap							wand	orb				0	0
 of Alacrity	100	1	1	25		17				20	7	swing2		20	20										weap							wand	orb				0	0
 of Swiftness	100	1	1	34		26				20	7	swing2		30	30										mele							wand	staf	orb			0	0
 of Deflecting	100	1	1	11		8				20	8	block		20	30	block2		30	30						shld												0	0
@@ -1092,9 +1092,9 @@ of Venom	100	1	0	30		25				12	16	dmg-pois	75	80	100	res-pois-len		6	8						lcha	
 of Pestilence	100	1	1	35		40				12	16	dmg-pois	100	100	120	res-pois-len		8	10						lcha												0	0
 of Anthrax	100	1	1	50		55				12	16	dmg-pois	125	120	140	res-pois-len		10	12						lcha												0	0
 of Prosperity	100	1	1	80		75				12	22	mag%		12	18										jewl												0	0
-of Light	100	1	1	6	45	4				12	25	light		1	1	att		15	15						rod	ring	amul										0	0
-of Radiance	100	1	1	15	65	11				12	25	light		3	3	att		30	30						rod	ring	amul										0	0
-of the Sun	100	1	1	17		12				12	25	light		5	5	att%		5	5						rod	ring	amul										0	0
+of Light	100	1	1	6	45	4				12	25	light		1	1	att		15	15						armo	rod	ring	amul									0	0
+of Radiance	100	1	1	15	65	11				12	25	light		3	3	att		30	30						rod	armo	ring	amul									0	0
+of the Sun	100	1	1	17		12				12	25	light		5	5	att%		5	5						rod	armo	amul	ring									0	0
 of Substinence	100	1	0	55		50				12	26	hp		30	40	regen		7	7						lcha												0	0
 of Substinence	100	1	0	61		60				12	26	hp		40	50	regen		7	7						lcha												0	0
 of Vita	100	1	1	75		70				12	26	hp		50	75	regen		10	10						lcha												0	0
@@ -1146,12 +1146,12 @@ of Thorns	100	1	1	40		35				10	6	thorns/lvl	8												tors	shld											0	0
 of Thorns	100	1	1	67		62				10	6	thorns/lvl	12												tors	shld											0	0
 of Malice	100	1	1	37	40	29				10	6	thorns		3	8										jewl												0	0
 of Thorns	100	1	1	1	15	10				10	6	thorns		10	10										tors	belt	shld										0	0
-of Swords	100	1	1	55		45				10	6	thorns		21	40									oran	circ												0	0
-of Swords	100	1	1	65		55				10	6	thorns		41	50									oran	circ												0	0
+of Swords	100	1	1	55		45				10	6	thorns		21	40									oran	tors	shld	circ	belt									0	0
+of Swords	100	1	1	65		55				10	6	thorns		41	50									oran	tors	shld	circ	belt									0	0
 of Malice	100	1	1	60		48				10	6	thorns		10	18										jewl												0	0
-of Alacrity	100	1	1	43		35				10	7	swing2		20	20									dyel	glov	helm											0	0
-of Fervor	100	1	1	39		31				10	7	swing1		15	15										glov	helm											0	0
-of Readiness	100	1	1	20		15				10	7	swing1		10	10										glov	helm											0	0
+of Alacrity	100	1	1	43		35				10	7	swing2		20	20									dyel	glov												0	0
+of Fervor	100	1	1	39		31				10	7	swing1		15	15										glov												0	0
+of Readiness	100	1	1	20		15				10	7	swing1		10	10										glov												0	0
 of Fire	100	1	0	21		25				10	12	fire-min		2	5	fire-max		5	20						scha												0	0
 of Lightning	100	1	0	21		25				10	13	ltng-min		2	5	ltng-max		5	20						scha												0	0
 of Quality	100	1	0	36		45				10	14	dmg-max		5	5										scha												0	0
@@ -1176,9 +1176,9 @@ of the Nimble	100	1	0	12		10				10	32	balance2		5	5										mcha												0	0
 of the Stoic	100	1	0	12		10				10	32	block2		5	5										mcha												0	0
 of the Blitz	100	1	0	18		18				10	32	swing2		5	5										mcha												0	0
 of the Fluent	100	1	0	18		18				10	32	cast2		5	5										mcha												0	0
-of Frost	100	1	1	4	10	3				8	10	cold-min		1	1	cold-max		1	2	cold-len		50	50		weap							wand	orb				0	0
-of the Icicle	100	1	1	13	25	9				8	10	cold-min		1	1	cold-max		3	4	cold-len		75	75		weap							wand	orb				0	0
-of the Glacier	100	1	1	27	40	20				8	10	cold-min		2	4	cold-max		4	15	cold-len		100	100	dblu	weap							wand	orb				0	0
+of Frost	100	1	1	4	35	3				8	10	cold-min		1	1	cold-max		1	2	cold-len		50	50		weap							wand	orb				0	0
+of the Icicle	100	1	1	13	50	9				8	10	cold-min		1	1	cold-max		3	4	cold-len		75	75		weap							wand	orb				0	0
+of the Glacier	100	1	1	27	70	20				8	10	cold-min		2	4	cold-max		4	15	cold-len		100	100	dblu	weap							wand	orb				0	0
 of Winter	100	1	1	45		37				8	10	cold-min		5	9	cold-max		16	50	cold-len		150	150	dblu	weap							wand	orb				0	0
 of Winter	100	1	1	60		50				8	10	cold-min		20	30	cold-max		75	100	cold-len		150	150	dblu	weap							wand	orb				0	0
 of Winter	100	1	1	80		75				8	10	cold-min		35	45	cold-max		100	150	cold-len		150	150	dblu	weap							wand	orb				0	0
@@ -1280,208 +1280,208 @@ of the Monk	100	1	0	7		10				1	31	dex		2	4	enr	2	4							mcha												0	0
 of the Stalwart	100	1	0	7		10				1	31	str		4	6	vit	4	6							mcha												0	0
 of the Proud	100	1	0	7		10				1	31	str		2	4	enr	2	4							mcha												0	0
 of the Young	100	1	0	7		10				1	31	vit		4	6	enr	4	6							mcha												0	0
-of Inner Sight	100	1	1	19		19		ama	1	1	77	gethit-skill	8	4	12										amul	amaz	circ	glov									0	0
-of Slow Missiles	100	0	1	12	34	12		ama	12	0	77	gethit-skill	17	5	2										amaz	glov	amul										0	0
-of Slow Missiles	100	1	1	65		33		ama	12	1	77	gethit-skill	17	10	27										amaz	glov	amul										0	0
-of Freezing Arrows	100	0	1	30	65	33		ama	30	0	77	gethit-skill	31	25	6										miss	abow	glov										0	0
-of Freezing Arrows	100	1	1	65		67		ama	30	1	77	gethit-skill	31	10	22										abow	miss											0	0
-of Fire Bolts	100	0	1	11	22	10		sor	1	0	77	gethit-skill	36	5	8										ring	circ											0	0
-of Fire Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	36	7	25										ring	circ											0	0
-of Charged Bolts	100	0	1	11	22	10		sor	1	0	77	gethit-skill	38	5	8										ring	circ											0	0
-of Charged Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	38	7	25										ring	circ											0	0
-of Ice Bolts	100	0	1	11	22	10		sor	1	0	77	gethit-skill	39	5	8										ring	circ											0	0
-of Ice Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	39	7	25										ring	circ											0	0
-of Frozen Armor	100	0	1	1	30	1		sor	1	0	77	gethit-skill	40	8	2										orb	tors											0	0
-of Frozen Armor	100	1	1	30		35		sor	1	1	77	gethit-skill	40	13	8										orb	tors											0	0
-of Static Field	100	0	1	6	40	6		sor	6	0	77	gethit-skill	42	3	8										ring	circ											0	0
-of Static Field	100	1	1	40		45		sor	6	1	77	gethit-skill	42	7	18										ring	circ											0	0
-of Frost Novas	100	0	1	6	24	6		sor	6	0	77	gethit-skill	44	6	6										amul	circ											0	0
-of Frost Novas	100	1	1	24		23		sor	6	1	77	gethit-skill	44	8	14										amul	circ											0	0
-of Ice Blasts	100	0	1	6	24	6		sor	6	0	77	gethit-skill	45	4	4										ring	circ											0	0
-of Ice Blasts	100	1	1	24		24		sor	6	1	77	gethit-skill	45	9	16										ring	circ											0	0
-of Blazing	100	0	1	18	34	18		sor	12	0	77	gethit-skill	46	20	8										staf	orb	boot										0	0
-of Fire Balls	100	0	1	32	60	33		sor	12	0	77	gethit-skill	47	7	18										tors												0	0
-of Fire Balls	100	1	1	60		63		sor	12	1	77	gethit-skill	47	8	30										tors												0	0
-of Novas	100	0	1	28	60	32		sor	12	0	77	gethit-skill	48	6	18										shld												0	0
-of Novas	100	1	1	60		61		sor	12	1	77	gethit-skill	48	12	22										shld												0	0
-of Lightning	100	0	1	24	48	18		sor	12	0	77	gethit-skill	49	8	14										tors												0	0
-of Lightning	100	1	1	48		48		sor	12	1	77	gethit-skill	49	8	25										tors												0	0
-of Shiver Armor	100	1	1	20		20		sor	12	1	77	gethit-skill	50	12	18										tors												0	0
-of Fire Walls	100	0	1	24	45	24		sor	18	0	77	gethit-skill	51	4	14										tors												0	0
-of Fire Walls	100	1	1	45		45		sor	18	1	77	gethit-skill	51	7	24										tors												0	0
-of Enchantment	100	0	1	18	36	18		sor	18	0	77	gethit-skill	52	8	16										tors												0	0
-of Enchantment	100	1	1	36		36		sor	18	1	77	gethit-skill	52	11	28										tors												0	0
-of Chain Lightning	100	0	1	24	46	24		sor	18	0	77	gethit-skill	53	6	12										tors												0	0
-of Chain Lightning	100	1	1	46		45		sor	18	1	77	gethit-skill	53	9	25										tors												0	0
-of Teleportation	100	1	1	30		30		sor	18	1	77	gethit-skill	54	10	2										amul												0	0
-of Glacial Spikes	100	0	1	18	40	18		sor	18	0	77	gethit-skill	55	6	18										tors												0	0
-of Glacial Spikes	100	1	1	40		40		sor	18	1	77	gethit-skill	55	9	24										tors												0	0
-of Meteors	100	0	1	32	62	32		sor	24	0	77	gethit-skill	56	4	14										tors												0	0
-of Meteors	100	1	1	62		65		sor	24	1	77	gethit-skill	56	8	27										tors												0	0
-of Thunder Storm	100	0	1	24	55	25		sor	24	0	77	gethit-skill	57	12	18										tors												0	0
-of Energy Shield	100	0	1	24	45	25		sor	24	0	77	gethit-skill	58	7	12										helm												0	0
-of Energy Shield	100	1	1	45		45		sor	24	1	77	gethit-skill	58	10	19										helm	weap											0	0
-of Blizzards	100	0	1	29	57	29		sor	24	0	77	gethit-skill	59	9	12										tors												0	0
-of Blizzards	100	1	1	57		60		sor	24	1	77	gethit-skill	59	14	25										tors												0	0
-of Chilling Armor	100	1	1	36		38		sor	24	1	77	gethit-skill	60	15	18										tors												0	0
-of Hydras	100	0	1	34	80	34		sor	30	0	77	gethit-skill	62	6	6										tors												0	0
-of Hydras	100	1	1	80		85		sor	30	1	77	gethit-skill	62	12	28										tors												0	0
-of Frozen Orbs	100	0	1	30	80	33		sor	30	0	77	gethit-skill	64	4	6										tors												0	0
-of Frozen Orbs	100	1	1	80		85		sor	30	1	77	gethit-skill	64	4	33										tors												0	0
-of Amplify Damage	100	0	1	1	18	1		nec	1	0	77	gethit-skill	66	4	2										head												0	0
-of Amplify Damage	100	1	1	18		20		nec	1	1	77	gethit-skill	66	8	18										head												0	0
-of Teeth	100	0	1	1	18	1		nec	1	0	77	gethit-skill	67	17	2										head												0	0
-of Teeth	100	1	1	18		18		nec	1	1	77	gethit-skill	67	8	30										head												0	0
-of Bone Armor	100	0	1	1	30	1		nec	1	0	77	gethit-skill	68	5	2										tors	head											0	0
-of Bone Armor	100	1	1	30		35		nec	1	1	77	gethit-skill	68	9	22										tors	weap	head										0	0
-of Dim Vision	100	0	1	6	24	6		nec	6	0	77	gethit-skill	71	5	2										ring	circ	head	weap									0	0
-of Dim Vision	100	1	1	24		20		nec	6	1	77	gethit-skill	71	7	20										ring	circ	head	weap									0	0
-of Weaken	100	0	1	6	24	6		nec	6	0	77	gethit-skill	72	5	2										glov	head											0	0
-of Weaken	100	1	1	24		24		nec	6	1	77	gethit-skill	72	8	18										glov	weap	head										0	0
-of Corpse Explosions	100	0	1	6	40	6		nec	6	0	77	gethit-skill	74	4	2										head												0	0
-of Corpse Explosions	100	1	1	40		45		nec	6	1	77	gethit-skill	74	7	27										head												0	0
-of Iron Maiden	100	0	1	12	30	12		nec	12	0	77	gethit-skill	76	3	2										shld	weap	head										0	0
-of Iron Maiden	100	1	1	30		30		nec	12	1	77	gethit-skill	76	6	20										shld	weap	head										0	0
-of Terror	100	0	1	12	30	12		nec	12	0	77	gethit-skill	77	4	2										shld	weap	head										0	0
-of Terror	100	1	1	30		30		nec	12	1	77	gethit-skill	77	9	18										shld	weap	head										0	0
-of Bone Walls	100	0	1	12	35	12		nec	12	0	77	gethit-skill	78	5	2										head												0	0
-of Bone Walls	100	1	1	35		37		nec	12	1	77	gethit-skill	78	4	37										head												0	0
-of Confusion	100	0	1	18	36	18		nec	18	0	77	gethit-skill	81	35	2										ring	circ	head	weap									0	0
-of Confusion	100	1	1	36		35		nec	18	1	77	gethit-skill	81	35	10										ring	circ	head	weap									0	0
-of Life Tap	100	0	1	18	40	18		nec	18	0	77	gethit-skill	82	12	2										ring	head											0	0
-of Life Tap	100	1	1	40		41		nec	18	1	77	gethit-skill	82	19	10										ring	head											0	0
-of Poison Explosion	100	0	1	18	36	18		nec	18	0	77	gethit-skill	83	4	2										head												0	0
-of Poison Explosion	100	1	1	36		36		nec	18	1	77	gethit-skill	83	5	20										head												0	0
-of Bone Spears	100	0	1	18	55	18		nec	18	0	77	gethit-skill	84	7	2										head												0	0
-of Bone Spears	100	1	1	55		55		nec	18	1	77	gethit-skill	84	11	30										head												0	0
-of Attraction	100	0	1	24	48	25		nec	24	0	77	gethit-skill	86	5	4										ring	amul	head	circ	weap								0	0
-of Attraction	100	1	1	48		44		nec	24	1	77	gethit-skill	86	7	24										ring	amul	circ	head	weap								0	0
-of Decrepification	100	0	1	24	70	25		nec	24	0	77	gethit-skill	87	11	4										shld	head											0	0
-of Decrepification	100	1	1	70		75		nec	24	1	77	gethit-skill	87	10	22										shld	weap	head										0	0
-of Bone Imprisonment	100	0	1	24	46	25		nec	24	0	77	gethit-skill	88	8	4										ring	head											0	0
-of Bone Imprisonment	100	1	1	46		44		nec	24	1	77	gethit-skill	88	8	21										ring	head											0	0
-of Lower Resistance	100	0	1	30	77	33		nec	30	0	77	gethit-skill	91	6	6										head												0	0
-of Lower Resistance	100	1	1	77		80		nec	30	1	77	gethit-skill	91	6	27										head												0	0
-of Poison Novas	100	0	1	30	48	33		nec	30	0	77	gethit-skill	92	5	6										glov	head											0	0
-of Poison Novas	100	1	1	48		48		nec	30	1	77	gethit-skill	92	7	21										glov	weap	glov										0	0
-of Bone Spirits	100	0	1	30	48	33		nec	30	0	77	gethit-skill	93	4	6										amul	circ	head	weap									0	0
-of Bone Spirits	100	1	1	48		48		nec	30	1	77	gethit-skill	93	6	34										amul	circ	head	weap									0	0
-of Revivification	100	0	1	30	80	33		nec	30	0	77	gethit-skill	95	4	6										head												0	0
-of Revivification	100	1	1	80		85		nec	30	1	77	gethit-skill	95	7	20										head												0	0
-of Holy Bolts	100	0	1	6	24	6		pal	6	0	77	gethit-skill	101	12	2										mele	ashd	amul	circ									0	0
-of Holy Bolts	100	1	1	24		24		pal	6	1	77	gethit-skill	101	12	24										amul	circ	mele	circ									0	0
-of Blessed Hammers	100	0	1	18	50	18		pal	18	0	77	gethit-skill	112	5	2										mele	ashd											0	0
-of Blessed Hammers	100	1	1	50		45		pal	18	1	77	gethit-skill	112	9	30										mele	ashd											0	0
-of Fist of the Heavens	100	0	1	30	60	33		pal	30	0	77	gethit-skill	121	4	6										mele	ashd	glov										0	0
-of Fist of the Heavens	100	1	1	60		60		pal	30	1	77	gethit-skill	121	7	21										glov	mele	glov										0	0
-of Howling	100	0	1	1	18	1		bar	1	0	77	gethit-skill	130	7	2										phlm	mele											0	0
-of Howling	100	1	1	18		18		bar	1	1	77	gethit-skill	130	8	18										phlm	mele											0	0
-of Taunting	100	0	1	6	24	6		bar	6	0	77	gethit-skill	137	4	2										phlm	mele											0	0
-of Taunting	100	1	1	24		24		bar	6	1	77	gethit-skill	137	8	19										phlm	mele											0	0
-of Shouting	100	0	1	6	40	6		bar	6	0	77	gethit-skill	138	6	6										phlm	mele											0	0
-of Shouting	100	1	1	40		45		bar	6	1	77	gethit-skill	138	8	25										phlm	mele											0	0
-of Battle Cry	100	0	1	18	36	18		bar	18	0	77	gethit-skill	146	20	2										phlm	mele											0	0
-of Battle Cry	100	1	1	36		36		bar	18	1	77	gethit-skill	146	15	27										phlm	mele											0	0
-of Battle Orders	100	0	1	24	55	25		bar	24	0	77	gethit-skill	149	5	4										phlm	mele											0	0
-of Battle Orders	100	1	1	55		55		bar	24	1	77	gethit-skill	149	7	33										phlm	mele											0	0
-of Grim Ward	100	0	1	24	50	25		bar	24	0	77	gethit-skill	150	4	4										phlm	mele	amul										0	0
-of Grim Ward	100	1	1	50		55		bar	24	1	77	gethit-skill	150	8	22										amul	phlm	mele										0	0
-of War Cry	100	0	1	30	55	33		bar	30	0	77	gethit-skill	154	7	6										phlm	mele											0	0
-of War Cry	100	1	1	55		63		bar	30	1	77	gethit-skill	154	10	19										phlm	mele											0	0
-of Battle Command	100	0	1	30	48	33		bar	30	0	77	gethit-skill	155	4	6										phlm	mele											0	0
-of Battle Command	100	1	1	48		53		bar	30	1	77	gethit-skill	155	8	20										phlm	mele											0	0
-of Firestorms	100	0	1	1	18	1		dru	1	0	77	gethit-skill	225	33	2										mele												0	0
-of Firestorms	100	1	1	18		18		dru	1	1	77	gethit-skill	225	33	18										mele												0	0
-of Molten Boulders	100	0	1	6	24	6		dru	6	0	77	gethit-skill	229	4	2										mele												0	0
-of Molten Boulders	100	1	1	24		21		dru	6	1	77	gethit-skill	229	7	18										mele												0	0
-of Eruption	100	0	1	12	36	12		dru	12	0	77	gethit-skill	234	5	2										mele												0	0
-of Eruption	100	1	1	36		36		dru	12	1	77	gethit-skill	234	8	22										mele												0	0
-of Cyclone Armor	100	0	1	12	35	12		dru	12	0	77	gethit-skill	235	6	2										mele	tors											0	0
-of Cyclone Armor	100	1	1	35		37		dru	12	1	77	gethit-skill	235	9	21										tors	mele											0	0
-of Twister	100	0	1	18	36	18		dru	18	0	77	gethit-skill	240	4	2										mele	amul	circ										0	0
-of Twister	100	1	1	36		38		dru	18	1	77	gethit-skill	240	8	25										amul	circ	mele										0	0
-of Volcano	100	0	1	24	42	25		dru	24	0	77	gethit-skill	244	4	4										mele												0	0
-of Volcano	100	1	1	42		44		dru	24	1	77	gethit-skill	244	7	22										mele												0	0
-of Tornado	100	0	1	24	49	25		dru	24	0	77	gethit-skill	245	6	4										mele	amul	circ										0	0
-of Tornado	100	1	1	49		50		dru	24	1	77	gethit-skill	245	7	24										amul	circ	mele										0	0
-of Armageddon	100	0	1	30	60	33		dru	30	0	77	gethit-skill	249	4	8										mele												0	0
-of Armageddon	100	1	1	60		70		dru	30	1	77	gethit-skill	249	6	28										mele												0	0
-of Hurricane	100	0	1	30	65	33		dru	30	0	77	gethit-skill	250	11	6										mele	amul	circ										0	0
-of Hurricane	100	1	1	65		65		dru	30	1	77	gethit-skill	250	8	31										amul	circ	mele										0	0
-of Burst of Speed2	100	0	1	6	40	6		ass	6	0	77	gethit-skill	258	5	4										boot	mele											0	0
-of Burst of Speed2	100	1	1	40		45		ass	6	1	77	gethit-skill	258	8	16										boot	mele											0	0
-of Cloak of Shadows2	100	0	1	18	36	18		ass	18	0	77	gethit-skill	264	5	2										amul	mele											0	0
-of Cloak of Shadows2	100	1	1	36		38		ass	18	1	77	gethit-skill	264	9	19										amul	mele											0	0
-of Fading2	100	0	1	18	50	18		ass	18	0	77	gethit-skill	267	4	2										tors	amul	mele										0	0
-of Fading2	100	1	1	50		53		ass	18	1	77	gethit-skill	267	8	18										tors	amul	mele										0	0
-of Mind Blasting2	100	0	1	24	48	25		ass	24	0	77	gethit-skill	273	3	4										helm	mele											0	0
-of Mind Blasting2	100	1	1	48		48		ass	24	1	77	gethit-skill	273	7	27										helm	mele											0	0
-of Blade Shield2	100	0	1	30	48	33		ass	30	0	77	gethit-skill	277	6	6										tors	mele											0	0
-of Blade Shield2	100	1	1	48		50		ass	30	1	77	gethit-skill	277	9	25										tors	mele											0	0
-of Venom	100	0	1	30	57	33		ass	30	0	77	gethit-skill	278	12	6										glov	mele											0	0
-of Venom	100	1	1	57		61		ass	30	1	77	gethit-skill	278	8	28										glov	mele											0	0
-of Inner Sight	100	0	1	1	46	1		ama	1	0	78	hit-skill	8	3	6										amul	amaz	circ	glov									0	0
-of Inner Sight	100	1	1	46		46		ama	1	1	78	hit-skill	8	10	16										amul	amaz	circ	glov									0	0
-of Slow Missiles	100	1	1	34		33		ama	12	1	78	hit-skill	17	4	42										amaz	glov	amul										0	0
-of Lightning Fury	100	0	1	30	70	33		ama	30	0	78	hit-skill	35	5	52										jave												0	0
-of Lightning Fury	100	1	1	70		71		ama	30	1	78	hit-skill	35	9	52										jave												0	0
-of Fire Bolts	100	0	1	1	11	1		sor	1	0	78	hit-skill	36	5	4										weap	ring	circ										0	0
-of Fire Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	36	8	28										weap	ring	circ										0	0
-of Charged Bolts	100	0	1	1	11	1		sor	1	0	78	hit-skill	38	5	4										weap	ring	circ										0	0
-of Charged Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	38	8	28										weap	ring	circ										0	0
-of Ice Bolts	100	0	1	1	11	1		sor	1	0	78	hit-skill	39	5	4										weap	ring	circ										0	0
-of Ice Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	39	8	28										weap	ring	circ										0	0
-of Static Field	100	0	1	18	40	18		sor	6	0	78	hit-skill	42	3	48										weap	ring	circ										0	0
-of Static Field	100	1	1	40		41		sor	6	1	78	hit-skill	42	6	48										weap	ring	circ										0	0
-of Frost Novas	100	0	1	6	42	6		sor	6	0	78	hit-skill	44	6	48										weap	amul	circ										0	0
-of Frost Novas	100	1	1	42		42		sor	6	1	78	hit-skill	44	6	48										weap	amul	circ										0	0
-of Ice Blasts	100	0	1	6	32	6		sor	6	0	78	hit-skill	45	4	48										weap	ring	circ										0	0
-of Ice Blasts	100	1	1	32		32		sor	6	1	78	hit-skill	45	7	48										weap	ring	circ										0	0
-of Fire Balls	100	0	1	18	32	18		sor	12	0	78	hit-skill	47	5	42										weap												0	0
-of Fire Balls	100	1	1	32		32		sor	12	1	78	hit-skill	47	5	42										weap												0	0
-of Novas	100	0	1	28	60	32		sor	12	0	78	hit-skill	48	6	42										weap	shld											0	0
-of Novas	100	1	1	60		60		sor	12	1	78	hit-skill	48	6	42										weap	shld											0	0
-of Lightning	100	1	1	48		48		sor	12	1	78	hit-skill	49	8	42										weap												0	0
-of Fire Walls	100	0	1	24	45	24		sor	18	0	78	hit-skill	51	4	34										weap												0	0
-of Fire Walls	100	1	1	45		45		sor	18	1	78	hit-skill	51	6	34										weap												0	0
-of Chain Lightning	100	1	1	46		46		sor	18	1	78	hit-skill	53	6	34										weap												0	0
-of Glacial Spikes	100	0	1	18	40	18		sor	18	0	78	hit-skill	55	6	34										weap												0	0
-of Glacial Spikes	100	1	1	40		40		sor	18	1	78	hit-skill	55	7	34										weap												0	0
-of Meteors	100	0	1	32	62	32		sor	24	0	78	hit-skill	56	4	43										weap												0	0
-of Meteors	100	1	1	62		62		sor	24	1	78	hit-skill	56	5	43										weap												0	0
-of Blizzards	100	0	1	29	57	29		sor	24	0	78	hit-skill	59	9	43										weap												0	0
-of Blizzards	100	1	1	57		57		sor	24	1	78	hit-skill	59	5	43										weap												0	0
-of Hydras	100	0	1	34	80	34		sor	30	0	78	hit-skill	62	6	52										weap												0	0
-of Hydras	100	1	1	80		80		sor	30	1	78	hit-skill	62	5	52										weap												0	0
-of Frozen Orbs	100	1	1	48		48		sor	30	1	78	hit-skill	64	7	52										weap												0	0
-of Amplify Damage	100	0	1	1	35	1		nec	1	0	78	hit-skill	66	4	4										weap	head											0	0
-of Amplify Damage	100	1	1	35		35		nec	1	1	78	hit-skill	66	5	18										weap	head											0	0
-of Teeth	100	0	1	1	18	4		nec	1	0	78	hit-skill	67	10	8										weap	head											0	0
-of Dim Vision	100	1	1	24		24		nec	6	1	78	hit-skill	71	5	48										ring	circ	head	weap									0	0
-of Weaken	100	1	1	24		24		nec	6	1	78	hit-skill	72	5	48										weap	glov	head										0	0
-of Corpse Explosions	100	1	1	30		30		nec	6	1	78	hit-skill	74	4	48										weap	head											0	0
-of Iron Maiden	100	1	1	30		30		nec	12	1	78	hit-skill	76	5	42										shld	weap	head										0	0
-of Terror	100	1	1	24		24		nec	12	1	78	hit-skill	77	4	42										shld	weap	head										0	0
-of Confusion	100	1	1	22		22		nec	18	1	78	hit-skill	81	7	34										ring	circ	head	weap									0	0
-of Life Tap	100	1	1	32		32		nec	18	1	78	hit-skill	82	8	34										weap	ring	head										0	0
-of Poison Explosion	100	1	1	27		27		nec	18	1	78	hit-skill	83	4	34										weap	head											0	0
-of Bone Spears	100	1	1	30		30		nec	18	1	78	hit-skill	84	4	34										weap	head											0	0
-of Decrepification	100	1	1	38		38		nec	24	1	78	hit-skill	87	6	43										weap	shld	head										0	0
-of Bone Imprisonment	100	1	1	30		30		nec	24	1	78	hit-skill	88	5	43										weap	ring	head										0	0
-of Lower Resistance	100	1	1	45		45		nec	30	1	78	hit-skill	91	6	52										weap	head											0	0
-of Poison Novas	100	1	1	55		55		nec	30	1	78	hit-skill	92	5	52										weap	glov	head										0	0
-of Bone Spirits	100	1	1	48		48		nec	30	1	78	hit-skill	93	4	52										amul	circ	head	weap									0	0
-of Revivification	100	1	1	51		51		nec	30	1	78	hit-skill	95	3	52										weap	head											0	0
-of Firestorms	100	0	1	1	18	1		dru	1	0	78	hit-skill	225	12	8										mele												0	0
-of Firestorms	100	0	1	18	36	18		dru	1	0	78	hit-skill	225	6	18										mele												0	0
-of Molten Boulders	100	1	1	18		18		dru	6	1	78	hit-skill	229	4	48										mele												0	0
-of Eruption	100	1	1	36		36		dru	12	1	78	hit-skill	234	5	42										mele												0	0
-of Twister	100	0	1	24	48	24		dru	18	0	78	hit-skill	240	7	34										mele	amul	circ										0	0
-of Volcano	100	1	1	48		48		dru	24	1	78	hit-skill	244	3	43										mele												0	0
-of Tornado	100	1	1	36		36		dru	24	1	78	hit-skill	245	7	43										mele	amul	circ										0	0
-of Armageddon	100	1	1	60		60		dru	30	1	78	hit-skill	249	3	52										mele												0	0
-of Cloak of Shadows2	100	1	1	18		18		ass	18	1	78	hit-skill	264	5	34										amul	mele											0	0
-of Mind Blasting2	100	1	1	30		30		ass	24	1	78	hit-skill	273	3	43										helm	mele											0	0
+of Inner Sight	100	1	1	19		19		ama	1	1	77	gethit-skill	8	4	6										amul	amaz	circ	glov									0	0
+of Slow Missiles	100	0	1	12	34	12		ama	12	1	77	gethit-skill	17	5	1										amaz	glov	amul										0	0
+of Slow Missiles	100	1	1	65		33		ama	12	1	77	gethit-skill	17	10	18										amaz	glov	amul										0	0
+of Freezing Arrows	100	0	1	30	65	33		ama	30	1	77	gethit-skill	31	25	3										miss	abow	glov										0	0
+of Freezing Arrows	100	1	1	65		67		ama	30	1	77	gethit-skill	31	10	15										abow	miss											0	0
+of Fire Bolts	100	0	1	11	22	10		sor	1	1	77	gethit-skill	36	5	4										weap	ring	circ										0	0
+of Fire Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	36	7	17										weap	ring	circ										0	0
+of Charged Bolts	100	0	1	11	22	10		sor	1	1	77	gethit-skill	38	5	4										weap	ring	circ										0	0
+of Charged Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	38	7	17										weap	ring	circ										0	0
+of Ice Bolts	100	0	1	11	22	10		sor	1	1	77	gethit-skill	39	5	4										weap	ring	circ										0	0
+of Ice Bolts	100	1	1	22		20		sor	1	1	77	gethit-skill	39	7	17										weap	ring	circ										0	0
+of Frozen Armor	100	0	1	1	30	1		sor	1	1	77	gethit-skill	40	8	1										orb	tors											0	0
+of Frozen Armor	100	1	1	30		35		sor	1	1	77	gethit-skill	40	13	4										orb	tors											0	0
+of Static Field	100	0	1	6	40	6		sor	6	1	77	gethit-skill	42	3	4										weap	ring	circ										0	0
+of Static Field	100	1	1	40		45		sor	6	1	77	gethit-skill	42	7	9										weap	ring	circ										0	0
+of Frost Novas	100	0	1	6	24	6		sor	6	1	77	gethit-skill	44	6	3										weap	amul	circ										0	0
+of Frost Novas	100	1	1	24		23		sor	6	1	77	gethit-skill	44	8	7										weap	amul	circ										0	0
+of Ice Blasts	100	0	1	6	24	6		sor	6	1	77	gethit-skill	45	4	2										weap	ring	circ										0	0
+of Ice Blasts	100	1	1	24		24		sor	6	1	77	gethit-skill	45	9	8										weap	ring	circ										0	0
+of Blazing	100	0	1	18	34	18		sor	12	1	77	gethit-skill	46	20	4										staf	orb	boot										0	0
+of Fire Balls	100	1	1	32	60	33		sor	12	1	77	gethit-skill	47	7	12										weap												0	0
+of Fire Balls	100	1	1	60		63		sor	12	1	77	gethit-skill	47	8	20										weap												0	0
+of Novas	100	0	1	28	60	32		sor	12	1	77	gethit-skill	48	6	9										weap	shld											0	0
+of Novas	100	1	1	60		61		sor	12	1	77	gethit-skill	48	12	15										weap	shld											0	0
+of Lightning	100	0	1	24	48	18		sor	12	1	77	gethit-skill	49	8	7										weap												0	0
+of Lightning	100	1	1	48		48		sor	12	1	77	gethit-skill	49	8	17										weap												0	0
+of Shiver Armor	100	1	1	20		20		sor	12	1	77	gethit-skill	50	12	9										weap	tors											0	0
+of Fire Walls	100	0	1	24	45	24		sor	18	1	77	gethit-skill	51	4	7										weap												0	0
+of Fire Walls	100	1	1	45		45		sor	18	1	77	gethit-skill	51	7	16										weap												0	0
+of Enchantment	100	1	1	18	36	18		sor	18	1	77	gethit-skill	52	8	11										weap												0	0
+of Enchantment	100	1	1	36		36		sor	18	1	77	gethit-skill	52	11	19										weap												0	0
+of Chain Lightning	100	0	1	24	46	24		sor	18	1	77	gethit-skill	53	6	6										weap												0	0
+of Chain Lightning	100	1	1	46		45		sor	18	1	77	gethit-skill	53	9	17										weap												0	0
+of Teleportation	100	1	1	30		30		sor	18	1	77	gethit-skill	54	10	1										weap	amul											0	0
+of Glacial Spikes	100	0	1	18	40	18		sor	18	1	77	gethit-skill	55	6	9										weap												0	0
+of Glacial Spikes	100	1	1	40		40		sor	18	1	77	gethit-skill	55	9	16										weap												0	0
+of Meteors	100	0	1	32	62	32		sor	24	1	77	gethit-skill	56	4	7										weap												0	0
+of Meteors	100	1	1	62		65		sor	24	1	77	gethit-skill	56	8	18										weap												0	0
+of Thunder Storm	100	0	1	24	55	25		sor	24	1	77	gethit-skill	57	12	9										weap												0	0
+of Energy Shield	100	0	1	24	45	25		sor	24	1	77	gethit-skill	58	7	6										weap	helm											0	0
+of Energy Shield	100	1	1	45		45		sor	24	1	77	gethit-skill	58	10	13										helm	weap											0	0
+of Blizzards	100	0	1	29	57	29		sor	24	1	77	gethit-skill	59	9	6										weap												0	0
+of Blizzards	100	1	1	57		60		sor	24	1	77	gethit-skill	59	14	17										weap												0	0
+of Chilling Armor	100	1	1	36		38		sor	24	1	77	gethit-skill	60	15	12										weap	tors											0	0
+of Hydras	100	0	1	34	80	34		sor	30	1	77	gethit-skill	62	6	3										weap												0	0
+of Hydras	100	1	1	80		85		sor	30	1	77	gethit-skill	62	12	19										weap												0	0
+of Frozen Orbs	100	0	1	30	80	33		sor	30	1	77	gethit-skill	64	4	3										weap												0	0
+of Frozen Orbs	100	1	1	80		85		sor	30	1	77	gethit-skill	64	4	22										weap												0	0
+of Amplify Damage	100	0	1	1	18	1		nec	1	1	77	gethit-skill	66	4	1										weap	head											0	0
+of Amplify Damage	100	1	1	18		20		nec	1	1	77	gethit-skill	66	8	12										weap	head											0	0
+of Teeth	100	0	1	1	18	1		nec	1	1	77	gethit-skill	67	17	1										weap	head											0	0
+of Teeth	100	1	1	18		18		nec	1	1	77	gethit-skill	67	8	20										weap	head											0	0
+of Bone Armor	100	0	1	1	30	1		nec	1	1	77	gethit-skill	68	5	1										weap	tors	head										0	0
+of Bone Armor	100	1	1	30		35		nec	1	1	77	gethit-skill	68	9	15										tors	weap	head										0	0
+of Dim Vision	100	0	1	6	24	6		nec	6	1	77	gethit-skill	71	5	1										ring	circ	head	weap									0	0
+of Dim Vision	100	1	1	24		20		nec	6	1	77	gethit-skill	71	7	10										ring	circ	head	weap									0	0
+of Weaken	100	0	1	6	24	6		nec	6	1	77	gethit-skill	72	5	1										weap	glov	head										0	0
+of Weaken	100	1	1	24		24		nec	6	1	77	gethit-skill	72	8	12										glov	weap	head										0	0
+of Corpse Explosions	100	0	1	6	40	6		nec	6	1	77	gethit-skill	74	4	1										weap	head											0	0
+of Corpse Explosions	100	1	1	40		45		nec	6	1	77	gethit-skill	74	7	18										weap	head											0	0
+of Iron Maiden	100	0	1	12	30	12		nec	12	1	77	gethit-skill	76	3	1										shld	weap	head										0	0
+of Iron Maiden	100	1	1	30		30		nec	12	1	77	gethit-skill	76	6	10										shld	weap	head										0	0
+of Terror	100	0	1	12	30	12		nec	12	1	77	gethit-skill	77	4	1										shld	weap	head										0	0
+of Terror	100	1	1	30		30		nec	12	1	77	gethit-skill	77	9	12										shld	weap	head										0	0
+of Bone Walls	100	0	1	12	35	12		nec	12	1	77	gethit-skill	78	5	1										weap	head											0	0
+of Bone Walls	100	1	1	35		37		nec	12	1	77	gethit-skill	78	4	25										weap	head											0	0
+of Confusion	100	0	1	18	36	18		nec	18	1	77	gethit-skill	81	35	1										ring	circ	head	weap									0	0
+of Confusion	100	1	1	36		35		nec	18	1	77	gethit-skill	81	35	5										ring	circ	head	weap									0	0
+of Life Tap	100	0	1	18	40	18		nec	18	1	77	gethit-skill	82	12	1										weap	ring	head										0	0
+of Life Tap	100	1	1	40		41		nec	18	1	77	gethit-skill	82	19	5										weap	ring	head										0	0
+of Poison Explosion	100	0	1	18	36	18		nec	18	1	77	gethit-skill	83	4	1										weap	head											0	0
+of Poison Explosion	100	1	1	36		36		nec	18	1	77	gethit-skill	83	5	10										weap	head											0	0
+of Bone Spears	100	0	1	18	55	18		nec	18	1	77	gethit-skill	84	7	1										weap	head											0	0
+of Bone Spears	100	1	1	55		55		nec	18	1	77	gethit-skill	84	11	20										weap	head											0	0
+of Attraction	100	0	1	24	48	25		nec	24	1	77	gethit-skill	86	5	2										ring	amul	head	circ	weap								0	0
+of Attraction	100	1	1	48		44		nec	24	1	77	gethit-skill	86	7	16										ring	amul	circ	head	weap								0	0
+of Decrepification	100	0	1	24	70	25		nec	24	1	77	gethit-skill	87	11	2										weap	shld	head										0	0
+of Decrepification	100	1	1	70		75		nec	24	1	77	gethit-skill	87	10	15										shld	weap	head										0	0
+of Bone Imprisonment	100	0	1	24	46	25		nec	24	1	77	gethit-skill	88	8	2										weap	ring	head										0	0
+of Bone Imprisonment	100	1	1	46		44		nec	24	1	77	gethit-skill	88	8	14										weap	ring	head										0	0
+of Lower Resistance	100	0	1	30	77	33		nec	30	1	77	gethit-skill	91	6	3										weap	head											0	0
+of Lower Resistance	100	1	1	77		80		nec	30	1	77	gethit-skill	91	6	18										weap	head											0	0
+of Poison Novas	100	0	1	30	48	33		nec	30	1	77	gethit-skill	92	5	3										weap	glov	head										0	0
+of Poison Novas	100	1	1	48		48		nec	30	1	77	gethit-skill	92	7	14										glov	weap	glov										0	0
+of Bone Spirits	100	0	1	30	48	33		nec	30	1	77	gethit-skill	93	4	3										amul	circ	head	weap									0	0
+of Bone Spirits	100	1	1	48		48		nec	30	1	77	gethit-skill	93	6	23										amul	circ	head	weap									0	0
+of Revivification	100	0	1	30	80	33		nec	30	1	77	gethit-skill	95	4	3										weap	head											0	0
+of Revivification	100	1	1	80		85		nec	30	1	77	gethit-skill	95	7	10										weap	head											0	0
+of Holy Bolts	100	0	1	6	24	6		pal	6	1	77	gethit-skill	101	12	1										mele	ashd	amul	circ									0	0
+of Holy Bolts	100	1	1	24		24		pal	6	1	77	gethit-skill	101	12	16										amul	circ	mele	circ									0	0
+of Blessed Hammers	100	0	1	18	50	18		pal	18	1	77	gethit-skill	112	5	1										mele	ashd											0	0
+of Blessed Hammers	100	1	1	50		45		pal	18	1	77	gethit-skill	112	9	20										mele	ashd											0	0
+of Fist of the Heavens	100	0	1	30	60	33		pal	30	1	77	gethit-skill	121	4	3										mele	ashd	glov										0	0
+of Fist of the Heavens	100	1	1	60		60		pal	30	1	77	gethit-skill	121	7	14										glov	mele	glov										0	0
+of Howling	100	0	1	1	18	1		bar	1	1	77	gethit-skill	130	7	1										phlm	mele											0	0
+of Howling	100	1	1	18		18		bar	1	1	77	gethit-skill	130	8	12										phlm	mele											0	0
+of Taunting	100	0	1	6	24	6		bar	6	1	77	gethit-skill	137	4	1										phlm	mele											0	0
+of Taunting	100	1	1	24		24		bar	6	1	77	gethit-skill	137	8	13										phlm	mele											0	0
+of Shouting	100	0	1	6	40	6		bar	6	1	77	gethit-skill	138	6	3										phlm	mele											0	0
+of Shouting	100	1	1	40		45		bar	6	1	77	gethit-skill	138	8	17										phlm	mele											0	0
+of Battle Cry	100	0	1	18	36	18		bar	18	1	77	gethit-skill	146	20	1										phlm	mele											0	0
+of Battle Cry	100	1	1	36		36		bar	18	1	77	gethit-skill	146	15	18										phlm	mele											0	0
+of Battle Orders	100	0	1	24	55	25		bar	24	1	77	gethit-skill	149	5	2										phlm	mele											0	0
+of Battle Orders	100	1	1	55		55		bar	24	1	77	gethit-skill	149	7	22										phlm	mele											0	0
+of Grim Ward	100	0	1	24	50	25		bar	24	1	77	gethit-skill	150	4	2										phlm	mele	amul										0	0
+of Grim Ward	100	1	1	50		55		bar	24	1	77	gethit-skill	150	8	15										amul	phlm	mele										0	0
+of War Cry	100	0	1	30	55	33		bar	30	1	77	gethit-skill	154	7	3										phlm	mele											0	0
+of War Cry	100	1	1	55		63		bar	30	1	77	gethit-skill	154	10	13										phlm	mele											0	0
+of Battle Command	100	0	1	30	48	33		bar	30	1	77	gethit-skill	155	4	3										phlm	mele											0	0
+of Battle Command	100	1	1	48		53		bar	30	1	77	gethit-skill	155	8	10										phlm	mele											0	0
+of Firestorms	100	0	1	1	18	1		dru	1	1	77	gethit-skill	225	33	1										mele												0	0
+of Firestorms	100	1	1	18		18		dru	1	1	77	gethit-skill	225	33	9										mele												0	0
+of Molten Boulders	100	0	1	6	24	6		dru	6	1	77	gethit-skill	229	4	1										mele												0	0
+of Molten Boulders	100	1	1	24		21		dru	6	1	77	gethit-skill	229	7	9										mele												0	0
+of Eruption	100	0	1	12	36	12		dru	12	1	77	gethit-skill	234	5	1										mele												0	0
+of Eruption	100	1	1	36		36		dru	12	1	77	gethit-skill	234	8	15										mele												0	0
+of Cyclone Armor	100	0	1	12	35	12		dru	12	1	77	gethit-skill	235	6	1										mele	tors											0	0
+of Cyclone Armor	100	1	1	35		37		dru	12	1	77	gethit-skill	235	9	14										tors	mele											0	0
+of Twister	100	0	1	18	36	18		dru	18	1	77	gethit-skill	240	4	1										mele	amul	circ										0	0
+of Twister	100	1	1	36		38		dru	18	1	77	gethit-skill	240	8	17										amul	circ	mele										0	0
+of Volcano	100	0	1	24	42	25		dru	24	1	77	gethit-skill	244	4	2										mele												0	0
+of Volcano	100	1	1	42		44		dru	24	1	77	gethit-skill	244	7	15										mele												0	0
+of Tornado	100	0	1	24	49	25		dru	24	1	77	gethit-skill	245	6	2										mele	amul	circ										0	0
+of Tornado	100	1	1	49		50		dru	24	1	77	gethit-skill	245	7	16										amul	circ	mele										0	0
+of Armageddon	100	0	1	30	60	33		dru	30	1	77	gethit-skill	249	4	4										mele												0	0
+of Armageddon	100	1	1	60		70		dru	30	1	77	gethit-skill	249	6	19										mele												0	0
+of Hurricane	100	0	1	30	65	33		dru	30	1	77	gethit-skill	250	11	3										mele	amul	circ										0	0
+of Hurricane	100	1	1	65		65		dru	30	1	77	gethit-skill	250	8	21										amul	circ	mele										0	0
+of Burst of Speed2	100	0	1	6	40	6		ass	6	1	77	gethit-skill	258	5	2										boot	mele											0	0
+of Burst of Speed2	100	1	1	40		45		ass	6	1	77	gethit-skill	258	8	8										boot	mele											0	0
+of Cloak of Shadows2	100	0	1	18	36	18		ass	18	1	77	gethit-skill	264	5	1										amul	mele											0	0
+of Cloak of Shadows2	100	1	1	36		38		ass	18	1	77	gethit-skill	264	9	13										amul	mele											0	0
+of Fading2	100	0	1	18	50	18		ass	18	1	77	gethit-skill	267	4	1										tors	amul	mele										0	0
+of Fading2	100	1	1	50		53		ass	18	1	77	gethit-skill	267	8	12										tors	amul	mele										0	0
+of Mind Blasting2	100	0	1	24	48	25		ass	24	1	77	gethit-skill	273	3	2										helm	mele											0	0
+of Mind Blasting2	100	1	1	48		48		ass	24	1	77	gethit-skill	273	7	18										helm	mele											0	0
+of Blade Shield2	100	0	1	30	48	33		ass	30	1	77	gethit-skill	277	6	3										tors	mele											0	0
+of Blade Shield2	100	1	1	48		50		ass	30	1	77	gethit-skill	277	9	17										tors	mele											0	0
+of Venom	100	0	1	30	57	33		ass	30	1	77	gethit-skill	278	12	3										glov	mele											0	0
+of Venom	100	1	1	57		61		ass	30	1	77	gethit-skill	278	8	19										glov	mele											0	0
+of Inner Sight	100	0	1	1	46	1		ama	1	1	78	hit-skill	8	3	3										amul	amaz	circ	glov									0	0
+of Inner Sight	100	1	1	46		46		ama	1	1	78	hit-skill	8	10	11										amul	amaz	circ	glov									0	0
+of Slow Missiles	100	1	1	34		33		ama	12	1	78	hit-skill	17	4	28										amaz	glov	amul										0	0
+of Lightning Fury	100	0	1	30	70	33		ama	30	1	78	hit-skill	35	5	35										jave												0	0
+of Lightning Fury	100	1	1	70		71		ama	30	1	78	hit-skill	35	9	35										jave												0	0
+of Fire Bolts	100	0	1	1	11	1		sor	1	1	78	hit-skill	36	5	2										weap	ring	circ										0	0
+of Fire Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	36	8	19										weap	ring	circ										0	0
+of Charged Bolts	100	0	1	1	11	1		sor	1	1	78	hit-skill	38	5	2										weap	ring	circ										0	0
+of Charged Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	38	8	19										weap	ring	circ										0	0
+of Ice Bolts	100	0	1	1	11	1		sor	1	1	78	hit-skill	39	5	2										weap	ring	circ										0	0
+of Ice Bolts	100	1	1	11		11		sor	1	1	78	hit-skill	39	8	19										weap	ring	circ										0	0
+of Static Field	100	0	1	18	40	18		sor	6	1	78	hit-skill	42	3	32										weap	ring	circ										0	0
+of Static Field	100	1	1	40		41		sor	6	1	78	hit-skill	42	6	32										weap	ring	circ										0	0
+of Frost Novas	100	0	1	6	42	6		sor	6	1	78	hit-skill	44	6	32										weap	amul	circ										0	0
+of Frost Novas	100	1	1	42		42		sor	6	1	78	hit-skill	44	6	32										weap	amul	circ										0	0
+of Ice Blasts	100	0	1	6	32	6		sor	6	1	78	hit-skill	45	4	32										weap	ring	circ										0	0
+of Ice Blasts	100	1	1	32		32		sor	6	1	78	hit-skill	45	7	32										weap	ring	circ										0	0
+of Fire Balls	100	0	1	18	32	18		sor	12	1	78	hit-skill	47	5	28										weap												0	0
+of Fire Balls	100	1	1	32		32		sor	12	1	78	hit-skill	47	5	28										weap												0	0
+of Novas	100	1	1	28	60	32		sor	12	1	78	hit-skill	48	6	28										weap	shld											0	0
+of Novas	100	1	1	60		60		sor	12	1	78	hit-skill	48	6	28										weap	shld											0	0
+of Lightning	100	1	1	48		48		sor	12	1	78	hit-skill	49	8	28										weap												0	0
+of Fire Walls	100	0	1	24	45	24		sor	18	1	78	hit-skill	51	4	23										weap												0	0
+of Fire Walls	100	1	1	45		45		sor	18	1	78	hit-skill	51	6	23										weap												0	0
+of Chain Lightning	100	1	1	46		46		sor	18	1	78	hit-skill	53	6	23										weap												0	0
+of Glacial Spikes	100	0	1	18	40	18		sor	18	1	78	hit-skill	55	6	23										weap												0	0
+of Glacial Spikes	100	1	1	40		40		sor	18	1	78	hit-skill	55	7	23										weap												0	0
+of Meteors	100	0	1	32	62	32		sor	24	1	78	hit-skill	56	4	29										weap												0	0
+of Meteors	100	1	1	62		62		sor	24	1	78	hit-skill	56	5	29										weap												0	0
+of Blizzards	100	0	1	29	57	29		sor	24	1	78	hit-skill	59	9	29										weap												0	0
+of Blizzards	100	1	1	57		57		sor	24	1	78	hit-skill	59	5	29										weap												0	0
+of Hydras	100	0	1	34	80	34		sor	30	1	78	hit-skill	62	6	35										weap												0	0
+of Hydras	100	1	1	80		80		sor	30	1	78	hit-skill	62	5	35										weap												0	0
+of Frozen Orbs	100	1	1	48		48		sor	30	1	78	hit-skill	64	7	35										weap												0	0
+of Amplify Damage	100	0	1	1	35	1		nec	1	1	78	hit-skill	66	4	2										weap	head											0	0
+of Amplify Damage	100	1	1	35		35		nec	1	1	78	hit-skill	66	5	9										weap	head											0	0
+of Teeth	100	0	1	1	18	4		nec	1	1	78	hit-skill	67	10	4										weap	head											0	0
+of Dim Vision	100	1	1	24		24		nec	6	1	78	hit-skill	71	5	32										ring	circ	head	weap									0	0
+of Weaken	100	1	1	24		24		nec	6	1	78	hit-skill	72	5	32										weap	glov	head										0	0
+of Corpse Explosions	100	1	1	30		30		nec	6	1	78	hit-skill	74	4	32										weap	head											0	0
+of Iron Maiden	100	1	1	30		30		nec	12	1	78	hit-skill	76	5	28										shld	weap	head										0	0
+of Terror	100	1	1	24		24		nec	12	1	78	hit-skill	77	4	28										shld	weap	head										0	0
+of Confusion	100	1	1	22		22		nec	18	1	78	hit-skill	81	7	23										ring	circ	head	weap									0	0
+of Life Tap	100	1	1	32		32		nec	18	1	78	hit-skill	82	8	23										weap	ring	head										0	0
+of Poison Explosion	100	1	1	27		27		nec	18	1	78	hit-skill	83	4	23										weap	head											0	0
+of Bone Spears	100	1	1	30		30		nec	18	1	78	hit-skill	84	4	23										weap	head											0	0
+of Decrepification	100	1	1	38		38		nec	24	1	78	hit-skill	87	6	29										weap	shld	head										0	0
+of Bone Imprisonment	100	1	1	30		30		nec	24	1	78	hit-skill	88	5	29										weap	ring	head										0	0
+of Lower Resistance	100	1	1	45		45		nec	30	1	78	hit-skill	91	6	35										weap	head											0	0
+of Poison Novas	100	1	1	55		55		nec	30	1	78	hit-skill	92	5	35										weap	glov	head										0	0
+of Bone Spirits	100	1	1	48		48		nec	30	1	78	hit-skill	93	4	35										amul	circ	head	weap									0	0
+of Revivification	100	1	1	51		51		nec	30	1	78	hit-skill	95	3	35										weap	head											0	0
+of Firestorms	100	0	1	1	18	1		dru	1	1	78	hit-skill	225	12	4										mele												0	0
+of Firestorms	100	1	1	18	36	18		dru	1	1	78	hit-skill	225	6	12										mele												0	0
+of Molten Boulders	100	1	1	18		18		dru	6	1	78	hit-skill	229	4	32										mele												0	0
+of Eruption	100	1	1	36		36		dru	12	1	78	hit-skill	234	5	28										mele												0	0
+of Twister	100	0	1	24	48	24		dru	18	1	78	hit-skill	240	7	23										mele	amul	circ										0	0
+of Volcano	100	1	1	48		48		dru	24	1	78	hit-skill	244	3	29										mele												0	0
+of Tornado	100	1	1	36		36		dru	24	1	78	hit-skill	245	7	29										mele	amul	circ										0	0
+of Armageddon	100	1	1	60		60		dru	30	1	78	hit-skill	249	3	35										mele												0	0
+of Cloak of Shadows2	100	1	1	18		18		ass	18	1	78	hit-skill	264	5	23										amul	mele											0	0
+of Mind Blasting2	100	1	1	30		30		ass	24	1	78	hit-skill	273	3	29										helm	mele											0	0
 of Mastery	100	1	0	65		75				1	82	pierce-fire		3	5										mcha												0	0
 of Mastery	100	1	0	65		75				1	82	pierce-ltng		3	5										mcha												0	0
 of Mastery	100	1	0	65		75				1	82	pierce-cold		3	5										mcha												0	0
@@ -1497,5 +1497,4 @@ of Mastery	100	1	1	80		85				2	84	oskill	Battle Command	2	6										jewl							
 of Mastery	100	1	1	80		55				2	84	oskill	Warmth	3	9										jewl												0	0
 of Craftsmanship	0	1	1	1		1					13	dmg-max		1	2										amul	ring											0	0
 of Craftsmanship	1	1	1	1		1				8	14	dmg-max		1	1										amul	ring											0	0
-of Craftsmanship	100	1	1	1	20	1				60	14	dmg-max		1	2										amul	ring											0	0
 of Hardening	100	1	1	38		30				4	308	red-dmg%		5	10										tors	shld	helm					circ					0	0

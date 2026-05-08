@@ -6,7 +6,7 @@ import gomule.translations.TranslationsLoader;
 public class D2Files {
 
     private static D2Files INSTANCE;
-    private Translations translations;
+    private final Translations translations;
 
     private D2Files(Translations translations) {
         this.translations = translations;

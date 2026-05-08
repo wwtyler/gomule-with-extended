@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,6 +53,11 @@ import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Theme;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import gomule.d2s.D2Character;
 import static gomule.d2s.D2Character.STASHSIZEX;
@@ -194,8 +200,10 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
     private D2SkillPainterPanel lSkillPanel;
     private D2WayPainterPanel lWayPanel;
     private D2DeathPainterPanel iDeathPainter;
-    private JTextArea lDump;
+    private JEditorPane lDump;
     private RandallPanel lDumpPanel;
+    private RSyntaxTextArea lRawDataArea;
+    private RandallPanel lRawDataPanel;
 
     public D2ViewChar(D2FileManager pMainFrame, String pFileName) {
         super(pFileName, false, true, false, true);
@@ -400,22 +408,152 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
         lBankPanel.finishDefaultPanel();
         lTabs.addTab("Bank", lBankPanel);
         lDumpPanel = new RandallPanel();
-        lDump = new JTextArea();
+        lDump = new JEditorPane();
+        lDump.setContentType("text/html");
+        lDump.setEditable(false);
+        lDump.setBackground(new java.awt.Color(0x1a, 0x1a, 0x2e));
         JScrollPane dumpScroll = new JScrollPane(lDump);
         dumpScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        dumpScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        lDumpPanel.addToPanel(dumpScroll, 0, 0, 1, RandallPanel.BOTH);
-        lDump.setFont(new Font("monospaced", Font.PLAIN, 11));
-        // HTMLEditorKit htmlEditor = new HTMLEditorKit();
-        // lDump.setEditorKit(htmlEditor);
-        // lDump.setPreferredSize(new Dimension(520,360));
-
+        dumpScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         dumpScroll.setPreferredSize(new Dimension(520, 360));
-        lDump.setAutoscrolls(false);
-        lDump.setVisible(true);
-        // lDump.setBounds(6,7,175,179);
-        // dumpScroll.setBounds(6,7,175,179);
+        lDumpPanel.addToPanel(dumpScroll, 0, 0, 1, RandallPanel.BOTH);
         lTabs.addTab("Dump", lDumpPanel);
+
+        lRawDataPanel = new RandallPanel();
+        lRawDataArea = new RSyntaxTextArea() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                paintFoldHints(g);
+            }
+
+            private void paintFoldHints(java.awt.Graphics g) {
+                org.fife.ui.rsyntaxtextarea.folding.FoldManager foldMgr = getFoldManager();
+                if (!isCodeFoldingEnabled() || foldMgr == null) return;
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                try {
+                    g2.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING,
+                            java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                    g2.setFont(getFont().deriveFont(java.awt.Font.ITALIC));
+                    g2.setColor(new java.awt.Color(200, 200, 80, 130));
+                    java.awt.FontMetrics metrics = g2.getFontMetrics();
+                    java.awt.Rectangle vis = getVisibleRect();
+                    for (int fi = 0; fi < foldMgr.getFoldCount(); fi++) {
+                        paintOneFoldHint(g2, foldMgr.getFold(fi), metrics, vis);
+                    }
+                } finally {
+                    g2.dispose();
+                }
+            }
+
+            private void paintOneFoldHint(java.awt.Graphics2D g2,
+                    org.fife.ui.rsyntaxtextarea.folding.Fold fold,
+                    java.awt.FontMetrics metrics, java.awt.Rectangle vis) {
+                if (fold.isCollapsed()) {
+                    int sl = fold.getStartLine();
+                    try {
+                        int endOff = getLineEndOffset(sl);
+                        if (endOff > 0) endOff--;
+                        java.awt.geom.Rectangle2D r = modelToView2D(endOff);
+                        if (r != null) {
+                            int ry = (int) r.getY();
+                            if (ry >= vis.y - 30 && ry <= vis.y + vis.height + 30) {
+                                String hint = buildFoldHint(fold);
+                                if (hint != null && !hint.isEmpty()) {
+                                    int hx = (int) r.getMaxX() + 6;
+                                    int hy = ry + metrics.getAscent()
+                                            + (int) ((r.getHeight() - metrics.getHeight()) / 2);
+                                    g2.drawString(hint, hx, hy);
+                                }
+                            }
+                        }
+                    } catch (javax.swing.text.BadLocationException ignored) {}
+                } else {
+                    for (int ci = 0; ci < fold.getChildCount(); ci++) {
+                        paintOneFoldHint(g2, fold.getChild(ci), metrics, vis);
+                    }
+                }
+            }
+
+            private String buildFoldHint(org.fife.ui.rsyntaxtextarea.folding.Fold fold) {
+                // Look ahead a few lines for a "name" or first string value
+                int total = getLineCount();
+                for (int li = fold.getStartLine() + 1;
+                        li <= fold.getStartLine() + 4 && li < total; li++) {
+                    try {
+                        int ls = getLineStartOffset(li);
+                        int le = getLineEndOffset(li);
+                        String t = getDocument().getText(ls, le - ls).trim()
+                                .replaceAll(",$", "");
+                        if (t.isEmpty() || t.equals("{") || t.equals("[")) continue;
+                        if (t.length() > 60) t = t.substring(0, 60) + "\u2026";
+                        return "// " + t;
+                    } catch (javax.swing.text.BadLocationException ignored) {}
+                }
+                return null;
+            }
+        };
+        lRawDataArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON);
+        try {
+            Theme theme = Theme.load(
+                    RSyntaxTextArea.class.getResourceAsStream(
+                            "/org/fife/ui/rsyntaxtextarea/themes/dark.xml"));
+            theme.apply(lRawDataArea);
+        } catch (java.io.IOException ignored) {}
+        lRawDataArea.setEditable(false);
+        lRawDataArea.setFont(new Font("monospaced", Font.PLAIN, 20));
+        lRawDataArea.setCodeFoldingEnabled(true);
+        RTextScrollPane rawDataScroll = new RTextScrollPane(lRawDataArea);
+        rawDataScroll.setPreferredSize(new Dimension(520, 360));
+
+        // font size toolbar
+        JPanel rawDataToolbar = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
+        JLabel fontSizeLabel = new JLabel("字体大小:");
+        JButton fontDecBtn = new JButton("A-");
+        JButton fontIncBtn = new JButton("A+");
+        Runnable updateFontSize = () -> {
+            int cur = lRawDataArea.getFont().getSize();
+            fontSizeLabel.setText("字体大小: " + cur);
+        };
+        fontDecBtn.addActionListener(e -> {
+            int s = lRawDataArea.getFont().getSize();
+            if (s > 8) {
+                lRawDataArea.setFont(lRawDataArea.getFont().deriveFont((float)(s - 1)));
+                updateFontSize.run();
+            }
+        });
+        fontIncBtn.addActionListener(e -> {
+            int s = lRawDataArea.getFont().getSize();
+            if (s < 40) {
+                lRawDataArea.setFont(lRawDataArea.getFont().deriveFont((float)(s + 1)));
+                updateFontSize.run();
+            }
+        });
+        updateFontSize.run();
+
+        JButton collapseAllBtn = new JButton("全部折叠");
+        JButton expandAllBtn = new JButton("全部展开");
+        collapseAllBtn.addActionListener(e -> {
+            setAllFolds(lRawDataArea.getFoldManager(), true);
+            lRawDataArea.repaint();
+        });
+        expandAllBtn.addActionListener(e -> {
+            setAllFolds(lRawDataArea.getFoldManager(), false);
+            lRawDataArea.repaint();
+        });
+
+        rawDataToolbar.add(fontSizeLabel);
+        rawDataToolbar.add(fontDecBtn);
+        rawDataToolbar.add(fontIncBtn);
+        rawDataToolbar.add(javax.swing.Box.createHorizontalStrut(8));
+        rawDataToolbar.add(collapseAllBtn);
+        rawDataToolbar.add(expandAllBtn);
+
+        JPanel rawDataContainer = new JPanel(new BorderLayout());
+        rawDataContainer.add(rawDataToolbar, BorderLayout.NORTH);
+        rawDataContainer.add(rawDataScroll, BorderLayout.CENTER);
+        lRawDataPanel.addToPanel(rawDataContainer, 0, 0, 1, RandallPanel.BOTH);
+        lTabs.addTab("Raw Data", lRawDataPanel);
 
         lTabs.addMouseListener(new MyMouse());
 
@@ -452,6 +590,25 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
     }
 
+    public void paintRawData() {
+        lRawDataArea.setText(iCharacter.toRawJson());
+        lRawDataArea.setCaretPosition(0);
+    }
+
+    /** Recursively collapse or expand all folds in the given FoldManager. */
+    private void setAllFolds(org.fife.ui.rsyntaxtextarea.folding.FoldManager fm, boolean collapsed) {
+        for (int i = 0; i < fm.getFoldCount(); i++) {
+            setFoldCollapsed(fm.getFold(i), collapsed);
+        }
+    }
+
+    private void setFoldCollapsed(org.fife.ui.rsyntaxtextarea.folding.Fold fold, boolean collapsed) {
+        fold.setCollapsed(collapsed);
+        for (int i = 0; i < fold.getChildCount(); i++) {
+            setFoldCollapsed(fold.getChild(i), collapsed);
+        }
+    }
+
     @Override
     public final void connect() {
         if (iCharacter != null) {
@@ -463,6 +620,7 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
             paintMercStats();
             paintCharStats();
+            paintRawData();
             lSkillPanel.build();
             lQuestPanel.build();
             lWayPanel.build();
@@ -688,16 +846,11 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
     public void dumpChar() {
 
         if (iCharacter == null) {
-            // Character failed to load (e.g. d2s parse error). Show a placeholder
-            // so clicking the Dump tab does not throw NPE.
-            lDump.setText(
-                    "(no character loaded — file may have failed to parse; check logs/gomule.log)");
-            lDump.setCaretPosition(0);
+            lDump.setText("<html><body style='font-family:Dialog; color:#e05050;'>(no character loaded)</body></html>");
             lDump.validate();
             return;
         }
-        String iChaString = iCharacter.fullDumpStr().replaceAll("<BR>", "\n");
-        lDump.setText(iChaString);
+        lDump.setText(iCharacter.fullDumpHtml());
         lDump.setCaretPosition(0);
         lDump.validate();
     }
@@ -2057,6 +2210,9 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
                 lEmptyBackground = D2ImageCache.getImage("dead2.jpg");
             }
 
+            if (lEmptyBackground == null) {
+                return;
+            }
             int lWidth = lEmptyBackground.getWidth(D2DeathPainterPanel.this);
             int lHeight = lEmptyBackground.getHeight(D2DeathPainterPanel.this);
 
@@ -2494,6 +2650,9 @@ public class D2ViewChar extends JInternalFrame implements D2ItemContainer, D2Ite
 
         public void build() {
             lEmptyBackground = D2ImageCache.getImage("q" + bgNum + ".jpg");
+            if (lEmptyBackground == null) {
+                return;
+            }
             int lWidth = lEmptyBackground.getWidth(D2QuestPainterPanel.this);
             int lHeight = lEmptyBackground.getHeight(D2QuestPainterPanel.this);
 

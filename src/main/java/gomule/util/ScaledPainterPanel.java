@@ -1,5 +1,6 @@
 package gomule.util;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 
 /**
  * Base class for inventory / stash painter panels that need to support a
@@ -98,19 +100,59 @@ public abstract class ScaledPainterPanel extends JPanel {
      * let Swing position the tooltip at those coordinates, the popup appears
      * far to the upper-left of the actual on-screen cursor, ends up underneath
      * the cursor, triggers {@code mouseExited}, hides itself, then reappears
-     * when the cursor “re-enters” — a flicker loop.
+     * when the cursor "re-enters" — a flicker loop.
      *
-     * <p>Fix: convert the translated coordinates back to screen-space (multiply
-     * by scale) and add a small offset so the tooltip never overlaps the
-     * cursor.
+     * <p>Fix #1: convert the translated coordinates back to screen-space
+     * (multiply by scale) and add a small offset so the tooltip never overlaps
+     * the cursor.
+     *
+     * <p>Fix #2 (anti-flicker for big tooltips): while the tooltip text stays
+     * the same (i.e. cursor is still hovering the same item), return the
+     * <em>same</em> {@link Point} we returned last time. Otherwise Swing's
+     * {@code ToolTipManager} sees a new location on every mouse-move event and
+     * destroys+recreates the popup. For long Unique/Set HTML tooltips the
+     * popup overflows the parent {@code JFrame} and becomes a
+     * {@code HeavyweightPopup} (a real OS window) — recreating it every pixel
+     * causes a visible white→black flash. Equipment slots don't suffer the
+     * same way because their popups fit inside the parent frame and stay
+     * lightweight, so {@code setLocation} alone (no recreate) is enough.
      */
     @Override
     public Point getToolTipLocation(MouseEvent event) {
+        String tipText = getToolTipText();
+        if (tipText == null || tipText.isEmpty()) {
+            lastTipText = null;
+            lastTipLocation = null;
+            return null;
+        }
+        if (tipText.equals(lastTipText) && lastTipLocation != null) {
+            return lastTipLocation;
+        }
         double s = D2UI.getUiScale();
-        if (s == 1.0) return null; // default Swing behaviour
         int sx = (int) Math.round(event.getX() * s) + 16;
         int sy = (int) Math.round(event.getY() * s) + 24;
-        return new Point(sx, sy);
+        lastTipText = tipText;
+        lastTipLocation = new Point(sx, sy);
+        return lastTipLocation;
+    }
+
+    /** Cache for {@link #getToolTipLocation} — see field doc on the method. */
+    private String lastTipText;
+    private Point lastTipLocation;
+
+    /**
+     * Pre-paint the tooltip background black so HeavyweightPopup (separate OS
+     * window, used when the popup overflows the parent frame — common for tall
+     * Unique/Set HTML tooltips on right/bottom-edge items) doesn't flash white
+     * for one frame before the dark item HTML paints over it.
+     */
+    @Override
+    public JToolTip createToolTip() {
+        JToolTip tip = super.createToolTip();
+        tip.setBackground(Color.BLACK);
+        tip.setForeground(Color.WHITE);
+        tip.setOpaque(true);
+        return tip;
     }
 
     private MouseEvent translate(MouseEvent e) {

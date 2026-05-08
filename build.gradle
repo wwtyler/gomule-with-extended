@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'eclipse'
 }
 
 repositories {
@@ -10,6 +11,7 @@ dependencies {
     implementation 'com.google.guava:guava:33.4.0-jre'
     implementation 'com.formdev:flatlaf:1.6'
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
+    implementation 'com.fifesoft:rsyntaxtextarea:3.5.4'
     testImplementation "org.mockito:mockito-core:3.+"
     testImplementation "org.junit.jupiter:junit-jupiter:5.5.2"
 }

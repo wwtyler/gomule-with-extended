@@ -1,11 +1,14 @@
 package gomule.item;
 
-import com.google.common.io.BaseEncoding;
-import gomule.util.D2BitReader;
-import org.junit.jupiter.api.Test;
-import randall.d2files.D2TxtFile;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import com.google.common.io.BaseEncoding;
+
+import gomule.util.D2BitReader;
+import randall.d2files.D2TxtFile;
 
 public class D2ItemTest {
 
@@ -376,6 +379,18 @@ public class D2ItemTest {
                 + "Shields: 25% Better Chance of Getting Magic Items\n";
         byte[] bytes = {16, 72, -128, 12, -51, 12, 0, -102, 25, -119, -94, 59, -37, -85, 2, 10, -108, 8, -15, 60, -96, -1, 0, 104, 32, 24, 57, -95, 47, -123, -66, 21, -6, 90, -24, -29, -127, -56, -61, 77, 15, -98, 63, -6, 15, 16, 0, -96, 8, 53, 0, -32, 124, -66, 2, 16, 0, -96, 8, 51, 4, -32, 48, 76, 0, 16, 0, -96, 8, 53, 8, -32, 108, -65, 3, 16, 0, -96, 8, 53, 12, -32, 48, 95, 1};
         runItemDumpComparison(expected, loadD2Item(bytes));
+    }
+
+    @Test
+    public void socketedTooltipRendersCompactRuneNames() throws Exception {
+        byte[] bytes = {16, 72, -128, 12, -51, 12, 0, -102, 25, -119, -94, 59, -37, -85, 2, 10, -108, 8, -15, 60, -96, -1, 0, 104, 32, 24, 57, -95, 47, -123, -66, 21, -6, 90, -24, -29, -127, -56, -61, 77, 15, -98, 63, -6, 15, 16, 0, -96, 8, 53, 0, -32, 124, -66, 2, 16, 0, -96, 8, 51, 4, -32, 48, 76, 0, 16, 0, -96, 8, 53, 8, -32, 108, -65, 3, 16, 0, -96, 8, 53, 12, -32, 48, 95, 1};
+
+        String html = D2ItemRenderer.itemDumpHtml(loadD2Item(bytes), true);
+
+        assertTrue(html.contains("Socketed: "), html);
+        assertFalse(html.contains("ÿc"), html);
+        assertFalse(html.contains("★★★★★"), html);
+        assertFalse(html.contains("------"), html);
     }
 
     @Test

@@ -89,37 +89,20 @@ public class D2FileWriter {
 
             iBuffer[iCounterPos] = (byte) (iBuffer[iCounterPos] | lNr);
         } else {
-            int lNr;
-            switch (iCounterBit) {
-                case 0:
-                    lNr = 0xFE;
-                    break;
-                case 1:
-                    lNr = 0xFD;
-                    break;
-                case 2:
-                    lNr = 0xFB;
-                    break;
-                case 3:
-                    lNr = 0xF7;
-                    break;
-                case 4:
-                    lNr = 0xEF;
-                    break;
-                case 5:
-                    lNr = 0xDF;
-                    break;
-                case 6:
-                    lNr = 0xBF;
-                    break;
-                case 7:
-                    lNr = 0x7F;
-                    break;
-                default:
-                    lNr = 0xFF;
+            int lNr = switch (iCounterBit) {
+                case 0 -> 0xFE;
+                case 1 -> 0xFD;
+                case 2 -> 0xFB;
+                case 3 -> 0xF7;
+                case 4 -> 0xEF;
+                case 5 -> 0xDF;
+                case 6 -> 0xBF;
+                case 7 -> 0x7F;
+                default -> {
                     System.err.println("Unknown bitcode: " + iCounterBit);
-                    break;
-            }
+                    yield 0xFF;
+                }
+            };
 
             iBuffer[iCounterPos] = (byte) (iBuffer[iCounterPos] & lNr);
         }

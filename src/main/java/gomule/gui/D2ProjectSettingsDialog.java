@@ -4,39 +4,44 @@
  *
  * This file is part of gomule.
  *
- * gomule is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ * gomule is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * gomule is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * gomule is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * gomlue; if not, write to the Free Software Foundation, Inc., 51 Franklin St,
- * Fifth Floor, Boston, MA 02110-1301 USA
+ * You should have received a copy of the GNU General Public License along with gomlue; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
+ * USA
  *
  ******************************************************************************/
 package gomule.gui;
+
+import java.io.File;
+import java.io.Serial;
+
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import gomule.util.D2Project;
 import randall.util.RandallFileFilter;
 import randall.util.RandallPanel;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.Serial;
-
 /**
  * @author Marco
- * <p>
- * Don't allow the dialog to close without a project ! (or stop the application
- * alltogether)
+ *         <p>
+ *         Don't allow the dialog to close without a project ! (or stop the application alltogether)
  */
 @SuppressWarnings("rawtypes")
 public class D2ProjectSettingsDialog extends JDialog {
@@ -53,23 +58,17 @@ public class D2ProjectSettingsDialog extends JDialog {
     private JTextField iNewName;
     private JButton iSaveNew;
     private DefaultComboBoxModel iProjectModel;
-//    private JComboBox            iChangeProject;
+    // private JComboBox iChangeProject;
 
-    private JRadioButton iTypeSC;
-    private JRadioButton iTypeHC;
-    private JRadioButton iTypeBoth;
+    private final JRadioButton iTypeSC;
+    private final JRadioButton iTypeHC;
+    private final JRadioButton iTypeBoth;
 
-    private JRadioButton iBackupDay;
-    private JRadioButton iBackupWeek;
-    private JRadioButton iBackupMonth;
-    private JRadioButton iBackupNone;
+    private final JRadioButton iBackupDay;
+    private final JRadioButton iBackupWeek;
+    private final JRadioButton iBackupMonth;
+    private final JRadioButton iBackupNone;
 
-//    private JButton 			 iColorUnique;
-//    private JButton 			 iColorSet;
-//    private JButton 			 iColorRare;
-//    private JButton 			 iColorMagical;
-//    private JButton 			 iColorCrafted;
-//    private JButton 			 iColorSocketed;
 
     private JTextField iFlavieOutputReportFileName;
     private JTextField iFlavieOutputData;
@@ -92,7 +91,7 @@ public class D2ProjectSettingsDialog extends JDialog {
         iFileManager.closeWindows();
 
         iProject = iFileManager.getProject();
-//        setTitle();
+        // setTitle();
 
         iContent = new RandallPanel();
 
@@ -100,6 +99,7 @@ public class D2ProjectSettingsDialog extends JDialog {
 
         iNewName = new JTextField();
         iNewName.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 String lNewName = iNewName.getText();
                 if (lNewName == null || lNewName.trim().equals("")) {
@@ -125,190 +125,143 @@ public class D2ProjectSettingsDialog extends JDialog {
         iSaveNew = new JButton(D2ImageCache.getIcon("save.gif"));
         iSaveNew.setEnabled(false);
         iSaveNew.setToolTipText("Type a new project name");
-        iSaveNew.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-//                setProject(iNewName.getText());
-            }
+        iSaveNew.addActionListener(pEvent -> {
+            // setProject(iNewName.getText());
         });
 
-//        iProjectModel = new DefaultComboBoxModel();
-////        checkProjectsModel();
-//        iChangeProject = new JComboBox(iProjectModel);
-//        iChangeProject.setSelectedItem(iProject.getProjectName());
-//        iChangeProject.addActionListener(new ActionListener()
-//        {
-//            public void actionPerformed(ActionEvent pEvent)
-//            {
-////                setProject((String) iChangeProject.getSelectedItem());
-//            }
-//        });
+        // iProjectModel = new DefaultComboBoxModel();
+        //// checkProjectsModel();
+        // iChangeProject = new JComboBox(iProjectModel);
+        // iChangeProject.setSelectedItem(iProject.getProjectName());
+        // iChangeProject.addActionListener(new ActionListener()
+        // {
+        // public void actionPerformed(ActionEvent pEvent)
+        // {
+        //// setProject((String) iChangeProject.getSelectedItem());
+        // }
+        // });
 
         iTypeSC = new JRadioButton("Softcore (SC) Only");
-        iTypeSC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setType(D2Project.TYPE_SC);
-            }
-        });
+        iTypeSC.addActionListener(pEvent -> iProject.setType(D2Project.TYPE_SC));
         iTypeHC = new JRadioButton("Hardcore (HC) Only");
-        iTypeHC.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setType(D2Project.TYPE_HC);
-            }
-        });
+        iTypeHC.addActionListener(pEvent -> iProject.setType(D2Project.TYPE_HC));
         iTypeBoth = new JRadioButton("All (SC+HC+Unknown)");
-        iTypeBoth.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setType(D2Project.TYPE_BOTH);
-            }
-        });
+        iTypeBoth.addActionListener(pEvent -> iProject.setType(D2Project.TYPE_BOTH));
         ButtonGroup lType = new ButtonGroup();
         lType.add(iTypeSC);
         lType.add(iTypeHC);
         lType.add(iTypeBoth);
 
         iBackupDay = new JRadioButton("Day");
-        iBackupDay.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setBackup(D2Project.BACKUP_DAY);
-            }
-        });
+        iBackupDay.addActionListener(pEvent -> iProject.setBackup(D2Project.BACKUP_DAY));
         iBackupWeek = new JRadioButton("Week");
-        iBackupWeek.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setBackup(D2Project.BACKUP_WEEK);
-            }
-        });
+        iBackupWeek.addActionListener(pEvent -> iProject.setBackup(D2Project.BACKUP_WEEK));
         iBackupMonth = new JRadioButton("Month");
-        iBackupMonth.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setBackup(D2Project.BACKUP_MONTH);
-            }
-        });
+        iBackupMonth.addActionListener(pEvent -> iProject.setBackup(D2Project.BACKUP_MONTH));
         iBackupNone = new JRadioButton("No Backup");
-        iBackupNone.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setBackup(D2Project.BACKUP_NONE);
-            }
-        });
+        iBackupNone.addActionListener(pEvent -> iProject.setBackup(D2Project.BACKUP_NONE));
         ButtonGroup lBackup = new ButtonGroup();
         lBackup.add(iBackupDay);
         lBackup.add(iBackupWeek);
         lBackup.add(iBackupMonth);
         lBackup.add(iBackupNone);
 
-//        iColorUnique = new JButton("Unique");
-//        iTypeBoth.addActionListener(new ActionListener()
-//        {
-//            public void actionPerformed(ActionEvent pEvent)
-//            {
-////                iProject.setType(D2Project.TYPE_BOTH);
-//            }
-//        });
+        // iColorUnique = new JButton("Unique");
+        // iTypeBoth.addActionListener(new ActionListener()
+        // {
+        // public void actionPerformed(ActionEvent pEvent)
+        // {
+        //// iProject.setType(D2Project.TYPE_BOTH);
+        // }
+        // });
 
         iFlavieOutputReportFileName = new JTextField();
-        iFlavieOutputReportFileName.getDocument().addDocumentListener(new RandallDocumentListener() {
-            public void check() {
-                iProject.setReportName(iFlavieOutputReportFileName.getText());
-            }
-        });
+        iFlavieOutputReportFileName.getDocument()
+                .addDocumentListener(new RandallDocumentListener() {
+                    @Override
+                    public void check() {
+                        iProject.setReportName(iFlavieOutputReportFileName.getText());
+                    }
+                });
         iFlavieOutputTitle = new JTextField();
         iFlavieOutputTitle.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setReportTitle(iFlavieOutputTitle.getText());
             }
         });
         iFlavieOutputData = new JTextField();
         iFlavieOutputData.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setDataName(iFlavieOutputData.getText());
             }
         });
         JButton lFlavieDataButton = new JButton("Search");
-        lFlavieDataButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                JFileChooser lChooser = new JFileChooser();
-                lChooser.setCurrentDirectory(new File("."));
-                lChooser.setSelectedFile(new File("standard.dat"));
-                RandallFileFilter filter = new RandallFileFilter("Dat files only");
-                filter.addExtension("dat");
-                lChooser.setFileFilter(filter);
-                lChooser.setFileHidingEnabled(true);
-                int returnVal = lChooser.showOpenDialog(iFileManager);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    iFlavieOutputData.setText(lChooser.getSelectedFile().getAbsolutePath());
-                }
+        lFlavieDataButton.addActionListener(pEvent -> {
+            JFileChooser lChooser = new JFileChooser();
+            lChooser.setCurrentDirectory(new File("."));
+            lChooser.setSelectedFile(new File("standard.dat"));
+            RandallFileFilter filter = new RandallFileFilter("Dat files only");
+            filter.addExtension("dat");
+            lChooser.setFileFilter(filter);
+            lChooser.setFileHidingEnabled(true);
+            int returnVal = lChooser.showOpenDialog(iFileManager);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                iFlavieOutputData.setText(lChooser.getSelectedFile().getAbsolutePath());
             }
         });
         iFlavieOutputStyle = new JTextField();
         iFlavieOutputStyle.getDocument().addDocumentListener(new RandallDocumentListener() {
+            @Override
             public void check() {
                 iProject.setStyleName(iFlavieOutputStyle.getText());
             }
         });
         JButton lFlaveStyleButton = new JButton("Search");
-        lFlaveStyleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                JFileChooser lChooser = new JFileChooser();
-                lChooser.setCurrentDirectory(new File("."));
-                lChooser.setSelectedFile(new File("standard.css"));
-                RandallFileFilter filter = new RandallFileFilter("Style sheet files only");
-                filter.addExtension("css");
-                lChooser.setFileFilter(filter);
-                lChooser.setFileHidingEnabled(true);
-                int returnVal = lChooser.showOpenDialog(iFileManager);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    iFlavieOutputStyle.setText(lChooser.getSelectedFile().getAbsolutePath());
-                }
+        lFlaveStyleButton.addActionListener(pEvent -> {
+            JFileChooser lChooser = new JFileChooser();
+            lChooser.setCurrentDirectory(new File("."));
+            lChooser.setSelectedFile(new File("standard.css"));
+            RandallFileFilter filter = new RandallFileFilter("Style sheet files only");
+            filter.addExtension("css");
+            lChooser.setFileFilter(filter);
+            lChooser.setFileHidingEnabled(true);
+            int returnVal = lChooser.showOpenDialog(iFileManager);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                iFlavieOutputStyle.setText(lChooser.getSelectedFile().getAbsolutePath());
             }
         });
 
         iIgnoreItems = new JCheckBox("Ignore Common Items on Pickup");
-        iIgnoreItems.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setIgnoreItem(iIgnoreItems.isSelected());
-            }
-        });
+        iIgnoreItems.addActionListener(pEvent -> iProject.setIgnoreItem(iIgnoreItems.isSelected()));
 
         allowDelete = new JCheckBox("Allow Item Deletion");
-        allowDelete.addActionListener((ActionListener) pEvent -> iProject.setAllowDelete(allowDelete.isSelected()));
+        allowDelete.addActionListener(pEvent -> iProject.setAllowDelete(allowDelete.isSelected()));
 
         iFlavieCountAll = new JCheckBox("All");
-        iFlavieCountAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setCountAll(iFlavieCountAll.isSelected());
-            }
-        });
+        iFlavieCountAll
+                .addActionListener(pEvent -> iProject.setCountAll(iFlavieCountAll.isSelected()));
         iFlavieCountStash = new JCheckBox("Stash Items");
-        iFlavieCountStash.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setCountStash(iFlavieCountStash.isSelected());
-            }
-        });
+        iFlavieCountStash.addActionListener(
+                pEvent -> iProject.setCountStash(iFlavieCountStash.isSelected()));
         iFlavieCountChar = new JCheckBox("Character Items");
-        iFlavieCountChar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setCountChar(iFlavieCountChar.isSelected());
-            }
-        });
+        iFlavieCountChar
+                .addActionListener(pEvent -> iProject.setCountChar(iFlavieCountChar.isSelected()));
         iFlavieCountEthereal = new JCheckBox("Ethereal Items");
-        iFlavieCountEthereal.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                iProject.setCountEthereal(iFlavieCountEthereal.isSelected());
-            }
-        });
+        iFlavieCountEthereal.addActionListener(
+                pEvent -> iProject.setCountEthereal(iFlavieCountEthereal.isSelected()));
         JButton iOk = new JButton("Ok");
-        iOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent pEvent) {
-                ((JDialog) iContent.getRootPane().getParent()).dispose();
-            }
-        });
+        iOk.addActionListener(pEvent -> ((JDialog) iContent.getRootPane().getParent()).dispose());
 
-//        iContent.addToPanel(new JLabel("New Project"), 0, 0, 1, RandallPanel.NONE);
-//        iContent.addToPanel(iNewName, 1, 0, 1, RandallPanel.HORIZONTAL);
-//        iContent.addToPanel(iSaveNew, 2, 0, 1, RandallPanel.NONE);
-//        iContent.addToPanel(new JLabel("Change Project"), 0, 1, 1, RandallPanel.NONE);
-//        iContent.addToPanel(iChangeProject, 1, 1, 2, RandallPanel.HORIZONTAL);
-        iContent.addToPanel(new JLabel("Type selection: (for stashes naming convection only, names SC/HC should start with SC_ or HC_)"), 0, 10, 3, RandallPanel.NONE);
+        // iContent.addToPanel(new JLabel("New Project"), 0, 0, 1, RandallPanel.NONE);
+        // iContent.addToPanel(iNewName, 1, 0, 1, RandallPanel.HORIZONTAL);
+        // iContent.addToPanel(iSaveNew, 2, 0, 1, RandallPanel.NONE);
+        // iContent.addToPanel(new JLabel("Change Project"), 0, 1, 1, RandallPanel.NONE);
+        // iContent.addToPanel(iChangeProject, 1, 1, 2, RandallPanel.HORIZONTAL);
+        iContent.addToPanel(new JLabel(
+                "Type selection: (for stashes naming convection only, names SC/HC should start with SC_ or HC_)"),
+                0, 10, 3, RandallPanel.NONE);
 
         RandallPanel lTypePanel = new RandallPanel();
         lTypePanel.addToPanel(iTypeSC, 0, 0, 1, RandallPanel.HORIZONTAL);
@@ -317,7 +270,8 @@ public class D2ProjectSettingsDialog extends JDialog {
         iContent.addToPanel(lTypePanel, 0, 20, 3, RandallPanel.HORIZONTAL);
 
         RandallPanel lBackupPanel = new RandallPanel();
-        lBackupPanel.addToPanel(new JLabel("Create backupdir for each: "), 0, 0, 1, RandallPanel.NONE);
+        lBackupPanel.addToPanel(new JLabel("Create backupdir for each: "), 0, 0, 1,
+                RandallPanel.NONE);
         lBackupPanel.addToPanel(iBackupDay, 1, 0, 1, RandallPanel.HORIZONTAL);
         lBackupPanel.addToPanel(iBackupWeek, 2, 0, 1, RandallPanel.HORIZONTAL);
         lBackupPanel.addToPanel(iBackupMonth, 3, 0, 1, RandallPanel.HORIZONTAL);
@@ -327,7 +281,7 @@ public class D2ProjectSettingsDialog extends JDialog {
         iContent.addToPanel(lBackupPanel, 0, 30, 3, RandallPanel.HORIZONTAL);
 
 
-//        RandallPanel lColorPanel = new RandallPanel();
+        // RandallPanel lColorPanel = new RandallPanel();
 
         RandallPanel lFlaviePanel = new RandallPanel(true);
         lFlaviePanel.setBorder("FLAVIE settings");
@@ -358,32 +312,18 @@ public class D2ProjectSettingsDialog extends JDialog {
         setLocationRelativeTo(iFileManager);
     }
 
-    protected void setProjectValues() {
+    protected final void setProjectValues() {
         switch (iProject.getType()) {
-            case D2Project.TYPE_SC:
-                iTypeSC.setSelected(true);
-                break;
-            case D2Project.TYPE_HC:
-                iTypeHC.setSelected(true);
-                break;
-            default:
-                iTypeBoth.setSelected(true);
-                break;
+            case D2Project.TYPE_SC -> iTypeSC.setSelected(true);
+            case D2Project.TYPE_HC -> iTypeHC.setSelected(true);
+            default -> iTypeBoth.setSelected(true);
         }
 
         switch (iProject.getBackup()) {
-            case D2Project.BACKUP_DAY:
-                iBackupDay.setSelected(true);
-                break;
-            case D2Project.BACKUP_MONTH:
-                iBackupMonth.setSelected(true);
-                break;
-            case D2Project.BACKUP_NONE:
-                iBackupNone.setSelected(true);
-                break;
-            default:
-                iBackupWeek.setSelected(true);
-                break;
+            case D2Project.BACKUP_DAY -> iBackupDay.setSelected(true);
+            case D2Project.BACKUP_MONTH -> iBackupMonth.setSelected(true);
+            case D2Project.BACKUP_NONE -> iBackupNone.setSelected(true);
+            default -> iBackupWeek.setSelected(true);
         }
 
         iFlavieOutputReportFileName.setText(iProject.getReportName());
@@ -400,17 +340,21 @@ public class D2ProjectSettingsDialog extends JDialog {
 
 }
 
+
 abstract class RandallDocumentListener implements DocumentListener {
     abstract void check();
 
+    @Override
     public void insertUpdate(DocumentEvent e) {
         check();
     }
 
+    @Override
     public void removeUpdate(DocumentEvent e) {
         check();
     }
 
+    @Override
     public void changedUpdate(DocumentEvent e) {
         check();
     }

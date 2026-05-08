@@ -112,7 +112,7 @@ public class RandallPanel extends JPanel {
      * Set the right column nr for the sub panel (does not add left/upper margin when left/up
      * coordinate is 0)
      */
-    public void setSubPanel() {
+    public final void setSubPanel() {
         iSubPanel = true;
     }
 

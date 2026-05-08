@@ -21,6 +21,21 @@
 
 package gomule;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import gomule.gui.D2FileManager;
 import gomule.gui.D2ViewChar;
 import gomule.gui.FileManagerProperties;
@@ -30,21 +45,13 @@ import gomule.gui.PanelTheme;
 import gomule.util.D2UI;
 import randall.util.RandallUtil;
 
-import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Properties;
-
 public class GoMule {
     /**
      * Main Class, runs GoMule
      *
      * @param args Can set L+F
      */
+    @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] pArgs) {
         try {
             Properties fileManagerPropertiesFile = FileManagerProperties.loadFileManagerProperties();
@@ -67,20 +74,18 @@ public class GoMule {
             }
 
             if (lArgs != null && lArgs.length != 0) {
-                for (int i = 0; i < lArgs.length; i++) {
-                    if (lArgs[i].equalsIgnoreCase("-system")) {
+                for (String lArg : lArgs) {
+                    if (lArg != null && lArg.equalsIgnoreCase("-system")) {
                         lLookAndFeel = UIManager.getSystemLookAndFeelClassName();
-                    } else if (lArgs[i] != null) {
+                    } else if (lArg != null) {
                         LookAndFeelInfo[] lList = UIManager.getInstalledLookAndFeels();
-                        for (int j = 0; j < lList.length; j++) {
-                            LookAndFeelInfo lInfo = lList[j];
+                        for (LookAndFeelInfo lInfo : lList) {
                             System.err.println("LookAndFeel: " + lInfo.getName());
-                            if (lArgs[i].equalsIgnoreCase(lInfo.getName())) {
+                            if (lArg.equalsIgnoreCase(lInfo.getName())) {
                                 lLookAndFeel = lInfo.getClassName();
                             }
                         }
                     }
-
                 }
             }
             UIManager.setLookAndFeel(lLookAndFeel);
@@ -91,8 +96,7 @@ public class GoMule {
                 while (keys.hasMoreElements()) {
                     Object key = keys.nextElement();
                     Object value = UIManager.get(key);
-                    if (value instanceof Font) {
-                        Font f = (Font) value;
+                    if (value instanceof Font f) {
                         UIManager.put(key, f.deriveFont((float) menuFontSize));
                     }
                 }
@@ -102,15 +106,11 @@ public class GoMule {
             UIManager.put("ToolTip.font", new Font(Font.SANS_SERIF, Font.PLAIN, D2UI.getTooltipFontSize()));
             UIManager.put("info", Color.black);
             ToolTipManager.sharedInstance().setInitialDelay(0);
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
         // Randall: generally adviced for swing, doing anything with GUI inside the swing-thread
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                D2FileManager.getInstance();
-            }
-        });
+        EventQueue.invokeLater(D2FileManager::getInstance);
     }
 
     private static String[] readArgumentsFromFile(String pFilename) {
@@ -129,9 +129,10 @@ public class GoMule {
                 return null;
             }
 
-            BufferedReader lIn = new BufferedReader(new FileReader(pFilename));
-            String lLine = lIn.readLine();
-            lIn.close();
+            String lLine;
+            try (BufferedReader lIn = new BufferedReader(new FileReader(pFilename))) {
+                lLine = lIn.readLine();
+            }
 
             ArrayList<String> lString = RandallUtil.split(lLine, " ", false);
 
@@ -141,8 +142,7 @@ public class GoMule {
                 lReturn[i] = (String) lString.get(i);
             }
             return lReturn;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
             return null;
         }
     }

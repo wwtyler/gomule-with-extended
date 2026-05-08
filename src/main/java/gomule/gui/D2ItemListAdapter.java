@@ -5,10 +5,10 @@
  */
 package gomule.gui;
 
-import gomule.util.D2Project;
-
 import java.io.File;
 import java.util.ArrayList;
+
+import gomule.util.D2Project;
 
 /**
  * @author Marco
@@ -21,7 +21,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
 
     private long iTimestamp;
 
-    private ArrayList<D2ItemListListener> iListeners = new ArrayList<D2ItemListListener>();
+    private ArrayList<D2ItemListListener> iListeners = new ArrayList<>();
     private boolean iModified;
 
     private boolean iIgnoreItemListEvents = false;
@@ -31,6 +31,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         initTimestamp();
     }
 
+    @Override
     public final void save(D2Project pProject) {
         saveInternal(pProject);
         initTimestamp();
@@ -38,10 +39,12 @@ public abstract class D2ItemListAdapter implements D2ItemList {
 
     protected abstract void saveInternal(D2Project pProject);
 
-    public void initTimestamp() {
+    @Override
+    public final void initTimestamp() {
         iTimestamp = (new File(iFileName)).lastModified();
     }
 
+    @Override
     public boolean checkTimestamp() {
         long lTimestamp = (new File(iFileName)).lastModified();
         return iTimestamp == lTimestamp;
@@ -56,6 +59,7 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         iListeners = (ArrayList<D2ItemListListener>) pItemListInfo;
     }
 
+    @Override
     public boolean isModified() {
         return iModified;
     }
@@ -65,18 +69,22 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         fireD2ItemListEvent();
     }
 
+    @Override
     public void addD2ItemListListener(D2ItemListListener pListener) {
         iListeners.add(pListener);
     }
 
+    @Override
     public void removeD2ItemListListener(D2ItemListListener pListener) {
         iListeners.remove(pListener);
     }
 
+    @Override
     public boolean hasD2ItemListListener() {
         return !iListeners.isEmpty();
     }
 
+    @Override
     public void fireD2ItemListEvent() {
         if (iIgnoreItemListEvents) {
             return;
@@ -86,10 +94,12 @@ public abstract class D2ItemListAdapter implements D2ItemList {
         }
     }
 
+    @Override
     public void ignoreItemListEvents() {
         iIgnoreItemListEvents = true;
     }
 
+    @Override
     public void listenItemListEvents() {
         iIgnoreItemListEvents = false;
     }

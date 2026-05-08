@@ -20,15 +20,15 @@
  ******************************************************************************/
 package gomule.d2x;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import gomule.gui.D2ItemListAdapter;
 import gomule.item.D2Item;
 import gomule.util.D2Backup;
 import gomule.util.D2BitReader;
 import gomule.util.D2Project;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  * @author Marco
@@ -44,7 +44,7 @@ public class D2Stash extends D2ItemListAdapter {
     private boolean iHC;
     private boolean iSC;
 
-    private int iCharLvl = 75; // default char lvl for properties
+    private final int iCharLvl = 75; // default char lvl for properties
 
     private File lFile;
 
@@ -56,7 +56,7 @@ public class D2Stash extends D2ItemListAdapter {
         if (iFileName == null || !iFileName.toLowerCase().endsWith(".d2x")) {
             throw new Exception("Incorrect Stash file name");
         }
-        iItems = new ArrayList<D2Item>();
+        iItems = new ArrayList<>();
 
         lFile = new File(iFileName);
 
@@ -85,22 +85,27 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
+    @Override
     public String getFilename() {
         return iFileName;
     }
 
+    @Override
     public boolean isHC() {
         return iHC;
     }
 
+    @Override
     public boolean isSC() {
         return iSC;
     }
 
+    @Override
     public ArrayList<D2Item> getItemList() {
         return iItems;
     }
 
+    @Override
     public void addItem(D2Item pItem) {
         if (pItem != null) {
             iItems.add(pItem);
@@ -109,17 +114,19 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
+    @Override
     public boolean containsItem(D2Item pItem) {
         return iItems.contains(pItem);
     }
 
+    @Override
     public void removeItem(D2Item pItem) {
         iItems.remove(pItem);
         setModified(true);
     }
 
     public ArrayList<D2Item> removeAllItems() {
-        ArrayList<D2Item> lReturn = new ArrayList<D2Item>();
+        ArrayList<D2Item> lReturn = new ArrayList<>();
         lReturn.addAll(iItems);
 
         iItems.clear();
@@ -129,6 +136,7 @@ public class D2Stash extends D2ItemListAdapter {
     }
 
 
+    @Override
     public int getNrItems() {
         return iItems.size();
     }
@@ -187,6 +195,7 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
+    @Override
     public void saveInternal(D2Project pProject) {
         // backup file
         D2Backup.backup(pProject, iFileName, iBR);
@@ -231,6 +240,7 @@ public class D2Stash extends D2ItemListAdapter {
         }
     }
 
+    @Override
     public void fullDump(PrintWriter pWriter) {
         pWriter.println(iFileName);
         pWriter.println();

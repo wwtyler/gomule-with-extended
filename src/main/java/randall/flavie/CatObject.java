@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("rawtypes")
 public class CatObject implements Comparable {
-    private String iCat;
-    private ArrayList<SubCatObject> iSubCats = new ArrayList<SubCatObject>();
+    private final String iCat;
+    private final ArrayList<SubCatObject> iSubCats = new ArrayList<>();
     private String iStyle;
     private String iGroup;
 
@@ -45,6 +45,7 @@ public class CatObject implements Comparable {
         iCat = pCat;
     }
 
+    @Override
     public String toString() {
         return iCat;
     }
@@ -57,12 +58,19 @@ public class CatObject implements Comparable {
         return iSubCats;
     }
 
+    @Override
     public int compareTo(Object pObject) {
         return toString().compareTo(pObject.toString());
     }
 
+    @Override
     public boolean equals(Object pObject) {
-        return toString().equals(pObject.toString());
+        return pObject instanceof CatObject && toString().equals(pObject.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return iCat != null ? iCat.hashCode() : 0;
     }
 
     public String getStyle() {

@@ -27,17 +27,21 @@ public class D2SharedStashReader {
             // sectionType=2: chronicle/RotW metadata (raw bytes, C0 ED EA C0 marker, not JM)
             bitReader.set_byte_pos(stashHeaderOffset);
             D2SharedStash.Header peekHeader = D2SharedStash.Header.fromBytes(bitReader);
-            if (peekHeader.getSectionType() == D2IOffsets.SECTION_TYPE_NORMAL) {
-                bitReader.set_byte_pos(stashHeaderOffset);
-                result.add(readSharedStashPane(bitReader, filename));
-            } else if (peekHeader.getSectionType() == D2IOffsets.SECTION_TYPE_MATERIALS) {
-                bitReader.set_byte_pos(stashHeaderOffset);
-                materialsPane = readMaterialsPane(bitReader, filename);
-            } else if (peekHeader.getSectionType() == D2IOffsets.SECTION_TYPE_CHRONICLE) {
-                // Chronicle/RotW metadata: preserve as raw bytes for write-back
-                int sectionSize = (int) peekHeader.getLength();
-                bitReader.set_byte_pos(stashHeaderOffset);
-                chronicleRawBytes = bitReader.get_bytes(sectionSize);
+            switch ((int) peekHeader.getSectionType()) {
+                case D2IOffsets.SECTION_TYPE_NORMAL -> {
+                    bitReader.set_byte_pos(stashHeaderOffset);
+                    result.add(readSharedStashPane(bitReader, filename));
+                }
+                case D2IOffsets.SECTION_TYPE_MATERIALS -> {
+                    bitReader.set_byte_pos(stashHeaderOffset);
+                    materialsPane = readMaterialsPane(bitReader, filename);
+                }
+                case D2IOffsets.SECTION_TYPE_CHRONICLE -> {
+                    // Chronicle/RotW metadata: preserve as raw bytes for write-back
+                    int sectionSize = (int) peekHeader.getLength();
+                    bitReader.set_byte_pos(stashHeaderOffset);
+                    chronicleRawBytes = bitReader.get_bytes(sectionSize);
+                }
             }
         }
         return new D2SharedStash(filename, result, bitReader.getFileContent(), materialsPane, chronicleRawBytes);

@@ -20,13 +20,7 @@
  ******************************************************************************/
 package gomule.util;
 
-import gomule.gui.D2FileManager;
-import gomule.gui.D2ViewClipboard;
-import gomule.item.D2Item;
-import randall.util.RandallFileFilter;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,6 +28,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
+
+import javax.swing.JFileChooser;
+
+import gomule.gui.D2FileManager;
+import gomule.gui.D2ViewClipboard;
+import gomule.item.D2Item;
+import randall.util.RandallFileFilter;
 
 /**
  * @author Marco
@@ -57,9 +58,9 @@ public class D2Project {
     private JFileChooser iCharDialog;
     private JFileChooser iStashDialog;
     private JFileChooser iSharedStashDialog;
-    private ArrayList<String> iCharList = new ArrayList<String>();
-    private ArrayList<String> iStashList = new ArrayList<String>();
-    private ArrayList<String> iSharedStashList = new ArrayList<String>();
+    private ArrayList<String> iCharList = new ArrayList<>();
+    private ArrayList<String> iStashList = new ArrayList<>();
+    private ArrayList<String> iSharedStashList = new ArrayList<>();
     private int iBank;
     private int iType = TYPE_BOTH;
     private int iBackup = BACKUP_WEEK;
@@ -77,12 +78,16 @@ public class D2Project {
     private boolean allowDelete;
 
     /**
-     * 返回 D2R 存档默认目录。优先返回 D2RMMMDKV3 mod 存档目录（如存在），
-     * 否则回退到 D2R 默认 Saved Games 目录或当前工作目录。
+     * 返回 D2R 存档默认目录。优先返回 TylerPack mod 存档目录（如存在），
+     * 其次回退到历史别名 D2RMMMDKV3 目录（老存档兼容），
+     * 最后回退到 D2R 默认 Saved Games 目录或当前工作目录。
      */
     private static String getDefaultD2RSaveDir() {
         String userHome = System.getProperty("user.home");
         String[] candidates = new String[] {
+                userHome + File.separator + "Saved Games" + File.separator
+                        + "Diablo II Resurrected" + File.separator + "mods"
+                        + File.separator + "TylerPack",
                 userHome + File.separator + "Saved Games" + File.separator
                         + "Diablo II Resurrected" + File.separator + "mods"
                         + File.separator + "D2RMMMDKV3",
@@ -91,8 +96,7 @@ public class D2Project {
         };
         for (String p : candidates) {
             File f = new File(p);
-            if (f.isDirectory()) {
-                return p;
+            if (f.isDirectory()) {                return p;
             }
         }
         return ".";
@@ -115,10 +119,10 @@ public class D2Project {
         Properties lLoadProperties = new Properties();
         if (iFile.exists() && iFile.canRead()) {
             try {
-                FileInputStream lInputStream = new FileInputStream(iFile);
-                lLoadProperties.load(lInputStream);
-                lInputStream.close();
-            } catch (Exception pEx) {
+                try (FileInputStream lInputStream = new FileInputStream(iFile)) {
+                    lLoadProperties.load(lInputStream);
+                }
+            } catch (IOException pEx) {
                 D2FileManager.displayErrorDialog(pEx);
             }
         } else {
@@ -203,7 +207,7 @@ public class D2Project {
             if (lGold != null) {
                 try {
                     iBank = Integer.parseInt(lGold);
-                } catch (Exception pEx) {
+                } catch (NumberFormatException pEx) {
                     iBank = 0;
                     D2FileManager.displayErrorDialog(pEx);
                 }
@@ -214,7 +218,7 @@ public class D2Project {
             if (lType != null) {
                 try {
                     iType = Integer.parseInt(lType);
-                } catch (Exception pEx) {
+                } catch (NumberFormatException pEx) {
                     iType = TYPE_BOTH;
                     D2FileManager.displayErrorDialog(pEx);
                 }
@@ -223,21 +227,13 @@ public class D2Project {
             String lBackup = lLoadProperties.getProperty("backup");
 
             try {
-                if (lLoadProperties.getProperty("propDisplay").equals("true")) {
-                    iIgnoreItems = true;
-                } else {
-                    iIgnoreItems = false;
-                }
+                iIgnoreItems = lLoadProperties.getProperty("propDisplay").equals("true");
             } catch (Exception pEx) {
                 iIgnoreItems = true;
             }
 
             try {
-                if (lLoadProperties.getProperty("allowDelete").equals("true")) {
-                    allowDelete = true;
-                } else {
-                    allowDelete = false;
-                }
+                allowDelete = lLoadProperties.getProperty("allowDelete").equals("true");
             } catch (Exception pEx) {
                 allowDelete = true;
             }
@@ -246,7 +242,7 @@ public class D2Project {
             if (lBackup != null) {
                 try {
                     iBackup = Integer.parseInt(lBackup);
-                } catch (Exception pEx) {
+                } catch (NumberFormatException pEx) {
                     iBackup = BACKUP_WEEK;
                     D2FileManager.displayErrorDialog(pEx);
                 }
@@ -271,8 +267,8 @@ public class D2Project {
         if (dir.exists() && dir.canRead()) {
             if (dir.isDirectory()) {
                 String[] dirCont = dir.list();
-                for (int x = 0; x < dirCont.length; x++) {
-                    delFail = delDir(new File(dir, dirCont[x]));
+                for (String dirCont1 : dirCont) {
+                    delFail = delDir(new File(dir, dirCont1));
                 }
             }
             if (delFail) {
@@ -470,12 +466,12 @@ public class D2Project {
                 iFile.createNewFile();
             }
             if (iFile.canWrite()) {
-                FileOutputStream lOutputStream = new FileOutputStream(iFile);
-                lSaveProperties.store(lOutputStream, "#saved by GoMule");
-                lOutputStream.flush();
-                lOutputStream.close();
+                try (FileOutputStream lOutputStream = new FileOutputStream(iFile)) {
+                    lSaveProperties.store(lOutputStream, "#saved by GoMule");
+                    lOutputStream.flush();
+                }
             }
-        } catch (Exception pEx) {
+        } catch (IOException pEx) {
             D2FileManager.displayErrorDialog(pEx);
         }
 

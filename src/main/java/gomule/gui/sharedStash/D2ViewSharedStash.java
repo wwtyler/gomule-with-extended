@@ -1,15 +1,18 @@
 package gomule.gui.sharedStash;
 
+import java.io.File;
+
+import javax.swing.JInternalFrame;
+import javax.swing.ToolTipManager;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
 import gomule.d2i.D2SharedStash;
 import gomule.gui.D2FileManager;
 import gomule.gui.D2ItemContainer;
 import gomule.gui.D2ItemList;
 import gomule.gui.D2ItemListListener;
-
-import javax.swing.*;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-import java.io.File;
+import gomule.util.D2Log;
 
 public class D2ViewSharedStash extends JInternalFrame implements D2ItemContainer, D2ItemListListener {
     private final D2FileManager fileManager;
@@ -22,6 +25,7 @@ public class D2ViewSharedStash extends JInternalFrame implements D2ItemContainer
         this.fileManager = fileManager;
         this.sharedStashFilename = sharedStashFilename;
         addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 fileManager.saveAll();
                 closeView();
@@ -73,7 +77,7 @@ public class D2ViewSharedStash extends JInternalFrame implements D2ItemContainer
     }
 
     @Override
-    public void connect() {
+    public final void connect() {
         if (sharedStash != null) {
             return;
         }
@@ -82,7 +86,7 @@ public class D2ViewSharedStash extends JInternalFrame implements D2ItemContainer
             itemListChanged();
         } catch (Exception pEx) {
             disconnect(pEx);
-            pEx.printStackTrace();
+            D2Log.error("D2ViewSharedStash", pEx, "connect failed: %s", sharedStashFilename);
         }
     }
 

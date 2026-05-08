@@ -21,15 +21,14 @@
 
 package gomule.item;
 
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import gomule.util.D2BitReader;
 import gomule.util.D2ColorCode;
 import randall.d2files.D2TxtFile;
 import randall.d2files.D2TxtFileItemProperties;
-
-import java.io.Serial;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class D2PropCollection extends ArrayList<D2Prop> {
 
@@ -94,8 +93,8 @@ public class D2PropCollection extends ArrayList<D2Prop> {
 
     private boolean containsProp(int propNum) {
 
-        for (int x = 0; x < size(); x++) {
-            if (((D2Prop) get(x)).getPNum() == propNum) {
+        for (D2Prop prop : this) {
+            if (prop.getPNum() == propNum) {
                 return true;
             }
         }
@@ -162,22 +161,22 @@ public class D2PropCollection extends ArrayList<D2Prop> {
         //Light 41
         //Cold 43
         //Poison 45
-        ArrayList<D2Prop> resMap = new ArrayList<D2Prop>();
+        ArrayList<D2Prop> resMap = new ArrayList<>();
 
         //Str 0
         //Ener 1
         //Dex 2
         //Vit 3
-        ArrayList<D2Prop> statMap = new ArrayList<D2Prop>();
+        ArrayList<D2Prop> statMap = new ArrayList<>();
 
-        for (int x = 0; x < size(); x++) {
+        for (D2Prop prop : this) {
 
-            if (D2TxtFile.ITEM_STAT_COST.searchColumns("*ID", Integer.toString(((D2Prop) get(x)).getPNum())).get("dgrp").equals("") || ((D2Prop) get(x)).getQFlag() != 0)
+            if (D2TxtFile.ITEM_STAT_COST.searchColumns("*ID", Integer.toString(prop.getPNum())).get("dgrp").equals("") || prop.getQFlag() != 0)
                 continue;
-            if (((D2Prop) get(x)).getPNum() == 0 || ((D2Prop) get(x)).getPNum() == 1 || ((D2Prop) get(x)).getPNum() == 2 || ((D2Prop) get(x)).getPNum() == 3)
-                statMap.add(get(x));
-            if (((D2Prop) get(x)).getPNum() == 39 || ((D2Prop) get(x)).getPNum() == 41 || ((D2Prop) get(x)).getPNum() == 43 || ((D2Prop) get(x)).getPNum() == 45)
-                resMap.add(get(x));
+            if (prop.getPNum() == 0 || prop.getPNum() == 1 || prop.getPNum() == 2 || prop.getPNum() == 3)
+                statMap.add(prop);
+            if (prop.getPNum() == 39 || prop.getPNum() == 41 || prop.getPNum() == 43 || prop.getPNum() == 45)
+                resMap.add(prop);
 
         }
 
@@ -311,12 +310,11 @@ public class D2PropCollection extends ArrayList<D2Prop> {
 
     private ArrayList<D2Prop> getPartialList(int qFlag) {
 
-        ArrayList<D2Prop> partialList = new ArrayList<D2Prop>();
-//		NEED TO ADD AS A NEW WITH STANDARD Q FLAG
-        for (int x = 0; x < size(); x++) {
-            if (((D2Prop) get(x)).getQFlag() == qFlag) {
+        ArrayList<D2Prop> partialList = new ArrayList<>();
+        for (D2Prop prop : this) {
+            if (prop.getQFlag() == qFlag) {
                 //D2Prop constructor (d2Prop) sets QFlag to be 0
-                partialList.add(new D2Prop((D2Prop) get(x)));
+                partialList.add(new D2Prop(prop));
             }
         }
 
@@ -350,8 +348,8 @@ public class D2PropCollection extends ArrayList<D2Prop> {
         } else if (qFlag < 37) {
             arrOut.append("<br><font color=\"#ffdead\">");
         }
-        for (int x = 0; x < size(); x++) {
-            String val = ((D2Prop) get(x)).generateDisplay(qFlag, cLvl);
+        for (D2Prop prop : this) {
+            String val = prop.generateDisplay(qFlag, cLvl);
             if (val != null && !val.equals("")) {
                 arrOut.append(D2ColorCode.toHtml(val)).append("<br>&#10;");
             }
@@ -371,14 +369,14 @@ public class D2PropCollection extends ArrayList<D2Prop> {
             String msg = "ItemStatCost row #" + rootProp
                     + (pRow != null ? " (" + pRow.get("Stat") + ")" : " (missing row)")
                     + " has empty 'Save Bits' — bit stream likely misaligned at bit position "
-                    + pFile.get_pos() + ". 检查 d2111/itemstatcost.txt 是否与当前 mod 一致 (pwsh tools/sync-d2111.ps1)。"
+                    + pFile.get_pos() + ". 检查 d2111/itemstatcost.txt 是否与当前 mod 一致 (pwsh tools/prelaunch-sync-tylerpack.ps1 -Apply)。"
                     + "\n  bits: " + snap;
             gomule.util.D2Log.error("D2PropCol", "%s", msg);
             throw new RuntimeException(msg);
         }
         int readLength = Integer.parseInt(saveBitsStr.trim());
         int saveAdd = 0;
-        if (!pRow.get("Save Add").equals("")) {
+        if (pRow != null && !pRow.get("Save Add").equals("")) {
             saveAdd = Integer.parseInt(pRow.get("Save Add"));
         }
         if (rootProp == 201 || rootProp == 197 || rootProp == 199
@@ -386,7 +384,7 @@ public class D2PropCollection extends ArrayList<D2Prop> {
             add(new D2Prop(rootProp, new int[]{(int) pFile.read(6) - saveAdd, (int) pFile.read(10) - saveAdd, (int) pFile.read(readLength) - saveAdd}, qFlag));
         } else if (rootProp == 204) {
             add(new D2Prop(rootProp, new int[]{(int) pFile.read(6) - saveAdd, (int) pFile.read(10) - saveAdd, (int) pFile.read(8) - saveAdd, (int) pFile.read(8) - saveAdd}, qFlag));
-        } else if (!pRow.get("Save Param Bits").equals("")) {
+        } else if (pRow != null && !pRow.get("Save Param Bits").equals("")) {
             add(new D2Prop(rootProp, new int[]{(int) pFile.read(Integer.parseInt(pRow.get("Save Param Bits"))) - saveAdd, (int) pFile.read(readLength) - saveAdd}, qFlag));
         } else {
             add(new D2Prop(rootProp, new int[]{(int) pFile.read(readLength) - saveAdd}, qFlag));
@@ -406,37 +404,34 @@ public class D2PropCollection extends ArrayList<D2Prop> {
 
     public void calcStats(int[] outStats, ArrayList<D2Prop> plSkill, int cLvl, int op, int qFlagM) {
 
-        for (int x = 0; x < size(); x++) {
-
-            ((D2Prop) get(x)).addCharMods(outStats, plSkill, cLvl, op, qFlagM);
+        for (D2Prop prop : this) {
+            prop.addCharMods(outStats, plSkill, cLvl, op, qFlagM);
         }
     }
 
 
     public void sort() {
 
-        Collections.sort(this, new Comparator<D2Prop>() {
-            public int compare(D2Prop pObj1, D2Prop pObj2) {
-                D2Prop p1 = (D2Prop) pObj1;
-                D2Prop p2 = (D2Prop) pObj2;
-                if (p2.getDescPriority() == p1.getDescPriority()) {
-                    if (p2.getPNum() > p1.getPNum()) {
-                        return 1;
-                    }
-                    return -1;
-                } else if (p2.getDescPriority() > p1.getDescPriority()) {
+        Collections.sort(this, (D2Prop pObj1, D2Prop pObj2) -> {
+            D2Prop p1 = (D2Prop) pObj1;
+            D2Prop p2 = (D2Prop) pObj2;
+            if (p2.getDescPriority() == p1.getDescPriority()) {
+                if (p2.getPNum() > p1.getPNum()) {
                     return 1;
-                } else {
-                    return -1;
                 }
+                return -1;
+            } else if (p2.getDescPriority() > p1.getDescPriority()) {
+                return 1;
+            } else {
+                return -1;
             }
         });
     }
 
     public void applyOp(int charLvl) {
 
-        for (int x = 0; x < size(); x++) {
-            ((D2Prop) get(x)).applyOp(charLvl);
+        for (D2Prop prop : this) {
+            prop.applyOp(charLvl);
         }
     }
 }

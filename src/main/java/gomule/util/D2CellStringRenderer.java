@@ -6,10 +6,12 @@
  */
 package gomule.util;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.io.Serial;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * @author Marco & Silospen
@@ -30,6 +32,7 @@ public class D2CellStringRenderer extends DefaultTableCellRenderer {
 
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable pTable, Object pValue, boolean pIsSelected, boolean pHasFocus, int pRow, int pColumn) {
 
         Object lValue;

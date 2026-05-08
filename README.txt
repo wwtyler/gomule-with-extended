@@ -2,6 +2,19 @@ This release of GoMule is in test stadium,
 do not use this program without backup your D2 characters !!!
 
 ================================================================
+CROSS-PROJECT KNOWLEDGE BASE:
+  GoMule-specific notes, D2R parser/format docs, and agent
+  definitions for the whole D2R ecosystem live in
+    d:\260305\.d2r-knowledge\
+  See d:\260305\.d2r-knowledge\gomule\README.md for the index of
+  all GoMule knowledge (parser gaps, hardcoded offsets, sync
+  policy, TylerPack integration, ...).
+  Path variables (${GOMULE_SRC}, ${TYLERPACK_DEPLOY_DIR}, ...) are
+  defined in conventions/path-config.md — do NOT hardcode paths
+  in new docs.
+================================================================
+
+================================================================
 DEVELOPER NOTES (D2R 1.5+ support — MUST READ before touching
 the .d2s/.d2i bit-stream parser):
   - d2r-1.5-item-tail-bits.md   Per-item has_quantity / chronicle /
@@ -16,10 +29,10 @@ DATA-TABLE SYNC (d2111/):
   GoMule loads ~25 .txt tables from d2111/ at startup. They MUST
   match the actual D2R install + active mod or .d2s parsing breaks.
   Verify / sync via:
-    pwsh tools/sync-d2111.ps1            # report only
-    pwsh tools/sync-d2111.ps1 -Apply     # copy mismatched files
-  Resolution priority: mod (MDK V3 MPQ) -> vanilla D2R dump.
-  Edit -Mod / -Vanilla parameters if your install paths differ.
+    pwsh tools/prelaunch-sync-tylerpack.ps1            # report only
+    pwsh tools/prelaunch-sync-tylerpack.ps1 -Apply     # sync d2111 + tracked translations
+  Resolution priority: TylerPack -> orig vanilla D2R dump.
+  Add -RefreshDistribution if you need GoMule.jar rebuilt before launch.
 ================================================================
 
 Basically the read/write character "core" is setup by Gohanman,

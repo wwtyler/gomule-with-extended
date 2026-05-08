@@ -23,8 +23,8 @@ package randall.flavie;
 import java.util.ArrayList;
 @SuppressWarnings({"rawtypes","unchecked"})
 public class SubCatObject implements Comparable {
-    private String iSubCat;
-    private ArrayList iItemObjects = new ArrayList();
+    private final String iSubCat;
+    private final ArrayList iItemObjects = new ArrayList();
     private CatObject iCatObject;
 
     public SubCatObject(String pSubCat, CatObject pCatObject) {
@@ -32,6 +32,7 @@ public class SubCatObject implements Comparable {
         iCatObject = pCatObject;
     }
 
+    @Override
     public String toString() {
         return iSubCat;
     }
@@ -44,12 +45,19 @@ public class SubCatObject implements Comparable {
         return iItemObjects;
     }
 
+    @Override
     public int compareTo(Object pObject) {
         return toString().compareTo(pObject.toString());
     }
 
+    @Override
     public boolean equals(Object pObject) {
-        return toString().equals(pObject.toString());
+        return pObject instanceof SubCatObject && toString().equals(pObject.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return iSubCat != null ? iSubCat.hashCode() : 0;
     }
 
     public CatObject getCatObject() {

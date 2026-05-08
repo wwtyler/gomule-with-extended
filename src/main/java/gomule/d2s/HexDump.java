@@ -28,10 +28,10 @@ public class HexDump {
     }
 
     public static void main(String[] args) throws Exception {
-        FileInputStream fis = new FileInputStream(args[0]);
-        byte[] bytes = new byte[fis.available()];
-        fis.read(bytes);
-        printHex(bytes);
-        fis.close();
+        try (FileInputStream fis = new FileInputStream(args[0])) {
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
+            printHex(bytes);
+        }
     }
 }

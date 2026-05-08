@@ -34,7 +34,7 @@ public class D2SpriteCache {
 
     // Default search directories (semicolon-separated, tried in order)
     private static final String DEFAULT_SPRITE_DIRS =
-            "D:\\BlizGames\\Diablo II Resurrected\\mods\\D2RMMMDKV3\\D2RMMMDKV3.mpq\\data" + ";" +
+            "D:\\BlizGames\\Diablo II Resurrected\\mods\\TylerPack\\TylerPack.mpq\\data" + ";" +
             "D:\\260305\\D2RM_Ladiks Casc Viewer\\Work\\data\\data";
 
     private static D2SpriteCache INSTANCE;

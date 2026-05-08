@@ -6,12 +6,12 @@
  */
 package gomule.util;
 
-import gomule.gui.D2FileManager;
-import randall.util.RandallUtil;
-
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import gomule.gui.D2FileManager;
+import randall.util.RandallUtil;
 
 /**
  * @author Marco
@@ -33,28 +33,26 @@ public class D2Backup {
             String lPathName = lFile.getParent();
 
             GregorianCalendar lCalendar = new GregorianCalendar();
-            String lExtra1;
-
-            if (lBackup == D2Project.BACKUP_DAY) {
-                lExtra1 = "D"
+            String lExtra1 = switch (lBackup) {
+                case D2Project.BACKUP_DAY -> "D"
                         + RandallUtil.fill(lCalendar.get(Calendar.YEAR), 4)
                         + "." + RandallUtil.fill(lCalendar.get(Calendar.MONTH) + 1, 2)
                         + "." + RandallUtil.fill(lCalendar.get(Calendar.DAY_OF_MONTH), 2);
-            } else if (lBackup == D2Project.BACKUP_MONTH) {
-                lExtra1 = "M"
+                case D2Project.BACKUP_MONTH -> "M"
                         + RandallUtil.fill(lCalendar.get(Calendar.YEAR), 4)
                         + RandallUtil.fill(lCalendar.get(Calendar.MONTH) + 1, 2);
-            } else {
-                GregorianCalendar lWeek = new GregorianCalendar();
+                default -> {
+                    GregorianCalendar lWeek = new GregorianCalendar();
 
-                while (lWeek.get(Calendar.DAY_OF_WEEK) != lWeek.getFirstDayOfWeek()) {
-                    lWeek.add(Calendar.DAY_OF_MONTH, -1);
+                    while (lWeek.get(Calendar.DAY_OF_WEEK) != lWeek.getFirstDayOfWeek()) {
+                        lWeek.add(Calendar.DAY_OF_MONTH, -1);
+                    }
+                    yield "W"
+                            + RandallUtil.fill(lWeek.get(Calendar.YEAR), 4)
+                            + "." + RandallUtil.fill(lWeek.get(Calendar.MONTH) + 1, 2)
+                            + "." + RandallUtil.fill(lWeek.get(Calendar.DAY_OF_MONTH), 2);
                 }
-                lExtra1 = "W"
-                        + RandallUtil.fill(lWeek.get(Calendar.YEAR), 4)
-                        + "." + RandallUtil.fill(lWeek.get(Calendar.MONTH) + 1, 2)
-                        + "." + RandallUtil.fill(lWeek.get(Calendar.DAY_OF_MONTH), 2);
-            }
+            };
 
             String lExtra2 =
                     RandallUtil.fill(lCalendar.get(Calendar.YEAR), 4)
@@ -76,7 +74,7 @@ public class D2Backup {
 
             pContent.save(lBackupName);
         } catch (Exception pEx) {
-            pEx.printStackTrace();
+            D2Log.error("D2Backup", pEx, "backup failed for %s", pFileName);
             D2FileManager.displayErrorDialog(pEx);
         }
 

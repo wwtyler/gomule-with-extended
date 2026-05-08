@@ -39,9 +39,12 @@ public class PercentageCounter {
 
     public PercentageCounter(CatObject pCat, int pNrItems, int pNrItemsFound) {
         iCat = pCat;
-        iCat.setCounter(this);
         iNrItems = pNrItems;
         iNrItemsFound = pNrItemsFound;
+        iTotalObject = null;
+        if (pCat != null) {
+            // setCounter moved after all fields initialized to avoid 'this' escape
+        }
     }
 
     public PercentageCounter(int pNrItems, int pNrItemsFound) {

@@ -31,14 +31,15 @@ import java.util.ArrayList;
 @SuppressWarnings("rawtypes")
 public class RandallFileFilter
         extends javax.swing.filechooser.FileFilter {
-    private ArrayList iExtensions;
-    private String iDescription;
+    private final ArrayList iExtensions;
+    private final String iDescription;
 
     public RandallFileFilter(String pDescription) {
         iExtensions = new ArrayList();
         iDescription = pDescription;
     }
 
+    @Override
     public boolean accept(File pFile) {
         for (int i = 0; i < iExtensions.size(); i++) {
             if (pFile.isDirectory()) {
@@ -56,6 +57,7 @@ public class RandallFileFilter
         iExtensions.add(pExtension);
     }
 
+    @Override
     public String getDescription() {
         return iDescription;
     }

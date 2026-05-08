@@ -26,6 +26,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import gomule.D2Files;
 import gomule.gui.D2ItemListAdapter;
@@ -1572,6 +1574,273 @@ public class D2Character extends D2ItemListAdapter {
         return out.toString();
     }
 
+    public String fullDumpHtml() {
+        final String BG      = "#1a1a2e";
+        final String BG_SECT = "#0d1b3e";
+        final String BG_HDR  = "#252850";
+        final String BG_ROW1 = "#1a1a2e";
+        final String BG_ROW2 = "#141428";
+        final String C_GOLD  = "#ffd700";
+        final String C_LABEL = "#8888aa";
+        final String C_VAL   = "#c8c8c8";
+        final String C_WHITE = "#ffffff";
+        final String C_FIRE  = "#e05050";
+        final String C_COLD  = "#5080ff";
+        final String C_LIGHT = "#d0d000";
+        final String C_POIS  = "#40c840";
+
+        String[] resNames  = {"火焰", "冰冷", "闪电", "毒素"};
+        String[] resColors = {C_FIRE, C_COLD, C_LIGHT, C_POIS};
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html><body bgcolor='").append(BG)
+          .append("' style='font-family:Dialog; font-size:24pt; margin:15px;'>");
+
+        // helper lambda-like: section header
+        java.util.function.Function<String, String> secHdr = title ->
+            "<table width='100%' cellpadding='0' cellspacing='2'><tr><td bgcolor='" + BG_HDR
+            + "' style='padding:18px 20px;'><font color='" + C_GOLD + "'><b>" + title
+            + "</b></font></td></tr></table>";
+
+        // helper: build a single item card HTML fragment (no outer <html> tags)
+        java.util.function.Function<D2Item, String> itemCard = item -> {
+            String h = D2ItemRenderer.itemDumpHtml(item, true)
+                .replaceAll("(?i)^<html>", "").replaceAll("(?i)</html>$", "");
+            return "<table width='100%' cellpadding='6' cellspacing='1' bgcolor='" + BG_SECT + "'>"
+                + "<tr bgcolor='" + BG_ROW2 + "'><td>" + h + "</td></tr></table>";
+        };
+
+        // helper: emit a list of items in a 3-column grid
+        java.util.function.Consumer<ArrayList<D2Item>> emitItemGrid = items -> {
+            if (items == null || items.isEmpty()) return;
+            sb.append("<table width='100%' cellpadding='4' cellspacing='6'><tr>");
+            for (int ii = 0; ii < items.size(); ii++) {
+                if (ii > 0 && ii % 3 == 0) sb.append("</tr><tr>");
+                sb.append("<td width='33%' valign='top'>").append(itemCard.apply((D2Item) items.get(ii))).append("</td>");
+            }
+            // pad remaining cells in last row
+            int rem = items.size() % 3;
+            if (rem == 1) sb.append("<td width='33%'></td><td width='33%'></td>");
+            else if (rem == 2) sb.append("<td width='33%'></td>");
+            sb.append("</tr></table>");
+        };
+
+        // ── Character Info ──────────────────────────────────────────
+        sb.append(secHdr.apply("== 角色信息 =="));
+        sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+        String[][] charInfo = {
+            {"名称",     getCharName()},
+            {"职业",     getCharClass()},
+            {"等级",     String.valueOf(getCharLevel())},
+            {"经验值",   String.valueOf(getCharExp())},
+            {"硬核模式",  String.valueOf(isHC())},
+            {"身上金币",  String.valueOf(getGold())},
+            {"仓库金币",  String.valueOf(getGoldBank())},
+        };
+        for (int i = 0; i < charInfo.length; i++) {
+            String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+            sb.append("<tr bgcolor='").append(rb).append("'>")
+              .append("<td width='40%' style='padding:2px 8px;'><font color='").append(C_LABEL).append("'>").append(charInfo[i][0]).append("</font></td>")
+              .append("<td><font color='").append(C_VAL).append("'>").append(charInfo[i][1]).append("</font></td>")
+              .append("</tr>");
+        }
+        sb.append("</table><br>");
+
+        // ── Attributes ─────────────────────────────────────────────
+        sb.append(secHdr.apply("== 属性 =="));
+        sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+        sb.append("<tr bgcolor='").append(BG_HDR).append("'>")
+          .append("<th align='left' style='padding:2px 8px;'><font color='#7ec8e3'>属性</font></th>")
+          .append("<th align='center'><font color='#7ec8e3'>裸装</font></th>")
+          .append("<th align='center'><font color='#7ec8e3'>装备后</font></th></tr>");
+        Object[][] statsData = {
+            {"力量",      getCharInitStr(), getCharStr()},
+            {"敏捷",      getCharInitDex(), getCharDex()},
+            {"活力",      getCharInitVit(), getCharVit()},
+            {"精力",      getCharInitNrg(), getCharNrg()},
+            {"生命",      getCharInitHP(),  getCharHP()},
+            {"法力",      getCharInitMana(), getCharMana()},
+            {"耐力",      getCharInitStam(), getCharStam()},
+            {"防御",      getCharInitDef(), getCharDef()},
+            {"攻击评级",  getCharInitAR(),  getCharAR()},
+        };
+        for (int i = 0; i < statsData.length; i++) {
+            String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+            sb.append("<tr bgcolor='").append(rb).append("'>")
+              .append("<td style='padding:2px 8px;'><font color='").append(C_LABEL).append("'>").append(statsData[i][0]).append("</font></td>")
+              .append("<td align='center'><font color='").append(C_VAL).append("'>").append(statsData[i][1]).append("</font></td>")
+              .append("<td align='center'><font color='").append(C_WHITE).append("'><b>").append(statsData[i][2]).append("</b></font></td>")
+              .append("</tr>");
+        }
+        sb.append("</table><br>");
+
+        // ── Resistances ────────────────────────────────────────────
+        sb.append(secHdr.apply("== 抗性 (普通 / 噩梦 / 地狱) =="));
+        sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+        sb.append("<tr bgcolor='").append(BG_HDR).append("'>")
+          .append("<th align='left' style='padding:2px 8px;'><font color='#7ec8e3'>元素</font></th>")
+          .append("<th align='center'><font color='#7ec8e3'>普通</font></th>")
+          .append("<th align='center'><font color='#7ec8e3'>噩梦</font></th>")
+          .append("<th align='center'><font color='#7ec8e3'>地狱</font></th></tr>");
+        int[][] resVals = {
+            {getCharFireRes(),  getCharFireRes() - 40,  getCharFireRes() - 100},
+            {getCharColdRes(),  getCharColdRes() - 40,  getCharColdRes() - 100},
+            {getCharLightRes(), getCharLightRes() - 40, getCharLightRes() - 100},
+            {getCharPoisRes(),  getCharPoisRes() - 40,  getCharPoisRes() - 100},
+        };
+        for (int i = 0; i < 4; i++) {
+            String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+            sb.append("<tr bgcolor='").append(rb).append("'>")
+              .append("<td style='padding:2px 8px;'><font color='").append(resColors[i]).append("'><b>").append(resNames[i]).append("</b></font></td>");
+            for (int d = 0; d < 3; d++) {
+                int v = resVals[i][d];
+                String vc = (v >= 75) ? "#40ff40" : (v >= 0) ? C_VAL : "#e05050";
+                sb.append("<td align='center'><font color='").append(vc).append("'><b>").append(v).append("</b></font></td>");
+            }
+            sb.append("</tr>");
+        }
+        sb.append("</table><br>");
+
+        // ── Combat Stats ───────────────────────────────────────────
+        sb.append(secHdr.apply("== 战斗属性 =="));
+        sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+        Object[][] combatData = {
+            {"魔法找物 (MF)",       getCharMF()},
+            {"金币找物 (GF)",       getCharGF()},
+            {"加速中弹回复 (FHR)",  getCharFHR()},
+            {"增加攻击速度 (IAS)",  getCharIAS()},
+            {"加速奔跑/走路 (FRW)", getCharFRW()},
+            {"加速施法速率 (FCR)",  getCharFCR()},
+            {"格挡率",              getCharBlock()},
+        };
+        for (int i = 0; i < combatData.length; i++) {
+            String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+            sb.append("<tr bgcolor='").append(rb).append("'>")
+              .append("<td width='60%' style='padding:2px 8px;'><font color='").append(C_LABEL).append("'>").append(combatData[i][0]).append("</font></td>")
+              .append("<td align='center'><font color='").append(C_WHITE).append("'><b>").append(combatData[i][1]).append("</b></font></td>")
+              .append("</tr>");
+        }
+        sb.append("</table><br>");
+
+        // ── Skills ─────────────────────────────────────────────────
+        sb.append(secHdr.apply("== 技能 =="));
+        ArrayList<D2TxtFileItemProperties> skillArr =
+            D2TxtFile.SKILLS.searchColumnsMultipleHits("charclass", cClass);
+        String[] skillTrees = {"", "", ""};
+        int[] skillCounter = {0, 0, 0};
+        for (int x = 0; x < skillArr.size(); x++) {
+            try {
+                int page = Integer.parseInt(
+                    D2TxtFile.SKILL_DESC.getRow(Integer.parseInt(skillArr.get(x).get("*Id"))).get("SkillPage"));
+                if (page == 0) continue;
+                String skillName = D2Files.getInstance().getTranslations().getTranslation(
+                    D2TxtFile.SKILL_DESC.searchColumns("skilldesc", skillArr.get(x).get("skilldesc")).get("str name"));
+                int init = initSkills[page - 1][skillCounter[page - 1]];
+                int curr = cSkills[page - 1][skillCounter[page - 1]];
+                String rb = (skillCounter[page - 1] % 2 == 0) ? BG_ROW1 : BG_ROW2;
+                skillTrees[page - 1] += "<tr bgcolor='" + rb + "'>"
+                    + "<td style='padding:2px 8px;'><font color='" + C_LABEL + "'>" + skillName + "</font></td>"
+                    + "<td align='center'><font color='" + C_VAL + "'>" + init + "</font></td>"
+                    + "<td align='center'><font color='" + C_GOLD + "'><b>" + curr + "</b></font></td>"
+                    + "</tr>";
+                skillCounter[page - 1]++;
+            } catch (NumberFormatException ignored) {}
+        }
+        for (int t = 0; t < 3; t++) {
+            if (!skillTrees[t].isEmpty()) {
+                sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+                sb.append("<tr bgcolor='").append(BG_HDR).append("'>")
+                  .append("<th align='left' style='padding:2px 8px;'><font color='#7ec8e3'>技能树 ").append(t + 1).append("</font></th>")
+                  .append("<th align='center'><font color='#7ec8e3'>基础</font></th>")
+                  .append("<th align='center'><font color='#7ec8e3'>当前</font></th></tr>");
+                sb.append(skillTrees[t]);
+                sb.append("</table>");
+            }
+        }
+        sb.append("<br>");
+
+        // ── Character Items ────────────────────────────────────────
+        sb.append(secHdr.apply("== 角色物品 =="));
+        emitItemGrid.accept(iCharItems);
+        sb.append("<br>");
+        // ── Mercenary ──────────────────────────────────────────────
+        if (hasMerc()) {
+            sb.append(secHdr.apply("== 佣兵 =="));
+            sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+            String[][] mercInfo = {
+                {"名称",   getMercName()},
+                {"种族",   getMercRace()},
+                {"类型",   getMercType()},
+                {"等级",   String.valueOf(getMercLevel())},
+                {"经验值", String.valueOf(getMercExp())},
+                {"已阵亡", String.valueOf(getMercDead())},
+            };
+            for (int i = 0; i < mercInfo.length; i++) {
+                String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+                sb.append("<tr bgcolor='").append(rb).append("'>")
+                  .append("<td width='40%' style='padding:2px 8px;'><font color='").append(C_LABEL).append("'>").append(mercInfo[i][0]).append("</font></td>")
+                  .append("<td><font color='").append(C_VAL).append("'>").append(mercInfo[i][1]).append("</font></td>")
+                  .append("</tr>");
+            }
+            sb.append("</table>");
+
+            sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+            sb.append("<tr bgcolor='").append(BG_HDR).append("'>")
+              .append("<th align='left' style='padding:2px 8px;'><font color='#7ec8e3'>属性</font></th>")
+              .append("<th align='center'><font color='#7ec8e3'>裸装</font></th>")
+              .append("<th align='center'><font color='#7ec8e3'>装备后</font></th></tr>");
+            Object[][] mercStats = {
+                {"力量",    getMercInitStr(), getMercStr()},
+                {"敏捷",    getMercInitDex(), getMercDex()},
+                {"生命",    getMercInitHP(),  getMercHP()},
+                {"防御",    getMercInitDef(), getMercDef()},
+                {"攻击评级", getMercInitAR(), getMercAR()},
+            };
+            for (int i = 0; i < mercStats.length; i++) {
+                String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+                sb.append("<tr bgcolor='").append(rb).append("'>")
+                  .append("<td style='padding:2px 8px;'><font color='").append(C_LABEL).append("'>").append(mercStats[i][0]).append("</font></td>")
+                  .append("<td align='center'><font color='").append(C_VAL).append("'>").append(mercStats[i][1]).append("</font></td>")
+                  .append("<td align='center'><font color='").append(C_WHITE).append("'><b>").append(mercStats[i][2]).append("</b></font></td>")
+                  .append("</tr>");
+            }
+            sb.append("</table>");
+
+            sb.append("<table width='100%' cellpadding='3' cellspacing='1' bgcolor='").append(BG_SECT).append("'>");
+            sb.append("<tr bgcolor='").append(BG_HDR).append("'>")
+              .append("<th align='left' style='padding:2px 8px;'><font color='#7ec8e3'>抗性</font></th>")
+              .append("<th align='center'><font color='#7ec8e3'>普通</font></th>")
+              .append("<th align='center'><font color='#7ec8e3'>噩梦</font></th>")
+              .append("<th align='center'><font color='#7ec8e3'>地狱</font></th></tr>");
+            int[][] mercRes = {
+                {getMercFireRes(),  getMercFireRes() - 40,  getMercFireRes() - 100},
+                {getMercColdRes(),  getMercColdRes() - 40,  getMercColdRes() - 100},
+                {getMercLightRes(), getMercLightRes() - 40, getMercLightRes() - 100},
+                {getMercPoisRes(),  getMercPoisRes() - 40,  getMercPoisRes() - 100},
+            };
+            for (int i = 0; i < 4; i++) {
+                String rb = (i % 2 == 0) ? BG_ROW1 : BG_ROW2;
+                sb.append("<tr bgcolor='").append(rb).append("'>")
+                  .append("<td style='padding:2px 8px;'><font color='").append(resColors[i]).append("'><b>").append(resNames[i]).append("</b></font></td>");
+                for (int d = 0; d < 3; d++) {
+                    int v = mercRes[i][d];
+                    String vc = (v >= 75) ? "#40ff40" : (v >= 0) ? C_VAL : "#e05050";
+                    sb.append("<td align='center'><font color='").append(vc).append("'><b>").append(v).append("</b></font></td>");
+                }
+                sb.append("</tr>");
+            }
+            sb.append("</table><br>");
+
+            if (iMercItems != null) {
+                sb.append(secHdr.apply("== 佣兵装备 =="));
+                emitItemGrid.accept(iMercItems);
+            }
+        }
+
+        sb.append("</body></html>");
+        return sb.toString();
+    }
+
     public void updateCharStats(String string, D2Item temp) {
 
         if (string.equals("P"))
@@ -2215,6 +2484,170 @@ public class D2Character extends D2ItemListAdapter {
                 "GF:         " + getCharGF() + "       FR/W:       " + getCharFRW() + "\n" +
                 "FHR:        " + getCharFHR() + "       IAS:        " + getCharIAS() + "\n" +
                 "FCR:        " + getCharFCR();
+    }
+
+    @SuppressWarnings("UseSpecificCatch")
+    public String toRawJson() {
+        try {
+            Map<String, Object> root = new LinkedHashMap<>();
+
+            Map<String, Object> character = new LinkedHashMap<>();
+            character.put("name", getCharName());
+            character.put("class", getCharClass());
+            character.put("level", getCharLevel());
+            character.put("experience", getCharExp());
+            character.put("hardcore", isHC());
+            character.put("skillPointsRemaining", getCharSkillRem());
+            character.put("gold", getGold());
+            character.put("goldBank", getGoldBank());
+
+            Map<String, Object> stats = new LinkedHashMap<>();
+            stats.put("strength",   Map.of("base", getCharInitStr(),   "withGear", getCharStr()));
+            stats.put("dexterity",  Map.of("base", getCharInitDex(),   "withGear", getCharDex()));
+            stats.put("vitality",   Map.of("base", getCharInitVit(),   "withGear", getCharVit()));
+            stats.put("energy",     Map.of("base", getCharInitNrg(),   "withGear", getCharNrg()));
+            stats.put("hp",         Map.of("base", getCharInitHP(),    "withGear", getCharHP()));
+            stats.put("mana",       Map.of("base", getCharInitMana(),  "withGear", getCharMana()));
+            stats.put("stamina",    Map.of("base", getCharInitStam(),  "withGear", getCharStam()));
+            stats.put("defense",    Map.of("base", getCharInitDef(),   "withGear", getCharDef()));
+            stats.put("attackRating", Map.of("base", getCharInitAR(), "withGear", getCharAR()));
+            character.put("stats", stats);
+
+            Map<String, Object> resistances = new LinkedHashMap<>();
+            resistances.put("fire",      getCharFireRes());
+            resistances.put("cold",      getCharColdRes());
+            resistances.put("lightning", getCharLightRes());
+            resistances.put("poison",    getCharPoisRes());
+            character.put("resistances", resistances);
+
+            Map<String, Object> misc = new LinkedHashMap<>();
+            misc.put("magicFind",    getCharMF());
+            misc.put("goldFind",     getCharGF());
+            misc.put("fasterHitRecovery", getCharFHR());
+            misc.put("increasedAttackSpeed", getCharIAS());
+            misc.put("fasterRunWalk", getCharFRW());
+            misc.put("fasterCastRate", getCharFCR());
+            misc.put("block",        getCharBlock());
+            character.put("misc", misc);
+
+            root.put("character", character);
+
+            // items
+            java.util.List<Map<String, Object>> itemsList = new java.util.ArrayList<>();
+            for (int i = 0; i < getCharItemNr(); i++) {
+                gomule.item.D2Item item = getCharItem(i);
+                if (item == null) continue;
+                Map<String, Object> entry = new LinkedHashMap<>();
+                entry.put("name", item.getItemName());
+                entry.put("code", item.getItemCode());
+                entry.put("baseItemName", item.getBaseItemName());
+                String quality;
+                if (item.isUnique()) quality = "unique";
+                else if (item.isSet()) quality = "set";
+                else if (item.isRuneWord()) quality = "runeword";
+                else if (item.isCrafted()) quality = "crafted";
+                else if (item.isRare()) quality = "rare";
+                else if (item.isMagical()) quality = "magic";
+                else if (item.isRune()) quality = "rune";
+                else quality = "normal";
+                entry.put("quality", quality);
+                entry.put("ilvl", item.getIlvl());
+                entry.put("reqLvl", item.getReqLvl());
+                entry.put("ethereal", item.isEthereal());
+                entry.put("socketed", item.isSocketed());
+                if (item.isSocketed()) {
+                    entry.put("socketsTotal", item.getSocketNrTotal());
+                    entry.put("socketsFilled", item.getSocketNrFilled());
+                    java.util.List<Map<String, Object>> socketedJson = new java.util.ArrayList<>();
+                    java.util.ArrayList<gomule.item.D2Item> socketedItems = item.getiSocketedItems();
+                    if (socketedItems != null) {
+                        for (gomule.item.D2Item filler : socketedItems) {
+                            if (filler == null) continue;
+                            Map<String, Object> se = new LinkedHashMap<>();
+                            se.put("name", filler.getItemName());
+                            se.put("code", filler.getItemCode());
+                            if (filler.isRune()) se.put("rune", filler.getRuneCode());
+                            se.put("ilvl", filler.getIlvl());
+                            socketedJson.add(se);
+                        }
+                    }
+                    entry.put("socketedItems", socketedJson);
+                }
+                entry.put("location", item.get_location());
+                entry.put("bodyPosition", item.get_body_position());
+                entry.put("panel", item.get_panel());
+                if (item.isSet()) entry.put("setName", item.getSetName());
+                // structured properties: stat name + raw values + display string
+                java.util.List<Map<String, Object>> propsJson = new java.util.ArrayList<>();
+                for (gomule.item.D2Prop prop : item.getPropCollection()) {
+                    int statId = prop.getPNum();
+                    randall.d2files.D2TxtFileItemProperties statRow =
+                            D2TxtFile.ITEM_STAT_COST.getRow(statId);
+                    String statName = (statRow != null) ? statRow.get("Stat") : null;
+                    String display = null;
+                    try {
+                        display = prop.generateDisplay(prop.getQFlag(), getCharLevel());
+                    } catch (Exception ignored) {}
+                    if (display == null) continue;
+                    // strip D2R colour codes (ÿcX ... ÿc0)
+                    display = display.replaceAll("ÿc.", "").replaceAll("&#32;", "").trim();
+                    if (display.isEmpty()) continue;
+                    Map<String, Object> pEntry = new LinkedHashMap<>();
+                    if (statName != null && !statName.isEmpty()) pEntry.put("stat", statName);
+                    pEntry.put("statId", statId);
+                    int[] pVals = prop.getPVals();
+                    java.util.List<Integer> valsList = new java.util.ArrayList<>();
+                    for (int v : pVals) valsList.add(v);
+                    pEntry.put("values", valsList);
+                    pEntry.put("display", display);
+                    propsJson.add(pEntry);
+                }
+                entry.put("properties", propsJson);
+                itemsList.add(entry);
+            }
+            root.put("items", itemsList);
+
+            if (hasMerc()) {
+                Map<String, Object> merc = new LinkedHashMap<>();
+                merc.put("name",       getMercName());
+                merc.put("race",       getMercRace());
+                merc.put("type",       getMercType());
+                merc.put("level",      getMercLevel());
+                merc.put("experience", getMercExp());
+                merc.put("isDead",     !getMercDead().equals("Alive"));
+
+                Map<String, Object> mercStats = new LinkedHashMap<>();
+                mercStats.put("strength",   Map.of("base", getMercInitStr(), "withGear", getMercStr()));
+                mercStats.put("dexterity",  Map.of("base", getMercInitDex(), "withGear", getMercDex()));
+                mercStats.put("hp",         Map.of("base", getMercInitHP(),  "withGear", getMercHP()));
+                mercStats.put("defense",    Map.of("base", getMercInitDef(), "withGear", getMercDef()));
+                mercStats.put("attackRating", Map.of("base", getMercInitAR(), "withGear", getMercAR()));
+                merc.put("stats", mercStats);
+
+                Map<String, Object> mercRes = new LinkedHashMap<>();
+                mercRes.put("fire",      getMercFireRes());
+                mercRes.put("cold",      getMercColdRes());
+                mercRes.put("lightning", getMercLightRes());
+                mercRes.put("poison",    getMercPoisRes());
+                merc.put("resistances", mercRes);
+
+                root.put("mercenary", merc);
+            }
+
+            com.fasterxml.jackson.databind.ObjectMapper mapper =
+                    new com.fasterxml.jackson.databind.ObjectMapper();
+            // Custom pretty-printer: each array element starts on its own line,
+            // so RSyntaxTextArea code-folding can collapse individual {} blocks.
+            com.fasterxml.jackson.core.util.DefaultPrettyPrinter printer =
+                    new com.fasterxml.jackson.core.util.DefaultPrettyPrinter();
+            printer.indentArraysWith(
+                    com.fasterxml.jackson.core.util.DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
+            mapper.setDefaultPrettyPrinter(printer);
+            mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
+            return mapper.writer(printer).writeValueAsString(root);
+        } catch (Exception e) {
+            return "{\"error\": \"" + e.getMessage() + "\"}";
+        }
     }
 
     public String getMercStatString() {

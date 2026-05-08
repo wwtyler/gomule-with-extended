@@ -3,6 +3,8 @@ package gomule.item;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import gomule.util.D2ColorCode;
+
 public class D2ItemRenderer {
 
     public static String itemDumpHtml(D2Item d2Item, boolean extended) {
@@ -38,7 +40,7 @@ public class D2ItemRenderer {
                     .append("<font color=\"#")
                     .append(rgb)
                     .append("\">")
-                    .append(iItemName)
+                    .append(formatItemNameForHtml(iItemName))
                     .append("</font>")
                     .append("<br>&#10;");
         } else {
@@ -50,7 +52,7 @@ public class D2ItemRenderer {
                     .append("\">")
                     .append(d2Item.getPersonalization())
                     .append("'s ")
-                    .append(iItemName)
+                    .append(formatItemNameForHtml(iItemName))
                     .append("</font>")
                     .append("<br>&#10;");
         }
@@ -60,14 +62,13 @@ public class D2ItemRenderer {
             dispStr.append("<font color=\"#")
                     .append(rgb)
                     .append("\">")
-                    .append(iBaseItemName)
+                    .append(formatItemNameForHtml(iBaseItemName))
                     .append("</font>")
                     .append("<br>&#10;");
         if (d2Item.isRuneWord()) {
             dispStr.append("<font color=\"#").append(rgb).append("\">");
             for (D2Item iSocketedItem : iSocketedItems) {
-                dispStr.append(
-                        (iSocketedItem.getName()), 0, iSocketedItem.getName().length() - 5);
+                dispStr.append(getRuneWordDisplayName(iSocketedItem));
             }
             dispStr.append("</font><br>&#10;");
         }
@@ -218,7 +219,7 @@ public class D2ItemRenderer {
             if (d2Item.getiSocketedItems() != null) {
                 for (int i = 0; i < d2Item.getiSocketedItems().size(); i++) {
                     dispStr.append("Socketed: ")
-                            .append(d2Item.getiSocketedItems().get(i).getItemName())
+                            .append(formatItemNameForHtml(d2Item.getiSocketedItems().get(i).getItemName()))
                             .append("<br>&#10;");
                 }
             }
@@ -239,5 +240,25 @@ public class D2ItemRenderer {
             }
         }
         return dispStr;
+    }
+
+    private static String formatItemNameForHtml(String itemName) {
+        if (itemName == null) {
+            return "";
+        }
+        return D2ColorCode.toHtml(itemName).replace("\r\n", "<br>&#10;")
+                .replace("\n", "<br>&#10;");
+    }
+
+    private static String getRuneWordDisplayName(D2Item socketedItem) {
+        String strippedName = D2ColorCode.strip(socketedItem.getName());
+        if (strippedName == null) {
+            return "";
+        }
+        return strippedName.replace("\r", "")
+                .replace("\n", " ")
+                .replaceFirst("\\s*\\(#\\d+\\)$", "")
+                .replaceFirst("\\s+Rune$", "")
+                .trim();
     }
 }

@@ -20,10 +20,11 @@
  ******************************************************************************/
 package randall.d2files;
 
-import gomule.gui.D2FileManager;
-
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import gomule.gui.D2FileManager;
 
 /**
  * @author Marco
@@ -43,10 +44,10 @@ public class D2FileReader {
         if (lFile.exists() && lFile.isFile() && lFile.canRead()) {
             try {
                 iBuffer = new byte[(int) lFile.length()];
-                FileInputStream lIn = new FileInputStream(lFile);
-                lIn.read(iBuffer);
-                lIn.close();
-            } catch (Exception pEx) {
+                try (FileInputStream lIn = new FileInputStream(lFile)) {
+                    lIn.read(iBuffer);
+                }
+            } catch (IOException pEx) {
                 iBuffer = null;
                 D2FileManager.displayErrorDialog(pEx);
             }
@@ -93,9 +94,9 @@ public class D2FileReader {
     }
 
     public String getCounterString() {
-        StringBuffer lBuffer = new StringBuffer();
+        StringBuilder lBuffer = new StringBuilder();
 
-        int lInt = 0;
+        int lInt;
         try {
             lInt = getCounterInt(8);
         } catch (Exception pEx) {

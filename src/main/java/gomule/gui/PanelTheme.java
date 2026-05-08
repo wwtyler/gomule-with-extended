@@ -132,11 +132,11 @@ public enum PanelTheme {
         this.weaponInactiveText = weaponInactiveText;
     }
 
-    /** 根据名称解析主题，找不到时返回 {@link #GOLD}。 */
+    /** 根据名称解析主题，找不到时返回 {@link #GOLD}。大小写不敏感（容忍 app.properties 手改成小写）。 */
     public static PanelTheme fromName(String name) {
         if (name == null || name.isBlank()) return GOLD;
         try {
-            return PanelTheme.valueOf(name);
+            return PanelTheme.valueOf(name.trim().toUpperCase(java.util.Locale.ROOT));
         } catch (IllegalArgumentException e) {
             return GOLD;
         }
